@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import type { MindElixirData, Options } from 'mind-elixir'
 import { getRandomInt } from 'easy-fns-ts'
+import { homepage, urls } from '~build/package'
 
 defineOptions({
   name: 'MindmapDemo',
 })
 
 const appSettings = useAppStoreSetting()
-
-const { urls } = __APP_INFO__
 
 const options: Omit<Options, 'el'> = {
   editable: true,
@@ -25,7 +24,7 @@ const data: MindElixirData = {
         children: [
           {
             id: `${getRandomInt(0, 999999)}`,
-            topic: `仓库地址：${urls.github}`,
+            topic: `仓库地址：${homepage}`,
           },
           {
             id: `${getRandomInt(0, 999999)}`,

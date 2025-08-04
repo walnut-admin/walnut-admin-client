@@ -1,6 +1,5 @@
 import { compare } from 'compare-versions'
-
-const { version } = __APP_INFO__
+import { version } from '~build/package'
 
 // TODO fetch from api
 const migrations: Record<string, { key: string, action: 'remove' | 'update', newValue?: string }[]> = {

@@ -5,6 +5,7 @@ import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
 import WIcon from '@/components/UI/Icon'
 
 import WAvatar from '@/views/account/settings/components/avatar.vue'
+import { homepage, urls } from '~build/package'
 import SwitchRole from './switchRole.vue'
 
 const { t } = useAppI18n()
@@ -51,10 +52,10 @@ const dropdownOptions = computed<DropdownMixedOption[]>(() => [
 
 async function onSelect(val: string) {
   if (val === '1')
-    openExternalLink(__APP_INFO__.urls.doc)
+    openExternalLink(urls.doc)
 
   if (val === '2')
-    openExternalLink(__APP_INFO__.urls.github)
+    openExternalLink(homepage)
 
   if (val === '3')
     switchRoleRef.value?.onOpen()

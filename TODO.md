@@ -57,7 +57,7 @@
   - [ ] https://github.com/hrynko/vue-pdf-embed
   - [x] cap https://github.com/tiagorangel1/cap
   - [x] https://github.com/zumerlab/snapdom https://github.com/sindresorhus/capture-website still use html-to-image
-  - [ ] https://github.com/yjl9903/unplugin-info
+  - [x] https://github.com/yjl9903/unplugin-info
   - [x] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
   - [x] https://github.com/vite-pwa/vite-plugin-pwa
   - [ ] https://github.com/antfu/case-police

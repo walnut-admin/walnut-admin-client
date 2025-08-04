@@ -1,4 +1,3 @@
-import type { Recordable } from 'easy-fns-ts'
 import type { UnwrapRef } from 'vue'
 
 declare global {
@@ -16,33 +15,18 @@ declare global {
   type EChartsOption = import('echarts').EChartsOption
 
   interface ICapInst {
-    new ({ apiEndpoint: string }, el?: HTMLElement): { solve: () => Promise<{ token: string }> }
+    new({ apiEndpoint: string }, el?: HTMLElement): { solve: () => Promise<{ token: string }> }
   }
 
-type DeepKeyOf<T> = T extends object
-  ? {
-      [K in keyof T]: K extends string | number
-        ? UnwrapRef<T[K]> extends object
-          ? `${K}` | `${K}.${DeepKeyOf<UnwrapRef<T[K]>> & string}`
-          : `${K}`
-        : never;
-    }[keyof T]
-  : never
-
-const __APP_INFO__: {
-  name: string
-  version: string
-  deps: Recordable<string>
-  devDeps: Recordable<string>
-  urls: {
-    doc: string
-    demo: string
-    github: string
-    author: string
-  }
-  lastBuildTime: string
+  type DeepKeyOf<T> = T extends object
+    ? {
+        [K in keyof T]: K extends string | number
+          ? UnwrapRef<T[K]> extends object
+            ? `${K}` | `${K}.${DeepKeyOf<UnwrapRef<T[K]>> & string}`
+            : `${K}`
+          : never;
+      }[keyof T]
+    : never
 }
 
-}
-
-export {}
+export { }

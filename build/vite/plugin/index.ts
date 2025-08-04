@@ -12,6 +12,7 @@ import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
+import { createInfoPlugin } from './info'
 import { createLegacyPlugin } from './legacy'
 import { createObfuscatorPlugin } from './obfuscator'
 // import { createPWAPlugin } from './pwa'
@@ -42,6 +43,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/Julien-R44/vite-plugin-validate-env
     creatValidateEnvPlugin(mode),
+
+    // https://github.com/yjl9903/unplugin-info
+    createInfoPlugin(),
 
     // https://github.com/antfu/unplugin-auto-import
     creatAutoImportPlugin(),

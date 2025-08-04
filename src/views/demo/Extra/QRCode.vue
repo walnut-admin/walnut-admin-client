@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { urls } from '~build/package'
+
 defineOptions({
   name: 'QRCodeDemo',
   defaultView: false,
@@ -6,7 +8,7 @@ defineOptions({
 
 const getUrl = () => `https://www.baidu.com/?t=${Date.now()}`
 
-const url = ref(__APP_INFO__.urls.doc)
+const url = ref(urls.doc)
 
 const url2 = ref(getUrl())
 const success = ref(false)

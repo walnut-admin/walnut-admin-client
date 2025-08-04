@@ -2,6 +2,7 @@
 /// <reference types="vite/client" />
 /// <reference types="unplugin-turbo-console/client" />
 /// <reference types="vite-plugin-pwa/client" />
+/// <reference types="unplugin-info/client" />
 
 declare interface Fn<T = any, R = T> {
   (...arg: T[]): R

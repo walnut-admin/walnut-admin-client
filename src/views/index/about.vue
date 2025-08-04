@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 import { BackendDepsAPI } from '@/api'
+import { dependencies, devDependencies, homepage, urls, version } from '~build/package'
+import now from '~build/time'
 
 defineOptions({
   name: 'About',
 })
 
 const { t } = useAppI18n()
-
-const { lastBuildTime, version, deps, devDeps, urls } = __APP_INFO__
 
 const infoItems = computed<ICompUIDescriptionsItem[]>(
   () =>
@@ -45,12 +45,12 @@ const infoItems = computed<ICompUIDescriptionsItem[]>(
         type: 'link',
         typeProps: {
           type: 'primary',
-          link: urls.github,
+          link: homepage,
         },
       },
       {
         label: t('desc.about.info.buildTime'),
-        value: lastBuildTime,
+        value: now.toLocaleDateString(),
         type: 'tag',
         typeProps: {
           type: 'info',
@@ -60,7 +60,7 @@ const infoItems = computed<ICompUIDescriptionsItem[]>(
 )
 
 const frontendDeps = ref<ICompUIDescriptionsItem[]>(
-  Object.entries(deps).map(([k, v]) => ({
+  Object.entries(dependencies).map(([k, v]) => ({
     label: k,
     value: v,
     type: 'link',
@@ -68,7 +68,7 @@ const frontendDeps = ref<ICompUIDescriptionsItem[]>(
   })),
 )
 const frontendDevDeps = ref<ICompUIDescriptionsItem[]>(
-  Object.entries(devDeps).map(([k, v]) => ({
+  Object.entries(devDependencies).map(([k, v]) => ({
     label: k,
     value: v,
     type: 'link',

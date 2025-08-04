@@ -1,5 +1,6 @@
 // TODO 111
 import WIcon from '@/components/UI/Icon'
+import { homepage } from '~build/package'
 
 export async function useStarOnGithub() {
   const { t } = useAppI18n()
@@ -7,7 +8,7 @@ export async function useStarOnGithub() {
   const naiveStore = useAppStoreNaive()
 
   function onClick() {
-    openExternalLink(__APP_INFO__.urls.github)
+    openExternalLink(homepage)
   }
 
   function onCheckboxChange(val: boolean) {

@@ -7,7 +7,7 @@ import { envDir, publicDir } from './build/constant'
 import { createVitePlugins } from './build/vite/plugin'
 import { createViteProxy } from './build/vite/proxy'
 
-import { author, dependencies, devDependencies, name, repository, urls, version } from './package.json'
+import { dependencies } from './package.json'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -40,18 +40,6 @@ function useBuildEnv(env: Record<keyof ImportMetaEnv, string>): IViteEnv {
   }
 }
 
-const __APP_INFO__ = {
-  name,
-  version,
-  deps: dependencies,
-  devDeps: devDependencies,
-  urls: Object.assign(urls, {
-    github: repository.url,
-    author: author.url,
-  }),
-  lastBuildTime: new Date().toLocaleDateString(),
-}
-
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = cwd()
@@ -73,7 +61,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       // https://vue-i18n.intlify.dev/guide/advanced/optimization#feature-build-flags
       __VUE_I18N_FULL_INSTALL__: false,
       __VUE_I18N_LEGACY_API__: false,
-      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
 
     plugins: [...createVitePlugins(mode, processedEnv)],

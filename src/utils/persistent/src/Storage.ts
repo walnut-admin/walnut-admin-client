@@ -1,4 +1,5 @@
 import type { Serializer } from '@vueuse/core'
+import { name, version } from '~build/package'
 
 interface IAppStorageOptions<T> {
   storage?: typeof localStorage | typeof sessionStorage
@@ -18,8 +19,6 @@ interface IAppStorageData<T> {
   e: number | null // expire time (milliseconds)，null means won't expire
   enc: boolean // is encrypted
 }
-
-const { name, version } = __APP_INFO__
 
 export const getStorageKey = (key: string) => `${name.toLocaleUpperCase().slice(0, 1)}__${import.meta.env.MODE.slice(0, 3).toLocaleUpperCase()}__${key.replaceAll('-', '_').toLocaleUpperCase()}`
 
