@@ -5,7 +5,7 @@ import pkg from '../../../package.json'
 // still got problems, but offline mode seem to work in dev mode
 export function createPWAPlugin(env: IViteEnv) {
   return VitePWA({
-    registerType: 'autoUpdate',
+    registerType: 'prompt',
     strategies: 'generateSW',
     injectRegister: 'auto',
     includeAssets: ['favicon.ico', '/assets/apple-touch-icon-180x180.png', '/pwa/maskable-icon-512x512.png'],

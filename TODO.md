@@ -21,6 +21,7 @@
   - [ ] 找回密码
   - [x] api 函数重命名 结尾都以API结束 好区分是请求函数
   - [x] ~~merge request的axios adapter完成了，字典数据接口需要重新梳理一下，可以不用initDict在form/table/desc组件里了~~
+  - [ ] checker貌似导致了HMR不好使（可能也是多个plugin使用导致的，还需要排查）
 
 - 重要不紧急
 

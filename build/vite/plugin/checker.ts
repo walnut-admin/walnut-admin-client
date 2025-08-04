@@ -7,6 +7,7 @@ export function createCheckerPlugin() {
     eslint: {
       lintCommand: 'eslint .',
       useFlatConfig: true,
+      watchPath: '../../../src',
     },
   })
 }

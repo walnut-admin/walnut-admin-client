@@ -15,7 +15,7 @@ import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInfoPlugin } from './info'
 import { createLegacyPlugin } from './legacy'
 import { createObfuscatorPlugin } from './obfuscator'
-// import { createPWAPlugin } from './pwa'
+import { createPWAPlugin } from './pwa'
 // import { createCSPPlugin } from './csp'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
@@ -58,19 +58,6 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/fi3ework/vite-plugin-checker
     createCheckerPlugin(),
-
-    // https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
-    // {
-    //   name: 'singleHMR',
-    //   handleHotUpdate({ modules }) {
-    //     modules.forEach((m) => {
-    //       m.importedModules = new Set()
-    //       m.importers = new Set()
-    //     })
-
-    //     return modules
-    //   },
-    // },
   ]
 
   // I'm pretty sure packages below will be removed when build
@@ -115,7 +102,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   }
 
   // https://github.com/vite-pwa/vite-plugin-pwa
-  // vitePlugins.push(createPWAPlugin(env))
+  vitePlugins.push(createPWAPlugin(env))
 
   return vitePlugins
 }
