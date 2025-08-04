@@ -1,11 +1,9 @@
-// import { registerSW } from 'virtual:pwa-register'
-
 import { App, setupApp } from './App'
 
 import { setupGoogleAnalytics } from './App/src/scripts/analytics'
 
 // LINK https://utc.yuy1n.io/features/highlight.html#options-1
-// import '~console/theme-detect'
+import '~console/theme-detect'
 
 // unocss
 import 'virtual:uno.css'
@@ -15,6 +13,7 @@ import '@unocss/reset/tailwind-compat.css'
 
 // animate
 import 'animate.css'
+
 // custom scss
 import './assets/styles/main.scss'
 
@@ -30,6 +29,4 @@ import './assets/styles/main.scss'
   await setupApp(app)
 
   app.mount('#app')
-
-  // registerSW({ immediate: true })
 })()

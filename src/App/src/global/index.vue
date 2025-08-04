@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import WAppGlobalComponentCap from './cap.vue'
 import WAppGlobalComponentForceQuit from './forceQuit.vue'
+import WAppGlobalComponentReloadPrompt from './reloadPrompt.vue'
 
 defineOptions({
   name: 'WAppGlobalComponents',
@@ -10,4 +11,5 @@ defineOptions({
 <template>
   <WAppGlobalComponentCap />
   <WAppGlobalComponentForceQuit />
+  <WAppGlobalComponentReloadPrompt />
 </template>
