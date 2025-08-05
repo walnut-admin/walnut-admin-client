@@ -34,7 +34,8 @@
   - [ ] pdf/word/excel/print.js plugin
   - [ ] error monitor (sentry?)
   - [x] untyper
-  - [ ] cdn/混淆
+  - [ ] cdn 也是配合其他插件貌似会有问题
+  - [x] 混淆 vite-plugin-bundle-obfuscator 基础混淆，高级混淆配合其他plugin打包后会有问题
   - [ ] 拆分面板 splitpanes
   - [ ] markdown (vditor)
   - [ ] fullcalendar
