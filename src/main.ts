@@ -3,7 +3,8 @@ import { App, setupApp } from './App'
 import { setupGoogleAnalytics } from './App/src/scripts/analytics'
 
 // LINK https://utc.yuy1n.io/features/highlight.html#options-1
-import '~console/theme-detect'
+// TODO build error, did not figure out which plugin conflict
+// import '~console/theme-detect'
 
 // unocss
 import 'virtual:uno.css'

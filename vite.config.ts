@@ -109,13 +109,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       minify: 'esbuild',
       outDir: processedEnv.build.outDir,
       reportCompressedSize: false,
+      // code split would caused build css not work
       cssCodeSplit: false,
 
       chunkSizeWarningLimit: 600,
 
       rollupOptions: {
-        // fix build error with turbo-console
-        external: ['~console/theme-detect'],
         output: {
           format: 'es',
           // https://github.com/vitejs/vite-plugin-vue/issues/19#issuecomment-3087602546
