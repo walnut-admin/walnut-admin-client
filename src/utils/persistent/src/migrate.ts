@@ -3,38 +3,38 @@ import { version } from '~build/package'
 
 // TODO fetch from api
 const migrations: Record<string, { key: string, action: 'remove' | 'update', newValue?: string }[]> = {
-  '1.2.0': [
-    {
-      key: AppConstPersistKey.REMEMBER,
-      action: 'update',
-      newValue: '123',
-    },
-  ],
-  '1.2.1': [
-    {
-      key: AppConstPersistKey.REMEMBER,
-      action: 'update',
-      newValue: '3213',
-    },
-    {
-      key: '222',
-      action: 'remove',
-    },
-  ],
-  '1.2.2': [
-    {
-      key: AppConstPersistKey.REMEMBER,
-      action: 'update',
-      newValue: 'qqq',
-    },
-  ],
-  '1.2.3': [
-    {
-      key: '333',
-      action: 'update',
-      newValue: '333',
-    },
-  ],
+  // '1.2.0': [
+  //   {
+  //     key: AppConstPersistKey.REMEMBER,
+  //     action: 'update',
+  //     newValue: '123',
+  //   },
+  // ],
+  // '1.2.1': [
+  //   {
+  //     key: AppConstPersistKey.REMEMBER,
+  //     action: 'update',
+  //     newValue: '3213',
+  //   },
+  //   {
+  //     key: '222',
+  //     action: 'remove',
+  //   },
+  // ],
+  // '1.2.2': [
+  //   {
+  //     key: AppConstPersistKey.REMEMBER,
+  //     action: 'update',
+  //     newValue: 'qqq',
+  //   },
+  // ],
+  // '1.2.3': [
+  //   {
+  //     key: '333',
+  //     action: 'update',
+  //     newValue: '333',
+  //   },
+  // ],
 }
 
 const MIGRATION_DONE_KEY = `__APP_MIGRATION_VERSION__`
