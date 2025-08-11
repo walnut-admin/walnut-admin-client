@@ -63,6 +63,14 @@ async function onOAuth(type: string) {
     loading.value = false
     eventSource.close()
   }
+
+  const id = setInterval(() => {
+    if (childWindow && childWindow.closed) {
+      loading.value = false
+      eventSource.close()
+      clearInterval(id)
+    }
+  }, 200)
 }
 
 async function onClick(key: string) {
