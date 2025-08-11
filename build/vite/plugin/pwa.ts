@@ -3,6 +3,7 @@ import pkg from '../../../package.json'
 
 // https://alexop.dev/posts/create-pwa-vue3-vite-4-steps/
 // still got problems, but offline mode seem to work in dev mode
+// network filter: -is:service-worker-initiated -is:service-worker-intercepted
 export function createPWAPlugin(env: IViteEnv) {
   return VitePWA({
     registerType: 'prompt',
