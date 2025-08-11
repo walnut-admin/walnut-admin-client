@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const GeoIPInfo = useAppStorage<Partial<ExternalGeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { usePresetKey: false, expire: Number.POSITIVE_INFINITY })
 
-export async function useExternalGeoIP() {
+export async function setupGeoIP() {
   if (Object.keys(GeoIPInfo.value).length)
     return
 

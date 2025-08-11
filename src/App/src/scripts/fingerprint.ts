@@ -1,5 +1,4 @@
 import type { BuiltinComponents, UnknownComponents } from '@fingerprintjs/fingerprintjs'
-import { initialDeviceAPI } from '@/api/system/device'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { pick } from 'lodash-es'
 
@@ -52,7 +51,7 @@ const excludeComponents: (keyof BuiltinComponents)[] = [
 // Initialize an agent at application startup.
 export const fpId = useAppStorage<string>(AppConstPersistKey.FP_ID, '', { usePresetKey: false, expire: Number.POSITIVE_INFINITY })
 
-export async function useFingerprint() {
+export async function setupFingerprint() {
   if (fpId.value)
     return
 
@@ -68,7 +67,4 @@ export async function useFingerprint() {
   const visiterId = FingerprintJS.hashComponents(components)
 
   fpId.value = visiterId
-
-  // initial device id after fingerprint is generated
-  await initialDeviceAPI()
 }

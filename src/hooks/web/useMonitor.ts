@@ -1,3 +1,5 @@
+import { fpId } from '@/App/src/scripts/fingerprint'
+
 export function sendUserMonitorBeacon(data: Partial<AppMonitorUserModel>) {
   const { httpUrl } = useAppEnvProxy()
 

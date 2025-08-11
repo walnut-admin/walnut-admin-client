@@ -18,10 +18,6 @@ import { setupStore } from '@/store/pinia'
  * @description Entry to set up Vue App
  */
 export async function setupApp(app: App) {
-  await useExternalGeoIP()
-
-  await useFingerprint()
-
   await setupI18n(app)
 
   setupRouter(app)

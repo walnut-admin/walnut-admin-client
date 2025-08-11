@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { Recordable } from 'easy-fns-ts'
 import { getGiteeURIAPI, getGitHubURIAPI, getWeiboURIAPI } from '@/api/auth/third'
+import { fpId } from '@/App/src/scripts/fingerprint'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({

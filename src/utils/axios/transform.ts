@@ -1,10 +1,11 @@
 import type { AxiosError } from 'axios'
+import { fpId } from '@/App/src/scripts/fingerprint'
 import { AppNotAllowedName } from '@/router/constant'
 import axios from 'axios'
+
 import {
   easyTransformObjectStringBoolean,
 } from 'easy-fns-ts'
-
 import { merge } from 'lodash-es'
 import { AppRequestEncryption, AppResponseEncryption } from '../crypto'
 import { RefreshCapJSTokenLogic } from './capJSToken'

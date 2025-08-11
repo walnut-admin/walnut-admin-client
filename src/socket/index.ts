@@ -1,5 +1,6 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Socket } from 'socket.io-client'
+import { fpId } from '@/App/src/scripts/fingerprint'
 import { io } from 'socket.io-client'
 
 /**
