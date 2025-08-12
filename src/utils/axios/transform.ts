@@ -31,9 +31,14 @@ export const transform: WalnutAxiosTransform = {
     config.headers['x-language'] = appLocale.locale
     config.headers['x-fingerprint'] = fpId.value
 
+    // sign & serial
     const certCache = getCertCache()
     config.headers['x-sign'] = buildSign(merge(config.params, config.data), certCache)
     config.headers['x-serial'] = certCache.server_sn
+
+    // timestamp & nonce
+    config.headers['x-timestamp'] = Date.now()
+    config.headers['x-nonce'] = crypto.randomUUID()
 
     // a request doomed to fail
     if (config._error)
