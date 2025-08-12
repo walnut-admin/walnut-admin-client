@@ -22,6 +22,14 @@ declare global {
     interface TokenPayload {
       accessToken: string
     }
+
+    // cert payload
+    interface ClientCert {
+      server_cert: string
+      server_sn: string
+      secret: string
+    }
+
   }
 
   namespace AppPublicSettings {

@@ -1,8 +1,9 @@
 import type { AxiosError } from 'axios'
+import { getCertCache } from '@/App/src/scripts/cert'
 import { fpId } from '@/App/src/scripts/fingerprint'
+
 import { AppNotAllowedName } from '@/router/constant'
 import axios from 'axios'
-
 import {
   easyTransformObjectStringBoolean,
 } from 'easy-fns-ts'
@@ -29,6 +30,10 @@ export const transform: WalnutAxiosTransform = {
     // custom headers
     config.headers['x-language'] = appLocale.locale
     config.headers['x-fingerprint'] = fpId.value
+
+    const certCache = getCertCache()
+    config.headers['x-sign'] = buildSign(merge(config.params, config.data), certCache)
+    config.headers['x-serial'] = certCache.server_sn
 
     // a request doomed to fail
     if (config._error)
