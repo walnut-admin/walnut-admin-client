@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios'
-import { getCertCache } from '@/App/src/scripts/cert'
 import { fpId } from '@/App/src/scripts/fingerprint'
+import { getSignCache } from '@/App/src/scripts/sign'
 
 import { AppNotAllowedName } from '@/router/constant'
 import axios from 'axios'
@@ -32,13 +32,13 @@ export const transform: WalnutAxiosTransform = {
     config.headers['x-fingerprint'] = fpId.value
 
     // sign & serial
-    const certCache = getCertCache()
-    config.headers['x-sign'] = buildSign(merge(config.params, config.data), certCache)
-    config.headers['x-serial'] = certCache.server_sn
+    const signRef = getSignCache()
+    config.headers['x-sign'] = buildSign(merge(config.params, config.data), signRef.serverSn!, signRef.secret!)
+    config.headers['x-serial'] = signRef.serverSn
 
     // timestamp & nonce
     config.headers['x-timestamp'] = Date.now()
-    config.headers['x-nonce'] = crypto.randomUUID()
+    config.headers['x-nonce'] = generateNonce()
 
     // a request doomed to fail
     if (config._error)

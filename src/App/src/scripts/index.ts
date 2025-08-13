@@ -1,17 +1,17 @@
 import { setupGoogleAnalytics } from './analytics'
-import { setupClientCert } from './cert'
 import { setupDevice } from './device'
 import { setupFingerprint } from './fingerprint'
 import { setupGeoIP } from './geoip'
+import { setupSign } from './sign'
 
 export async function setupAppScripts() {
-  await setupClientCert()
+  await setupFingerprint()
 
   await setupGeoIP()
 
   await setupDevice()
 
-  await setupFingerprint()
+  await setupSign()
 
   await setupGoogleAnalytics()
 }

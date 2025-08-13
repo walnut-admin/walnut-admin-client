@@ -21,6 +21,10 @@ export const AppConstPersistKey = {
   // finger print
   FP_ID: 'FPID',
 
+  // sign
+  SERVER_SN: 'SERVER_SN',
+  ENCRYPTED_SESSION: 'ENCRYPTED_SESSION',
+
   // geo ip info, fetch from EXTERNAL_LINKS.GEOIP
   GEO_IP_INFO: 'GEO_IP_INFO',
 

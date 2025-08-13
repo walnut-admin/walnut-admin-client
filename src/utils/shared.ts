@@ -127,3 +127,7 @@ export function pathsToObject<T extends object, R extends Recordable = T>(pathsO
 
   return result as R
 }
+
+export function generateNonce() {
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('')
+}

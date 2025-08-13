@@ -23,13 +23,16 @@ declare global {
       accessToken: string
     }
 
-    // cert payload
-    interface ClientCert {
-      server_cert: string
-      server_sn: string
-      secret: string
+    // sign payload
+    interface SignHandShakePayload {
+      serverCert: string
+      serverSn: string
+      rsaPubKey: string
     }
 
+    interface SignSessionKeyPayload {
+      encrypted_session: string
+    }
   }
 
   namespace AppPublicSettings {

@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-export function buildSign(params: Record<string, any>, certPayload: AppPayloadAuth.ClientCert) {
+export function buildSign(params: Record<string, any>, serverSn: string, secret: string) {
   const ua = navigator.userAgent
 
   const flatternObj = objectToPaths(params)
@@ -10,12 +10,9 @@ export function buildSign(params: Record<string, any>, certPayload: AppPayloadAu
     .map(k => `${k}=${flatternObj[k]}`)
     .join('&')
 
-  if (!certPayload)
-    return
+  const raw = `${sorted}&serial=${serverSn}&ua=${ua}`
 
-  const raw = `${sorted}&serial=${certPayload.server_sn}&ua=${ua}`
-
-  const sign = CryptoJS.HmacSHA256(raw, certPayload.secret).toString()
+  const sign = CryptoJS.HmacSHA256(raw, secret).toString()
 
   return sign
 }
