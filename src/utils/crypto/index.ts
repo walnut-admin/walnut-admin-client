@@ -1,5 +1,6 @@
-import { Encryption } from './Crypto'
+import { Encryption } from './symmetric/crypto'
 
+// TODO need to remove
 const { persist, request, response } = useAppEnvCrypto()
 
 export const AppPersistEncryption = new Encryption({
