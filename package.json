@@ -86,7 +86,6 @@
     "signature_pad": "5.0.7",
     "socket.io-client": "4.8.1",
     "sortablejs": "1.15.6",
-    "ua-parser-js": "2.0.3",
     "untyper": "0.0.10",
     "vue": "3.5.13",
     "vue-codemirror": "6.1.1",
