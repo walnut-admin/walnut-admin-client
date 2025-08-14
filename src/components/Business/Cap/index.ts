@@ -1,3 +1,5 @@
+import { createAsyncComponent } from '@/utils/factory/asyncComponent'
+
 const appCapJSToken = useAppStoreCapJSToken()
 
 export default createAsyncComponent(async () => {

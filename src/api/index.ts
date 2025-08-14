@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 import type { Recordable } from 'easy-fns-ts'
+import { AppAxios } from '@/utils/axios'
 
 export function HelloAPI(config: AxiosRequestConfig) {
   return AppAxios.get<string>(

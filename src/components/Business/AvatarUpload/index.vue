@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { WCropperInst } from '@/components/Vendor/Cropper'
+import { imgUrlToBase64 } from '@/utils/file/base64'
 import { AliOSSClient } from '../../Vendor/OSSUpload/client'
 
 defineOptions({

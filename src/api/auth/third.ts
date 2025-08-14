@@ -1,3 +1,5 @@
+import { AppAxios } from '@/utils/axios'
+
 const oauthThird = {
   GITHUB: '/auth/oauth/github/url',
   GITEE: '/auth/oauth/gitee/url',

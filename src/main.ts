@@ -1,3 +1,4 @@
+import { setupStorageMigrations } from '@/utils/persistent/migrate'
 import { App, setupApp, setupAppScripts } from './App'
 
 // LINK https://utc.yuy1n.io/features/highlight.html#options-1

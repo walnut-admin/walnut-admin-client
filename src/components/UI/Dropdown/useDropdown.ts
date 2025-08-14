@@ -1,4 +1,5 @@
 import type { ICompUIDropdownInst, ICompUIDropdownProps } from '.'
+import { isInSetup } from '@/utils/shared'
 
 export function useDropdown(props: IDeepMaybeRef<ICompUIDropdownProps> | ICompUIDropdownProps): [(inst: ICompUIDropdownInst) => void, ICompUIDropdownInst] {
   isInSetup()

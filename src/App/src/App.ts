@@ -3,6 +3,7 @@ import type { App } from 'vue'
 import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'
+import { isDev } from '@/utils/constant/vue'
 
 // function setupErrorhandler(app: App) {
 //   app.config.errorHandler = (error) => {

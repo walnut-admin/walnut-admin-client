@@ -1,5 +1,6 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 import type { RouteRecordRaw } from 'vue-router'
+import { AppAxios } from '@/utils/axios'
 
 const Auth = {
   PWD: '/auth/pwd',

@@ -2,8 +2,9 @@
 import type { InputInst } from 'naive-ui'
 import type { ICompExtraIconPickerProps } from '.'
 
-import { useFormItem } from 'naive-ui/es/_mixins'
+import { mockListApi } from '@/utils/shared'
 
+import { useFormItem } from 'naive-ui/es/_mixins'
 // @ts-expect-error build generated files
 import allIcons from '/build/_generated/icon-list.ts'
 // @ts-expect-error build generated files

@@ -1,3 +1,4 @@
+import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
 export const userAPI = new BaseAPI<AppSystemUser>({

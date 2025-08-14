@@ -4,8 +4,9 @@ import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
-import { defineStore } from 'pinia'
+import { useAppStorage } from '@/utils/persistent/Storage'
 
+import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

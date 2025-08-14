@@ -1,3 +1,4 @@
+import { useAppStorage } from '@/utils/persistent/Storage'
 import axios from 'axios'
 
 export const GeoIPInfo = useAppStorage<Partial<ExternalGeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { usePresetKey: false, expire: Number.POSITIVE_INFINITY })

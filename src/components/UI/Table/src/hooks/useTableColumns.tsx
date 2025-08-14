@@ -8,8 +8,9 @@ import WDictLabel from '@/components/Business/DictLabel'
 import WMessage from '@/components/Extra/Message'
 import WIcon from '@/components/UI/Icon'
 import WIconButton from '@/components/UI/IconButton'
-import { omit } from 'lodash-es'
+import { getBoolean, getFunctionBoolean } from '@/utils/shared'
 
+import { omit } from 'lodash-es'
 import { NA, NDropdown, NTag } from 'naive-ui'
 import { getTableTranslated } from '../utils'
 

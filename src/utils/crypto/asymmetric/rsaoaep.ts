@@ -4,15 +4,10 @@
  * No third-party deps. Designed for browsers.
  *
  * Exports:
- *  - pemToArrayBuffer(pem)
- *  - importRsaPublicKeyFromPem(pem, hash?)
  *  - encryptAesKeyOAEP(aesKey, pemPublicKey, opts?)
- *  - generateAesKeyBytes(length?)
- *  - toBase64(uint8)
- *  - fromBase64(b64)
  */
 
-export type RsaOaepHash = 'SHA-256' | 'SHA-1' | 'SHA-384' | 'SHA-512'
+ type RsaOaepHash = 'SHA-256' | 'SHA-1' | 'SHA-384' | 'SHA-512'
 
 /** Utility: ensure Web Crypto is present */
 function getSubtle(): SubtleCrypto {
@@ -28,7 +23,7 @@ function getSubtle(): SubtleCrypto {
  * - Tolerates extra spaces/CRLFs.
  * - Accepts URL-safe base64 ("-_/" variants) and fixes missing padding.
  */
-export function pemToArrayBuffer(pem: string): ArrayBuffer {
+function pemToArrayBuffer(pem: string): ArrayBuffer {
   if (!pem || typeof pem !== 'string') {
     throw new TypeError('[pemToArrayBuffer] pem must be a non-empty string')
   }
@@ -79,7 +74,7 @@ export function pemToArrayBuffer(pem: string): ArrayBuffer {
  * Import an RSA public key from SPKI PEM for RSA-OAEP.
  * Default hash is SHA-256.
  */
-export async function importRsaPublicKeyFromPem(
+async function importRsaPublicKeyFromPem(
   pem: string,
   hash: RsaOaepHash = 'SHA-256',
 ): Promise<CryptoKey> {
@@ -104,7 +99,7 @@ export async function importRsaPublicKeyFromPem(
   }
 }
 
-export interface EncryptOAEPOptions {
+interface EncryptOAEPOptions {
   /** OAEP hash algorithm, defaults to 'SHA-256' */
   hash?: RsaOaepHash
   /** If true, retry with SHA-1 when SHA-256 import/encrypt fails (compat fallback) */
@@ -156,43 +151,11 @@ export async function encryptAesKeyOAEP(
   return toBase64(u8) // default base64 for transport
 }
 
-/** Generate cryptographically-strong random bytes for AES key material (default 32 bytes). */
-export function generateAesKeyBytes(length = 32): Uint8Array {
-  if (length <= 0)
-    throw new RangeError('[generateAesKeyBytes] length must be > 0')
-  const out = new Uint8Array(length)
-  // Browser crypto RNG
-  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
-    crypto.getRandomValues(out)
-    return out
-  }
-  throw new Error('[generateAesKeyBytes] crypto.getRandomValues is unavailable')
-}
-
 /** Encode Uint8Array → base64 */
-export function toBase64(u8: Uint8Array): string {
+function toBase64(u8: Uint8Array): string {
   let binary = ''
   for (let i = 0; i < u8.length; i++) binary += String.fromCharCode(u8[i])
   return typeof btoa === 'function' ? btoa(binary) : base64Encode(binary)
-}
-
-/** Decode base64 → Uint8Array */
-export function fromBase64(b64: string): Uint8Array {
-  if (!b64)
-    return new Uint8Array()
-  // Accept URL-safe variant and auto-fix padding
-  b64 = b64.replace(/-/g, '+').replace(/_/g, '/')
-  const pad = b64.length % 4
-  if (pad === 2)
-    b64 += '=='
-  else if (pad === 3)
-    b64 += '='
-  else if (pad !== 0)
-    throw new Error('[fromBase64] Invalid base64 length')
-  const binary = typeof atob === 'function' ? atob(b64) : base64Decode(b64)
-  const out = new Uint8Array(binary.length)
-  for (let i = 0; i < binary.length; i++) out[i] = binary.charCodeAt(i)
-  return out
 }
 
 // --- Minimal base64 encode/decode polyfills for non-browser runtimes ---
@@ -215,13 +178,3 @@ function base64Decode(b64: string): string {
   }
   throw new Error('[base64Decode] No atob/Buffer available')
 }
-
-// --- Convenience helper: generate a URL-safe base64 string key (optional) ---
-export function generateAesKeyB64Url(length = 32): string {
-  const u8 = generateAesKeyBytes(length)
-  return toBase64(u8).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '')
-}
-
-// Example usage (pseudo):
-// const aesKey = new TextDecoder().decode(generateAesKeyBytes(32)) // or your own scheme
-// const encryptedB64 = await encryptAesKeyOAEP(aesKey, serverRsaPem, { hash: 'SHA-256' })

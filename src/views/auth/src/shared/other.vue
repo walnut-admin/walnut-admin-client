@@ -2,6 +2,7 @@
 import type { Recordable } from 'easy-fns-ts'
 import { getGiteeURIAPI, getGitHubURIAPI, getWeiboURIAPI } from '@/api/auth/third'
 import { fpId } from '@/App/src/scripts/fingerprint'
+import { openOAuthWindow } from '@/utils/window/open'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({

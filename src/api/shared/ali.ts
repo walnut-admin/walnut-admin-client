@@ -1,3 +1,5 @@
+import { AppAxios } from '@/utils/axios'
+
 /**
  * @description get ali oss sts token from backend
  */

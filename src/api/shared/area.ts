@@ -1,4 +1,5 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
+import { AppAxios } from '@/utils/axios'
 
 // get area children by pcode, default will return province info
 export function getAreaChildrenByPcodeAPI(pcode?: string) {

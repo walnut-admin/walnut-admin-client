@@ -1,4 +1,5 @@
 import type { Recordable } from 'easy-fns-ts'
+import { createAsyncComponent } from '@/utils/factory/asyncComponent'
 import { NDynamicInput, NSlider } from 'naive-ui'
 
 const BUILT_IN_FORM_ITEM_TYPE_UI = [

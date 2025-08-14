@@ -1,4 +1,5 @@
 import type { Router } from 'vue-router'
+import { removeCurrentPageRequests } from '@/utils/axios/adapters/cancel'
 
 const appTab = useAppStoreTab()
 

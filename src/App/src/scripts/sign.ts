@@ -1,4 +1,6 @@
 import { authSignHandShakeAPI, authSignSessionKeyAPI } from '@/api/auth/sign'
+import { encryptAesKeyOAEP } from '@/utils/crypto/asymmetric/rsaoaep'
+import { useAppStorage } from '@/utils/persistent/Storage'
 
 const serverSnRef = useAppStorage<string>(AppConstPersistKey.SERVER_SN, '', { usePresetKey: false, expire: 7 * 24 * 3600 * 1000, encrypt: false })
 const encryptedSessionRef = useAppStorage<string>(AppConstPersistKey.ENCRYPTED_SESSION, '', { usePresetKey: false, expire: 7 * 24 * 3600 * 1000, encrypt: false })

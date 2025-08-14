@@ -1,3 +1,5 @@
+import { base64ToBlob, imgUrlToBase64 } from '@/utils/file/base64'
+
 /**
  * @description Download url resources
  */

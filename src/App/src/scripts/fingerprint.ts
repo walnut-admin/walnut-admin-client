@@ -1,4 +1,5 @@
 import type { BuiltinComponents, UnknownComponents } from '@fingerprintjs/fingerprintjs'
+import { useAppStorage } from '@/utils/persistent/Storage'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { pick } from 'lodash-es'
 

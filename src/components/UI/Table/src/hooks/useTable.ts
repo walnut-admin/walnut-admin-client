@@ -1,4 +1,5 @@
 import type { WTable } from '../types'
+import { isInSetup } from '@/utils/shared'
 
 export function useTable<T>(props: WTable.Hooks.UseTable.Props<T>): WTable.Hooks.UseTable.ReturnType<T> {
   isInSetup()

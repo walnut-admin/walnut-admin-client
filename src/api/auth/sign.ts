@@ -1,3 +1,5 @@
+import { AppAxios } from '@/utils/axios'
+
 const { httpUrl } = useAppEnvProxy()
 
 /**

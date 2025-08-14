@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { WCompExtraAbsImageInst } from '@/components/Extra/AbsImage'
+import { downloadByBase64, downloadByBlob, downloadByUrl } from '@/utils/file/download'
 
 defineOptions({
   name: 'AbsImageDemo',

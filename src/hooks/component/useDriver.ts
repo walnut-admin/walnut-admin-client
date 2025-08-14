@@ -1,4 +1,5 @@
 import type { Driver, DriveStep } from 'driver.js'
+import { getCookie, setCookie } from '@/utils/persistent/Cookie'
 import { driver } from 'driver.js'
 
 export function useDriver(key: string, steps: DriveStep[]) {

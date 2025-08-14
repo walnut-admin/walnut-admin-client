@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IAppAuthorizeProps } from '.'
+import { createAsyncComponent } from '@/utils/factory/asyncComponent'
 
 defineOptions({
   name: 'AppAuthorize',

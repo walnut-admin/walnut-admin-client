@@ -3,6 +3,7 @@ import type {
   SorterMultiple,
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
+import { getBoolean } from '@/utils/shared'
 import { isBaseI18nKey } from '../../../shared'
 
 export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling']

@@ -1,4 +1,6 @@
 import type { LocationQuery, LocationQueryRaw } from 'vue-router'
+import { AppPersistEncryption } from '@/utils/crypto'
+import { watob, wbtoa } from '@/utils/window/base64'
 import qs from 'qs'
 
 export function stringifyQuery(obj: LocationQueryRaw) {

@@ -1,3 +1,4 @@
+import { openExternalLink } from '@/utils/window/open'
 // @ts-expect-error generated file
 import { paths } from '/build/_generated/paths'
 

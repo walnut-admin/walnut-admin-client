@@ -1,5 +1,7 @@
 import { fpId } from '@/App/src/scripts/fingerprint'
 import { GeoIPInfo } from '@/App/src/scripts/geoip'
+import { AppAxios } from '@/utils/axios'
+import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
 export const deviceAPI = new BaseAPI<AppSystemDictType>({

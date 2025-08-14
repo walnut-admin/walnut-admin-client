@@ -1,6 +1,8 @@
 <script lang="tsx" setup  generic="T">
 import type { BaseDataType } from 'easy-fns-ts'
 import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeDict, ICompUIDescTypeLink } from '.'
+import { getBoolean } from '@/utils/shared'
+import { openExternalLink } from '@/utils/window/open'
 import { omit } from 'lodash-es'
 
 defineOptions({

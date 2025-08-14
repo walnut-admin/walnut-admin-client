@@ -1,7 +1,6 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Slots } from 'vue'
 import { forEach, isArray, isPlainObject, isUndefined, set } from 'lodash-es'
-import { renderSlot } from 'vue'
 
 export function getDefaultSlotText(slots: Slots): string {
   const str = (slots.default && slots.default()[0].children) as string
@@ -17,19 +16,27 @@ export function isInSetup() {
     console.error('IsInSetup', 'Hook can only be used in `setup` function!')
 }
 
-export function renderSlots<T extends Recordable>(slots: Slots) {
-  const ret: Record<string, Fn> = {}
-  Object.keys(slots).forEach((slotName) => {
-    ret[slotName] = (scope: T) => renderSlot(slots, slotName, scope)
-  })
-  return ret
-}
-
 // handle undefined to defaultValue
 export const getBoolean = (val: any, df = true) => (isUndefined(val) ? df : val)
 
 // get boolean or return value is boolean
 export const getFunctionBoolean = <T>(val: any, cbParams: T, defaultVal = true) => (isUndefined(val) ? defaultVal : typeof val === 'boolean' ? val : val(cbParams))
+
+/**
+ * @description mock list endpoint
+ */
+export function mockListApi<T>(arr: T[]) {
+  return (params: WalnutBaseListParams) => {
+    const num = params.page?.page || 1
+    const size = params.page?.pageSize || 10
+    const total = arr.length
+
+    return {
+      data: arr.slice((num - 1) * size, (num - 1) * size + size),
+      total,
+    }
+  }
+}
 
 // easy detect device type
 export function detectDeviceType() {
@@ -126,8 +133,4 @@ export function pathsToObject<T extends object, R extends Recordable = T>(pathsO
   })
 
   return result as R
-}
-
-export function generateNonce() {
-  return Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('')
 }

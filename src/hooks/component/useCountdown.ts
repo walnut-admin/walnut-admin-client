@@ -1,3 +1,4 @@
+import { useAppStorage } from '@/utils/persistent/Storage'
 import { StorageSerializers } from '@vueuse/core'
 
 const buttonRetryMapPersistent = useAppStorage<Map<string, number>>(AppConstPersistKey.COUNTDOWN, new Map<string, number>(), { serializer: StorageSerializers.map })

@@ -4,6 +4,7 @@ import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface'
 // TODO 111
 import WIcon from '@/components/UI/Icon'
 
+import { openExternalLink } from '@/utils/window/open'
 import WAvatar from '@/views/account/settings/components/avatar.vue'
 import { homepage, urls } from '~build/package'
 import SwitchRole from './switchRole.vue'

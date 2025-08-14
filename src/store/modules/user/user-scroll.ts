@@ -1,3 +1,4 @@
+import { useAppStorage } from '@/utils/persistent/Storage'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'

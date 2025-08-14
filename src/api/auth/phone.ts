@@ -1,3 +1,5 @@
+import { AppAxios } from '@/utils/axios'
+
 const authPhone = {
   AUTH_PHONE: '/auth/phone',
   AUTH_EMAIL_TEXT_MESSAGE: '/auth/phone/send',

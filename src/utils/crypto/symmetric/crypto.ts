@@ -22,17 +22,17 @@ import CryptoJS from 'crypto-js'
 // · ZeroPadding
 // · NoPadding
 
-export type EncryptionMethod = 'AES' | 'DES' | 'TripleDES' | 'Rabbit' | 'RC4'
-export type EncryptionMode = 'CBC' | 'CFB' | 'CTR' | 'OFB' | 'ECB'
-export type EncryptionPadding =
-  | 'Pkcs7'
-  | 'Iso97971'
-  | 'AnsiX923'
-  | 'Iso10126'
-  | 'ZeroPadding'
-  | 'NoPadding'
+ type EncryptionMethod = 'AES' | 'DES' | 'TripleDES' | 'Rabbit' | 'RC4'
+ type EncryptionMode = 'CBC' | 'CFB' | 'CTR' | 'OFB' | 'ECB'
+ type EncryptionPadding =
+   | 'Pkcs7'
+   | 'Iso97971'
+   | 'AnsiX923'
+   | 'Iso10126'
+   | 'ZeroPadding'
+   | 'NoPadding'
 
-export interface EncryptionOptions {
+interface EncryptionOptions {
   /**
    * @description has to be a string with length of multiple of 4
    * @link https://juejin.cn/post/6844904198677463053

@@ -1,4 +1,5 @@
 import type { EffectScope } from 'vue'
+import { useAppStorage } from '@/utils/persistent/Storage'
 
 export function useTabsPersistent() {
   let scope: EffectScope

@@ -2,11 +2,14 @@
 import type { DropdownOption } from 'naive-ui'
 
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
-
 // TODO 111
 import WIcon from '@/components/UI/Icon'
-import { toJpeg } from 'html-to-image'
 
+import { isDev } from '@/utils/constant/vue'
+import { downloadByBase64 } from '@/utils/file/download'
+
+import { openExternalLink } from '@/utils/window/open'
+import { toJpeg } from 'html-to-image'
 import { getTabsContext } from '../hooks/useTabsContext'
 
 const { t } = useAppI18n()

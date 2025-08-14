@@ -1,4 +1,5 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
+import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
 export const menuAPI = new BaseAPI<AppSystemMenu>({

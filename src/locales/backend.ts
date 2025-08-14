@@ -1,4 +1,5 @@
 import type { Recordable } from 'easy-fns-ts'
+import { AppAxios } from '@/utils/axios'
 
 /**
  * @description get language lists from back end, used for language change

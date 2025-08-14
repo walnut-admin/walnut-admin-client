@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { openExternalLink } from '@/utils/window/open'
+
 defineOptions({
   name: 'UseTable',
 })

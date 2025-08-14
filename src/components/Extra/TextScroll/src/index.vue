@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { ICompExtraTextScrollProps } from '..'
+import { getDefaultSlotText } from '@/utils/shared'
 import TextScrollHorizontal from './Horizontal.vue'
 import TextScrollVertical from './Vertical.vue'
 

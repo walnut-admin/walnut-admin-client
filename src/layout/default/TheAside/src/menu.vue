@@ -3,8 +3,9 @@ import type { MenuOption } from 'naive-ui'
 
 // TODO 111
 import WIcon from '@/components/UI/Icon'
-import { findPath, formatTree } from 'easy-fns-ts'
+import { openExternalLink } from '@/utils/window/open'
 
+import { findPath, formatTree } from 'easy-fns-ts'
 import { omit } from 'lodash-es'
 
 interface MenuMeta {

@@ -1,3 +1,4 @@
+import { createAsyncComponent } from '@/utils/factory/asyncComponent'
 import { AliOSSClient } from './client'
 
 export default createAsyncComponent(async () => {

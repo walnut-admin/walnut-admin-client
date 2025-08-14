@@ -3,11 +3,12 @@ import type { FormRules } from 'naive-ui'
 import type { CSSProperties } from 'vue'
 import type { WForm } from './types'
 
+import { createAsyncComponent } from '@/utils/factory/asyncComponent'
+
 import { omit } from 'lodash-es'
-
 import WFormItem from '../src/components/FormItem/index.vue'
-import { setFormContext } from './hooks/useFormContext'
 
+import { setFormContext } from './hooks/useFormContext'
 import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
 import { useFormSchemas } from './hooks/useFormSchemas'

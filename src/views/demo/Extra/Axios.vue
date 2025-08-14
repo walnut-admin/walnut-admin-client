@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { AxiosRequestConfig } from 'axios'
 import { HelloAPI, HelloWithTokenAPI } from '@/api'
-import { removeAllCancel, removeLatestRequest } from '@/utils/axios/src/adapters'
+import { removeAllCancel, removeLatestRequest } from '@/utils/axios/adapters/cancel'
 
 defineOptions({
   name: 'AxiosDemo',

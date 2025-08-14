@@ -1,5 +1,7 @@
 // TODO 111
 import WIcon from '@/components/UI/Icon'
+import { getCookie, setCookie } from '@/utils/persistent/Cookie'
+import { openExternalLink } from '@/utils/window/open'
 import { homepage } from '~build/package'
 
 export async function useStarOnGithub() {
@@ -15,6 +17,7 @@ export async function useStarOnGithub() {
     setCookie('dontShowStar', val)
   }
 
+  // TODO not working in production?
   const dontShow = getCookie('dontShowStar')
 
   if (dontShow === 'true')

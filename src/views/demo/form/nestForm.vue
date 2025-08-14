@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Recordable } from 'easy-fns-ts'
+import { objectToPaths, pathsToObject } from '@/utils/shared'
 
 defineOptions({
   name: 'NestForm',

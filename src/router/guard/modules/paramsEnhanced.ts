@@ -1,4 +1,6 @@
 import type { Router } from 'vue-router'
+import { AppPersistEncryption } from '@/utils/crypto'
+import { watob, wbtoa } from '@/utils/window/base64'
 
 const ENHANCED_ROUTE_PARAMS_PREFIX = 'ep_'
 

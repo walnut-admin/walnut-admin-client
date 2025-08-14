@@ -1,3 +1,5 @@
+import { AppAxios } from '@/utils/axios'
+
 export namespace IServerInfo {
   export interface CPU {
     cores: number

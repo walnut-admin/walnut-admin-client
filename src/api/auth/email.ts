@@ -1,3 +1,5 @@
+import { AppAxios } from '@/utils/axios'
+
 const authEmail = {
   AUTH_EMAIL: '/auth/email',
   AUTH_EMAIL_SEND: '/auth/email/send',
