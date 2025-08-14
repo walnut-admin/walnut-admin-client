@@ -5,8 +5,7 @@ import { AppRequestEncryption } from '@/utils/crypto'
 import { getBoolean } from '@/utils/shared'
 import { easyTransformObjectStringBoolean } from 'easy-fns-ts'
 import { merge } from 'lodash-es'
-import { generateNonce, setTokenHeaderWithConfig } from '../../utils'
-import { buildSign } from './utils'
+import { buildSign, generateNonce, setTokenHeaderWithConfig } from '../../utils'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
@@ -23,14 +22,16 @@ export function requestInterceptors(config: AxiosRequestConfig) {
   config.headers['x-language'] = appLocale.locale
   config.headers['x-fingerprint'] = fpId.value
 
+  // timestamp & nonce
+  const timestamp = Date.now()
+  const nonce = generateNonce()
+  config.headers['x-timestamp'] = timestamp
+  config.headers['x-nonce'] = nonce
+
   // sign & serial
   const signRef = getSignCache()
-  config.headers['x-sign'] = buildSign(merge(config.params, config.data), signRef.serverSn!, signRef.secret!)
+  config.headers['x-sign'] = buildSign(config, timestamp, nonce)
   config.headers['x-serial'] = signRef.serverSn
-
-  // timestamp & nonce
-  config.headers['x-timestamp'] = Date.now()
-  config.headers['x-nonce'] = generateNonce()
 
   // a request doomed to fail
   if (config._error)

@@ -2,7 +2,7 @@ import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
 const appSetting = {
-  PUBLIC: 'app/setting/public',
+  PUBLIC: '/app/setting/public',
 } as const
 
 export const appSettingAPI = new BaseAPI<AppSettingsModel>({
