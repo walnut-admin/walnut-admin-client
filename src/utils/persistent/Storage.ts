@@ -1,4 +1,6 @@
 import type { Serializer } from '@vueuse/core'
+import { isProd } from '@/utils/constant/vue'
+import { AppPersistEncryption } from '@/utils/crypto'
 import { name, version } from '~build/package'
 
 interface IAppStorageOptions<T> {
@@ -20,7 +22,7 @@ interface IAppStorageData<T> {
   enc: boolean // is encrypted
 }
 
-export const getStorageKey = (key: string) => `${name.toLocaleUpperCase().slice(0, 1)}__${import.meta.env.MODE.slice(0, 3).toLocaleUpperCase()}__${key.replaceAll('-', '_').toLocaleUpperCase()}`
+const getStorageKey = (key: string) => `${name.toLocaleUpperCase().slice(0, 1)}__${import.meta.env.MODE.slice(0, 3).toLocaleUpperCase()}__${key.replaceAll('-', '_').toLocaleUpperCase()}`
 
 export function getStorageRealKey(k: string, presetKey: boolean) {
   return presetKey

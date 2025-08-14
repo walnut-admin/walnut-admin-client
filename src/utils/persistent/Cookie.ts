@@ -1,13 +1,16 @@
+import type { Nullable } from 'easy-fns-ts'
+import { isProd } from '@/utils/constant/vue'
+import { AppPersistEncryption } from '@/utils/crypto'
 import { isString } from 'easy-fns-ts'
 
 const { persist } = useAppEnvSeconds()
 
-export interface CookieOptions {
+interface CookieOptions {
   prefixKey?: string
   encrypt: boolean
 }
 
-export class Cookie {
+class Cookie {
   private prefixKey
   private encrypt
 
@@ -72,4 +75,25 @@ export class Cookie {
       }
     }
   }
+}
+
+const AppCookie = new Cookie({
+  encrypt: isProd(),
+})
+
+/* cookie */
+export function setCookie(key: string, value: any, expire?: number) {
+  AppCookie.set(key, value, expire)
+}
+
+export function getCookie(key: string): Nullable<any> {
+  return AppCookie.get(key)
+}
+
+export function clearCookie() {
+  AppCookie.clear()
+}
+
+export function removeCookie(key: string) {
+  AppCookie.remove(key)
 }
