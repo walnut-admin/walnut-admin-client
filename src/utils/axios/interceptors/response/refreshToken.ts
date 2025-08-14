@@ -1,5 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 import { AppCoreFn1 } from '@/core'
+import { getBoolean } from '@/utils/shared'
+import { AppAxios } from '../..'
 
 // flag to judge if calling refreshing token api
 let isRefreshTokenRefreshing = false

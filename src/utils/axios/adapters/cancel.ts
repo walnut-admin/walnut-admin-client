@@ -1,5 +1,6 @@
 import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
 import { nanoid } from 'nanoid'
+import { buildSortedURL } from '../utils'
 
 /**
  * @description First version use cancel token
@@ -70,7 +71,7 @@ export function removeCurrentPageRequests(path: string) {
   }
 }
 
-export function cancelAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
+export function cancelAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
     const requestId = nanoid(16)
 

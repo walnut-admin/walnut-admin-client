@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
+import { AppAxios } from '../..'
 
 // flag to judge if calling refreshing token api
 let isCapJSTokenRefreshing = false

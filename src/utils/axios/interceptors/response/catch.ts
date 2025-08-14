@@ -1,9 +1,30 @@
+import type { AxiosError } from 'axios'
+import { isCancel } from 'axios'
+
+export async function responseInterceptorsCatch(err: AxiosError) {
+  if (err.message === 'Network Error') {
+    await useAppRouterPush({ name: '500' })
+    return Promise.reject(err)
+  }
+
+  if (isCancel(err))
+    return Promise.reject(err)
+
+  // TODO need to take a look
+  // @ts-expect-error response
+  const statusCode: number = err.response?.data.statusCode
+  // @ts-expect-error response
+  const msg: string = err.response?.data.detail?.message
+  await checkReponseErrorStatus(statusCode, msg)
+
+  return Promise.reject(err)
+}
+
 function responseError(msg: string) {
-  // TODO 93
   useAppNotiError(AppI18n().global?.t(msg))
 }
 
-export async function checkReponseErrorStatus(status?: number, msg?: string) {
+async function checkReponseErrorStatus(status?: number, msg?: string) {
   switch (status) {
     case 400:
       responseError(`${msg}`)

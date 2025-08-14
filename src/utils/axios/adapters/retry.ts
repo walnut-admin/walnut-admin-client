@@ -1,6 +1,7 @@
 import type { AxiosAdapter, AxiosResponse } from 'axios'
+import { BussinessCodeConst } from '../constant'
 
-export function retryAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
+export function retryAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
     const { _retryTimes } = config
 

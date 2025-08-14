@@ -1,3 +1,4 @@
+import { objectToPaths } from '@/utils/shared'
 import CryptoJS from 'crypto-js'
 
 export function buildSign(params: Record<string, any>, serverSn: string, secret: string) {

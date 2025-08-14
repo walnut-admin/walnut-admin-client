@@ -125,12 +125,12 @@ const scheduleMergeRequest = debounce((groupKey: string, group: RequestGroup, or
 }, DEFAULT_DELAY)
 
 /**
- * Axios adapter enhancer that merges multiple requests with same URL and method
+ * Axios adapter that merges multiple requests with same URL and method
  * into a single request by combining parameters with comma-separated values
  * @param adapter Original axios adapter
  * @returns Enhanced adapter with request merging capability
  */
-export function mergeAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
+export function mergeAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config: InternalAxiosRequestConfig) => {
     const { url, method, params, _mergeRequest } = config
 

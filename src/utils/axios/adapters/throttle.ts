@@ -1,5 +1,7 @@
 import type { AxiosAdapter, AxiosPromise, InternalAxiosRequestConfig } from 'axios'
 import { LRUCache } from 'lru-cache'
+import { BussinessCodeConst } from '../constant'
+import { buildSortedURL } from '../utils'
 
 interface RecordedCache {
   timestamp: number
@@ -10,9 +12,9 @@ const { axiosCache: cacheSeconds } = useAppEnvSeconds()
 
 const CACHE_MINUTE = 1000 * cacheSeconds
 const CAPACITY = 100
-const throttleAdapterEnhancerCache = new LRUCache<string, RecordedCache>({ ttl: CACHE_MINUTE, max: CAPACITY })
+const throttleAdapterCache = new LRUCache<string, RecordedCache>({ ttl: CACHE_MINUTE, max: CAPACITY })
 
-export function throttleAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
+export function throttleAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
     const { url, method, params, paramsSerializer, _throttle } = config
 
@@ -22,10 +24,10 @@ export function throttleAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
           try {
             const response = await adapter(config)
             if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS) {
-              throttleAdapterEnhancerCache.delete(index)
+              throttleAdapterCache.delete(index)
             }
             else {
-              throttleAdapterEnhancerCache.set(index, {
+              throttleAdapterCache.set(index, {
                 timestamp: Date.now(),
                 value: Promise.resolve(response),
               })
@@ -33,12 +35,12 @@ export function throttleAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
             return response
           }
           catch (reason) {
-            throttleAdapterEnhancerCache.delete(index)
+            throttleAdapterCache.delete(index)
             throw reason
           }
         })()
 
-        throttleAdapterEnhancerCache.set(index, {
+        throttleAdapterCache.set(index, {
           timestamp: Date.now(),
           value: responsePromise,
         })
@@ -49,7 +51,7 @@ export function throttleAdapterEnhancer(adapter: AxiosAdapter): AxiosAdapter {
       const index = buildSortedURL(url, params, paramsSerializer)
 
       const now = Date.now()
-      const cachedRecord = throttleAdapterEnhancerCache.get(index) || { timestamp: now }
+      const cachedRecord = throttleAdapterCache.get(index) || { timestamp: now }
 
       if (method === 'get') {
         if (now - cachedRecord.timestamp <= _throttle) {
