@@ -10,9 +10,9 @@ export async function setupAppScripts() {
 
   await appGeoIP.setupGeoIP()
 
-  await setupDevice()
-
   await appSign.setupSign()
+
+  await setupDevice()
 
   await setupGoogleAnalytics()
 }
