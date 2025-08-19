@@ -1,8 +1,9 @@
 import { initialDeviceAPI } from '@/api/system/device'
-import { fpId } from '@/App/src/scripts/fingerprint'
+
+const appFingerprint = useAppStoreFingerprint()
 
 export async function setupDevice() {
-  if (fpId.value) {
+  if (appFingerprint.getFingerprint) {
     return
   }
   await initialDeviceAPI()

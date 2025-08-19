@@ -19,9 +19,9 @@ export const AppConstPersistKey = {
   SCROLL: 'SCROLL',
 
   // finger print
-  FP_ID: 'FPID',
+  FINGERPRINT: 'FINGERPRINT',
 
-  // sign
+  // signature
   RSA_PRIVATE_KEY: 'RSA_PRIVATE_KEY',
   RSA_PUBLIC_KEY: 'RSA_PUBLIC_KEY',
   AES_KEY: 'AES_KEY',

@@ -1,5 +1,5 @@
-import { fpId } from '@/App/src/scripts/fingerprint'
+const appFingerprint = useAppStoreFingerprint()
 
 export const AppSocketEvents = {
-  FORCE_QUIT: () => `${fpId.value}/force/quit`,
+  FORCE_QUIT: () => `${appFingerprint.getFingerprint}/force/quit`,
 }

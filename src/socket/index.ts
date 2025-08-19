@@ -1,7 +1,8 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Socket } from 'socket.io-client'
-import { fpId } from '@/App/src/scripts/fingerprint'
 import { io } from 'socket.io-client'
+
+const appFingerprint = useAppStoreFingerprint()
 
 /**
  * @description socket
@@ -33,7 +34,7 @@ class SocketService {
 
     this._socket = io(url, {
       path,
-      query: { fingerprint: fpId.value, accessToken: userAuth.accessToken },
+      query: { fingerprint: appFingerprint.getFingerprint, accessToken: userAuth.accessToken },
     })
 
     this._socket.on('connect', () => {

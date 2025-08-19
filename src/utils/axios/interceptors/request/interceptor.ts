@@ -1,6 +1,4 @@
 import type { AxiosRequestConfig } from 'axios'
-import { fpId } from '@/App/src/scripts/fingerprint'
-import { useAppStoreSign } from '@/store/modules/app/app-sign'
 import { AppRequestEncryption } from '@/utils/crypto'
 import { getBoolean } from '@/utils/shared'
 import { easyTransformObjectStringBoolean } from 'easy-fns-ts'
@@ -10,6 +8,7 @@ import { setTokenHeaderWithConfig } from '../../utils'
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
 const appSign = useAppStoreSign()
+const appFingerprint = useAppStoreFingerprint()
 
 export function requestInterceptors(config: AxiosRequestConfig) {
   const isRequestAfterRefreshedToken = getBoolean(config._request_after_refresh_token, false)
@@ -21,7 +20,10 @@ export function requestInterceptors(config: AxiosRequestConfig) {
 
   // custom headers
   config.headers['x-language'] = appLocale.locale
-  config.headers['x-fingerprint'] = fpId.value
+
+  // fingerprint
+  // assign the x-fingerprint header
+  config.headers['x-fingerprint'] = appFingerprint.axiosReqInterceptorBuildFingerprint(config)
 
   // sign
   // assign the x-sign header/x-timestamp/x-nonce three headers

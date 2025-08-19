@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { Recordable } from 'easy-fns-ts'
 import { getGiteeURIAPI, getGitHubURIAPI, getWeiboURIAPI } from '@/api/auth/third'
-import { fpId } from '@/App/src/scripts/fingerprint'
 import { openOAuthWindow } from '@/utils/window/open'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -13,6 +12,7 @@ defineOptions({
 const { t } = useAppI18n()
 const userAuth = useAppStoreUserAuth()
 const appBackendSettings = useAppStoreSettingBackend()
+const appFingerprint = useAppStoreFingerprint()
 const { loading } = useAuthContext()
 
 let childWindow: Window | null
@@ -50,7 +50,7 @@ async function onOAuth(type: string) {
   const { httpUrl } = useAppEnvProxy()
 
   const eventSource = new EventSource(
-    `${httpUrl}/auth/oauth/${type}/sse/${fpId.value}`,
+    `${httpUrl}/auth/oauth/${type}/sse/${appFingerprint.getFingerprint}`,
     { withCredentials: true },
   )
 

@@ -1,4 +1,3 @@
-import { useAppStoreSign } from '@/store/modules/app/app-sign'
 import { SingletonPromise } from '@/utils/queue'
 
 const appSign = useAppStoreSign()

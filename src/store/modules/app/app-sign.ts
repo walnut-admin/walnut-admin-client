@@ -2,7 +2,7 @@ import type { AxiosRequestConfig } from 'axios'
 import { authSignHandShakeAPI, authSignSessionKeyAPI } from '@/api/auth/sign'
 import { AxiosQsParamsSerializer } from '@/utils/axios/core/config'
 import { generateNonce } from '@/utils/axios/utils'
-import { decryptWithPrivateKey, generateRSAKeyPair } from '@/utils/crypto/asymmetric/rsaoaep2'
+import { decryptWithPrivateKey, generateRSAKeyPair } from '@/utils/crypto/asymmetric/rsaoaep'
 import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
 import { useAppStorage2 } from '@/utils/persistent/storage2'
 import { objectToPaths } from '@/utils/shared'
@@ -37,23 +37,24 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
 
   actions: {
     async setupSign() {
-      if (!this.getPrivateKey || !this.getPublicKey) {
-        // setup RSA keypair
-        const keyPair = await generateRSAKeyPair()
-        this.privateKey = keyPair?.privateKey as string
-        this.publicKey = keyPair?.publicKey as string
+      if (this.getPrivateKey && this.getPublicKey)
+        return
 
-        // call handshake API to save rsa pub key in backend redis
-        await authSignHandShakeAPI(this.getPublicKey)
+      // setup RSA keypair
+      const keyPair = await generateRSAKeyPair()
+      this.privateKey = keyPair?.privateKey as string
+      this.publicKey = keyPair?.publicKey as string
 
-        // get encrypted session key
-        const res = await authSignSessionKeyAPI()
+      // call handshake API to save rsa pub key in backend redis
+      await authSignHandShakeAPI(this.getPublicKey)
 
-        // decrypt session key with private key
-        const realAesKey = await decryptWithPrivateKey(this.getPrivateKey, res.encryptedAes)
+      // get encrypted session key
+      const res = await authSignSessionKeyAPI()
 
-        this.aesKey = realAesKey
-      }
+      // decrypt session key with private key
+      const realAesKey = await decryptWithPrivateKey(this.getPrivateKey, res.encryptedAes)
+
+      this.aesKey = realAesKey
     },
 
     async refreshAesKey() {
@@ -106,10 +107,10 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
         `ua=${ua}`,
       ].join('|')
 
-      if (!this.aesKey)
+      if (!this.getAesKey)
         return 'expired-key'
 
-      return CryptoJS.HmacSHA256(raw, this.aesKey).toString()
+      return CryptoJS.HmacSHA256(raw, this.getAesKey).toString()
     },
   },
 })

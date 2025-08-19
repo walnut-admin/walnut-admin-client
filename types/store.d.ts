@@ -82,6 +82,13 @@ declare global {
   }
 
   /**
+   * App fingerprint state
+   */
+  interface IAppStoreFingerprint {
+    fingerprint: Ref<string | null>
+  }
+
+  /**
    * App force quit state
    */
   interface IAppStoreForceQuit {
