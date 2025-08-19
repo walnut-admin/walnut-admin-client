@@ -1,5 +1,5 @@
 import type { EffectScope } from 'vue'
-import { useAppStorage } from '@/utils/persistent/Storage'
+import { useAppStorage2 } from '@/utils/persistent/storage2'
 
 export function useTabsPersistent() {
   let scope: EffectScope
@@ -14,10 +14,9 @@ export function useTabsPersistent() {
         scope = effectScope()
 
         scope.run(() => {
-          const _storaged_tabs = useAppStorage<AppTab[]>(
+          const _storaged_tabs = useAppStorage2<AppTab[]>(
             AppConstPersistKey.TABS,
             appTab.tabs,
-            { expire: Infinity },
           )
 
           watch(
@@ -31,7 +30,7 @@ export function useTabsPersistent() {
           )
 
           tryOnMounted(() => {
-            if (_storaged_tabs.value.length)
+            if (_storaged_tabs.value?.length)
               appTab.tabs = _storaged_tabs.value
           })
 

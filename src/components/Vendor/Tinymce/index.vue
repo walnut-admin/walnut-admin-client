@@ -34,7 +34,7 @@ const getSkinName = computed(() =>
   isDark.value ? 'tinymce-5-dark' : 'tinymce-5',
 )
 
-const getLangName = computed(() => appLocale.locale)
+const getLangName = computed(() => appLocale.locale!)
 
 const tinymceOptions = computed((): RawEditorOptions => {
   return {

@@ -31,7 +31,7 @@ export function useAppLocale() {
   }
 
   watchEffect(async () => {
-    await loadLocaleMessages(appLocale.locale)
-    setI18nLanguage(appLocale.locale)
+    await loadLocaleMessages(appLocale.getLocale)
+    setI18nLanguage(appLocale.getLocale)
   })
 }

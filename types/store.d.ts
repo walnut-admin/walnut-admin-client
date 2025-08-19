@@ -68,7 +68,7 @@ declare global {
    * App locale state
    */
   interface IAppStoreLocale {
-    locale: RemovableRef<ValueOfAppConstLocale>
+    locale: Ref<ValueOfAppConstLocale | null>
   }
 
   /**
@@ -92,7 +92,7 @@ declare global {
    * App force quit state
    */
   interface IAppStoreForceQuit {
-    modalShow: RemovableRef<boolean>
+    modalShow: Ref<boolean | null>
     forceQuitComponent: null | string
     quitButton: boolean
   }
@@ -108,8 +108,8 @@ declare global {
    * App lock state
    */
   interface IAppStoreLock {
-    isLock: RemovableRef<boolean>
-    lockRoute: RemovableRef<AppLockRoute>
+    isLock: Ref<boolean | null>
+    lockRoute: Ref<AppLockRoute | null>
   }
 
   /**
@@ -208,8 +208,8 @@ declare global {
    * User auth state
    */
   interface IUserStoreAuth {
-    accessToken?: RemovableRef<string>
-    remember?: RemovableRef<Omit<AppPayloadAuth.Password, 'rememberMe'>>
+    accessToken?: Ref<string | null>
+    remember?: Ref<Partial<Omit<AppPayloadAuth.Password, 'rememberMe'>> | null>
   }
 
   /**
@@ -220,7 +220,7 @@ declare global {
   }
 
   interface IUserStoreScroll {
-    scrollEntries: RemovableRef<[string, { top: number, left?: number }][]>
+    scrollEntries: Ref<[string, { top: number, left?: number }][] | null>
   }
 }
 

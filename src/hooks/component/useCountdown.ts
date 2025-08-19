@@ -1,7 +1,7 @@
-import { useAppStorage } from '@/utils/persistent/Storage'
-import { StorageSerializers } from '@vueuse/core'
+import { useAppStorage2 } from '@/utils/persistent/storage2'
 
-const buttonRetryMapPersistent = useAppStorage<Map<string, number>>(AppConstPersistKey.COUNTDOWN, new Map<string, number>(), { serializer: StorageSerializers.map })
+// TODO bug timer should in storage
+const buttonRetryMapPersistent = useAppStorage2<Map<string, number>>(AppConstPersistKey.COUNTDOWN, new Map<string, number>())
 
 export function useCountdown({ persistKey, persistSeconds = 60, onCountdownComplete }: { persistKey?: string, persistSeconds?: number, onCountdownComplete?: () => void }) {
   const { t } = useAppI18n()
@@ -12,13 +12,13 @@ export function useCountdown({ persistKey, persistSeconds = 60, onCountdownCompl
   const getPersistSeconds = computed<number>({
     get() {
       if (persistKey) {
-        return buttonRetryMapPersistent.value.get(persistKey)!
+        return buttonRetryMapPersistent.value?.get(persistKey) as number
       }
       return _intervalSeconds.value!
     },
     set(newValue) {
       if (persistKey) {
-        buttonRetryMapPersistent.value.set(persistKey, newValue ?? persistSeconds)
+        buttonRetryMapPersistent.value?.set(persistKey, newValue ?? persistSeconds)
       }
       else {
         _intervalSeconds.value = newValue
@@ -39,7 +39,7 @@ export function useCountdown({ persistKey, persistSeconds = 60, onCountdownCompl
       retryText.value = undefined
 
       if (persistKey) {
-        buttonRetryMapPersistent.value.set(persistKey, persistSeconds)
+        buttonRetryMapPersistent.value?.set(persistKey, persistSeconds)
       }
       else {
         _intervalSeconds.value = persistSeconds
@@ -60,7 +60,7 @@ export function useCountdown({ persistKey, persistSeconds = 60, onCountdownCompl
         }
       }
       else {
-        buttonRetryMapPersistent.value.set(persistKey, persistSeconds)
+        buttonRetryMapPersistent.value?.set(persistKey, persistSeconds)
       }
     }
   })

@@ -27,7 +27,7 @@ async function onForceQuit() {
 
 <template>
   <WModal
-    v-model:show="appForcequit.modalShow"
+    v-model:show="appForcequit.modalShow!"
     :close-on-esc="false"
     :closable="false"
     :mask-closable="false"

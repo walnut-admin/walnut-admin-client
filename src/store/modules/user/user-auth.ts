@@ -4,18 +4,20 @@ import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
-import { useAppStorage } from '@/utils/persistent/Storage'
 
+import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
+import { useAppStorage2 } from '@/utils/persistent/storage2'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): IUserStoreAuth => ({
-    accessToken: useAppStorage(AppConstPersistKey.ACCESS_TOKEN, ''),
-    remember: useAppStorage(AppConstPersistKey.REMEMBER, {
+    accessToken: useAppStorage2(AppConstPersistKey.ACCESS_TOKEN, '', { storage: enhancedBase64LocalStorage }),
+    remember: useAppStorage2(AppConstPersistKey.REMEMBER, {
       userName: '',
       password: '',
+      // TODO password storage enhance
     }),
   }),
 

@@ -2,7 +2,7 @@ import { isProd } from '@/utils/constant/vue'
 import { AppPersistEncryption } from '@/utils/crypto'
 import { compare } from 'compare-versions'
 import { version } from '~build/package'
-import { getStorageRealKey } from './Storage'
+import { getStorageKey } from './storage2'
 
 // TODO fetch from api
 const migrations: Record<string, { key: string, action: 'remove' | 'update', newValue?: string }[]> = {
@@ -75,7 +75,7 @@ export function setupStorageMigrations() {
 
       // Apply rule for both preset and non-preset keys
       for (const usePreset of [true, false]) {
-        const realKey = getStorageRealKey(originalKey, usePreset)
+        const realKey = usePreset ? getStorageKey(originalKey) : originalKey
 
         // Apply rule for both localStorage and sessionStorage
         for (const storage of [localStorage, sessionStorage]) {

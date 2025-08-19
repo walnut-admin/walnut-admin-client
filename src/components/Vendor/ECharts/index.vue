@@ -21,7 +21,7 @@ const appSettings = useAppStoreSetting()
 const getSkinName = computed(() => (isDark.value ? 'dark' : undefined))
 
 const getLangName = computed(() =>
-  appLocale.locale.split('_')[0].toUpperCase(),
+  appLocale.getLocale.split('_')[0].toUpperCase(),
 )
 
 useEventListener('resize', () => {
