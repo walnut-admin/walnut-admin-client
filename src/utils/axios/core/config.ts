@@ -6,6 +6,10 @@ const { axiosTimeout: axiosTimeoutSeconds } = useAppEnvSeconds()
 
 const { httpUrl } = useAppEnvProxy()
 
+export function AxiosQsParamsSerializer(params: any) {
+  return qs.stringify(params, { arrayFormat: 'comma' })
+}
+
 export const originalConfig: AxiosRequestConfig = {
   baseURL: httpUrl,
 
@@ -14,7 +18,7 @@ export const originalConfig: AxiosRequestConfig = {
   paramsSerializer: {
     // default, string array use comma to join into string
     // ['a', 'b'] => 'a,b'
-    serialize: params => qs.stringify(params, { arrayFormat: 'comma' }),
+    serialize: AxiosQsParamsSerializer,
   },
 
   // time out, default is 10s
