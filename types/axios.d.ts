@@ -35,13 +35,6 @@ declare module 'axios' {
     _autoDecryptResponseData?: booloean
 
     /**
-     * auto encrypt request data with `crypto-js`
-     * specfic the fields wanna encrypt
-     * only for shallow use and request data (mostly POST)
-     */
-    _autoEncryptRequestDataFields?: string[]
-
-    /**
      * cache flag
      * optimised from https://github.com/kuitos/axios-extensions
      */

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { resetPassowrdAPI, updatePassowrdAPI, userAPI } from '@/api/system/user'
+import { AppRequestEncryption } from '@/utils/crypto'
 
 defineOptions({
   name: 'User',
@@ -317,7 +318,10 @@ const [
 
 async function onYes(_: any, done: () => void) {
   try {
-    await updatePassowrdAPI(updatePasswordFormData.value)
+    await updatePassowrdAPI({
+      userId: updatePasswordFormData.value.userId,
+      newPassword: AppRequestEncryption.encrypt(updatePasswordFormData.value.newPassword)!,
+    })
     useAppMsgSuccess()
     resetPasswordFormData()
     await onApiList()

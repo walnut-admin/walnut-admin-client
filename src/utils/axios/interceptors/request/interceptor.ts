@@ -1,8 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
-import { AppRequestEncryption } from '@/utils/crypto'
 import { getBoolean } from '@/utils/shared'
 import { easyTransformObjectStringBoolean } from 'easy-fns-ts'
-import { merge } from 'lodash-es'
 import { setTokenHeaderWithConfig } from '../../utils'
 
 const userAuth = useAppStoreUserAuth()
@@ -61,18 +59,6 @@ export function requestInterceptors(config: AxiosRequestConfig) {
   // and this request is not the one after refresh token
   if (config._transformStringBoolean && bodyData)
     config.data = easyTransformObjectStringBoolean(bodyData)
-
-  // auto encrypt body data(post)
-  if (config?._autoEncryptRequestDataFields && config._autoEncryptRequestDataFields.length !== 0 && bodyData) {
-    const cryptedObj = Object.fromEntries(
-      config._autoEncryptRequestDataFields.map(key => [
-        key,
-        AppRequestEncryption.encrypt(bodyData[key]),
-      ]),
-    )
-
-    config.data = merge(bodyData, cryptedObj)
-  }
 
   return config
 }
