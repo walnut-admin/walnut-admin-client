@@ -1,9 +1,9 @@
-import { GeoIPInfo } from '@/App/src/scripts/geoip'
 import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
 const appFingerprint = useAppStoreFingerprint()
+const appGeoIP = useAppStoreGeoIP()
 
 export const deviceAPI = new BaseAPI<AppSystemDictType>({
   model: 'system',
@@ -32,21 +32,21 @@ export async function initialDeviceAPI() {
         memory: getMemoryGB(),
         gpu: await getGPUArchitecture(),
       },
-      ipHistory: [GeoIPInfo.value.ip],
+      ipHistory: [appGeoIP.getGeoInfo.ip],
       geoLocation: {
         type: 'Point',
-        coordinates: [GeoIPInfo.value.longitude, GeoIPInfo.value.latitude],
+        coordinates: [appGeoIP.getGeoInfo.longitude, appGeoIP.getGeoInfo.latitude],
       },
       deviceInfo: {
         // @ts-expect-error https://developer.mozilla.org/zh-CN/docs/Web/API/NetworkInformation/effectiveType
         netType: navigator.connection?.effectiveType,
         platform: navigator.platform,
-        isp: GeoIPInfo.value.isp,
+        isp: appGeoIP.getGeoInfo.isp,
       },
       locationInfo: {
-        country: GeoIPInfo.value.country,
-        city: GeoIPInfo.value.city,
-        region: GeoIPInfo.value.region,
+        country: appGeoIP.getGeoInfo.country,
+        city: appGeoIP.getGeoInfo.city,
+        region: appGeoIP.getGeoInfo.region,
       },
     } as AppSystemDevice,
   })

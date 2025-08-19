@@ -98,6 +98,13 @@ declare global {
   }
 
   /**
+   * App geo ip state
+   */
+  interface IAppStoreGeoIP {
+    geoInfo: Ref<Partial<ExternalGeoIPInfo> | null>
+  }
+
+  /**
    * App lock state
    */
   interface IAppStoreLock {

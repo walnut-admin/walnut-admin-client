@@ -3,7 +3,6 @@ import type { CountryCode } from 'libphonenumber-js'
 import type { SelectMixedOption } from 'naive-ui/lib/select/src/interface'
 import type { VNodeChild } from 'vue'
 import type { ICompExtraCountryCallingSelectOption, ICompExtraCountryCallingSelectProps } from '.'
-import { GeoIPInfo } from '@/App/src/scripts/geoip'
 import options from './data'
 import './icon.css'
 
@@ -18,6 +17,7 @@ const value = defineModel<CountryCode>('value', { required: true })
 const { t } = useAppI18n()
 const { isOnline } = useSharedNetwork()
 const { language } = useSharedNavigatorLanguage()
+const appGeoIP = useAppStoreGeoIP()
 
 const loading = ref(false)
 
@@ -69,7 +69,7 @@ watch(() => [autoDefaultCountry, isOnline.value, language.value], async () => {
     if (isOnline.value) {
       loading.value = true
       try {
-        value.value = GeoIPInfo.value.country_code as CountryCode
+        value.value = appGeoIP.getGeoInfo.country_code as CountryCode
       }
       finally {
         loading.value = false
