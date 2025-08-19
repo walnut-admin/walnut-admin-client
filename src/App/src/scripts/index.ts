@@ -1,8 +1,10 @@
+import { useAppStoreSign } from '@/store/modules/app/app-sign'
 import { setupGoogleAnalytics } from './analytics'
 import { setupDevice } from './device'
 import { setupFingerprint } from './fingerprint'
 import { setupGeoIP } from './geoip'
-import { setupSign } from './sign'
+
+const appSign = useAppStoreSign()
 
 export async function setupAppScripts() {
   await setupFingerprint()
@@ -11,7 +13,7 @@ export async function setupAppScripts() {
 
   await setupDevice()
 
-  await setupSign()
+  await appSign.setupSign()
 
   await setupGoogleAnalytics()
 }

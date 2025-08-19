@@ -31,7 +31,7 @@ declare global {
     }
 
     interface SignSessionKeyPayload {
-      encrypted_session: string
+      encryptedAes: string
     }
   }
 

@@ -22,8 +22,9 @@ export const AppConstPersistKey = {
   FP_ID: 'FPID',
 
   // sign
-  SERVER_SN: 'SERVER_SN',
-  ENCRYPTED_SESSION: 'ENCRYPTED_SESSION',
+  RSA_PRIVATE_KEY: 'RSA_PRIVATE_KEY',
+  RSA_PUBLIC_KEY: 'RSA_PUBLIC_KEY',
+  AES_KEY: 'AES_KEY',
 
   // geo ip info, fetch from EXTERNAL_LINKS.GEOIP
   GEO_IP_INFO: 'GEO_IP_INFO',

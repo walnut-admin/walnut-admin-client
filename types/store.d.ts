@@ -152,6 +152,15 @@ declare global {
     footer: AppSettingsForFooter
   }
 
+  /**
+   * App Sign state
+   */
+  interface IAppStoreSign {
+    publicKey: Ref<string | null>
+    privateKey: Ref<string | null>
+    aesKey: Ref<string | null>
+  }
+
   type IAppTabIframe = Pick<AppSystemMenu, 'name'> & Pick<AppSystemMenuMeta, 'cache' | 'url'>
 
   /**

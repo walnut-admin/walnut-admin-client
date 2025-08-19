@@ -1,14 +1,15 @@
 import type { AxiosRequestConfig } from 'axios'
 import { fpId } from '@/App/src/scripts/fingerprint'
-import { getSignCache } from '@/App/src/scripts/sign'
+import { useAppStoreSign } from '@/store/modules/app/app-sign'
 import { AppRequestEncryption } from '@/utils/crypto'
 import { getBoolean } from '@/utils/shared'
 import { easyTransformObjectStringBoolean } from 'easy-fns-ts'
 import { merge } from 'lodash-es'
-import { buildSign, generateNonce, setTokenHeaderWithConfig } from '../../utils'
+import { setTokenHeaderWithConfig } from '../../utils'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
+const appSign = useAppStoreSign()
 
 export function requestInterceptors(config: AxiosRequestConfig) {
   const isRequestAfterRefreshedToken = getBoolean(config._request_after_refresh_token, false)
@@ -22,16 +23,9 @@ export function requestInterceptors(config: AxiosRequestConfig) {
   config.headers['x-language'] = appLocale.locale
   config.headers['x-fingerprint'] = fpId.value
 
-  // timestamp & nonce
-  const timestamp = Date.now()
-  const nonce = generateNonce()
-  config.headers['x-timestamp'] = timestamp
-  config.headers['x-nonce'] = nonce
-
-  // sign & serial
-  const signRef = getSignCache()
-  config.headers['x-sign'] = buildSign(config, timestamp, nonce)
-  config.headers['x-serial'] = signRef.serverSn
+  // sign
+  // assign the x-sign header/x-timestamp/x-nonce three headers
+  config.headers['x-sign'] = appSign.axiosReqInterceptorBuildSign(config)
 
   // a request doomed to fail
   if (config._error)
