@@ -77,14 +77,9 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
 
       const ua = navigator.userAgent
 
-      // axios transformRequest would transform config.data to string
-      // so without change axios,
-      // we need to parse it to object
-      const bodyData = typeof config.data === 'string' ? JSON.parse(config.data) : config.data
-
       // transform bodyData to flat object
       // e.g. { a: { b: 1, c: 2 } } => { 'a.b': 1, 'a.c': 2 }
-      const flatternObj = objectToPaths(bodyData ?? {})
+      const flatternObj = objectToPaths(config.data ?? {})
 
       // sort the flattern object
       // and join with &

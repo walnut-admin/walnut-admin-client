@@ -11,12 +11,15 @@ const appSign = useAppStoreSign()
 const appFingerprint = useAppStoreFingerprint()
 
 export function requestInterceptors(config: AxiosRequestConfig) {
-  const isRequestAfterRefreshedToken = getBoolean(config._request_after_refresh_token, false)
-
   // avoid use ! below for ts
   if (!config.headers) {
     config.headers = {}
   }
+
+  // axios transformRequest would transform config.data to string
+  // since we have singleton promise in response interceptor, some requests would re-sent again after singleton promise resolved
+  // config.data below would be a string, so we need to parse it to object
+  const bodyData = typeof config.data === 'string' ? JSON.parse(config.data) : config.data
 
   // custom headers
   config.headers['x-language'] = appLocale.locale
@@ -42,7 +45,7 @@ export function requestInterceptors(config: AxiosRequestConfig) {
     userAuth.accessToken && setTokenHeaderWithConfig(config, userAuth.accessToken)
 
   // add timestamp
-  if (config._timestamp && !isRequestAfterRefreshedToken) {
+  if (config._timestamp) {
     if (config.params) {
       config.params = Object.assign(config.params, { t: Date.now() })
     }
@@ -56,19 +59,19 @@ export function requestInterceptors(config: AxiosRequestConfig) {
   // transform "true"/"false" to true/false
   // when config.data exists
   // and this request is not the one after refresh token
-  if (config._transformStringBoolean && config.data && !isRequestAfterRefreshedToken)
-    config.data = easyTransformObjectStringBoolean(config.data)
+  if (config._transformStringBoolean && bodyData)
+    config.data = easyTransformObjectStringBoolean(bodyData)
 
   // auto encrypt body data(post)
-  if (config?._autoEncryptRequestDataFields && config._autoEncryptRequestDataFields.length !== 0 && config.data && !isRequestAfterRefreshedToken) {
+  if (config?._autoEncryptRequestDataFields && config._autoEncryptRequestDataFields.length !== 0 && bodyData) {
     const cryptedObj = Object.fromEntries(
       config._autoEncryptRequestDataFields.map(key => [
         key,
-        AppRequestEncryption.encrypt(config.data[key]),
+        AppRequestEncryption.encrypt(bodyData[key]),
       ]),
     )
 
-    config.data = merge(config.data, cryptedObj)
+    config.data = merge(bodyData, cryptedObj)
   }
 
   return config

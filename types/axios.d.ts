@@ -71,15 +71,6 @@ declare module 'axios' {
     _mergeRequest?: boolean
 
     /**
-     * flag for the request(s) after excute the refresh token
-     * mostly adapt for transformed request data/params
-     * which should not excute part of the request interceptor again
-     * cause the data/params has already beed transformed in the first request that return access token expired
-     * see more in axios folder
-     */
-    _request_after_refresh_token?: boolean
-
-    /**
      * request from which page, used for cancel requests in one page
      */
     _request_from_route_path?: string
