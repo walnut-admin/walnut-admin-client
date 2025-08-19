@@ -7,6 +7,8 @@ export const BussinessCodeConst = {
 
   CAPJS_TOKEN_EXPIRED: 40111,
 
+  SIGNATURE_EXPIRED: 40113,
+
   PERMISSION_DENIED: 40105,
 
   DEVICE_NOT_ALLOWED: 40605,
@@ -32,6 +34,7 @@ export const errorCodeList = [
   40110,
   40111,
   40112,
+  40113,
   40300,
   40400,
   40401,

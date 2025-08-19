@@ -1,9 +1,11 @@
 import type { AxiosResponse } from 'axios'
 import { AppResponseEncryption } from '@/utils/crypto'
+import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
 import { BussinessCodeConst, errorCodeList } from '../../constant'
-import { RefreshCapJSTokenLogic } from './capJSToken'
-import { RefreshTokenLogic } from './refreshToken'
+import { SingletonPromiseCapJSToken } from './capJSToken'
+import { SingletonPromiseRefreshToken } from './refreshToken'
+import { SingletonPromiseSign } from './sign'
 
 const userAuth = useAppStoreUserAuth()
 
@@ -23,15 +25,20 @@ export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponse
   // cap js token refresh (front end only and invisible mode)
   // https://capjs.js.org/guide/invisible.html
   if (code === BussinessCodeConst.CAPJS_TOKEN_EXPIRED) {
-    const config = res.config
-    return await RefreshCapJSTokenLogic(config)
+    await SingletonPromiseCapJSToken()
+    return await AppAxios.request(res.config)
   }
 
   // when access token is expired, call refresh token api to get new token
   if (code === BussinessCodeConst.ACCESS_TOKEN_EXPIRED) {
-    const config = res.config
-    // TODO router push too fast, which means last page going on requesting, then go to another page, will cause fake death of page
-    return await RefreshTokenLogic(config)
+    await SingletonPromiseRefreshToken(res.config)
+    return await AppAxios.request(res.config)
+  }
+
+  // when signature is expired, call session key api to get new aes key
+  if (code === BussinessCodeConst.SIGNATURE_EXPIRED) {
+    await SingletonPromiseSign()
+    return await AppAxios.request(res.config)
   }
 
   // refresh token is expired, so this user need to signout and re-signin
