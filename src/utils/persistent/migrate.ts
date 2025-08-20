@@ -2,7 +2,7 @@ import { isProd } from '@/utils/constant/vue'
 import { AppPersistEncryption } from '@/utils/crypto'
 import { compare } from 'compare-versions'
 import { version } from '~build/package'
-import { getStorageKey } from './storage2'
+import { getStorageKey } from './shared'
 
 // TODO fetch from api
 const migrations: Record<string, { key: string, action: 'remove' | 'update', newValue?: string }[]> = {

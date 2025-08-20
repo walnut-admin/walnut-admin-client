@@ -1,7 +1,7 @@
-import { name, version } from '~build/package'
+import { version } from '~build/package'
+import { getStorageKey } from './shared'
 
-export const getStorageKey = (key: string) => `${name.toLocaleUpperCase().slice(0, 1)}__${import.meta.env.MODE.slice(0, 3).toLocaleUpperCase()}__${key.replaceAll('-', '_').toLocaleUpperCase()}`
-
+// TODO REMOVE THIS AND USE useAppStorageSync/useAppStorageAsync
 interface IUseAppStorageOptions {
   /* expire time（milliseconds），Infinity means never expire, default Infinity */
   expire?: number
@@ -31,7 +31,7 @@ export function useAppStorage2<T>(
   const realKey = usePresetKey ? getStorageKey(key) : key
 
   // read from storage and check expiration
-  function read(): T | null {
+  function read() {
     const raw = storage.getItem(realKey)
     if (raw === null)
       return null
@@ -59,15 +59,14 @@ export function useAppStorage2<T>(
   }
 
   return customRef<T | null>((track, trigger) => {
-    /* ---------- initialization ---------- */
     let cached = read()
+
     // first time: storage is empty
     if (cached === null) {
       write(initialValue)
       cached = initialValue
     }
 
-    /* ---------- custom ref ---------- */
     return {
       get() {
         track()
