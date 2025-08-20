@@ -75,6 +75,7 @@
     "echarts": "5.6.0",
     "highlight.js": "11.11.1",
     "html-to-image": "1.11.13",
+    "idb": "8.0.3",
     "libphonenumber-js": "1.12.7",
     "lodash-es": "4.17.21",
     "lru-cache": "11.1.0",
