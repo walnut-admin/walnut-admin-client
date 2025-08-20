@@ -10,27 +10,35 @@ const getKeepAliveInclude = computed(() => {
 </script>
 
 <template>
-  <router-view v-slot="{ Component, route }">
-    <WTransition v-if="appSetting.getTransition" :transition-name="appSetting.getTransition" mode="out-in" appear>
-      <keep-alive
-        v-if="appSetting.app.keepAlive"
-        :include="getKeepAliveInclude"
-      >
-        <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
-      </keep-alive>
+  <Suspense>
+    <template #default>
+      <router-view v-slot="{ Component, route }">
+        <WTransition v-if="appSetting.getTransition" :transition-name="appSetting.getTransition" mode="out-in" appear>
+          <keep-alive
+            v-if="appSetting.app.keepAlive"
+            :include="getKeepAliveInclude"
+          >
+            <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
+          </keep-alive>
 
-      <component :is="Component" v-else :key="route.fullPath" />
-    </WTransition>
+          <component :is="Component" v-else :key="route.fullPath" />
+        </WTransition>
 
-    <template v-else>
-      <keep-alive
-        v-if="appSetting.app.keepAlive"
-        :include="getKeepAliveInclude"
-      >
-        <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
-      </keep-alive>
+        <template v-else>
+          <keep-alive
+            v-if="appSetting.app.keepAlive"
+            :include="getKeepAliveInclude"
+          >
+            <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
+          </keep-alive>
 
-      <component :is="Component" v-else :key="route.fullPath" />
+          <component :is="Component" v-else :key="route.fullPath" />
+        </template>
+      </router-view>
     </template>
-  </router-view>
+
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
+  </Suspense>
 </template>
