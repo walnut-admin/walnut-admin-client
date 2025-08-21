@@ -14,11 +14,11 @@ import { store } from '../../pinia'
 const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
   state: (): IAppStoreSign => ({
     // 30 days
-    publicKey: useAppStorage2<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 3600 * 1000, storage: enhancedBase64LocalStorage }),
+    publicKey: useAppStorage2<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 3600 * 1000, storage: enhancedBase64LocalStorage() }),
     // 30 days
-    privateKey: useAppStorage2<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 3600 * 1000, storage: enhancedBase64LocalStorage }),
+    privateKey: useAppStorage2<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 3600 * 1000, storage: enhancedBase64LocalStorage() }),
     // 15 minutes
-    aesKey: useAppStorage2<string>(AppConstPersistKey.AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage }),
+    aesKey: useAppStorage2<string>(AppConstPersistKey.AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
   }),
 
   getters: {
@@ -77,9 +77,12 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
 
       const ua = navigator.userAgent
 
+      // fix request again would cause sign `config.data` error
+      const bodyData = typeof config.data === 'string' ? JSON.parse(config.data) : config.data
+
       // transform bodyData to flat object
       // e.g. { a: { b: 1, c: 2 } } => { 'a.b': 1, 'a.c': 2 }
-      const flatternObj = objectToPaths(config.data ?? {})
+      const flatternObj = objectToPaths(bodyData ?? {})
 
       // sort the flattern object
       // and join with &
@@ -102,10 +105,12 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
         `ua=${ua}`,
       ].join('|')
 
-      if (!this.getAesKey)
-        return 'expired-key'
-
-      return CryptoJS.HmacSHA256(raw, this.getAesKey).toString()
+      try {
+        return CryptoJS.HmacSHA256(raw, this.getAesKey).toString()
+      }
+      catch (error) {
+        console.log(error)
+      }
     },
   },
 })

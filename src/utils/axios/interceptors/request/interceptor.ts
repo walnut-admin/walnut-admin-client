@@ -1,6 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
 import { getBoolean } from '@/utils/shared'
-import { easyTransformObjectStringBoolean } from 'easy-fns-ts'
 import { setTokenHeaderWithConfig } from '../../utils'
 
 const userAuth = useAppStoreUserAuth()
@@ -13,11 +12,6 @@ export function requestInterceptors(config: AxiosRequestConfig) {
   if (!config.headers) {
     config.headers = {}
   }
-
-  // axios transformRequest would transform config.data to string
-  // since we have singleton promise in response interceptor, some requests would re-sent again after singleton promise resolved
-  // config.data below would be a string, so we need to parse it to object
-  const bodyData = typeof config.data === 'string' ? JSON.parse(config.data) : config.data
 
   // custom headers
   config.headers['x-language'] = appLocale.locale
@@ -53,12 +47,6 @@ export function requestInterceptors(config: AxiosRequestConfig) {
       }
     }
   }
-
-  // transform "true"/"false" to true/false
-  // when config.data exists
-  // and this request is not the one after refresh token
-  if (config._transformStringBoolean && bodyData)
-    config.data = easyTransformObjectStringBoolean(bodyData)
 
   return config
 }
