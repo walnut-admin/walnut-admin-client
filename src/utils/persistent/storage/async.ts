@@ -39,6 +39,7 @@ export async function useAppStorageAsync<T>(
   })
 
   async function resetToInitial() {
+    clearExpireTimer()
     const fresh = cloneDeep(initialValue)
     state.value = toShallowReactive(fresh)
     await write(fresh)

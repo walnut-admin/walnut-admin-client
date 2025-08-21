@@ -40,6 +40,7 @@ export function useAppStorageSync<T>(
 
   function resetToInitial() {
     storage.removeItem(realKey)
+    clearExpireTimer()
     const fresh = cloneDeep(initialValue)
     state.value = toShallowReactive(fresh)
     write(fresh)
