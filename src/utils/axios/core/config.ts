@@ -26,7 +26,4 @@ export const originalConfig: AxiosRequestConfig = {
 
   // adapter
   adapter: composeAdapters(),
-
-  // default transform "true"/"false" to true/false
-  _transformStringBoolean: true,
 }

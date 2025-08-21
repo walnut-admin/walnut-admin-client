@@ -24,12 +24,6 @@ declare module 'axios' {
     _sleep?: number
 
     /**
-     * transform "true"/"false" to boolean true/false
-     * only for shallow use and request data (mostly POST)
-     */
-    _transformStringBoolean?: boolean
-
-    /**
      * auto decrypt response data with `crypto-js`
      */
     _autoDecryptResponseData?: booloean
