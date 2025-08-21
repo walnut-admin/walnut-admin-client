@@ -1,11 +1,9 @@
-import { isProd } from '@/utils/constant/vue'
-import { AppPersistEncryption } from '@/utils/crypto'
 import { compare } from 'compare-versions'
 import { version } from '~build/package'
 import { getStorageKey } from './shared'
 
 // TODO fetch from api
-const migrations: Record<string, { key: string, action: 'remove' | 'update', newValue?: string }[]> = {
+const migrations: Record<string, { key: string, action: 'remove' }[]> = {
   // '1.2.0': [
   //   {
   //     key: AppConstPersistKey.REMEMBER,
@@ -71,7 +69,7 @@ export function setupStorageMigrations() {
 
     const rules = migrations[ver] ?? []
     for (const rule of rules) {
-      const { key: originalKey, action, newValue } = rule
+      const { key: originalKey, action } = rule
 
       // Apply rule for both preset and non-preset keys
       for (const usePreset of [true, false]) {
@@ -85,57 +83,11 @@ export function setupStorageMigrations() {
           if (!raw && action !== 'remove')
             continue
 
-          let data: any
-
-          // Determine whether encryption is enabled for this key
-          const useEncrypt = (() => {
-            try {
-              const temp = JSON.parse(raw || '{}')
-              return typeof temp.enc === 'boolean' ? temp.enc : isProd()
-            }
-            catch {
-              return isProd()
-            }
-          })()
-
-          // Decrypt and parse stored data
-          try {
-            data = raw ? JSON.parse(useEncrypt ? AppPersistEncryption.decrypt(raw) : raw) : null
-          }
-          catch {
-            // Corrupted data: skip this key
-            continue
-          }
-
-          // For 'update' rules, skip if data version is already >= rule version
-          if (action === 'update' && (!data || compare(data._v ?? '0.0.0', ver, '>=')))
-            continue
-
           switch (action) {
             case 'remove':
               storage.removeItem(realKey)
               console.log(`[storage-migration] Removed ${realKey}`)
               break
-
-            case 'update': {
-              if (newValue == null)
-                break
-
-              const updated = {
-                v: newValue, // new persisted value
-                _v: version, // mark migration version
-                e: data?.e ?? null, // preserve expiration if exists
-                enc: useEncrypt, // preserve encryption flag
-              }
-
-              const serialized = JSON.stringify(updated)
-              storage.setItem(
-                realKey,
-                useEncrypt ? AppPersistEncryption.encrypt(serialized)! : serialized,
-              )
-              console.log(`[storage-migration] Updated ${realKey} to new value`)
-              break
-            }
           }
         }
       }
