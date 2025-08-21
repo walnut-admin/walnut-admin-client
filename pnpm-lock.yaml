@@ -113,6 +113,9 @@ importers:
       sortablejs:
         specifier: 1.15.6
         version: 1.15.6
+      superjson:
+        specifier: 2.2.2
+        version: 2.2.2
       untyper:
         specifier: 0.0.10
         version: 0.0.10
