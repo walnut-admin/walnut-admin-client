@@ -1,5 +1,5 @@
 import type { LocationQuery, LocationQueryRaw } from 'vue-router'
-import { AppPersistEncryption } from '@/utils/crypto'
+import { AppUrlEncryption } from '@/utils/crypto'
 import { watob, wbtoa } from '@/utils/window/base64'
 import qs from 'qs'
 
@@ -16,7 +16,7 @@ export function stringifyQuery(obj: LocationQueryRaw) {
       return wbtoa(str)
 
     if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.CRYPTOJS)
-      return AppPersistEncryption.encrypt(str)!
+      return AppUrlEncryption.encrypt(str)!
   }
 
   return str
@@ -37,7 +37,7 @@ export function parseQuery(query: string) {
       return qs.parse(watob(query)) as LocationQuery
 
     if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.CRYPTOJS)
-      return qs.parse(AppPersistEncryption.decrypt(query)) as LocationQuery
+      return qs.parse(AppUrlEncryption.decrypt(query)) as LocationQuery
   }
 
   return str

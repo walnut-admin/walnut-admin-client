@@ -1,5 +1,5 @@
 import type { Router } from 'vue-router'
-import { AppPersistEncryption } from '@/utils/crypto'
+import { AppUrlEncryption } from '@/utils/crypto'
 import { watob, wbtoa } from '@/utils/window/base64'
 
 const ENHANCED_ROUTE_PARAMS_PREFIX = 'ep_'
@@ -9,12 +9,12 @@ export function createRouteParamsEnhancedGuard(router: Router) {
 
   const enhancedFn = {
     [AppConstRouteQueryEnhancedMode.BASE64]: wbtoa,
-    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppPersistEncryption.encrypt.bind(AppPersistEncryption),
+    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppUrlEncryption.encrypt.bind(AppUrlEncryption),
   }
 
   const resolvedFn = {
     [AppConstRouteQueryEnhancedMode.BASE64]: watob,
-    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppPersistEncryption.decrypt.bind(AppPersistEncryption),
+    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppUrlEncryption.decrypt.bind(AppUrlEncryption),
   }
 
   // beforeEach

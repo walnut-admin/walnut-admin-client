@@ -1,11 +1,11 @@
 import { Encryption } from './symmetric/crypto'
 
 // TODO need to remove
-const { persist, request, response } = useAppEnvCrypto()
+const { url, request, response } = useAppEnvCrypto()
 
-export const AppPersistEncryption = new Encryption({
-  key: persist[0],
-  iv: persist[1],
+export const AppUrlEncryption = new Encryption({
+  key: url[0],
+  iv: url[1],
 })
 
 export const AppRequestEncryption = new Encryption({

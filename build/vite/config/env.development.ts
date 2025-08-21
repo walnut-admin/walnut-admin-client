@@ -12,9 +12,11 @@ export default defineConfig({
   VITE_DEV_HTTPS: z.coerce.boolean(),
   VITE_DEV_CSP: z.coerce.boolean(),
   VITE_DEV_PWA: z.coerce.boolean(),
-  VITE_CRYPTO_PERSIST: VITE_KEY_IV_VALIDATE(),
+
+  VITE_CRYPTO_URL: VITE_KEY_IV_VALIDATE(),
   VITE_CRYPTO_REQUEST: VITE_KEY_IV_VALIDATE(),
   VITE_CRYPTO_RESPONSE: VITE_KEY_IV_VALIDATE(),
+
   VITE_SECONDS_AXIOS_TIMEOUT: z.coerce.number(),
   VITE_SECONDS_AXIOS_CACHE: z.coerce.number(),
   VITE_SECONDS_PERSIST: z.coerce.number(),
