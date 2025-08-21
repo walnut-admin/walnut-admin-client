@@ -119,7 +119,7 @@ function onClick() {
             Retry 30s
           </WButtonRetry>
 
-          <WButtonRetry ref="buttonRetryRef3" retry-key="demo-button-retry" :retry-seconds="10" @click="buttonRetryRef3.onStartCountdown()">
+          <WButtonRetry ref="buttonRetryRef3" retry-key="demo-button-retry" :retry-seconds="30" @click="buttonRetryRef3.onStartCountdown()">
             Retry with storage persistent
           </WButtonRetry>
         </n-space>

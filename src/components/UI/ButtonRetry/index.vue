@@ -11,7 +11,7 @@ const emits = defineEmits<{ click: [e: MouseEvent], retryClick: [startCountDown:
 
 const attrs: ICompUIButtonProps = useAttrs()
 
-const { retryText, resume } = useCountdown({ persistKey: retryKey, persistSeconds: retrySeconds })
+const { retryText, resume } = useCountdownStorage({ persistKey: retryKey, persistSeconds: retrySeconds })
 
 function onButtonClick(e: MouseEvent) {
   emits('click', e)

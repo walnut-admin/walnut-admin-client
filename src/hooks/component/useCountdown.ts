@@ -1,73 +1,87 @@
-import { useAppStorage2 } from '@/utils/persistent/storage2'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 
-// TODO bug timer should in storage
-const buttonRetryMapPersistent = useAppStorage2<Map<string, number>>(AppConstPersistKey.COUNTDOWN, new Map<string, number>())
+const buttonRetryMapPersistent = useAppStorageSync<Map<string, number>>(AppConstPersistKey.COUNTDOWN, new Map<string, number>())
 
-export function useCountdown({ persistKey, persistSeconds = 60, onCountdownComplete }: { persistKey?: string, persistSeconds?: number, onCountdownComplete?: () => void }) {
+export function useCountdownStorage({
+  persistKey,
+  persistSeconds = 60,
+  onCountdownComplete,
+}: {
+  persistKey?: string
+  persistSeconds?: number
+  onCountdownComplete?: () => void
+}) {
   const { t } = useAppI18n()
 
   const retryText = ref<string>()
-  const _intervalSeconds = ref<number>(persistSeconds)
+  const _leftSeconds = ref<number>(persistSeconds)
 
-  const getPersistSeconds = computed<number>({
-    get() {
-      if (persistKey) {
-        return buttonRetryMapPersistent.value?.get(persistKey) as number
-      }
-      return _intervalSeconds.value!
-    },
-    set(newValue) {
-      if (persistKey) {
-        buttonRetryMapPersistent.value?.set(persistKey, newValue ?? persistSeconds)
-      }
-      else {
-        _intervalSeconds.value = newValue
-      }
-    },
-  })
-
-  const { pause, resume } = useIntervalFn(() => {
-    retryText.value = t('comp.countdown.label', {
-      delay: getPersistSeconds.value,
-    })
-
-    --getPersistSeconds.value!
-
-    if (getPersistSeconds.value! < 0) {
-      pause()
-
-      retryText.value = undefined
-
-      if (persistKey) {
-        buttonRetryMapPersistent.value?.set(persistKey, persistSeconds)
-      }
-      else {
-        _intervalSeconds.value = persistSeconds
-      }
-
-      if (onCountdownComplete) {
-        onCountdownComplete()
-      }
-    }
-  }, 1000, { immediate: false, immediateCallback: true })
-
-  // init
-  onBeforeMount(() => {
-    if (persistKey) {
-      if (getPersistSeconds.value) {
-        if (getPersistSeconds.value !== persistSeconds) {
-          resume()
-        }
-      }
-      else {
-        buttonRetryMapPersistent.value?.set(persistKey, persistSeconds)
-      }
-    }
-  })
-
-  return {
-    retryText,
-    pause,
-    resume,
+  function readStart(): number | undefined {
+    return persistKey
+      ? buttonRetryMapPersistent.value?.get(persistKey)
+      : undefined
   }
+
+  function writeStart(ts: number) {
+    if (persistKey) {
+      buttonRetryMapPersistent.value?.set(persistKey, ts)
+    }
+  }
+
+  function clearPersist() {
+    if (persistKey) {
+      buttonRetryMapPersistent.value?.delete(persistKey)
+    }
+  }
+
+  const { pause, resume } = useIntervalFn(
+    () => {
+      retryText.value = t('comp.countdown.label', {
+        delay: _leftSeconds.value,
+      })
+
+      if (--_leftSeconds.value < 0) {
+        pause()
+        retryText.value = undefined
+        _leftSeconds.value = persistSeconds
+        clearPersist()
+        onCountdownComplete?.()
+      }
+    },
+    1000,
+    { immediate: false, immediateCallback: true },
+  )
+
+  function startCountdown() {
+    if (persistKey && !readStart()) {
+      writeStart(Date.now())
+    }
+    resume()
+  }
+
+  onBeforeMount(() => {
+    if (!persistKey) {
+      _leftSeconds.value = persistSeconds
+      return
+    }
+
+    const start = readStart()
+    if (start) {
+      const elapsed = Math.round((Date.now() - start) / 1000)
+      _leftSeconds.value = Math.max(persistSeconds - elapsed, 0)
+
+      if (_leftSeconds.value > 0) {
+        resume()
+      }
+      else {
+        clearPersist()
+        onCountdownComplete?.()
+      }
+    }
+    else {
+      _leftSeconds.value = persistSeconds
+    }
+  })
+
+  return { retryText, pause, resume: startCountdown }
 }

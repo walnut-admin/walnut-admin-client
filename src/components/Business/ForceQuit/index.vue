@@ -7,7 +7,7 @@ defineOptions({
 const loading = ref(false)
 
 const appForcequit = useAppStoreForceQuit()
-const { retryText, resume } = useCountdown({ persistKey: 'force-quit', persistSeconds: 10, onCountdownComplete: onForceQuit })
+const { retryText, resume } = useCountdownStorage({ persistKey: 'force-quit', persistSeconds: 10, onCountdownComplete: onForceQuit })
 resume()
 
 async function onForceQuit() {
