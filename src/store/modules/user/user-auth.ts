@@ -14,7 +14,7 @@ import { store } from '../../pinia'
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): IUserStoreAuth => ({
-    accessToken: useAppStorage2(AppConstPersistKey.ACCESS_TOKEN, '', { storage: enhancedBase64LocalStorage }),
+    accessToken: useAppStorage2(AppConstPersistKey.ACCESS_TOKEN, '', { storage: enhancedBase64LocalStorage() }),
     remember: useAppStorage2(AppConstPersistKey.REMEMBER, {
       userName: '',
       password: '',

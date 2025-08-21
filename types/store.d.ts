@@ -1,4 +1,3 @@
-import type { RemovableRef } from '@vueuse/core'
 import type { Nullable, Recordable, TreeNodeItem } from 'easy-fns-ts'
 import type {
   MessageReactive,

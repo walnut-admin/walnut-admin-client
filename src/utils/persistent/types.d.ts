@@ -1,5 +1,3 @@
-import type { ValueOf } from 'easy-fns-ts'
-
 declare global {
   interface IStorageSync extends Storage {}
 

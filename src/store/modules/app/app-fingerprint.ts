@@ -54,7 +54,7 @@ const excludeComponents: (keyof BuiltinComponents)[] = [
 
 const useAppStoreFingerprintInside = defineStore(StoreKeys.APP_FINGERPRINT, {
   state: (): IAppStoreFingerprint => ({
-    fingerprint: useAppStorage2<string>(AppConstPersistKey.FINGERPRINT, '', { storage: enhancedBase64LocalStorage }),
+    fingerprint: useAppStorage2<string>(AppConstPersistKey.FINGERPRINT, '', { storage: enhancedBase64LocalStorage() }),
   }),
 
   getters: {
