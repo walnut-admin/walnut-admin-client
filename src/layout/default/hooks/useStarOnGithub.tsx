@@ -17,10 +17,9 @@ export async function useStarOnGithub() {
     setCookie('dontShowStar', val)
   }
 
-  // TODO not working in production?
   const dontShow = getCookie('dontShowStar')
 
-  if (dontShow === 'true')
+  if (dontShow === true)
     return
 
   await naiveStore.destroyCurrentNotiInst()
