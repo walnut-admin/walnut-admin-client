@@ -22,10 +22,10 @@ declare global {
     v: T
 
     /** app version */
-    _v: string //
+    _v: string
 
     /** expire time (milliseconds)，null means won't expire */
-    e: number | null //
+    e: number | null
   }
 }
 
