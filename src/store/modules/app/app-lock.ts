@@ -1,6 +1,5 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
-
-import { useAppStorage2 } from '@/utils/persistent/storage2'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { clone, isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
@@ -8,8 +7,8 @@ import { store } from '../../pinia'
 
 const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   state: (): IAppStoreLock => ({
-    isLock: useAppStorage2(AppConstPersistKey.IS_LOCK, false),
-    lockRoute: useAppStorage2(AppConstPersistKey.LOCK_ROUTE, {}),
+    isLock: useAppStorageSync(AppConstPersistKey.IS_LOCK, false),
+    lockRoute: useAppStorageSync(AppConstPersistKey.LOCK_ROUTE, {}),
   }),
 
   getters: {},

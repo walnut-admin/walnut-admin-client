@@ -1,4 +1,4 @@
-import { useAppStorage2 } from '@/utils/persistent/storage2'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
@@ -6,7 +6,7 @@ import { store } from '../../pinia'
 
 const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
   state: (): IAppStoreGeoIP => ({
-    geoInfo: useAppStorage2<Partial<ExternalGeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}),
+    geoInfo: useAppStorageSync<Partial<ExternalGeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}),
   }),
 
   getters: {

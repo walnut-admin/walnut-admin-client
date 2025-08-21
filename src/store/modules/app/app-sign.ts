@@ -4,7 +4,7 @@ import { AxiosQsParamsSerializer } from '@/utils/axios/core/config'
 import { generateNonce } from '@/utils/axios/utils'
 import { decryptWithPrivateKey, generateRSAKeyPair } from '@/utils/crypto/asymmetric/rsaoaep'
 import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
-import { useAppStorage2 } from '@/utils/persistent/storage2'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { objectToPaths } from '@/utils/shared'
 import CryptoJS from 'crypto-js'
 import { defineStore } from 'pinia'
@@ -14,11 +14,11 @@ import { store } from '../../pinia'
 const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
   state: (): IAppStoreSign => ({
     // 30 days
-    publicKey: useAppStorage2<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 3600 * 1000, storage: enhancedBase64LocalStorage() }),
+    publicKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 3600 * 1000, storage: enhancedBase64LocalStorage() }),
     // 30 days
-    privateKey: useAppStorage2<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 3600 * 1000, storage: enhancedBase64LocalStorage() }),
+    privateKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 3600 * 1000, storage: enhancedBase64LocalStorage() }),
     // 15 minutes
-    aesKey: useAppStorage2<string>(AppConstPersistKey.AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
+    aesKey: useAppStorageSync<string>(AppConstPersistKey.AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
   }),
 
   getters: {

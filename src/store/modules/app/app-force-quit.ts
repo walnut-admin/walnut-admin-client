@@ -1,11 +1,11 @@
-import { useAppStorage2 } from '@/utils/persistent/storage2'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreForceQuitInside = defineStore(StoreKeys.APP_FORCE_QUIT, {
   state: (): IAppStoreForceQuit => ({
-    modalShow: useAppStorage2(AppConstPersistKey.FORCE_QUIT_SHOW, false),
+    modalShow: useAppStorageSync(AppConstPersistKey.FORCE_QUIT_SHOW, false),
     forceQuitComponent: null,
     quitButton: false,
   }),
