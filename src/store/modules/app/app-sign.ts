@@ -37,24 +37,25 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
 
   actions: {
     async setupSign() {
-      if (this.getPrivateKey && this.getPublicKey)
-        return
+      if (!this.getPrivateKey || !this.getPublicKey) {
+        // setup RSA keypair
+        const keyPair = await generateRSAKeyPair()
+        this.privateKey = keyPair?.privateKey as string
+        this.publicKey = keyPair?.publicKey as string
 
-      // setup RSA keypair
-      const keyPair = await generateRSAKeyPair()
-      this.privateKey = keyPair?.privateKey as string
-      this.publicKey = keyPair?.publicKey as string
+        // call handshake API to save rsa pub key in backend redis
+        await authSignHandShakeAPI(this.getPublicKey)
+      }
 
-      // call handshake API to save rsa pub key in backend redis
-      await authSignHandShakeAPI(this.getPublicKey)
+      if (!this.aesKey) {
+        // get encrypted session key
+        const res = await authSignSessionKeyAPI()
 
-      // get encrypted session key
-      const res = await authSignSessionKeyAPI()
+        // decrypt session key with private key
+        const realAesKey = await decryptWithPrivateKey(this.getPrivateKey, res.encryptedAes)
 
-      // decrypt session key with private key
-      const realAesKey = await decryptWithPrivateKey(this.getPrivateKey, res.encryptedAes)
-
-      this.aesKey = realAesKey
+        this.aesKey = realAesKey
+      }
     },
 
     async refreshAesKey() {
@@ -105,12 +106,7 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
         `ua=${ua}`,
       ].join('|')
 
-      try {
-        return CryptoJS.HmacSHA256(raw, this.getAesKey).toString()
-      }
-      catch (error) {
-        console.log(error)
-      }
+      return CryptoJS.HmacSHA256(raw, this.getAesKey).toString()
     },
   },
 })
