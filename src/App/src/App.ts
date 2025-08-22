@@ -5,15 +5,15 @@ import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'
 import { isDev } from '@/utils/constant/vue'
 
-// function setupErrorhandler(app: App) {
-//   app.config.errorHandler = (error) => {
-//     console.error('AppErrorHandler', error)
-//   }
+function setupErrorhandler(app: App) {
+  app.config.errorHandler = (error) => {
+    console.error('AppErrorHandler', error)
+  }
 
-//   app.config.warnHandler = (warn) => {
-//     console.warn('AppWarnHandler', warn)
-//   }
-// }
+  app.config.warnHandler = (warn) => {
+    console.warn('AppWarnHandler', warn)
+  }
+}
 
 /**
  * @description Entry to set up Vue App
@@ -25,7 +25,7 @@ export async function setupApp(app: App) {
 
   setupStore(app)
 
-  // setupErrorhandler(app)
+  setupErrorhandler(app)
 
   if (isDev())
     app.config.performance = true

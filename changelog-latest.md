@@ -1,28 +1,38 @@
-## [1.2.1] - 2025-08-08
+## [1.3.0] - 2025-08-22
+
+## Breaking Changes
+- [Front] `utils/hooks` folder restructure
+- [Front] `auto-import` content modified
+- [Front] `axios` refactoring
 
 ### Features
-- [Back] custom throttle decorator which can be configed from cache
-- [Back] scope resolver & roleMode usage with it
-- [Front] `unplugin-info` replace `__APP_INFO__`
+- [Both] `signature guard`, includes many features
+- [Front] `idb` implement
+- [Front] `ras-oaep` implement
+- [Front] `SingletonPromise`
+- [Front] `useExpireTimer`
+- [Front] `Suspense` on global `router-view`
+- [Front] add `superjson`
+- [Front] `storage` demo page
 
 ### Changed
-- [Back] postman in dev no need for capjs token guard
-- [Back] functional guard logic extend
-- [Back] auth setting redesign
-- [Back] WIP: frontend feature config in endpoint
-- [Front] hook folder restructure
-- [Front] use useScriptTag to load `web-vitals` & `google analytics`
-- [Front] upgrade `vue-tsc` & `vite-plugin-checker`
-- [Front] WIP: pwa reload/offline support
-- [Front] WIP: `setupStorageMigrations`
+- [Front] app level script re-design
+- [Front] `pinia` store re-integrate
+- [Front] `axios` re-design
+- [Front] `useAppStorageSync` and `useAppStorageAsync`
+- [Front] `localStorage` use `aes-gcm` for encrypt
+- [Front] each page refresh would call device `initial` API to update device info
+- [Front] `useCountdown` => `useCountdownStorage`
+- [Front] remove `VITE_CRYPTO_PERSIST`, add `VITE_CRYPTO_URL`
+- [Front] `cookie` re-design
 
 ### Fixed
-- [Back] cache list error
-- [Front] fix ellipsis tooltip in data-table style problem
+- [Front] `useCountdownStorage` should not keep the left seconds when page is closed
+- [Back] `setCustomHeaders` fatal error
 
 ### Deprecated
 -
 
 ### Removed
-- [Both] remove fking useless weibo oauth
-- [Front] remove `useCleanLocalStroage`
+- [Front] `useAppStorage`
+- [Front] `ua-parser-js`

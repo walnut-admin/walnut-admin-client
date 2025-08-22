@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { useRegisterSW } from 'virtual:pwa-register/vue'
+// import { useRegisterSW } from 'virtual:pwa-register/vue'
 
-const intervalMS = 60 * 60 * 1000
+// const intervalMS = 60 * 60 * 1000
 
-const {
-  offlineReady,
-  needRefresh,
-  updateServiceWorker,
-} = useRegisterSW({
-  onRegistered(r) {
-    r && setInterval(() => {
-      r.update()
-    }, intervalMS)
-  },
-})
+// const {
+//   offlineReady,
+//   needRefresh,
+//   updateServiceWorker,
+// } = useRegisterSW({
+//   onRegistered(r) {
+//     r && setInterval(() => {
+//       r.update()
+//     }, intervalMS)
+//   },
+// })
 
-async function close() {
-  offlineReady.value = false
-  needRefresh.value = false
-}
+// async function close() {
+//   offlineReady.value = false
+//   needRefresh.value = false
+// }
 </script>
 
 <template>
-  <div
+  <!-- <div
     v-if="offlineReady || needRefresh"
     class="pwa-toast"
     role="alert"
@@ -41,7 +41,7 @@ async function close() {
     <button @click="close">
       Close
     </button>
-  </div>
+  </div> -->
 </template>
 
 <style>
