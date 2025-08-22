@@ -22,6 +22,12 @@
   - [x] api 函数重命名 结尾都以API结束 好区分是请求函数
   - [x] ~~merge request的axios adapter完成了，字典数据接口需要重新梳理一下，可以不用initDict在form/table/desc组件里了~~
   - [ ] checker貌似导致了HMR不好使（可能也是多个plugin使用导致的，还需要排查）
+  - [ ] auto import 不能滥用，项目大了之后，会显得很乱
+  - [ ] server cert 加密请求参数?
+  - [ ] url/params 的参数 不要做配置 直接superjson + cryptojs
+  - [ ] store 重构了是重构了 但是还是有很多地方风格没有统一 需要挨个整理一下
+  - [ ] 非https打开页面 需要跳转页面提醒 要不页面会假死
+  - [ ] 设备不支持 那个页面应该统一化 因为可能还有其他类型的不支持
 
 - 重要不紧急
 

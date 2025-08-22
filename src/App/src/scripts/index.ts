@@ -8,11 +8,11 @@ const appGeoIP = useAppStoreGeoIP()
 export async function setupAppScripts() {
   await appFingerprint.setupFingerprint()
 
+  // TODO below to should merge as setupDevice
   await appGeoIP.setupGeoIP()
+  await setupDevice()
 
   await appSign.setupSign()
-
-  await setupDevice()
 
   await setupGoogleAnalytics()
 }
