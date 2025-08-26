@@ -70,7 +70,10 @@ export async function useAppStorageAsync<T>(
 
     try {
       const { v, e } = superjson.parse(raw) as IStorageData<T>
-      e ? armExpireTimer(e) : clearExpireTimer()
+      if (e && Date.now() >= e) {
+        resetToInitial()
+        return null
+      }
       return v as T
     }
     catch {
