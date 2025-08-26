@@ -1,7 +1,6 @@
 import type { LocationQuery, LocationQueryRaw } from 'vue-router'
-import { AppUrlEncryption } from '@/utils/crypto'
-import { watob, wbtoa } from '@/utils/window/base64'
-import qs from 'qs'
+import { isUrlEncrypted, urlDecrypt, urlEncrypt } from '@/utils/url-masking'
+import superjson from 'superjson'
 
 export function stringifyQuery(obj: LocationQueryRaw) {
   const appSetting = useAppStoreSetting()
@@ -9,14 +8,10 @@ export function stringifyQuery(obj: LocationQueryRaw) {
   if (!obj || Object.keys(obj).length === 0)
     return ''
 
-  const str = qs.stringify(obj)
+  const str = superjson.stringify(obj)
 
-  if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.ENHANCED) {
-    if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.BASE64)
-      return wbtoa(str)
-
-    if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.CRYPTOJS)
-      return AppUrlEncryption.encrypt(str)!
+  if (appSetting.app.urlMasking) {
+    return urlEncrypt(str)
   }
 
   return str
@@ -27,18 +22,18 @@ const whiteList = [AppOpenExternalPath]
 export function parseQuery(query: string) {
   const appSetting = useAppStoreSetting()
 
-  const str = qs.parse(query) as LocationQuery
-
   if (whiteList.includes(window.location.pathname))
-    return str
+    return superjson.parse(query) as LocationQuery
 
-  if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.ENHANCED) {
-    if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.BASE64)
-      return qs.parse(watob(query)) as LocationQuery
-
-    if (appSetting.app.routeQueryEnhancedMode === AppConstRouteQueryEnhancedMode.CRYPTOJS)
-      return qs.parse(AppUrlEncryption.decrypt(query)) as LocationQuery
+  if (appSetting.app.urlMasking && isUrlEncrypted(query)) {
+    try {
+      return superjson.parse(urlDecrypt(query)) as LocationQuery
+    }
+    catch (error) {
+      console.warn('Query decryption failed, fallback to empty', error)
+      return {} as LocationQuery
+    }
   }
 
-  return str
+  return superjson.parse(query) as LocationQuery
 }

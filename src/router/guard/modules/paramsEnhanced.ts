@@ -1,26 +1,13 @@
 import type { Router } from 'vue-router'
-import { AppUrlEncryption } from '@/utils/crypto'
-import { watob, wbtoa } from '@/utils/window/base64'
-
-const ENHANCED_ROUTE_PARAMS_PREFIX = 'ep_'
+import { isUrlEncrypted, urlDecrypt, urlEncrypt } from '@/utils/url-masking'
 
 export function createRouteParamsEnhancedGuard(router: Router) {
   const appSetting = useAppStoreSetting()
 
-  const enhancedFn = {
-    [AppConstRouteQueryEnhancedMode.BASE64]: wbtoa,
-    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppUrlEncryption.encrypt.bind(AppUrlEncryption),
-  }
-
-  const resolvedFn = {
-    [AppConstRouteQueryEnhancedMode.BASE64]: watob,
-    [AppConstRouteQueryEnhancedMode.CRYPTOJS]: AppUrlEncryption.decrypt.bind(AppUrlEncryption),
-  }
-
   // beforeEach
   router.beforeEach((to, _from) => {
     // normal params
-    if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.NORMAL) {
+    if (!appSetting.app.urlMasking) {
       return true
     }
 
@@ -30,28 +17,23 @@ export function createRouteParamsEnhancedGuard(router: Router) {
     if (!router.currentRoute.value.name || to.name === AppRedirectName)
       return true
 
-    const hasUnenhancedParams = Object.keys(to.params).some((key) => {
-      const value = to.params[key]
-      return value && typeof value === 'string' && !value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)
-    })
+    const needEncrypt = Object.entries(to.params)
+      .filter(([, v]) => typeof v === 'string' && !isUrlEncrypted(v))
 
-    if (!hasUnenhancedParams)
+    if (!needEncrypt.length)
       return true
 
-    const encryptedParams = { ...to.params }
-    Object.keys(encryptedParams).forEach((key) => {
-      const value = encryptedParams[key]
-      if (value && typeof value === 'string' && !value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)) {
-        encryptedParams[key] = ENHANCED_ROUTE_PARAMS_PREFIX + enhancedFn[appSetting.app.routeQueryEnhancedMode](value)
-      }
+    const encrypted = { ...to.params }
+    needEncrypt.forEach(([k, v]) => {
+      encrypted[k] = urlEncrypt(v as string)
     })
-    return { ...to, params: encryptedParams, replace: true }
+    return { ...to, params: encrypted, replace: true }
   })
 
   // beforeResolve
   router.beforeResolve((to) => {
     // normal params
-    if (appSetting.app.routeQueryMode === AppConstRouteQueryMode.NORMAL) {
+    if (!appSetting.app.urlMasking) {
       return true
     }
 
@@ -59,21 +41,23 @@ export function createRouteParamsEnhancedGuard(router: Router) {
     if (to.name === AppRedirectName)
       return true
 
-    const hasEncryptedParams = Object.keys(to.params).some((key) => {
-      const value = to.params[key]
-      return value && typeof value === 'string' && value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)
-    })
+    const encryptedEntries = Object.entries(to.params)
+      .filter(([, v]) => isUrlEncrypted(v))
 
-    if (!hasEncryptedParams)
-      return true
+    if (!encryptedEntries.length)
+      return
 
-    const resolvedParams = { ...to.params }
-    Object.keys(resolvedParams).forEach((key) => {
-      const value = resolvedParams[key]
-      if (value && typeof value === 'string' && value.startsWith(ENHANCED_ROUTE_PARAMS_PREFIX)) {
-        resolvedParams[key] = resolvedFn[appSetting.app.routeQueryEnhancedMode](value.replace(ENHANCED_ROUTE_PARAMS_PREFIX, ''))
+    const resolved = { ...to.params }
+    encryptedEntries.forEach(([k, v]) => {
+      try {
+        resolved[k] = urlDecrypt(v as string)
+      }
+      catch (error) {
+        console.warn('Query decryption failed, fallback to empty', error)
+        resolved[k] = '[invalid]'
       }
     })
-    to.meta._resolvedParams = resolvedParams
+
+    to.meta._resolvedParams = resolved
   })
 }
