@@ -1,38 +1,19 @@
-## [1.3.0] - 2025-08-22
-
-## Breaking Changes
-- [Front] `utils/hooks` folder restructure
-- [Front] `auto-import` content modified
-- [Front] `axios` refactoring
+## [1.3.1] - 2025-08-26
 
 ### Features
-- [Both] `signature guard`, includes many features
-- [Front] `idb` implement
-- [Front] `ras-oaep` implement
-- [Front] `SingletonPromise`
-- [Front] `useExpireTimer`
-- [Front] `Suspense` on global `router-view`
-- [Front] add `superjson`
-- [Front] `storage` demo page
+-
 
 ### Changed
-- [Front] app level script re-design
-- [Front] `pinia` store re-integrate
-- [Front] `axios` re-design
-- [Front] `useAppStorageSync` and `useAppStorageAsync`
-- [Front] `localStorage` use `aes-gcm` for encrypt
-- [Front] each page refresh would call device `initial` API to update device info
-- [Front] `useCountdown` => `useCountdownStorage`
-- [Front] remove `VITE_CRYPTO_PERSIST`, add `VITE_CRYPTO_URL`
-- [Front] `cookie` re-design
+- [Front] force `https` plugin in dev mode, cause `crypto` module needs
+- [Front] `routeRouteEnhance` => `urlMasking`, simplify API design
 
 ### Fixed
-- [Front] `useCountdownStorage` should not keep the left seconds when page is closed
-- [Back] `setCustomHeaders` fatal error
+- [Front] `useExpireTimer` support larger timestamp than `2*31 - 1`
+- [Front] `sign` cert expire error
+- [Front] `urlMasking` fatal error when page refresh
 
 ### Deprecated
 -
 
 ### Removed
-- [Front] `useAppStorage`
-- [Front] `ua-parser-js`
+-
