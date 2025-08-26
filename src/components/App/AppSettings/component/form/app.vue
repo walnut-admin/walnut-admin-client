@@ -67,33 +67,12 @@ const [register] = useForm<typeof appRelatives>({
     },
 
     {
-      type: 'Base:Select',
+      type: 'Base:Switch',
       formProp: {
-        path: 'routeQueryMode',
+        path: 'urlMasking',
         labelHelpMessage: true,
       },
-      componentProp: {
-        disabled: true,
-        options: Object.values(AppConstRouteQueryMode).map(i => ({
-          value: i,
-          label: i,
-        })),
-      },
-    },
-
-    {
-      type: 'Base:Select',
-      formProp: {
-        path: 'routeQueryEnhancedMode',
-        labelHelpMessage: true,
-      },
-      componentProp: {
-        disabled: true,
-        options: Object.values(AppConstRouteQueryEnhancedMode).map(i => ({
-          value: i,
-          label: i,
-        })),
-      },
+      componentProp: {},
     },
 
     {

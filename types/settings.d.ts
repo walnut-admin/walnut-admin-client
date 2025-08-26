@@ -5,8 +5,6 @@ import type {
   ValueOfAppConstColorMode,
   ValueOfAppConstLayoutMode,
   ValueOfAppConstLockMode,
-  ValueOfAppConstRouteQueryEnhancedMode,
-  ValueOfAppConstRouteQueryMode,
   ValueOfAppConstScrollMode,
 } from '../src/const/app'
 import type {
@@ -47,22 +45,11 @@ interface AppSettingsForApp {
 
   /**
    * DX config
-   * Rotue Query Features
-   * 'normal' => no change to route query
-   * 'enhanced' => make route query unreadable
-   * @default normal
+   * Url Masking Features
+   * true => make route query unreadable
+   * @default false
    */
-  routeQueryMode: ValueOfAppConstRouteQueryMode
-
-  /**
-   * DX config
-   * Route Query Enhanced Mode
-   * Only works when `routeQueryMode` => 'enhanced'
-   * 'base64' => stringify and transform to base64
-   * 'cryptojs' => use `crypto-js` to encrypt/decrypt route query
-   * @default base64
-   */
-  routeQueryEnhancedMode: ValueOfAppConstRouteQueryEnhancedMode
+  urlMasking: boolean
 
   /**
    * DX config

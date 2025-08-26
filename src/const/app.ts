@@ -79,22 +79,6 @@ export const AppConstColorMode = {
 export type ValueOfAppConstColorMode =
   typeof AppConstColorMode[keyof typeof AppConstColorMode]
 
-export const AppConstRouteQueryMode = {
-  NORMAL: 'normal',
-  ENHANCED: 'enhanced',
-} as const
-
-export type ValueOfAppConstRouteQueryMode =
-  typeof AppConstRouteQueryMode[keyof typeof AppConstRouteQueryMode]
-
-export const AppConstRouteQueryEnhancedMode = {
-  BASE64: 'base64',
-  CRYPTOJS: 'cryptojs',
-} as const
-
-export type ValueOfAppConstRouteQueryEnhancedMode =
-  typeof AppConstRouteQueryEnhancedMode[keyof typeof AppConstRouteQueryEnhancedMode]
-
 export const AppConstRoles = {
   ROOT: 'root',
   ADMIN: 'admin',
