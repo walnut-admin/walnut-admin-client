@@ -76,7 +76,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     vitePlugins.push(createRestartPlugin())
 
     // https://github.com/liuweiGL/vite-plugin-mkcert
-    env.dev.https && vitePlugins.push(createHttpsPlugin())
+    vitePlugins.push(createHttpsPlugin())
   }
   else {
     // https://github.com/FatehAK/vite-plugin-image-optimizer

@@ -9,7 +9,6 @@ export default defineConfig({
   VITE_HOST: z.string(),
   VITE_PUBLIC_PATH: z.string(),
   VITE_PROXY: VITE_PROXY_VALIDATE(),
-  VITE_DEV_HTTPS: z.coerce.boolean(),
   VITE_DEV_CSP: z.coerce.boolean(),
   VITE_DEV_PWA: z.coerce.boolean(),
 

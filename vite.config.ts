@@ -22,7 +22,6 @@ function useBuildEnv(env: Record<keyof ImportMetaEnv, string>): IViteEnv {
     proxy: JSON.parse(env.VITE_PROXY as string),
 
     dev: {
-      https: env.VITE_DEV_HTTPS === 'true',
       csp: env.VITE_DEV_CSP === 'true',
       pwa: env.VITE_DEV_PWA === 'true',
     },

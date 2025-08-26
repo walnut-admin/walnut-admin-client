@@ -24,7 +24,6 @@ interface IViteEnv {
   proxy: [[number, string, string], [number, string, string, string, string]]
 
   dev: {
-    https: boolean
     csp: boolean
     pwa: boolean
   }
