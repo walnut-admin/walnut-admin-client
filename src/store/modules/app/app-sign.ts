@@ -14,9 +14,9 @@ import { store } from '../../pinia'
 const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
   state: (): IAppStoreSign => ({
     // 30 days
-    publicKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 3600 * 1000, storage: enhancedBase64LocalStorage() }),
+    publicKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
     // 30 days
-    privateKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 3600 * 1000, storage: enhancedBase64LocalStorage() }),
+    privateKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
     // 15 minutes
     aesKey: useAppStorageSync<string>(AppConstPersistKey.AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
   }),
