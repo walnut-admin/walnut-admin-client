@@ -72,7 +72,9 @@ const [register] = useForm<typeof appRelatives>({
         path: 'urlMasking',
         labelHelpMessage: true,
       },
-      componentProp: {},
+      componentProp: {
+        disabled: true,
+      },
     },
 
     {

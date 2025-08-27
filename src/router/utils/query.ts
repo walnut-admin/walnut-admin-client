@@ -2,9 +2,9 @@ import type { LocationQuery, LocationQueryRaw } from 'vue-router'
 import { isUrlEncrypted, urlDecrypt, urlEncrypt } from '@/utils/url-masking'
 import superjson from 'superjson'
 
-export function stringifyQuery(obj: LocationQueryRaw) {
-  const appSetting = useAppStoreSetting()
+const appSetting = useAppStoreSetting()
 
+export function stringifyQuery(obj: LocationQueryRaw) {
   if (!obj || Object.keys(obj).length === 0)
     return ''
 
@@ -20,20 +20,18 @@ export function stringifyQuery(obj: LocationQueryRaw) {
 const whiteList = [AppOpenExternalPath]
 
 export function parseQuery(query: string) {
-  const appSetting = useAppStoreSetting()
+  try {
+    if (whiteList.includes(window.location.pathname))
+      return superjson.parse(query) as LocationQuery
 
-  if (whiteList.includes(window.location.pathname))
-    return superjson.parse(query) as LocationQuery
-
-  if (appSetting.app.urlMasking && isUrlEncrypted(query)) {
-    try {
+    if (appSetting.app.urlMasking && isUrlEncrypted(query)) {
       return superjson.parse(urlDecrypt(query)) as LocationQuery
     }
-    catch (error) {
-      console.warn('Query decryption failed, fallback to empty', error)
-      return {} as LocationQuery
-    }
-  }
 
-  return superjson.parse(query) as LocationQuery
+    return superjson.parse(query) as LocationQuery
+  }
+  catch (error) {
+    console.warn('Query decryption failed, fallback to empty', error)
+    return {} as LocationQuery
+  }
 }

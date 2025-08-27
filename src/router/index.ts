@@ -4,6 +4,7 @@ import type { RouteLocationRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createRouterGuard } from './guard'
 import { routes } from './routes'
+import { patchRouter } from './utils/patch'
 import { parseQuery, stringifyQuery } from './utils/query'
 
 export const AppRouter = createRouter({
@@ -16,6 +17,7 @@ export const AppRouter = createRouter({
 
 export function setupRouter(app: App) {
   app.use(AppRouter)
+  patchRouter(AppRouter)
   createRouterGuard(AppRouter)
   // turbo-console-disable-next-line
   console.info('Router', 'Router Initializing...')
