@@ -169,6 +169,7 @@ declare global {
    * App Sign state
    */
   interface IAppStoreSign {
+    rsaPublicKey: string
     publicKey: Ref<string | null>
     privateKey: Ref<string | null>
     aesKey: Ref<string | null>
