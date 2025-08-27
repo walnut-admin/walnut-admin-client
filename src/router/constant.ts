@@ -34,6 +34,9 @@ export const AppTestFrontAuthName = 'TestFrontAuth'
 export const AppOpenExternalPath = '/external-link'
 export const AppOpenExternalName = 'ExternalLink'
 
+export const splashCursorPath = '/splash-cursor'
+export const splashCursorName = 'SplashCursor'
+
 /**
  * @description public route that enter directly
  */

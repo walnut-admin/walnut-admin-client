@@ -30,8 +30,8 @@ export const testFrontAuthRoute: RouteRecordRaw = {
 
 // for fun
 export const splashCursorRoute: RouteRecordRaw = {
-  name: 'SplashCursor',
-  path: '/splash-cursor',
+  name: constant.splashCursorName,
+  path: constant.splashCursorPath,
   component: () => import('../../views/features/splash-cursor.vue'),
   meta: {
     _auth: false,
