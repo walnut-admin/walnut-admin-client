@@ -36,8 +36,9 @@ export async function encrpytRequestValueToEnvelope(value: string): Promise<Ciph
   const rawAes = await crypto.subtle.exportKey('raw', aesKey)
 
   // 5. RSA-OAEP encrypt the AES key
-  const appSign = useAppStoreSign()
-  const rsaKey = await importKeyFromPEM(appSign.getRsaPublicKey, 'public', { name: 'RSA-OAEP', hash: { name: 'SHA-256' } }, false, ['encrypt'])
+  const appSign = useAppStoreSecurity()
+  const serverRsaPubKey = await appSign.getServerRsaPubKey()
+  const rsaKey = await importKeyFromPEM(serverRsaPubKey, 'public', { name: 'RSA-OAEP', hash: { name: 'SHA-256' } }, false, ['encrypt'])
 
   const encryptedAesKey = await crypto.subtle.encrypt(
     { name: 'RSA-OAEP' },
