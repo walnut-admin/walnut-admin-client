@@ -1,6 +1,6 @@
 import { SingletonPromise } from '@/utils/queue'
 
-const appSign = useAppStoreSign()
+const appSign = useAppStoreSecurity()
 const signQueue = new SingletonPromise<string>()
 
 export function SingletonPromiseSign() {

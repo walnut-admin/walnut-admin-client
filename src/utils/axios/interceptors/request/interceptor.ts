@@ -4,7 +4,7 @@ import { setTokenHeaderWithConfig } from '../../utils'
 
 const userAuth = useAppStoreUserAuth()
 const appLocale = useAppStoreLocale()
-const appSign = useAppStoreSign()
+const appSign = useAppStoreSecurity()
 const appFingerprint = useAppStoreFingerprint()
 
 export function requestInterceptors(config: AxiosRequestConfig) {

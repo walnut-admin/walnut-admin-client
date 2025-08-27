@@ -24,7 +24,7 @@ export const AppConstPersistKey = {
   // signature
   RSA_PRIVATE_KEY: 'RSA_PRIVATE_KEY',
   RSA_PUBLIC_KEY: 'RSA_PUBLIC_KEY',
-  AES_KEY: 'AES_KEY',
+  SIGN_AES_KEY: 'SIGN_AES_KEY',
 
   // geo ip info, fetch from EXTERNAL_LINKS.GEOIP
   GEO_IP_INFO: 'GEO_IP_INFO',

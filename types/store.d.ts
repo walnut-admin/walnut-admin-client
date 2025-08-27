@@ -166,13 +166,13 @@ declare global {
   }
 
   /**
-   * App Sign state
+   * App Security state
    */
-  interface IAppStoreSign {
-    rsaPublicKey: string
-    publicKey: Ref<string | null>
-    privateKey: Ref<string | null>
-    aesKey: Ref<string | null>
+  interface IAppStoreSecurity {
+    serverRsaPubKey: string
+    clientRsaPubKey: Ref<string | null>
+    clientRsaPrivKey: Ref<string | null>
+    signAesSecretKey: Ref<string | null>
   }
 
   type IAppTabIframe = Pick<AppSystemMenu, 'name'> & Pick<AppSystemMenuMeta, 'cache' | 'url'>

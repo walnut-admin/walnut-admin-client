@@ -12,58 +12,65 @@ import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
-  state: (): IAppStoreSign => ({
-    rsaPublicKey: '',
+const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
+  state: (): IAppStoreSecurity => ({
+    // get from API
+    serverRsaPubKey: '',
     // 30 days
-    publicKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
+    clientRsaPubKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
     // 30 days
-    privateKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
+    clientRsaPrivKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
     // 15 minutes
-    aesKey: useAppStorageSync<string>(AppConstPersistKey.AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
+    signAesSecretKey: useAppStorageSync<string>(AppConstPersistKey.SIGN_AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
   }),
 
   getters: {
-    getRsaPublicKey(state) {
-      return state.rsaPublicKey
+    getSeverRsaPubKey(state) {
+      return state.serverRsaPubKey
     },
 
-    getPublicKey(state) {
-      return state.publicKey!
+    getClientRsaPubKey(state) {
+      return state.clientRsaPubKey!
     },
 
-    getPrivateKey(state) {
-      return state.privateKey!
+    getClientPrivKey(state) {
+      return state.clientRsaPrivKey!
     },
 
-    getAesKey(state) {
-      return state.aesKey!
+    getSignAesSecretKey(state) {
+      return state.signAesSecretKey!
     },
   },
 
   actions: {
-    async setupSign() {
-      const publicKey = await rsaPublicKeyAPI()
-      this.rsaPublicKey = publicKey
+    async getServerRsaPubKey() {
+      if (this.getSeverRsaPubKey) {
+        return this.getSeverRsaPubKey
+      }
+      const resPubKey = await rsaPublicKeyAPI()
+      this.serverRsaPubKey = resPubKey
+      return resPubKey
+    },
 
-      if (!this.getPrivateKey || !this.getPublicKey) {
+    async setupSign() {
+      if (!this.getClientPrivKey || !this.getClientRsaPubKey) {
         // setup RSA keypair
         const keyPair = await generateRSAKeyPair()
-        this.privateKey = keyPair?.privateKey as string
-        this.publicKey = keyPair?.publicKey as string
+        this.clientRsaPrivKey = keyPair?.privateKey as string
+        this.clientRsaPubKey = keyPair?.publicKey as string
 
         // call handshake API to save rsa pub key in backend redis
-        await signInitialAPI(this.getPublicKey)
+        await signInitialAPI(this.getClientRsaPubKey)
       }
 
-      if (!this.aesKey) {
+      if (!this.getSignAesSecretKey) {
         // get encrypted session key
         const res = await signAesKeyAPI()
 
         // decrypt session key with private key
-        const realAesKey = await decryptWithPrivateKey(this.getPrivateKey, res.encryptedAes)
+        const realAesKey = await decryptWithPrivateKey(this.getClientPrivKey, res.encryptedAes)
 
-        this.aesKey = realAesKey
+        this.signAesSecretKey = realAesKey
       }
     },
 
@@ -71,9 +78,9 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
       const res = await signAesKeyAPI()
 
       // decrypt session key with private key
-      const realAesKey = await decryptWithPrivateKey(this.privateKey!, res.encryptedAes)
+      const realAesKey = await decryptWithPrivateKey(this.getClientPrivKey, res.encryptedAes)
 
-      this.aesKey = realAesKey
+      this.signAesSecretKey = realAesKey
 
       return realAesKey!
     },
@@ -115,15 +122,15 @@ const useAppStoreSignInside = defineStore(StoreKeys.APP_SIGN, {
         `ua=${ua}`,
       ].join('|')
 
-      return CryptoJS.HmacSHA256(raw, this.getAesKey).toString()
+      return CryptoJS.HmacSHA256(raw, this.getSignAesSecretKey).toString()
     },
   },
 })
 
-const useAppStoreSignOutside = () => useAppStoreSignInside(store)
+const useAppStoreSecurityOutside = () => useAppStoreSecurityInside(store)
 
-export function useAppStoreSign() {
+export function useAppStoreSecurity() {
   if (getCurrentInstance())
-    return useAppStoreSignInside()
-  return useAppStoreSignOutside()
+    return useAppStoreSecurityInside()
+  return useAppStoreSecurityOutside()
 }

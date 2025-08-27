@@ -1,7 +1,7 @@
 import { setupGoogleAnalytics } from './analytics'
 import { setupDevice } from './device'
 
-const appSign = useAppStoreSign()
+const appSign = useAppStoreSecurity()
 const appFingerprint = useAppStoreFingerprint()
 const appGeoIP = useAppStoreGeoIP()
 
