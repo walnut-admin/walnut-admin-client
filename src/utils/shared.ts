@@ -134,3 +134,15 @@ export function pathsToObject<T extends object, R extends Recordable = T>(pathsO
 
   return result as R
 }
+
+export function toUrlSafeBase64(b64: string): string {
+  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+export function fromUrlSafeBase64(b64url: string): string {
+  let b64 = b64url.replace(/-/g, '+').replace(/_/g, '/')
+  while (b64.length % 4) {
+    b64 += '='
+  }
+  return b64
+}

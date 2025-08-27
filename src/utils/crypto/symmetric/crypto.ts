@@ -1,3 +1,4 @@
+import { fromUrlSafeBase64, toUrlSafeBase64 } from '@/utils/shared'
 import CryptoJS from 'crypto-js'
 
 // CryptoJS Ciphers
@@ -42,17 +43,19 @@ interface EncryptionOptions {
   method?: EncryptionMethod
   mode?: EncryptionMode
   padding?: EncryptionPadding
+  urlSafe?: boolean
 }
 
 export class Encryption {
-  private key
-  private iv
+  private key: CryptoJS.lib.WordArray
+  private iv: CryptoJS.lib.WordArray
   private method
-  private mode
-  private padding
+  private mode: keyof typeof CryptoJS.mode
+  private padding: keyof typeof CryptoJS.pad
+  private urlSafe: boolean
 
   constructor(opt?: EncryptionOptions) {
-    const { key, iv, method = 'AES', mode = 'CBC', padding = 'Pkcs7' } = opt!
+    const { key, iv, method = 'AES', mode = 'CBC', padding = 'Pkcs7', urlSafe = false } = opt!
 
     if (key.length % 4 !== 0)
       throw new Error('key length must be multiple of 4')
@@ -63,6 +66,7 @@ export class Encryption {
     this.method = CryptoJS[method]
     this.mode = mode
     this.padding = padding
+    this.urlSafe = urlSafe
   }
 
   encrypt(value: any) {
@@ -74,21 +78,27 @@ export class Encryption {
       mode: CryptoJS.mode[this.mode],
       padding: CryptoJS.pad[this.padding],
     })
-    return encrypted.toString()
+
+    const base64 = encrypted.toString()
+
+    return this.urlSafe ? toUrlSafeBase64(base64) : base64
   }
 
-  decrypt(encrypted: any) {
-    if (!encrypted)
+  decrypt(cipher: string) {
+    if (!cipher)
       return
 
     try {
-      const decrypted = this.method.decrypt(encrypted, this.key, {
+      const base64 = this.urlSafe ? fromUrlSafeBase64(cipher) : cipher
+
+      const decrypted = this.method.decrypt(base64, this.key, {
         iv: this.iv,
         mode: CryptoJS.mode[this.mode],
         padding: CryptoJS.pad[this.padding],
       })
 
-      return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8))
+      const text = decrypted.toString(CryptoJS.enc.Utf8)
+      return JSON.parse(text)
     }
     catch {
       return null
