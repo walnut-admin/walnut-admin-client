@@ -1,6 +1,7 @@
 import { fromUrlSafeBase64, toUrlSafeBase64 } from '@/utils/shared'
 import CryptoJS from 'crypto-js'
 
+// TODO stupid, need to remove
 // CryptoJS Ciphers
 // · AES (the default)
 // · DES

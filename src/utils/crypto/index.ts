@@ -1,6 +1,6 @@
 import { Encryption } from './symmetric/crypto'
 
-// TODO need to remove
+// TODO key module in backend support
 const { url } = useAppEnvCrypto()
 
 export const AppUrlEncryption = new Encryption({
