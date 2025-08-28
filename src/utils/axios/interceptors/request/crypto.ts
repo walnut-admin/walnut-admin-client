@@ -10,20 +10,20 @@ interface CipherEnvelope {
 
 // TODO _autoEncryptRequestData
 export async function encryptRequestValueToEnvelope(value: string): Promise<CipherEnvelope> {
-  // 1. 生成AES-256密钥
+  // 1. Generate AES-256 key
   const aesKey = await generateAes256Key()
 
-  // 2. AES-GCM加密明文，获取IV、密文、标签
+  // 2. AES-GCM encrypt plaintext to get IV, ciphertext and tag
   const { iv, ciphertext, tag } = await aesGcmEncryptSplit(aesKey, value)
 
-  // 3. 导出AES原始密钥并使用RSA加密
+  // 3. Export raw AES key and encrypt with RSA
   const rawAesKey = await exportAesKeyRaw(aesKey)
   const appStoreSecurity = useAppStoreSecurity()
   const serverRsaPubKey = await appStoreSecurity.getServerRsaPubKey()
   const rsaPublicKey = await importRsaPublicKey(serverRsaPubKey)
   const encryptedAesKey = await rsaOaepEncrypt(rsaPublicKey, rawAesKey)
 
-  // 4. 组装加密信封
+  // 4. Assemble encryption envelope
   return {
     enc: 'AES_256_GCM',
     key: arrayBufferToBase64(encryptedAesKey),
