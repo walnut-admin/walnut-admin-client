@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { resetPassowrdAPI, updatePassowrdAPI, userAPI } from '@/api/system/user'
-import { encrpytRequestValueToEnvelope } from '@/utils/axios/interceptors/request/crypto'
+import { encryptRequestValueToEnvelope } from '@/utils/axios/interceptors/request/crypto'
 
 defineOptions({
   name: 'User',
@@ -318,7 +318,7 @@ const [
 
 async function onYes(_: any, done: () => void) {
   try {
-    const passwordEnvelope = await encrpytRequestValueToEnvelope(updatePasswordFormData.value.newPassword)
+    const passwordEnvelope = await encryptRequestValueToEnvelope(updatePasswordFormData.value.newPassword)
 
     await updatePassowrdAPI({
       userId: updatePasswordFormData.value.userId,

@@ -13,6 +13,12 @@ const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
     getGeoInfo(state) {
       return state.geoInfo!
     },
+    getLng(state) {
+      return state.geoInfo?.longitude as number
+    },
+    getLat(state) {
+      return state.geoInfo?.latitude as number
+    },
   },
 
   actions: {

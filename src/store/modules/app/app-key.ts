@@ -3,10 +3,14 @@ import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
-  state: (): IAppStoreKey => ({}),
+const useAppStoreKeyInside = defineStore(StoreKeys.APP_KEY, {
+  state: (): IAppStoreKey => ({
+    baiduAK: '',
+  }),
 
-  getters: {},
+  getters: {
+    getBaiduAK: state => state.baiduAK,
+  },
 
   actions: {
     setBaiduAK(payload: string) {
@@ -14,21 +18,20 @@ const useAppStoreSecretKeyInside = defineStore(StoreKeys.APP_KEY, {
     },
 
     async initBaiduKey() {
+      if (this.getBaiduAK)
+        return
+
       const res = await getBaiduKeyAPI()
 
       this.setBaiduAK(res.B!)
     },
-
-    clearKeys() {
-      this.setBaiduAK('')
-    },
   },
 })
 
-const useAppStoreSecretKeyOutside = () => useAppStoreSecretKeyInside(store)
+const useAppStoreKeyOutside = () => useAppStoreKeyInside(store)
 
-export function useAppStoreSecretKey() {
+export function useAppStoreKey() {
   if (getCurrentInstance())
-    return useAppStoreSecretKeyInside()
-  return useAppStoreSecretKeyOutside()
+    return useAppStoreKeyInside()
+  return useAppStoreKeyOutside()
 }

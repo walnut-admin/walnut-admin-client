@@ -1,4 +1,4 @@
-import { arrayBufferToBase64, importKeyFromPEM } from '@/utils/crypto/shared'
+import { aesGcmEncryptSplit, arrayBufferToBase64, exportAesKeyRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
 
 interface CipherEnvelope {
   enc: 'AES_256_GCM'
@@ -8,50 +8,27 @@ interface CipherEnvelope {
   tag: string // base64(16-byte GCM tag)
 }
 
-export async function encrpytRequestValueToEnvelope(value: string): Promise<CipherEnvelope> {
-  // 1. Generate AES-256 key
-  const aesKey = await crypto.subtle.generateKey(
-    { name: 'AES-GCM', length: 256 },
-    true,
-    ['encrypt'],
-  )
+// TODO _autoEncryptRequestData
+export async function encryptRequestValueToEnvelope(value: string): Promise<CipherEnvelope> {
+  // 1. 生成AES-256密钥
+  const aesKey = await generateAes256Key()
 
-  // 2. Generate 12-byte IV
-  const iv = crypto.getRandomValues(new Uint8Array(12))
+  // 2. AES-GCM加密明文，获取IV、密文、标签
+  const { iv, ciphertext, tag } = await aesGcmEncryptSplit(aesKey, value)
 
-  // 3. AES-GCM encrypt the password
-  const encoder = new TextEncoder()
-  const cipherBuffer = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    aesKey,
-    encoder.encode(value),
-  )
+  // 3. 导出AES原始密钥并使用RSA加密
+  const rawAesKey = await exportAesKeyRaw(aesKey)
+  const appSecurity = useAppStoreSecurity()
+  const serverRsaPubKey = await appSecurity.getServerRsaPubKey()
+  const rsaPublicKey = await importRsaPublicKey(serverRsaPubKey)
+  const encryptedAesKey = await rsaOaepEncrypt(rsaPublicKey, rawAesKey)
 
-  // AES-GCM return format: cipherBuffer = ciphertext | tag(16 bytes)
-  const cipherBytes = new Uint8Array(cipherBuffer)
-  const ct = cipherBytes.slice(0, cipherBytes.length - 16)
-  const tag = cipherBytes.slice(-16)
-
-  // 4. Export raw AES key
-  const rawAes = await crypto.subtle.exportKey('raw', aesKey)
-
-  // 5. RSA-OAEP encrypt the AES key
-  const appSign = useAppStoreSecurity()
-  const serverRsaPubKey = await appSign.getServerRsaPubKey()
-  const rsaKey = await importKeyFromPEM(serverRsaPubKey, 'public', { name: 'RSA-OAEP', hash: { name: 'SHA-256' } }, false, ['encrypt'])
-
-  const encryptedAesKey = await crypto.subtle.encrypt(
-    { name: 'RSA-OAEP' },
-    rsaKey,
-    rawAes,
-  )
-
-  // 6. Assemble the envelope
+  // 4. 组装加密信封
   return {
     enc: 'AES_256_GCM',
     key: arrayBufferToBase64(encryptedAesKey),
     iv: arrayBufferToBase64(iv.buffer),
-    ct: arrayBufferToBase64(ct.buffer),
+    ct: arrayBufferToBase64(ciphertext.buffer),
     tag: arrayBufferToBase64(tag.buffer),
   }
 }
