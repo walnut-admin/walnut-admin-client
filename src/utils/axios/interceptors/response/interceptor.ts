@@ -1,9 +1,10 @@
 import type { AxiosResponse } from 'axios'
-import { AppResponseEncryption } from '@/utils/crypto'
+import { get, isArray, set } from 'lodash-es'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
 import { BussinessCodeConst, errorCodeList } from '../../constant'
 import { SingletonPromiseCapJSToken } from './capJSToken'
+import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
 import { SingletonPromiseSign } from './sign'
 
@@ -15,10 +16,23 @@ export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponse
 
   // normal success
   if (code === BussinessCodeConst.SUCCESS) {
-    // auto decrypt response data with `crypto-js`
-    if (res.config._autoDecryptResponseData)
-      return Promise.resolve(AppResponseEncryption.decrypt(data))
+    // auto decrypt response data
+    const keys = res.config._autoDecryptResponseData as string[]
 
+    if (keys && (Array.isArray(keys) ? keys.length : true)) {
+      const keyList = isArray(keys) ? keys : [keys]
+      const decryptedData = { ...data }
+
+      for (const key of keyList) {
+        const encryptedVal = get(decryptedData, key)
+        if (encryptedVal !== null) {
+          const decryptedVal = await decryptResponseValue(encryptedVal)
+          set(decryptedData, key, decryptedVal)
+        }
+      }
+
+      return Promise.resolve(decryptedData)
+    }
     return Promise.resolve(data)
   }
 

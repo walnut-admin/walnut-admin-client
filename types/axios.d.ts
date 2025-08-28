@@ -2,7 +2,7 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
 
 declare module 'axios' {
-  interface AxiosRequestConfig {
+  interface AxiosRequestConfig<D> {
     /**
      * carry token in header `Authorization Bearer`
      */
@@ -24,9 +24,9 @@ declare module 'axios' {
     _sleep?: number
 
     /**
-     * auto decrypt response data with `crypto-js`
+     * auto decrypt response specific field data
      */
-    _autoDecryptResponseData?: booloean
+    _autoDecryptResponseData?: (keyof D)[]
 
     /**
      * cache flag

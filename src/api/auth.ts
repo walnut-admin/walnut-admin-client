@@ -77,7 +77,7 @@ export function getBaiduKeyAPI() {
   return AppAxios.get<AppSecretKeysInterface>(
     {
       url: Auth.KEYS,
-      _autoDecryptResponseData: true,
+      _autoDecryptResponseData: ['B'],
       _cache: true,
     },
   )
