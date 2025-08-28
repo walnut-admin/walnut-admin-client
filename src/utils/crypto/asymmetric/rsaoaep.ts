@@ -4,7 +4,7 @@
  * Algorithm: RSA-OAEP + SHA-256
  */
 
-import { base64ToArrayBuffer, exportKeyToPEM } from '../shared'
+import { base64ToArrayBuffer, exportKeyToPEM, importRsaPrivateKey, rsaOaepDecrypt } from '../shared'
 
 /**
  * Generates RSA-OAEP key pair
@@ -65,33 +65,14 @@ export async function decryptWithPrivateKey(
   }
 
   try {
-    // Remove PEM headers/footers
-    const pemContents = privateKeyPem
-      .replace(/-----BEGIN PRIVATE KEY-----/, '')
-      .replace(/-----END PRIVATE KEY-----/, '')
-      .replace(/\s+/g, '')
+    // Reuse private key import logic from shared.ts
+    const privateKey = await importRsaPrivateKey(privateKeyPem)
 
-    const binaryDer = base64ToArrayBuffer(pemContents)
-
-    // Import private key
-    const privateKey = await crypto.subtle.importKey(
-      'pkcs8',
-      binaryDer,
-      {
-        name: 'RSA-OAEP',
-        hash: 'SHA-256',
-      },
-      false,
-      ['decrypt'],
-    )
-
-    // Decrypt
+    // Convert ciphertext format
     const cipherBuffer = base64ToArrayBuffer(base64Cipher)
-    const decryptedBuffer = await crypto.subtle.decrypt(
-      { name: 'RSA-OAEP' },
-      privateKey,
-      cipherBuffer,
-    )
+
+    // Reuse RSA-OAEP decryption logic from shared.ts
+    const decryptedBuffer = await rsaOaepDecrypt(privateKey, cipherBuffer)
 
     return new TextDecoder().decode(decryptedBuffer)
   }
