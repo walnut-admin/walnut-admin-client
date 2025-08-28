@@ -5,6 +5,6 @@ const signQueue = new SingletonPromise<string>()
 
 export function SingletonPromiseSign() {
   return signQueue.run(async () => {
-    return await appSign.refreshAesKey()
+    return await appSign.getSignAesKey()
   })
 }

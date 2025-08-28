@@ -64,17 +64,11 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
       }
 
       if (!this.getSignAesSecretKey) {
-        // get encrypted session key
-        const res = await signAesKeyAPI()
-
-        // decrypt session key with private key
-        const realAesKey = await decryptWithPrivateKey(this.getClientPrivKey, res.encryptedAes)
-
-        this.signAesSecretKey = realAesKey
+        await this.getSignAesKey()
       }
     },
 
-    async refreshAesKey() {
+    async getSignAesKey() {
       const res = await signAesKeyAPI()
 
       // decrypt session key with private key
