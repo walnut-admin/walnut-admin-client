@@ -5,8 +5,8 @@ defineOptions({
 })
 
 const state = ref({
-  location1: [],
-  location2: [126.544844, 45.726521],
+  location1: undefined,
+  location2: '126.544844,45.726521',
 })
 </script>
 
@@ -20,7 +20,7 @@ const state = ref({
           Basic usage
         </WTitle>
 
-        <w-location-picker v-model:value="state.location1" />
+        <WLocationPicker v-model:value="state.location1" />
       </n-list-item>
 
       <n-list-item>
@@ -28,7 +28,7 @@ const state = ref({
           Feedback
         </WTitle>
 
-        <w-location-picker v-model:value="state.location2" />
+        <WLocationPicker v-model:value="state.location2" />
       </n-list-item>
     </n-list>
   </WDemoCard>

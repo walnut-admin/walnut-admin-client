@@ -45,9 +45,8 @@ declare global {
     webVitals: WebVitalsAPI
 
     // baidu map
-    BMap: any
-    HOST_TYPE: string
-    BMAP_STATUS_SUCCESS: number
-    BMAP_ANCHOR_BOTTOM_RIGHT: number
+    BMapGL: any
+    __onBMapLoaded?: () => void
+    BMAP_ANCHOR_TOP_LEFT: number
   }
 }

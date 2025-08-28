@@ -1,180 +1,189 @@
 <script lang="ts" setup>
-import type { Nullable } from 'easy-fns-ts'
-// TODO rework
 import type { IWCompVendorLocationPickerProps } from '.'
-import { genString } from 'easy-fns-ts'
 
-defineOptions({
-  name: 'WVendorLocationPicker',
-})
+defineOptions({ name: 'WVendorLocationPicker' })
 
 const props = withDefaults(defineProps<IWCompVendorLocationPickerProps>(), {
   height: '50vh',
-  width: '50vw',
+  width: '80vw',
 })
 
-const emits = defineEmits(['update:value'])
+const modelValue = defineModel<string>('value', { required: true })
+const addressValue = defineModel<string>('address')
 
-const appKey = useAppStoreSecretKey()
+const appKey = useAppStoreKey()
+const appGeoIP = useAppStoreGeoIP()
 
-// third party libs should use shallowRef !!!
-const baiduRef = shallowRef<Nullable<HTMLDivElement>>(null)
-const baiduMap = shallowRef<any>()
-const baiduMapAutoComplete = shallowRef<any>()
+const wrapRef = shallowRef<HTMLDivElement>()
 
-const acId = ref(`ac${genString(8)}`)
+const mapInst = shallowRef()
+const localSearchInst = shallowRef()
+const geoCoderInst = shallowRef()
 
-const filter = ref<string>()
-const show = ref(false)
+const modalVisible = ref(false)
+const searchOptions = ref<{ label: string, value: string }[]>([])
 
-function onOpenPopover() {
-  show.value = true
-
-  if (window.BMap) {
-    onInitMap()
+async function initMap(lng: number, lat: number) {
+  if (mapInst.value)
     return
+
+  const BMapGL = window.BMapGL
+
+  const map = new BMapGL.Map(wrapRef.value, { enableSdkStorage: false })
+  mapInst.value = map
+
+  const defaultPt = new BMapGL.Point(lng, lat)
+  map.centerAndZoom(defaultPt, 15)
+  map.enableScrollWheelZoom(true)
+  map.addControl(new BMapGL.ScaleControl())
+  map.addControl(new BMapGL.MapTypeControl())
+
+  const cityControl = new BMapGL.CityListControl({
+    anchor: window.BMAP_ANCHOR_TOP_LEFT,
+    offset: new BMapGL.Size(10, 5),
+  })
+  map.addControl(cityControl)
+
+  createSearch(BMapGL)
+
+  createMapClick(BMapGL)
+}
+
+function loadBMapGL(ak: string) {
+  return new Promise((resolve, reject) => {
+    if (window.BMapGL?.Map)
+      return resolve(window.BMapGL)
+
+    window.__onBMapLoaded = () => {
+      delete window.__onBMapLoaded
+      resolve(window.BMapGL)
+    }
+
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = `https://api.map.baidu.com/api?type=webgl&v=1.0&ak=${ak}&callback=__onBMapLoaded`
+    script.onerror = reject
+    document.head.appendChild(script)
+  })
+}
+
+function doZoomAfterChoose(point: { lng: number, lat: number }) {
+  mapInst.value.centerAndZoom(point, 18)
+}
+
+function createMapClick(BMapGL: any) {
+  geoCoderInst.value = new BMapGL.Geocoder()
+
+  function onMapClick(e: { type: string, latlng: { lng: number, lat: number } }) {
+    const pt = e.latlng
+
+    mapInst.value.clearOverlays()
+    mapInst.value.addOverlay(new BMapGL.Marker(pt))
+
+    geoCoderInst.value.getLocation(pt, (rs: any) => {
+      localSearchInst.value?.search(rs.address)
+
+      doZoomAfterChoose(pt)
+    })
   }
 
-  const url = `https://api.map.baidu.com/getscript?v=3.0&ak=${appKey.baiduAK}&services=&t=20220512164557`
-  window.HOST_TYPE = '2'
-  useScriptTag(url, onInitMap)
+  useEventListener(mapInst, 'click', onMapClick)
+
+  return geoCoderInst.value
 }
 
-function onFilter() {
-  baiduMapAutoComplete.value.search(filter.value)
+function createSearch(BMapGL: any) {
+  localSearchInst.value = new BMapGL.LocalSearch(mapInst.value!, {
+    renderOptions: { map: mapInst.value!, autoViewport: false, panel: null },
+    onSearchComplete: (results: any) => {
+      searchOptions.value = results.getPoi(0)
+        ? Array.from({ length: results.getNumPois() })
+          .map((_, i) => {
+            const poi = results.getPoi(i)
+            return poi
+              ? { label: `${poi.title} · ${poi.address}`, value: [poi.point.lng, poi.point.lat].join(',') }
+              : null
+          })
+          .filter(Boolean) as { label: string, value: string }[]
+        : []
+    },
+  })
 }
 
-const onDebounedFilter = useDebounceFn(onFilter, 500)
-
-function onClearFilter() {
-  emits('update:value', [])
-}
-
-function onFeedback() {
-  if (!props.value || props.value.length === 0)
+function onSelect(lngLat: string) {
+  if (!lngLat)
     return
 
-  const BMap = window.BMap
-  const myGeo = new BMap.Geocoder()
+  const pt = new window.BMapGL.Point(...lngLat.split(','))
+  mapInst.value.clearOverlays()
+  mapInst.value.addOverlay(new window.BMapGL.Marker(pt))
+  mapInst.value.panTo(pt)
 
-  myGeo.getLocation(
-    new BMap.Point(props.value[0], props.value[1]),
-    (res: any) => {
-      filter.value = res.address + res.surroundingPois[0].title
+  modelValue.value = lngLat
+  addressValue.value = searchOptions.value.find(i => i.value === lngLat)?.label
 
-      baiduMap.value.centerAndZoom(res.point, 18)
-      baiduMap.value.addOverlay(new BMap.Marker(res.point))
-    },
-  )
+  doZoomAfterChoose(pt)
 }
 
-async function onInitMap() {
-  console.log('Init Baidu Map')
+function onClear() {
+  modelValue.value = ''
+  addressValue.value = ''
+  searchOptions.value = []
+}
 
-  await nextTick()
+async function onOpen() {
+  modalVisible.value = true
 
-  const wrap = unref(baiduRef)
+  await appKey.initBaiduKey()
+  await loadBMapGL(appKey.getBaiduAK!)
+  await initMap(appGeoIP.getLng, appGeoIP.getLat)
 
-  const BMap = window.BMap
-  const map = new BMap.Map(wrap)
-  baiduMap.value = map
-  const point = new BMap.Point(116.331398, 39.897445)
-  map.centerAndZoom(point, 15)
-  map.addControl(
-    new BMap.ScaleControl({ anchor: window.BMAP_ANCHOR_BOTTOM_RIGHT }),
-  )
-  map.addControl(new BMap.MapTypeControl())
-  map.enableScrollWheelZoom(true)
-  map.enableAutoResize(true)
-  map.setDefaultCursor('Crosshair')
-
-  baiduMapAutoComplete.value = new BMap.Autocomplete({
-    input: acId.value,
-    location: map,
-    onSearchComplete(_data: any) {},
-  })
-
-  baiduMapAutoComplete.value.addEventListener('onconfirm', (e: any) => {
-    const v = e.item.value
-
-    filter.value = v.province + v.city + v.district + v.street + v.business
-
-    const myGeo = new BMap.Geocoder()
-
-    myGeo.getPoint(filter.value, (point: any) => {
-      emits('update:value', [point.lng, point.lat])
-      baiduMapAutoComplete.value.hide()
-
-      map.centerAndZoom(point, 18)
-      map.addOverlay(new BMap.Marker(point))
+  // 3. 回显已有坐标
+  if (props.value?.length === 2) {
+    const pt = new window.BMapGL.Point(props.value[0], props.value[1])
+    geoCoderInst.value.getLocation(pt, () => {
+      mapInst.value.centerAndZoom(pt, 18)
+      mapInst.value.addOverlay(new window.BMapGL.Marker(pt))
     })
-  })
-
-  onFeedback()
-
-  // baiduMapAutoComplete.value.addEventListener(
-  //   'onhighlight',
-  //   function (e: any) {
-  //     console.log(e, 233)
-  //   }
-  // )
-
-  // // 用经纬度设置地图中心点
-  // function theLocation(lng, lat) {
-  //   map.clearOverlays()
-  //   var new_point = new BMap.Point(lng, lat)
-  //   var marker = new BMap.Marker(new_point) // 创建标注
-  //   map.addOverlay(marker) // 将标注添加到地图中
-  //   map.panTo(new_point)
-  // }
-
-  // var geolocation = new BMap.Geolocation()
-  // geolocation.getCurrentPosition(function (r) {
-  //   if (this.getStatus() == window.BMAP_STATUS_SUCCESS) {
-  //     var mk = new BMap.Marker(r.point)
-  //     map.addOverlay(mk)
-  //     map.panTo(r.point)
-  //     alert('您的位置：' + r.point.lng + ',' + r.point.lat)
-  //     theLocation(r.point.lng, r.point.lat)
-  //   } else {
-  //     alert('failed' + this.getStatus())
-  //   }
-  // })
+  }
 }
 
-onMounted(() => {
-  appKey.initBaiduKey()
+const onSearch = useDebounceFn((value: string) => {
+  if (!value.trim()) {
+    searchOptions.value = []
+    return
+  }
+  localSearchInst.value.search(value)
+}, 400)
+
+tryOnScopeDispose(() => {
+  mapInst.value.clearOverlays()
 })
 </script>
 
 <template>
-  <n-popover v-model:show="show" trigger="click" display-directive="show">
-    <template #trigger>
-      <n-input
-        :value="filter"
-        readonly
-        @click="onOpenPopover"
-      />
-    </template>
+  <div>
+    <n-input readonly :value="addressValue" @click="onOpen" />
 
-    <template #header>
-      <n-input
-        :id="acId"
-        v-model:value="filter"
+    <WModal v-model:show="modalVisible" :title="$t('comp.location.title')" width="80%" height="80%" display-directive="show">
+      <n-select
+        v-model:value="modelValue"
+        :options="searchOptions"
+        filterable
+        remote
         clearable
-        @input="onDebounedFilter"
-        @clear="onClearFilter"
+        placeholder="输入地址搜索"
+        class="mb-2 w-full"
+        @search="onSearch"
+        @update:value="onSelect"
+        @clear="onClear"
       />
-    </template>
 
-    <template #default>
-      <div ref="baiduRef" :style="{ height, width }" />
-    </template>
-  </n-popover>
+      <div ref="wrapRef" :style="{ height: props.height, width: props.width }" />
+    </WModal>
+  </div>
 </template>
 
-<style>
-.tangram-suggestion-main {
-  z-index: 9999999999;
-}
+<style scoped>
+
 </style>
