@@ -1,7 +1,6 @@
 export function useAppEnvCrypto() {
   return {
     url: import.meta.env.VITE_CRYPTO_URL,
-    request: import.meta.env.VITE_CRYPTO_REQUEST,
     response: import.meta.env.VITE_CRYPTO_RESPONSE,
   }
 }
