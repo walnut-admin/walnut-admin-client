@@ -1,11 +1,12 @@
-// TODO rsa-oaep & aes-gcm
 /**
  * Converts ArrayBuffer to Base64
  * @description Converts an ArrayBuffer object to a Base64 encoded string
  * @param buf - The ArrayBuffer to convert
  * @returns Base64 encoded string
  */
-export const arrayBufferToBase64 = (buf: ArrayBuffer): string => btoa(String.fromCharCode(...new Uint8Array(buf)))
+export function arrayBufferToBase64(buf: ArrayBuffer | ArrayBufferLike): string {
+  return btoa(String.fromCharCode(...new Uint8Array(buf)))
+}
 
 /**
  * Converts Base64 to ArrayBuffer
@@ -13,7 +14,9 @@ export const arrayBufferToBase64 = (buf: ArrayBuffer): string => btoa(String.fro
  * @param base64 - The Base64 string to convert
  * @returns ArrayBuffer containing the decoded data
  */
-export const base64ToArrayBuffer = (b64: string): ArrayBuffer => Uint8Array.from(atob(b64), c => c.charCodeAt(0)).buffer
+export function base64ToArrayBuffer(b64: string): ArrayBuffer {
+  return Uint8Array.from(atob(b64), c => c.charCodeAt(0)).buffer
+}
 
 /**
  * Exports key to PEM format
@@ -78,7 +81,7 @@ export async function importKeyFromPEM(
 }
 
 /**
- * 导入RSA私钥(PKCS#8 PEM格式)
+ * Imports RSA private key (PKCS#8 PEM format)
  */
 export async function importRsaPrivateKey(pem: string): Promise<CryptoKey> {
   return importKeyFromPEM(
@@ -91,7 +94,7 @@ export async function importRsaPrivateKey(pem: string): Promise<CryptoKey> {
 }
 
 /**
- * 导入RSA公钥(SPKI PEM格式)
+ * Imports RSA public key (SPKI PEM format)
  */
 export async function importRsaPublicKey(pem: string): Promise<CryptoKey> {
   return importKeyFromPEM(
@@ -104,10 +107,10 @@ export async function importRsaPublicKey(pem: string): Promise<CryptoKey> {
 }
 
 /**
- * RSA-OAEP加密
- * @param publicKey RSA公钥
- * @param data 待加密数据(ArrayBuffer)
- * @returns 加密后的数据(ArrayBuffer)
+ * RSA-OAEP Encryption
+ * @param publicKey - RSA public key
+ * @param data - Data to encrypt (ArrayBuffer)
+ * @returns Encrypted data (ArrayBuffer)
  */
 export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): Promise<ArrayBuffer> {
   return crypto.subtle.encrypt(
@@ -118,10 +121,10 @@ export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): P
 }
 
 /**
- * RSA-OAEP解密
- * @param privateKey RSA私钥
- * @param encryptedData 加密数据(ArrayBuffer)
- * @returns 解密后的数据(ArrayBuffer)
+ * RSA-OAEP Decryption
+ * @param privateKey - RSA private key
+ * @param encryptedData - Encrypted data (ArrayBuffer)
+ * @returns Decrypted data (ArrayBuffer)
  */
 export async function rsaOaepDecrypt(privateKey: CryptoKey, encryptedData: ArrayBuffer): Promise<ArrayBuffer> {
   return crypto.subtle.decrypt(
@@ -132,7 +135,7 @@ export async function rsaOaepDecrypt(privateKey: CryptoKey, encryptedData: Array
 }
 
 /**
- * 生成AES-256-GCM密钥
+ * Generates AES-256-GCM key
  */
 export async function generateAes256Key(): Promise<CryptoKey> {
   return crypto.subtle.generateKey(
@@ -143,17 +146,17 @@ export async function generateAes256Key(): Promise<CryptoKey> {
 }
 
 /**
- * AES-GCM加密(返回拆分的IV、密文、标签)
- * @param key AES密钥
- * @param plaintext 明文
- * @returns { iv, ciphertext, tag }
+ * AES-GCM Encryption (returns split IV, ciphertext, and tag)
+ * @param key - AES key
+ * @param plaintext - Plaintext string to encrypt
+ * @returns { iv, ciphertext, tag } - Split encryption components
  */
 export async function aesGcmEncryptSplit(key: CryptoKey, plaintext: string): Promise<{
   iv: Uint8Array
   ciphertext: Uint8Array
   tag: Uint8Array
 }> {
-  const iv = crypto.getRandomValues(new Uint8Array(12)) // GCM推荐12字节IV
+  const iv = crypto.getRandomValues(new Uint8Array(12)) // 12-byte IV recommended for GCM
   const encoder = new TextEncoder()
   const cipherBuffer = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
@@ -164,18 +167,18 @@ export async function aesGcmEncryptSplit(key: CryptoKey, plaintext: string): Pro
   const cipherBytes = new Uint8Array(cipherBuffer)
   return {
     iv,
-    ciphertext: cipherBytes.slice(0, cipherBytes.length - 16), // 剔除16字节标签
-    tag: cipherBytes.slice(-16), // 提取16字节标签
+    ciphertext: cipherBytes.slice(0, cipherBytes.length - 16), // Exclude 16-byte tag
+    tag: cipherBytes.slice(-16), // Extract 16-byte tag
   }
 }
 
 /**
- * AES-GCM解密(接收拆分的IV、密文、标签)
- * @param key AES密钥
- * @param iv 初始向量
- * @param ciphertext 密文
- * @param tag 认证标签
- * @returns 解密后的明文
+ * AES-GCM Decryption (accepts split IV, ciphertext, and tag)
+ * @param key - AES key
+ * @param iv - Initialization Vector
+ * @param ciphertext - Encrypted ciphertext
+ * @param tag - Authentication tag
+ * @returns Decrypted plaintext string
  */
 export async function aesGcmDecryptSplit(
   key: CryptoKey,
@@ -183,13 +186,13 @@ export async function aesGcmDecryptSplit(
   ciphertext: Uint8Array,
   tag: Uint8Array,
 ): Promise<string> {
-  // 合并密文和标签(GCM解密需要完整的 ciphertext + tag)
+  // Combine ciphertext and tag (GCM decryption requires complete ciphertext + tag)
   const ctWithTag = new Uint8Array(ciphertext.length + tag.length)
   ctWithTag.set(ciphertext)
   ctWithTag.set(tag, ciphertext.length)
 
   const plainBuffer = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
+    { name: 'AES-GCM', iv: iv as BufferSource },
     key,
     ctWithTag,
   )
@@ -198,14 +201,14 @@ export async function aesGcmDecryptSplit(
 }
 
 /**
- * 导出AES密钥为原始格式(ArrayBuffer)
+ * Exports AES key to raw format (ArrayBuffer)
  */
 export async function exportAesKeyRaw(key: CryptoKey): Promise<ArrayBuffer> {
   return crypto.subtle.exportKey('raw', key)
 }
 
 /**
- * 导入原始格式AES密钥
+ * Imports AES key from raw format (ArrayBuffer)
  */
 export async function importAesKeyRaw(rawKey: ArrayBuffer): Promise<CryptoKey> {
   return crypto.subtle.importKey(
