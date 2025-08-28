@@ -8,7 +8,7 @@ export default defineConfig({
   VITE_PROXY: VITE_PROXY_VALIDATE(),
 
   VITE_CRYPTO_URL: VITE_KEY_IV_VALIDATE(),
-  VITE_CRYPTO_RESPONSE: VITE_KEY_IV_VALIDATE(),
+
   VITE_SECONDS_AXIOS_TIMEOUT: z.coerce.number(),
   VITE_SECONDS_AXIOS_CACHE: z.coerce.number(),
   VITE_SECONDS_PERSIST: z.coerce.number(),
