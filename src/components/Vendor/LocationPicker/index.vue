@@ -11,8 +11,8 @@ const props = withDefaults(defineProps<IWCompVendorLocationPickerProps>(), {
 const modelValue = defineModel<string>('value', { required: true })
 const addressValue = defineModel<string>('address')
 
-const appKey = useAppStoreKey()
-const appGeoIP = useAppStoreGeoIP()
+const appStoreKey = useAppStoreKey()
+const appStoreGeoIP = useAppStoreGeoIP()
 
 const wrapRef = shallowRef<HTMLDivElement>()
 
@@ -134,9 +134,9 @@ function onClear() {
 async function onOpen() {
   modalVisible.value = true
 
-  await appKey.initBaiduKey()
-  await loadBMapGL(appKey.getBaiduAK!)
-  await initMap(appGeoIP.getLng, appGeoIP.getLat)
+  await appStoreKey.initBaiduKey()
+  await loadBMapGL(appStoreKey.getBaiduAK!)
+  await initMap(appStoreGeoIP.getLng, appStoreGeoIP.getLat)
 
   // 3. 回显已有坐标
   if (props.value?.length === 2) {

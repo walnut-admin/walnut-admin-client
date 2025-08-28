@@ -10,10 +10,10 @@ const p3 = 'some:strange:permission:string3'
 
 const p3show = ref(true)
 
-const userPermission = useAppStoreUserPermission()
+const userStorePermission = useAppStoreUserPermission()
 
 function onToggle(s: string) {
-  userPermission.togglePermission(s)
+  userStorePermission.togglePermission(s)
 }
 
 function onReset() {

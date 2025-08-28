@@ -6,14 +6,14 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const appCapJSToken = useAppStoreCapJSToken()
+const appStoreCapJSToken = useAppStoreCapJSToken()
 
 function onCapSolve(e: { detail: { token: string } }) {
   const token = e.detail.token
 
-  appCapJSToken.onCapSuccess!(token)
+  appStoreCapJSToken.onCapSuccess!(token)
   const id = setTimeout(() => {
-    appCapJSToken.onCloseCapModal()
+    appStoreCapJSToken.onCloseCapModal()
     clearTimeout(id)
   }, 1000)
 }
@@ -21,7 +21,7 @@ function onCapSolve(e: { detail: { token: string } }) {
 
 <template>
   <WModal
-    v-model:show="appCapJSToken.capShow"
+    v-model:show="appStoreCapJSToken.capShow"
     :close-on-esc="false"
     :closable="false"
     :mask-closable="false"

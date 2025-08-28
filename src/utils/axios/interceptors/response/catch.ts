@@ -35,9 +35,9 @@ async function checkReponseErrorStatus(status?: number, msg?: string) {
       {
         responseError('app.ajax.401')
 
-        const userAuth = useAppStoreUserAuth()
+        const userStoreAuth = useAppStoreUserAuth()
 
-        await userAuth.Signout()
+        await userStoreAuth.Signout()
       }
       break
 

@@ -18,8 +18,8 @@ export async function encryptRequestValueToEnvelope(value: string): Promise<Ciph
 
   // 3. 导出AES原始密钥并使用RSA加密
   const rawAesKey = await exportAesKeyRaw(aesKey)
-  const appSecurity = useAppStoreSecurity()
-  const serverRsaPubKey = await appSecurity.getServerRsaPubKey()
+  const appStoreSecurity = useAppStoreSecurity()
+  const serverRsaPubKey = await appStoreSecurity.getServerRsaPubKey()
   const rsaPublicKey = await importRsaPublicKey(serverRsaPubKey)
   const encryptedAesKey = await rsaOaepEncrypt(rsaPublicKey, rawAesKey)
 

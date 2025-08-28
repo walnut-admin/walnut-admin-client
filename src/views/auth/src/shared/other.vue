@@ -10,9 +10,9 @@ defineOptions({
 })
 
 const { t } = useAppI18n()
-const userAuth = useAppStoreUserAuth()
-const appBackendSettings = useAppStoreSettingBackend()
-const appFingerprint = useAppStoreFingerprint()
+const userStoreAuth = useAppStoreUserAuth()
+const appStoreBackendSettings = useAppStoreSettingBackend()
+const appStoreFingerprint = useAppStoreFingerprint()
 const { loading } = useAuthContext()
 
 let childWindow: Window | null
@@ -23,13 +23,13 @@ const iconArr = computed(() =>
       key: 'github',
       icon: 'ant-design:github-outlined',
       title: t('app.auth.other.github'),
-      show: appBackendSettings.getGitHubEnabled,
+      show: appStoreBackendSettings.getGitHubEnabled,
     },
     {
       key: 'gitee',
       icon: 'simple-icons:gitee',
       title: t('app.auth.other.gitee'),
-      show: appBackendSettings.getGiteeEnabled,
+      show: appStoreBackendSettings.getGiteeEnabled,
     },
   ].filter(i => i.show ?? true),
 )
@@ -50,7 +50,7 @@ async function onOAuth(type: string) {
   const { httpUrl } = useAppEnvProxy()
 
   const eventSource = new EventSource(
-    `${httpUrl}/auth/oauth/${type}/sse/${appFingerprint.getFingerprint}`,
+    `${httpUrl}/auth/oauth/${type}/sse/${appStoreFingerprint.getFingerprint}`,
     { withCredentials: true },
   )
 
@@ -59,7 +59,7 @@ async function onOAuth(type: string) {
 
     if (res.event === `token:${type}`) {
       useAppMsgSuccess(t('app.oauth.success'))
-      await userAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
+      await userStoreAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
     }
 
     loading.value = false

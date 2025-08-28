@@ -10,8 +10,8 @@ import { homepage, urls } from '~build/package'
 import SwitchRole from './switchRole.vue'
 
 const { t } = useAppI18n()
-const userProfile = useAppStoreUserProfile()
-const userAuth = useAppStoreUserAuth()
+const userStoreProfile = useAppStoreUserProfile()
+const userStoreAuth = useAppStoreUserAuth()
 
 const switchRoleRef = useTemplateRef('switchRoleRef')
 
@@ -32,7 +32,7 @@ const dropdownOptions = computed<DropdownMixedOption[]>(() => [
     key: '3',
     label: t('app.base.switchRole'),
     icon: () => <WIcon icon="ant-design:github-outlined"></WIcon>,
-    show: userProfile.getCurrentRoleModeIsSwitchable,
+    show: userStoreProfile.getCurrentRoleModeIsSwitchable,
   },
 
   {
@@ -68,7 +68,7 @@ async function onSelect(val: string) {
     const { confirmed } = await useAppConfirm(t('app.user.signout.warning'))
 
     if (confirmed)
-      await userAuth.Signout()
+      await userStoreAuth.Signout()
   }
 }
 </script>
@@ -89,7 +89,7 @@ async function onSelect(val: string) {
       </div>
 
       <div class="my-auto pl-1 text-base font-semibold">
-        {{ userProfile.getDisplayName }}
+        {{ userStoreProfile.getDisplayName }}
       </div>
     </div>
   </n-dropdown>

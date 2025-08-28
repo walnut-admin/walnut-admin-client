@@ -5,8 +5,8 @@ import type { Nullable } from 'easy-fns-ts'
  * @description App Tab Core Function
  */
 export function useTabs() {
-  const appTab = useAppStoreTab()
-  const appAdapter = useAppStoreAdapter()
+  const appStoreTab = useAppStoreTab()
+  const appStoreAdapter = useAppStoreAdapter()
 
   const route = useAppRoute()
   const { currentRoute } = useAppRouter()
@@ -15,7 +15,7 @@ export function useTabs() {
   const isOverflow = ref(false)
 
   const getCurrentRouteTabIndex = computed(() =>
-    appTab.tabs.findIndex(item => item.name === currentRoute.value.name),
+    appStoreTab.tabs.findIndex(item => item.name === currentRoute.value.name),
   )
 
   const onScrollToCurrentTab = async () => {
@@ -23,9 +23,9 @@ export function useTabs() {
 
     // scroll by index
     // If is mobile, just scroll to current route tab index
-    scrollRef.value?.scrollToIndex(appAdapter.isMobile
+    scrollRef.value?.scrollToIndex(appStoreAdapter.isMobile
       ? getCurrentRouteTabIndex.value
-      : appTab.leaveRoomForTabs(getCurrentRouteTabIndex.value))
+      : appStoreTab.leaveRoomForTabs(getCurrentRouteTabIndex.value))
   }
 
   const onUpdateOverflow = () => {
@@ -36,12 +36,12 @@ export function useTabs() {
     () => route,
     async (v) => {
       // Build tab
-      appTab.createTabs(appTab.createTabByRoute(v))
+      appStoreTab.createTabs(appStoreTab.createTabByRoute(v))
 
       await nextTick()
 
       // use device to trigger Scroll
-      appAdapter.device && await onScrollToCurrentTab()
+      appStoreAdapter.getDevice && await onScrollToCurrentTab()
     },
     {
       immediate: true,
@@ -50,7 +50,7 @@ export function useTabs() {
   )
 
   watch(
-    () => appTab.tabs,
+    () => appStoreTab.tabs,
     async () => {
       await nextTick()
       onUpdateOverflow()

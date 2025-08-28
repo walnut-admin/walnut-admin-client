@@ -10,11 +10,11 @@ defineOptions({
 })
 
 const { t } = useAppI18n()
-const userProfile = useAppStoreUserProfile()
+const userStoreProfile = useAppStoreUserProfile()
 
 const avatarUploadRef = ref<WAvatarUploadInst>()
 const formData = ref<AppSystemUser>({
-  ...pick(userProfile.profile, [
+  ...pick(userStoreProfile.profile, [
     '_id',
     'userName',
     'nickName',
@@ -120,7 +120,7 @@ const [register] = useForm<typeof formData.value>({
 
             await userAPI.update(formData.value)
             useAppMsgSuccess()
-            await userProfile.getProfile()
+            await userStoreProfile.getProfile()
           }
           finally {
             loading.value = false

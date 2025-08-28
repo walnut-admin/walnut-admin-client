@@ -5,14 +5,14 @@ defineOptions({
   name: 'FeatureLayoutTabs',
 })
 
-const appTab = useAppStoreTab()
+const appStoreTab = useAppStoreTab()
 
 const count = ref(0)
 
 const otherName = 'FeatureAnimationName'
 
 const getOtherTabButtonDisabled = computed(
-  () => !appTab.tabs.some(i => i.name === otherName),
+  () => !appStoreTab.tabs.some(i => i.name === otherName),
 )
 
 function onCreate(type: number) {
@@ -22,7 +22,7 @@ function onCreate(type: number) {
   const params
       = type === 2 ? { testParam1: 1, testParam2: 'abc', testParam3: false } : {}
 
-  appTab.createTabs({
+  appStoreTab.createTabs({
     name: `name-${count.value}`,
     path: `path-${count.value}`,
     meta: {
@@ -42,22 +42,22 @@ function onDelete() {
 
   count.value--
 
-  appTab.deleteTabs(`name-${count.value}`)
+  appStoreTab.deleteTabs(`name-${count.value}`)
 }
 
 function onDynamicTitle(type: number, self = true) {
   const pool: Recordable = {
     1: () => {
-      appTab.setCurrentTabTitle('Title ?')
+      appStoreTab.setCurrentTabTitle('Title ?')
     },
     2: () => {
-      appTab.setCurrentTabTitle('3s expired', {
+      appStoreTab.setCurrentTabTitle('3s expired', {
         timeout: 3000,
         maxLength: 12,
       })
     },
     3: () => {
-      appTab.setCurrentTabTitle(
+      appStoreTab.setCurrentTabTitle(
         'this will scrolling for 10s and then recover',
         {
           timeout: 10000,
@@ -66,22 +66,22 @@ function onDynamicTitle(type: number, self = true) {
       )
     },
     4: () => {
-      appTab.recoverCurrentTabTitle()
+      appStoreTab.recoverCurrentTabTitle()
     },
   }
 
   const pool2: Recordable = {
     1: () => {
-      appTab.setTabTitle(otherName, 'Title ?')
+      appStoreTab.setTabTitle(otherName, 'Title ?')
     },
     2: () => {
-      appTab.setTabTitle(otherName, '3s expired', {
+      appStoreTab.setTabTitle(otherName, '3s expired', {
         timeout: 3000,
         maxLength: 12,
       })
     },
     3: () => {
-      appTab.setTabTitle(
+      appStoreTab.setTabTitle(
         otherName,
         'this will scrolling for 10s and then recover',
         {
@@ -91,7 +91,7 @@ function onDynamicTitle(type: number, self = true) {
       )
     },
     4: () => {
-      appTab.recoverTabTitle(otherName)
+      appStoreTab.recoverTabTitle(otherName)
     },
   }
 
@@ -104,41 +104,41 @@ function onDynamicTitle(type: number, self = true) {
 function onDynamicIcon(type: number, self = true) {
   const pool: Recordable = {
     1: () => {
-      appTab.setCurrentTabIcon('ant-design:android-filled')
+      appStoreTab.setCurrentTabIcon('ant-design:android-filled')
     },
     2: () => {
-      appTab.setCurrentTabIcon('ant-design:android-outlined', {
+      appStoreTab.setCurrentTabIcon('ant-design:android-outlined', {
         timeout: 3000,
       })
     },
     3: () => {
-      appTab.setCurrentTabIcon('ant-design:android-filled', {
+      appStoreTab.setCurrentTabIcon('ant-design:android-filled', {
         animate: true,
         duration: 2000,
       })
     },
     4: () => {
-      appTab.recoverCurrentTabIcon()
+      appStoreTab.recoverCurrentTabIcon()
     },
   }
 
   const pool2: Recordable = {
     1: () => {
-      appTab.setTabIcon(otherName, 'ant-design:android-filled')
+      appStoreTab.setTabIcon(otherName, 'ant-design:android-filled')
     },
     2: () => {
-      appTab.setTabIcon(otherName, 'ant-design:android-outlined', {
+      appStoreTab.setTabIcon(otherName, 'ant-design:android-outlined', {
         timeout: 3000,
       })
     },
     3: () => {
-      appTab.setTabIcon(otherName, 'ant-design:android-filled', {
+      appStoreTab.setTabIcon(otherName, 'ant-design:android-filled', {
         animate: true,
         duration: 2000,
       })
     },
     4: () => {
-      appTab.recoverTabIcon(otherName)
+      appStoreTab.recoverTabIcon(otherName)
     },
   }
 
@@ -149,7 +149,7 @@ function onDynamicIcon(type: number, self = true) {
 }
 
 onMounted(() => {
-  const oldCount = appTab.tabs.filter(i => i.name.startsWith('name-')).length
+  const oldCount = appStoreTab.tabs.filter(i => i.name.startsWith('name-')).length
   count.value = oldCount < 0 ? 0 : oldCount
 })
 </script>

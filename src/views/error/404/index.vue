@@ -3,10 +3,10 @@ defineOptions({
   name: 'App404',
 })
 
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 
 async function onClick() {
-  await appMenu.goIndex()
+  await appStoreMenu.goIndex()
 }
 </script>
 

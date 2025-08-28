@@ -9,7 +9,7 @@ const { debounce = 100, textProp } = defineProps<ICompUIButtonProps>()
 
 const emits = defineEmits<{ click: [e: MouseEvent] }>()
 
-const userPermission = useAppStoreUserPermission()
+const userStorePermission = useAppStoreUserPermission()
 
 function onClick(e: MouseEvent) {
   emits('click', e)
@@ -23,7 +23,7 @@ const ButtonText = () => textProp && (typeof textProp === 'string' ? textProp : 
 </script>
 
 <template>
-  <n-button v-if="!auth || auth && userPermission.hasPermission(auth)" @click="onFinalClick">
+  <n-button v-if="!auth || auth && userStorePermission.hasPermission(auth)" @click="onFinalClick">
     <template #default>
       <ButtonText v-if="textProp" />
       <slot v-else name="default" />

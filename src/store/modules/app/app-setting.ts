@@ -242,8 +242,8 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
      * @description get aside status, pc or mobile
      */
     getMenuAdapterStatus(): boolean {
-      const appAdapter = useAppStoreAdapter()
-      return !appAdapter.isMobile && (this.getLogoShow || this.getMenuShow)
+      const appStoreAdapter = useAppStoreAdapter()
+      return !appStoreAdapter.isMobile && (this.getLogoShow || this.getMenuShow)
     },
 
     /**
@@ -257,18 +257,18 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
      * @description get aside menu width based on menu config
      */
     getMenuWidth(state) {
-      const appMenu = useAppStoreMenu()
-      const appAdapter = useAppStoreAdapter()
+      const appStoreMenu = useAppStoreMenu()
+      const appStoreAdapter = useAppStoreAdapter()
 
-      if (appAdapter.isMobile) {
+      if (appStoreAdapter.isMobile) {
         return 0
       }
 
-      if (state.menu.status && !appMenu.collapse) {
+      if (state.menu.status && !appStoreMenu.getCollapse) {
         return state.menu.width
       }
 
-      if (state.menu.status && appMenu.collapse) {
+      if (state.menu.status && appStoreMenu.getCollapse) {
         return state.menu.collapsedWidth
       }
 

@@ -9,9 +9,8 @@ export async function decryptResponseValue(encryptedBase64: string): Promise<str
     const encKey = Uint8Array.from(atob(payload.key), c => c.charCodeAt(0))
 
     // 2. Import RSA private key and decrypt to get AES-related data
-    const appSecurity = useAppStoreSecurity()
-    const clientRsaPrivKey = appSecurity.getClientPrivKey
-    const rsaPrivateKey = await importRsaPrivateKey(clientRsaPrivKey)
+    const appStoreSecurity = useAppStoreSecurity()
+    const rsaPrivateKey = await importRsaPrivateKey(appStoreSecurity.getClientPrivKey)
     const keyBlobBuf = await rsaOaepDecrypt(rsaPrivateKey, encKey.buffer)
     const keyBlob = new Uint8Array(keyBlobBuf)
 

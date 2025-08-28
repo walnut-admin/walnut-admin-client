@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { getCanAnimate, modalColor } from '../../shared'
 
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 
 const appSetting = useAppStoreSetting()
 
@@ -78,7 +78,7 @@ const [register] = useForm<typeof menuRelatives>({
         suffix: 'px',
         showButton: false,
         precision: 0,
-        disabled: computed(() => !menuRelatives.status || appMenu.collapse),
+        disabled: computed(() => !menuRelatives.status || appStoreMenu.getCollapse),
       },
     },
     {
@@ -98,7 +98,7 @@ const [register] = useForm<typeof menuRelatives>({
         suffix: 'px',
         showButton: false,
         precision: 0,
-        disabled: computed(() => !menuRelatives.status || appMenu.collapse),
+        disabled: computed(() => !menuRelatives.status || appStoreMenu.getCollapse),
       },
     },
     {
@@ -112,7 +112,7 @@ const [register] = useForm<typeof menuRelatives>({
         suffix: 'px',
         showButton: false,
         precision: 0,
-        disabled: computed(() => !menuRelatives.status || appMenu.collapse),
+        disabled: computed(() => !menuRelatives.status || appStoreMenu.getCollapse),
       },
     },
     {
@@ -147,7 +147,7 @@ const [register] = useForm<typeof menuRelatives>({
         suffix: 'px',
         showButton: false,
         precision: 0,
-        disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
+        disabled: computed(() => !menuRelatives.status || !appStoreMenu.getCollapse),
       },
     },
     {
@@ -161,7 +161,7 @@ const [register] = useForm<typeof menuRelatives>({
         suffix: 'px',
         showButton: false,
         precision: 0,
-        disabled: computed(() => !menuRelatives.status || !appMenu.collapse),
+        disabled: computed(() => !menuRelatives.status || !appStoreMenu.getCollapse),
       },
     },
   ],

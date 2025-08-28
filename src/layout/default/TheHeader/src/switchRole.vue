@@ -7,14 +7,14 @@ defineOptions({
 
 const { t } = useAppI18n()
 
-const userProfile = useAppStoreUserProfile()
-const userAuth = useAppStoreUserAuth()
+const userStoreProfile = useAppStoreUserProfile()
+const userStoreAuth = useAppStoreUserAuth()
 
 const { stateRef: formData } = useState({
-  roleId: userProfile.getCurrentRole,
+  roleId: userStoreProfile.getCurrentRole,
 })
 
-const getCurrentRoleName = computed(() => userProfile.getRoleList?.find(i => i._id === formData.value.roleId)?.roleName)
+const getCurrentRoleName = computed(() => userStoreProfile.getRoleList?.find(i => i._id === formData.value.roleId)?.roleName)
 
 const [register, { onOpen }] = useForm<typeof formData.value>({
   showFeedback: false,
@@ -29,7 +29,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
     maskClosable: false,
     title: computed(() => t('app.base.switchRole')),
     onYes: async (_, done) => {
-      if (formData.value.roleId === userProfile.getCurrentRole) {
+      if (formData.value.roleId === userStoreProfile.getCurrentRole) {
         done()
         return
       }
@@ -39,7 +39,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
         try {
           await switchRoleAPI(formData.value.roleId!)
           useAppMessage()
-          await userAuth.ExcuteAfterSwitchRole()
+          await userStoreAuth.ExcuteAfterSwitchRole()
         }
         finally {
           done()
@@ -62,7 +62,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
         path: 'roleId',
       },
       componentProp: {
-        options: userProfile.getRoleList?.map(i => ({ label: i.roleName!, value: i._id! })),
+        options: userStoreProfile.getRoleList?.map(i => ({ label: i.roleName!, value: i._id! })),
       },
     },
   ],

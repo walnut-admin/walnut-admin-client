@@ -43,10 +43,10 @@ const infos = ref<{
 const searchPanelOpen = ref(false)
 const phrases = ref()
 
-const appLocale = useAppStoreLocale()
+const appStoreLocale = useAppStoreLocale()
 
 watch(
-  () => appLocale.locale,
+  () => appStoreLocale.locale,
   async (v) => {
     const modules = import.meta.glob(
       '/vendor/codeMirror/langs/zh-CN.js',

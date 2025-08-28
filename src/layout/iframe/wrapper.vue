@@ -9,11 +9,11 @@ defineOptions({
 const [DefineIframe, ReuseIframe] = createReusableTemplate<{ item: IAppTabIframe }>()
 
 const appSetting = useAppStoreSetting()
-const appTab = useAppStoreTab()
+const appStoreTab = useAppStoreTab()
 
 const getIframeList = computed(() =>
-  appTab.iframeList.filter(e =>
-    appTab.tabs.some(tab => tab.name === e.name),
+  appStoreTab.iframeList.filter(e =>
+    appStoreTab.tabs.some(tab => tab.name === e.name),
   ),
 )
 

@@ -4,16 +4,16 @@ import HeaderCollapse from './collapse.vue'
 import HeaderDropdown from './dropdown.vue'
 
 const appSetting = useAppStoreSetting()
-const appAdapter = useAppStoreAdapter()
-const appMenu = useAppStoreMenu()
-const appBackendSettings = useAppStoreSettingBackend()
+const appStoreAdapter = useAppStoreAdapter()
+const appStoreMenu = useAppStoreMenu()
+const appStoreBackendSettings = useAppStoreSettingBackend()
 
 const { title: AppTitle } = useAppEnvTitle()
 
 const { isFullscreen, toggle } = useFullscreen()
 
 function onShowAside() {
-  appMenu.setShowAside(true)
+  appStoreMenu.setShowAside(true)
 }
 </script>
 
@@ -35,7 +35,7 @@ function onShowAside() {
         <!-- left -->
         <div class="hstack items-center justify-between space-x-2">
           <img
-            v-if="appAdapter.isMobile"
+            v-if="appStoreAdapter.isMobile"
             src="/logo.png"
             :alt="`${AppTitle} Logo`"
             class="m-1 h-9 w-9"
@@ -53,11 +53,11 @@ function onShowAside() {
         <div
           class="h-full hstack justify-end children:(h-full flex cursor-pointer items-center px-0.5) space-x-2"
           :class="[
-            { 'space-x-1': appAdapter.isMobile },
+            { 'space-x-1': appStoreAdapter.isMobile },
           ]"
         >
           <WAppFullScreen
-            v-if="appBackendSettings.getFullScreenEnabled && !appAdapter.isMobile && appSetting.header.fullscreen"
+            v-if="appStoreBackendSettings.getFullScreenEnabled && !appStoreAdapter.isMobile && appSetting.header.fullscreen"
             id="walnut-fullscreen"
             :is-fullscreen="isFullscreen"
             :click-event="toggle"
@@ -66,13 +66,13 @@ function onShowAside() {
           <WAppLock v-if="appSetting.getLockStatus" id="walnut-lock" />
 
           <WAppSearch
-            v-if="appBackendSettings.getSearchEnabled && appSetting.header.search"
+            v-if="appStoreBackendSettings.getSearchEnabled && appSetting.header.search"
             id="walnut-search"
           />
 
-          <WAppLocalePicker v-if="appBackendSettings.getLocaleEnabled" id="walnut-locale" />
+          <WappStoreLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" id="walnut-locale" />
 
-          <WAppDarkMode v-if="appBackendSettings.getDarkEnabled" id="walnut-dark" />
+          <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" id="walnut-dark" />
 
           <HeaderDropdown />
         </div>

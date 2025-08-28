@@ -22,16 +22,16 @@ class I18nService {
   }
 
   public async createI18nOptions(): Promise<I18nOptions> {
-    const appLocale = useAppStoreLocale()
-    const backendMsg = await AppI18nGetI18nMsg(appLocale.getLocale)
+    const appStoreLocale = useAppStoreLocale()
+    const backendMsg = await AppI18nGetI18nMsg(appStoreLocale.getLocale)
 
     this.baseI18nKeyList = Object.keys(backendMsg).filter(i => i.startsWith('app.base'))
 
     return {
       legacy: false,
-      locale: appLocale.getLocale,
+      locale: appStoreLocale.getLocale,
       messages: {
-        [appLocale.getLocale]: backendMsg,
+        [appStoreLocale.getLocale]: backendMsg,
       },
     }
   }

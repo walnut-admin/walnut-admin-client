@@ -1,9 +1,9 @@
 export function useTabsActions(onUpdateOverflow: Fn) {
-  const appTab = useAppStoreTab()
+  const appStoreTab = useAppStoreTab()
 
   const onTabClick = async (item: AppTab) => {
     // push by name
-    await appTab.goTab(item.name, item.query, item.params)
+    await appStoreTab.goTab(item.name, item.query, item.params)
   }
 
   const onTabRemove = async (
@@ -11,7 +11,7 @@ export function useTabsActions(onUpdateOverflow: Fn) {
     type: ValueOfAppConstTabDeleteType = AppConstTabDeleteType.TAB_SINGLE,
   ) => {
     // remove tab
-    await appTab.deleteTabs(name, type)
+    await appStoreTab.deleteTabs(name, type)
 
     // TODO
     const { stop } = useTimeoutFn(() => {

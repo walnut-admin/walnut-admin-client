@@ -3,13 +3,13 @@ import MenuCollpaseButton from './collapseButton.vue'
 import AsideLogo from './logo.vue'
 import AsideMenu from './menu.vue'
 
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 </script>
 
 <template>
   <n-layout-sider
-    v-model:collapsed="appMenu.collapse"
+    v-model:collapsed="appStoreMenu.collapse"
     bordered
     collapse-mode="width"
     class="h-screen"

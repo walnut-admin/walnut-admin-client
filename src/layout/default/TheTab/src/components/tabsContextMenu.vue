@@ -15,7 +15,7 @@ import { getTabsContext } from '../hooks/useTabsContext'
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
 
-const appTab = useAppStoreTab()
+const appStoreTab = useAppStoreTab()
 const appSetting = useAppStoreSetting()
 
 const {
@@ -30,9 +30,9 @@ const {
   onOpenDevTool,
 } = getTabsContext()
 
-const getTabsLength = computed(() => appTab.tabs.length)
+const getTabsLength = computed(() => appStoreTab.tabs.length)
 const getAffixedTabsLength = computed(
-  () => appTab.tabs.filter(i => i.meta.affix).length,
+  () => appStoreTab.tabs.filter(i => i.meta.affix).length,
 )
 
 // only affixed can not close
@@ -82,11 +82,11 @@ async function onSelect(key: ValueOfAppConstTabDeleteType &
   }
 
   if (key === 'Fix') {
-    appTab.setTabByIndex(currentMouseTabIndex.value, {
+    appStoreTab.setTabByIndex(currentMouseTabIndex.value, {
       meta: { affix: !currentMouseTab.value?.meta.affix },
     })
 
-    appTab.sortTabs()
+    appStoreTab.sortTabs()
 
     onScrollToCurrentTab()
   }

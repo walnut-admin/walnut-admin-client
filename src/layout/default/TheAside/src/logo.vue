@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 
 const { title: AppTitle } = useAppEnvTitle()
 
 async function onGoIndex() {
-  await appMenu.goIndex()
+  await appStoreMenu.goIndex()
 }
 </script>
 
@@ -16,7 +16,7 @@ async function onGoIndex() {
       :id="appSetting.getLogoId"
       class="cursor-pointer whitespace-nowrap px-6 transition-all" :class="[
         {
-          'pl-4 px-0': appMenu.collapse,
+          'pl-4 px-0': appStoreMenu.getCollapse,
           'fixed': appSetting.getLogoFixed,
         },
       ]"
@@ -32,7 +32,7 @@ async function onGoIndex() {
 
         <WTransition transition-name="zoom-down">
           <div
-            v-show="!appMenu.collapse"
+            v-show="!appStoreMenu.getCollapse"
             class="text-center text-xl font-bold not-italic"
           >
             {{ AppTitle }}

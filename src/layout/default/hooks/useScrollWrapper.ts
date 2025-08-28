@@ -1,5 +1,5 @@
 export function useScrollWrapper() {
-  const userScroll = useAppStoreUserScroll()
+  const userStoreScroll = useAppStoreUserScroll()
 
   const { currentRoute } = useAppRouter()
 
@@ -15,7 +15,7 @@ export function useScrollWrapper() {
     () => [x.value, y.value] as const,
     ([x, y]) => {
       if (currentRoute.value.meta.position)
-        userScroll.setScrollPosition(currentRoute.value.name as string, y, x)
+        userStoreScroll.setScrollPosition(currentRoute.value.name as string, y, x)
     },
     { immediate: true, debounce: 200 },
   )
@@ -24,7 +24,7 @@ export function useScrollWrapper() {
     () => currentRoute.value.meta.position,
     async (v) => {
       if (v) {
-        const position = userScroll.getScrollPosition(
+        const position = userStoreScroll.getScrollPosition(
           currentRoute.value.name as string,
         )
 

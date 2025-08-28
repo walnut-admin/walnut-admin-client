@@ -3,7 +3,7 @@ import { AppAxios } from '@/utils/axios'
 
 /**
  * @description get language lists from back end, used for language change
- * This should only called once in AppLocalePicker component
+ * This should only called once in appStoreLocalePicker component
  */
 export async function AppI18nGetLangLists() {
   const lists = await AppAxios.get<

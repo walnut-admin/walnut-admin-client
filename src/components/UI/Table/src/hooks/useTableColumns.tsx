@@ -18,7 +18,7 @@ import { getTableTranslated } from '../utils'
 export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, apiListParams: Ref<WalnutBaseListParams<T>>) {
   const columns = ref<WTable.Column<T>[]>([])
   const { t } = useAppI18n()
-  const userPermission = useAppStoreUserPermission()
+  const userStorePermission = useAppStoreUserPermission()
   const { getProps: props, setProps } = propsCtx
 
   const builtInType = ['expand', 'selection']
@@ -237,7 +237,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
               const dropdownOptions: DropdownOption[]
               = dropdownButtons
-                .filter(i => userPermission.hasPermission(i.buttonProps?.auth as string))
+                .filter(i => userStorePermission.hasPermission(i.buttonProps?.auth as string))
                 .map(i => i.iconProps?.icon
                   ? {
                       type: 'render',

@@ -3,11 +3,11 @@ defineOptions({
   name: 'AppLock',
 })
 
-const appLock = useAppStoreLock()
+const appStoreLock = useAppStoreLock()
 const { currentRoute } = useAppRouter()
 
 async function onLock() {
-  await appLock.lock(currentRoute)
+  await appStoreLock.lock(currentRoute)
 }
 </script>
 

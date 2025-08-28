@@ -2,10 +2,10 @@
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
 
 defineOptions({
-  name: 'AppLocalePicker',
+  name: 'AppStoreLocalePicker',
 })
 
-const appLocale = useAppStoreLocale()
+const appStoreLocale = useAppStoreLocale()
 
 const langLists = ref<SelectBaseOption[]>([])
 
@@ -21,7 +21,7 @@ onBeforeMount(() => {
 
 <template>
   <div>
-    <n-popselect v-model:value="appLocale.locale" :options="langLists">
+    <n-popselect v-model:value="appStoreLocale.locale" :options="langLists">
       <WIcon icon="carbon:language" width="24" />
     </n-popselect>
   </div>

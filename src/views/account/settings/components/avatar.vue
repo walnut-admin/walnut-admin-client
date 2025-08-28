@@ -8,19 +8,19 @@ withDefaults(defineProps<{ value?: string, size?: number }>(), {
   size: 24,
 })
 
-const userProfile = useAppStoreUserProfile()
+const userStoreProfile = useAppStoreUserProfile()
 </script>
 
 <template>
   <n-avatar
     :style="{ height: `${size}px`, width: `${size}px` }"
-    :src="value ?? userProfile.getAvatar"
+    :src="value ?? userStoreProfile.getAvatar"
     circle
     alt="avatar"
     object-fit="cover"
   >
-    <span v-if="!value && !userProfile.getAvatar">
-      {{ userProfile.getDisplayName }}
+    <span v-if="!value && !userStoreProfile.getAvatar">
+      {{ userStoreProfile.getDisplayName }}
     </span>
   </n-avatar>
 </template>

@@ -68,23 +68,23 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description core function after signin to excute
      */
     async ExcuteCoreFnAfterAuth(at: string) {
-      const userProfile = useAppStoreUserProfile()
-      const appMenu = useAppStoreMenu()
+      const userStoreProfile = useAppStoreUserProfile()
+      const appStoreMenu = useAppStoreMenu()
 
       // set tokens
       this.setAccessToken(at)
 
       // get user profile
-      await userProfile.getProfile()
+      await userStoreProfile.getProfile()
 
       // get menus/permissions/keys etc
       await AppCoreFn1()
 
       // send beacon
-      sendUserMonitorBeacon({ userId: userProfile.profile._id, auth: true })
+      sendUserMonitorBeacon({ userId: userStoreProfile.profile._id, auth: true })
 
       // push to the index menu
-      await appMenu.goIndex()
+      await appStoreMenu.goIndex()
     },
 
     /**
@@ -133,11 +133,13 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description signout, need to clean lots of state
      */
     async Signout(callApi = true) {
-      const userProfile = useAppStoreUserProfile()
-      const userPermission = useAppStoreUserPermission()
-      const appMenu = useAppStoreMenu()
-      const appTab = useAppStoreTab()
-      const appCapJSToken = useAppStoreCapJSToken()
+      const userStoreProfile = useAppStoreUserProfile()
+      const userStorePermission = useAppStoreUserPermission()
+      const appStoreMenu = useAppStoreMenu()
+      const appStoreTab = useAppStoreTab()
+      const appStoreCapJSToken = useAppStoreCapJSToken()
+      const appStoreCachedViews = useAppStoreCachedViews()
+      const appStoreLock = useAppStoreLock()
 
       // call signout to remove refresh_token
       if (callApi) {
@@ -148,19 +150,25 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       this.clearTokens()
 
       // clear capjs token
-      appCapJSToken.$reset()
+      appStoreCapJSToken.$reset()
 
       // clear user profile
-      userProfile.$reset()
+      userStoreProfile.$reset()
 
       // clear menus
-      appMenu.$reset()
+      appStoreMenu.$reset()
 
       // clear permissions
-      userPermission.$reset()
+      userStorePermission.$reset()
 
       // clear tab
-      appTab.$reset()
+      appStoreTab.$reset()
+
+      // clear cached views
+      appStoreCachedViews.$reset()
+
+      // clear lock
+      appStoreLock.$reset()
 
       // disconnect socket
       socketService.destroy()

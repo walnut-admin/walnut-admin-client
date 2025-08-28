@@ -8,7 +8,7 @@ import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
 import { SingletonPromiseSign } from './sign'
 
-const userAuth = useAppStoreUserAuth()
+const userStoreAuth = useAppStoreUserAuth()
 
 export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponseStructure<AppBaseModel>, any>) {
   // code below is custom code in `axios.response.data`
@@ -57,7 +57,7 @@ export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponse
 
   // refresh token is expired, so this user need to signout and re-signin
   if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
-    await userAuth.Signout(false)
+    await userStoreAuth.Signout(false)
     return Promise.reject(new Error('Error'))
   }
 

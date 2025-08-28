@@ -6,7 +6,7 @@ import TheScrollWrapper from './scrollWrapper.vue'
 
 import TheAside from './TheAside'
 
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 
 // TODO layout
@@ -46,7 +46,7 @@ function onBackToTop() {
 
     <n-drawer
       v-else
-      v-model:show="appMenu.showAside"
+      v-model:show="appStoreMenu.getShowAside"
       :width="`${appSetting.menu.width}px`"
       placement="left"
       :native-scrollbar="false"

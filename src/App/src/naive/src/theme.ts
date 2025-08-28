@@ -4,14 +4,14 @@ import { adjustColor } from 'easy-fns-ts'
 import { merge } from 'lodash-es'
 import { darkTheme, lightTheme } from 'naive-ui'
 
-const appSettings = useAppStoreSetting()
+const appStoreSettings = useAppStoreSetting()
 
 export const getTheme = computed(() =>
   !isDark.value ? lightTheme : darkTheme,
 )
 
 export const getThemeStyle = computed(() =>
-  isDark.value ? appSettings.themes.dark : appSettings.themes.light,
+  isDark.value ? appStoreSettings.themes.dark : appStoreSettings.themes.light,
 )
 
 export const getThemeOverridesCommon = computed(

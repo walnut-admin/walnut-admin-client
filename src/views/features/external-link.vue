@@ -7,7 +7,7 @@ defineOptions({
 
 const { currentRoute } = useAppRouter()
 
-const appBackendSettings = useAppStoreSettingBackend()
+const appStoreBackendSettings = useAppStoreSettingBackend()
 
 function onClick() {
   const url = currentRoute.value.query.url as string
@@ -75,10 +75,10 @@ function onClick() {
       class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4"
     >
       <n-button text>
-        <WAppLocalePicker v-if="appBackendSettings.getLocaleEnabled" />
+        <WappStoreLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" />
       </n-button>
       <n-button text>
-        <WAppDarkMode v-if="appBackendSettings.getDarkEnabled" />
+        <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" />
       </n-button>
     </div>
   </div>

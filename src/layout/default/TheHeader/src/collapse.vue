@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 const appSetting = useAppStoreSetting()
-const appMenu = useAppStoreMenu()
-const appAdapter = useAppStoreAdapter()
+const appStoreMenu = useAppStoreMenu()
+const appStoreAdapter = useAppStoreAdapter()
 
 function onClick() {
-  if (appAdapter.isMobile) {
-    appMenu.setShowAside(!appMenu.showAside)
-    appMenu.setCollapse(false)
+  if (appStoreAdapter.isMobile) {
+    appStoreMenu.setShowAside(!appStoreMenu.getShowAside)
+    appStoreMenu.setCollapse(false)
   }
   else {
-    appMenu.setCollapse(!appMenu.collapse)
+    appStoreMenu.setCollapse(!appStoreMenu.getCollapse)
   }
 }
 </script>
@@ -19,7 +19,7 @@ function onClick() {
     <WIcon
       v-if="appSetting.getMenuCollapseIconStatus"
       :icon="
-        appMenu.collapse
+        appStoreMenu.getCollapse
           ? 'ant-design:menu-fold-outlined'
           : 'ant-design:menu-unfold-outlined'
       "

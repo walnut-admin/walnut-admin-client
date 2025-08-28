@@ -2,10 +2,10 @@ import type { AxiosRequestConfig } from 'axios'
 import { getBoolean } from '@/utils/shared'
 import { setTokenHeaderWithConfig } from '../../utils'
 
-const userAuth = useAppStoreUserAuth()
-const appLocale = useAppStoreLocale()
-const appSign = useAppStoreSecurity()
-const appFingerprint = useAppStoreFingerprint()
+const userStoreAuth = useAppStoreUserAuth()
+const appStoreLocale = useAppStoreLocale()
+const appStoreSecurity = useAppStoreSecurity()
+const appStoreFingerprint = useAppStoreFingerprint()
 
 export function requestInterceptors(config: AxiosRequestConfig) {
   // avoid use ! below for ts
@@ -14,15 +14,15 @@ export function requestInterceptors(config: AxiosRequestConfig) {
   }
 
   // custom headers
-  config.headers['x-language'] = appLocale.locale
+  config.headers['x-language'] = appStoreLocale.locale
 
   // fingerprint
   // assign the x-fingerprint header
-  config.headers['x-fingerprint'] = appFingerprint.axiosReqInterceptorBuildFingerprint(config)
+  config.headers['x-fingerprint'] = appStoreFingerprint.axiosReqInterceptorBuildFingerprint(config)
 
   // sign
   // assign the x-sign header/x-timestamp/x-nonce three headers
-  config.headers['x-sign'] = appSign.axiosReqInterceptorBuildSign(config)
+  config.headers['x-sign'] = appStoreSecurity.axiosReqInterceptorBuildSign(config)
 
   // a request doomed to fail
   if (config._error)
@@ -34,7 +34,7 @@ export function requestInterceptors(config: AxiosRequestConfig) {
 
   // carry token
   if (getBoolean(config._carryToken))
-    userAuth.accessToken && setTokenHeaderWithConfig(config, userAuth.accessToken)
+    userStoreAuth.accessToken && setTokenHeaderWithConfig(config, userStoreAuth.accessToken)
 
   // add timestamp
   if (config._timestamp) {

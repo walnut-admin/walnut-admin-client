@@ -15,11 +15,11 @@ interface AppNotiOptions extends NotificationOptions {
  * @description notification usage
  */
 export function AppNoti(msg: string, options: AppNotiOptions) {
-  const appNaive = useAppStoreNaive()
+  const appStoreNaive = useAppStoreNaive()
   const { title } = useAppEnvTitle()
 
-  appNaive.setNotiPlacement(options?.placement ?? 'top-right')
-  appNaive.setNotiContainerStyle(options?.containerStyle ?? {})
+  appStoreNaive.setNotiPlacement(options?.placement ?? 'top-right')
+  appStoreNaive.setNotiContainerStyle(options?.containerStyle ?? {})
 
   const inst = useAppNotification()?.create({
     ...options,
@@ -33,12 +33,12 @@ export function AppNoti(msg: string, options: AppNotiOptions) {
   if (inst) {
     inst.onClose = () => {
       // recover the default placement and container style when current inst is closed
-      appNaive.setNotiPlacement('top-right')
-      appNaive.setNotiContainerStyle({})
+      appStoreNaive.setNotiPlacement('top-right')
+      appStoreNaive.setNotiContainerStyle({})
     }
   }
 
-  appNaive.setCurrentNotiInst(inst)
+  appStoreNaive.setCurrentNotiInst(inst)
 }
 
 export function useAppNotiSuccess(msg: string, options?: Omit<AppNotiOptions, 'type'>) {

@@ -17,7 +17,7 @@ const value = defineModel<CountryCode>('value', { required: true })
 const { t } = useAppI18n()
 const { isOnline } = useSharedNetwork()
 const { language } = useSharedNavigatorLanguage()
-const appGeoIP = useAppStoreGeoIP()
+const appStoreGeoIP = useAppStoreGeoIP()
 
 const loading = ref(false)
 
@@ -69,7 +69,7 @@ watch(() => [autoDefaultCountry, isOnline.value, language.value], async () => {
     if (isOnline.value) {
       loading.value = true
       try {
-        value.value = appGeoIP.getGeoInfo.country_code as CountryCode
+        value.value = appStoreGeoIP.getGeoInfo.country_code as CountryCode
       }
       finally {
         loading.value = false

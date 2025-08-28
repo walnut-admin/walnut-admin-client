@@ -10,7 +10,7 @@ defineOptions({
 
 const { t } = useI18n()
 
-const userPermission = useAppStoreUserPermission()
+const userStorePermission = useAppStoreUserPermission()
 
 const { tablePropsCtx, checkedRowKeys } = useTableContext<T>()
 
@@ -95,7 +95,7 @@ function onButtonClick(key: WTable.HeaderLeftBulitInActionType) {
     <n-text
       v-if="
         isShow('delete')
-          && userPermission.hasPermission(tableProps.auths?.deleteMany ?? 'force-auth')
+          && userStorePermission.hasPermission(tableProps.auths?.deleteMany ?? 'force-auth')
       "
       type="warning"
     >

@@ -1,18 +1,18 @@
 import { setupGoogleAnalytics } from './analytics'
 import { setupDevice } from './device'
 
-const appSign = useAppStoreSecurity()
-const appFingerprint = useAppStoreFingerprint()
-const appGeoIP = useAppStoreGeoIP()
+const appStoreSecurity = useAppStoreSecurity()
+const appStoreFingerprint = useAppStoreFingerprint()
+const appStoreGeoIP = useAppStoreGeoIP()
 
 export async function setupAppScripts() {
-  await appFingerprint.setupFingerprint()
+  await appStoreFingerprint.setupFingerprint()
 
   // TODO below to should merge as setupDevice
-  await appGeoIP.setupGeoIP()
+  await appStoreGeoIP.setupGeoIP()
   await setupDevice()
 
-  await appSign.setupSign()
+  await appStoreSecurity.setupSign()
 
   await setupGoogleAnalytics()
 }

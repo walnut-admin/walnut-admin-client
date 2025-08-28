@@ -3,19 +3,19 @@ import { useSortable } from '@vueuse/integrations/useSortable'
 import { getTabsContext } from '../hooks/useTabsContext'
 import TabsItem from './tabsItem.vue'
 
-const appTab = useAppStoreTab()
+const appStoreTab = useAppStoreTab()
 const appSetting = useAppStoreSetting()
 
 const sortableRef = useTemplateRef<HTMLDivElement>('sortableRef')
 
-const { start, stop } = useSortable(sortableRef, appTab.tabs, {
+const { start, stop } = useSortable(sortableRef, appStoreTab.tabs, {
   animation: 500,
   easing: 'linear',
   draggable: '.tab-draggable',
   onEnd: (evt) => {
     const { oldIndex, newIndex } = evt
 
-    appTab.changeTabOrder(oldIndex!, newIndex!)
+    appStoreTab.changeTabOrder(oldIndex!, newIndex!)
   },
 })
 
@@ -57,7 +57,7 @@ function onMouseUp(e: MouseEvent, name: string) {
   // middle button close
   // 1 stands for mouse middle button
   if (e.button === 1) {
-    const isRemoveable = !appTab.tabs
+    const isRemoveable = !appStoreTab.tabs
       .filter(i => i.meta.affix)
       .map(i => i.name)
       .includes(name)
@@ -89,7 +89,7 @@ function onMouseUp(e: MouseEvent, name: string) {
     >
       <WTransition appear :transition-name="appSetting.tabs.itemTransition" group>
         <div
-          v-for="(item, index) in appTab.tabs"
+          v-for="(item, index) in appStoreTab.tabs"
           :key="item.name"
           class="my-1 h-full"
           :class="[

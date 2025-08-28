@@ -33,7 +33,7 @@ const { t } = useAppI18n()
 
 const { setProps, getProps } = useProps<ICompUITreeProps<T>>(props)
 
-const userPermission = useAppStoreUserPermission()
+const userStorePermission = useAppStoreUserPermission()
 
 const nTreeRef = useTemplateRef<TreeInst>('nTreeRef')
 const selectedKeys = ref<TreeKey[]>([])
@@ -292,7 +292,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
             }}
           >
             {getProps.value.treeProps!.draggable
-              && userPermission.hasPermission(getProps.value.auths?.update as string) && (
+              && userStorePermission.hasPermission(getProps.value.auths?.update as string) && (
               <WIcon
                 height="18"
                 class="cursor-move"
@@ -302,7 +302,7 @@ function onRenderSuffix({ option }: TreeRenderProps) {
             )}
 
             {getProps.value.deletable
-              && userPermission.hasPermission(getProps.value.auths?.delete as string) && (
+              && userStorePermission.hasPermission(getProps.value.auths?.delete as string) && (
               <WIconButton
                 icon-props={{
                   icon: 'ant-design:delete-outlined',

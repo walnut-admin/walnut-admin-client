@@ -1,8 +1,8 @@
 /**
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
-export function useAppLocale() {
-  const appLocale = useAppStoreLocale()
+export function useappStoreLocale() {
+  const appStoreLocale = useAppStoreLocale()
 
   const loadLocaleMessages = async (locale: ValueOfAppConstLocale) => {
     // Don't load again if has been loaded
@@ -31,7 +31,7 @@ export function useAppLocale() {
   }
 
   watchEffect(async () => {
-    await loadLocaleMessages(appLocale.getLocale)
-    setI18nLanguage(appLocale.getLocale)
+    await loadLocaleMessages(appStoreLocale.getLocale)
+    setI18nLanguage(appStoreLocale.getLocale)
   })
 }

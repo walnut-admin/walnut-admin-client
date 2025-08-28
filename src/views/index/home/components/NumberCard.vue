@@ -8,7 +8,7 @@ defineOptions({
 
 const props = defineProps<WHomeNumberCardProps>()
 
-const appSettings = useAppStoreSetting()
+const appStoreSettings = useAppStoreSetting()
 
 const trend = ref(0)
 const showTrend = ref(true)
@@ -63,7 +63,7 @@ watch(
             :from="0"
             :to="number"
             show-separator
-            :duration="appSettings.app.reducedMotion ? 0 : 3000"
+            :duration="appStoreSettings.app.reducedMotion ? 0 : 3000"
           />
 
           <WTransition appear transition-name="slide-up">

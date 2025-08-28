@@ -15,8 +15,8 @@ async function onForceQuit() {
 
   try {
     appForcequit.onCloseForceQuitModal()
-    const userAuth = useAppStoreUserAuth()
-    await userAuth.Signout()
+    const userStoreAuth = useAppStoreUserAuth()
+    await userStoreAuth.Signout()
     appForcequit.$reset()
   }
   finally {
@@ -41,7 +41,7 @@ async function onForceQuit() {
       {{ retryText }}
     </div>
 
-    <template v-if="appForcequit.quitButton" #action>
+    <template v-if="appForcequit.getShowQuitButton" #action>
       <div class="text-right">
         <WButton type="warning" :loading="loading" :debounce="500" @click="onForceQuit">
           {{ $t('comp.forceQuit.now') }}

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 
 const getKeepAliveInclude = computed(() => {
   if (!appSetting.app.keepAlive)
     return []
-  return appMenu.keepAliveRouteNames
+  return appStoreMenu.getKeepAliveRouteNames
 })
 </script>
 

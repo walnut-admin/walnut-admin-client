@@ -9,9 +9,9 @@ import { buildRoutes } from '@/router/utils/route'
  * 3. called after refresh token
  */
 export async function AppCoreFn1() {
-  const appMenu = useAppStoreMenu()
-  const appTab = useAppStoreTab()
-  const userPermission = useAppStoreUserPermission()
+  const appStoreMenu = useAppStoreMenu()
+  const appStoreTab = useAppStoreTab()
+  const userStorePermission = useAppStoreUserPermission()
 
   const { addRoute, getRoutes, hasRoute } = AppRouter
 
@@ -22,22 +22,22 @@ export async function AppCoreFn1() {
   const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs, internalIframeList } = await getPermissionsAPI()
 
   // set menu tree
-  appMenu.setMenus(permissionMenuTree)
+  appStoreMenu.setMenus(permissionMenuTree)
 
   // set keep alive route name
-  appMenu.setKeepAliveRouteNames(appMenu.createKeepAliveRouteNames(keepAliveNames))
+  appStoreMenu.setKeepAliveRouteNames(appStoreMenu.createKeepAliveRouteNames(keepAliveNames))
 
   // set index menu name, use for home page
-  appMenu.setIndexMenuName(indexMenuName)
+  appStoreMenu.setIndexMenuName(indexMenuName)
 
   // set affixed tabs
-  appTab.setAffixedTabs(affixedTabs)
+  appStoreTab.setAffixedTabs(affixedTabs)
 
   // set iframe list
-  appTab.setIframeList(internalIframeList)
+  appStoreTab.setIframeList(internalIframeList)
 
   // set permission string array
-  userPermission.setPermissions(permissionStrings)
+  userStorePermission.setPermissions(permissionStrings)
 
   // build routes and add into root route
   const routes = buildRoutes(permissionRouteTree)
@@ -50,6 +50,6 @@ export async function AppCoreFn1() {
 
   // set root redirect since we do not prepare root page
   rootRoute.redirect = {
-    name: appMenu.indexMenuName,
+    name: appStoreMenu.getIndexMenuName,
   }
 }

@@ -1,5 +1,5 @@
-const appFingerprint = useAppStoreFingerprint()
+const appStoreFingerprint = useAppStoreFingerprint()
 
 export const AppSocketEvents = {
-  FORCE_QUIT: () => `${appFingerprint.getFingerprint}/force/quit`,
+  FORCE_QUIT: () => `${appStoreFingerprint.getFingerprint}/force/quit`,
 }

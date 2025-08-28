@@ -11,7 +11,10 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     lockRoute: useAppStorageSync(AppConstPersistKey.LOCK_ROUTE, {}),
   }),
 
-  getters: {},
+  getters: {
+    getLockStatus: state => state.isLock,
+    getLockRoute: state => state.lockRoute,
+  },
 
   actions: {
     setIsLock(payload: boolean) {
@@ -45,15 +48,15 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       if (!appSetting.getLockStatus)
         return
 
-      const appMenu = useAppStoreMenu()
+      const appStoreMenu = useAppStoreMenu()
 
       this.setIsLock(false)
 
-      const lockRoute = clone(this.lockRoute)
+      const lockRoute = clone(this.getLockRoute)
       this.setLockRoute({})
 
       if (isEmpty(lockRoute))
-        await appMenu.goIndex()
+        await appStoreMenu.goIndex()
       else
         await useAppRouterPush(lockRoute)
     },

@@ -9,7 +9,7 @@ defineOptions({
   name: 'UIProvider',
 })
 
-const appNaive = useAppStoreNaive()
+const appStoreNaive = useAppStoreNaive()
 </script>
 
 <template>
@@ -25,13 +25,13 @@ const appNaive = useAppStoreNaive()
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider
-          :max="appNaive.notiMax"
-          :placement="appNaive.notiPlacement"
-          :container-style="appNaive.notiContainerStyle"
+          :max="appStoreNaive.getNotiMax"
+          :placement="appStoreNaive.getNotiPlacement"
+          :container-style="appStoreNaive.getNotiContainerStyle"
         >
           <n-message-provider
-            :max="appNaive.msgMax"
-            :placement="appNaive.msgPlacement"
+            :max="appStoreNaive.getMsgMax"
+            :placement="appStoreNaive.getMsgPlacement"
           >
             <slot />
           </n-message-provider>

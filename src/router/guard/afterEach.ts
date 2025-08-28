@@ -1,18 +1,18 @@
 import type { Router } from 'vue-router'
 import { removeCurrentPageRequests } from '@/utils/axios/adapters/cancel'
 
-const appTab = useAppStoreTab()
+const appStoreTab = useAppStoreTab()
 
 export function createAfterEachGuard(router: Router) {
   router.afterEach((to, from) => {
-    const appCachedViews = useAppStoreCachedViews()
+    const appStoreCachedViews = useAppStoreCachedViews()
 
     // if the route exists in tabs
     // and when going to the route, it carrys query
     // add the query to the tab for user experience
-    const isExistInTab = appTab.tabs.some(i => i.name === to.name)
+    const isExistInTab = appStoreTab.tabs.some(i => i.name === to.name)
     if (isExistInTab && Reflect.ownKeys(to.query).length !== 0)
-      appTab.setTabByName(to.name as string, { query: to.query })
+      appStoreTab.setTabByName(to.name as string, { query: to.query })
 
     // if from page is not in keep-alive
     // when left, clear all unfinished requests using cancel tokens
@@ -24,7 +24,7 @@ export function createAfterEachGuard(router: Router) {
     // if target is cacheable, set the name into cached name list
     // then in beforeEach, it will not do the loadingbar stuff
     if (to.meta.cache) {
-      appCachedViews.setCached(to.name)
+      appStoreCachedViews.setCached(to.name)
     }
 
     return true

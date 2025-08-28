@@ -2,9 +2,9 @@
 import { isDev } from '@/utils/constant/vue'
 import { getTabsContext } from '../hooks/useTabsContext'
 
-const appAdapter = useAppStoreAdapter()
+const appStoreAdapter = useAppStoreAdapter()
 
-const getShowDevTools = computed(() => isDev() && !appAdapter.isMobile)
+const getShowDevTools = computed(() => isDev() && !appStoreAdapter.isMobile)
 
 const { currentMouseTab, devToolShow, onOpenFile } = getTabsContext()
 </script>

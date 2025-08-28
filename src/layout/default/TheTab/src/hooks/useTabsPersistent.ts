@@ -4,7 +4,7 @@ import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 export function useTabsPersistent() {
   let scope: EffectScope
 
-  const appTab = useAppStoreTab()
+  const appStoreTab = useAppStoreTab()
   const appSetting = useAppStoreSetting()
 
   watch(
@@ -16,11 +16,11 @@ export function useTabsPersistent() {
         scope.run(() => {
           const _storaged_tabs = useAppStorageSync<AppTab[]>(
             AppConstPersistKey.TABS,
-            appTab.tabs,
+            appStoreTab.tabs,
           )
 
           watch(
-            () => appTab.tabs,
+            () => appStoreTab.tabs,
             (v) => {
               _storaged_tabs.value = v
             },
@@ -31,7 +31,7 @@ export function useTabsPersistent() {
 
           tryOnMounted(() => {
             if (_storaged_tabs.value?.length)
-              appTab.tabs = _storaged_tabs.value
+              appStoreTab.tabs = _storaged_tabs.value
           })
 
           onScopeDispose(() => {

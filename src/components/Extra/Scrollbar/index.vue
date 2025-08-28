@@ -20,10 +20,10 @@ const {
 const emits = defineEmits<{ scroll: [] }>()
 const value = defineModel<number>('value', { default: 0 })
 
-const appSettings = useAppStoreSetting()
+const appStoreSettings = useAppStoreSetting()
 
 const getBehavior = computed(() =>
-  appSettings.app.reducedMotion ? 'instant' : behavior,
+  appStoreSettings.app.reducedMotion ? 'instant' : behavior,
 )
 
 const wrapperRef = useTemplateRef<HTMLDivElement>('wrapperRef')

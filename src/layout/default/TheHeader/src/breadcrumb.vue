@@ -10,7 +10,7 @@ import { findPath } from 'easy-fns-ts'
 import { isEmpty } from 'lodash-es'
 import { darkTheme } from 'naive-ui'
 
-const appMenu = useAppStoreMenu()
+const appStoreMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 
 const { t } = useAppI18n()
@@ -20,7 +20,7 @@ const [DefineBase, ReuseBase] = createReusableTemplate<{ item: TreeNodeItem<AppS
 
 const getChildren = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
   const matched = findPath<AppSystemMenu>(
-    appMenu.menus,
+    appStoreMenu.menus,
     n =>
       n.name
       === (currentRoute.value.meta.menuActiveName

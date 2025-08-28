@@ -8,6 +8,9 @@ const useAppStoreAdapterInside = defineStore(StoreKeys.APP_ADAPTER, {
   }),
 
   getters: {
+    getDevice(state) {
+      return state.device
+    },
     isMobile(state) {
       return state.device === AppConstDevice.MOBILE
     },

@@ -14,14 +14,14 @@ import { useTabsPersistent } from './hooks/useTabsPersistent'
 import { useTabsUtils } from './hooks/useTabsUtils'
 
 const appSetting = useAppStoreSetting()
-const appAdapter = useAppStoreAdapter()
+const appStoreAdapter = useAppStoreAdapter()
 
 const { scrollRef, isOverflow, onScrollToCurrentTab, onUpdateOverflow }
   = useTabs()
 
 const getShowUtils = computed(
   () =>
-    !appAdapter.isMobile
+    !appStoreAdapter.isMobile
     && appSetting.tabs.showUtils
     && (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.ALWAYS
       || (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
@@ -29,7 +29,7 @@ const getShowUtils = computed(
 )
 
 const getTabsWidth = computed(() =>
-  appAdapter.isMobile
+  appStoreAdapter.isMobile
     ? '100vw'
     : `calc(100vw - ${appSetting.getMenuWidth}px - ${getShowUtils.value ? '120px' : ''})`,
 )

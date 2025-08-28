@@ -10,9 +10,9 @@ defineOptions({
 })
 
 const { t } = useAppI18n()
-const appAuth = useAppStoreUserAuth()
-const appNaive = useAppStoreNaive()
-const appCapJSToken = useAppStoreCapJSToken()
+const userStoreAuth = useAppStoreUserAuth()
+const appStoreNaive = useAppStoreNaive()
+const appStoreCapJSToken = useAppStoreCapJSToken()
 
 const { loading } = useAuthContext()
 
@@ -26,10 +26,10 @@ async function onSignIn() {
   loading.value = true
 
   try {
-    await appAuth.AuthWithBasicPassword(accountFormData.value)
+    await userStoreAuth.AuthWithBasicPassword(accountFormData.value)
 
     // close demonstrate notification
-    appNaive.destroyAllNotiInst()
+    appStoreNaive.destroyAllNotiInst()
   }
   finally {
     loading.value = false
@@ -46,7 +46,7 @@ async function onSubmit() {
   const needCap = await getNeedCapAPI('userName', accountFormData.value.userName)
 
   if (needCap) {
-    await appCapJSToken.onOpenCapModal(async () => {
+    await appStoreCapJSToken.onOpenCapModal(async () => {
       await onSignIn()
     })
   }
@@ -157,8 +157,8 @@ function setFormData(userName: string, password: string) {
 }
 
 onMounted(() => {
-  if (appAuth.remember) {
-    setFormData(appAuth.remember.userName!, appAuth.remember.password!)
+  if (userStoreAuth.remember) {
+    setFormData(userStoreAuth.remember.userName!, userStoreAuth.remember.password!)
   }
 })
 

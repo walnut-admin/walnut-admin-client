@@ -22,7 +22,7 @@ const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
   },
 
   actions: {
-    async  setupGeoIP() {
+    async setupGeoIP() {
       if (Object.keys(this.getGeoInfo).length)
         return
 

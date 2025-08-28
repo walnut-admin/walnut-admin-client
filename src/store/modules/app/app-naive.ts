@@ -15,7 +15,17 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
     currentMsgInst: null,
   }),
 
-  getters: {},
+  getters: {
+    getNotiMax: state => state.notiMax,
+    getMsgMax: state => state.msgMax,
+
+    getNotiPlacement: state => state.notiPlacement,
+    getMsgPlacement: state => state.msgPlacement,
+
+    getNotiContainerStyle: state => state.notiContainerStyle,
+    getCurrentNotiInst: state => state.currentNotiInst,
+    getCurrentMsgInst: state => state.currentMsgInst,
+  },
 
   actions: {
     /**
@@ -29,14 +39,14 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
       this.notiContainerStyle = payload
     },
 
-    setCurrentNotiInst(payload: NotificationReactive) {
+    setCurrentNotiInst(payload: NotificationReactive | null) {
       this.currentNotiInst = payload
     },
 
     destroyCurrentNotiInst() {
       return new Promise((resolve) => {
         this.currentNotiInst?.destroy()
-        this.currentNotiInst = null
+        this.setCurrentNotiInst(null)
         resolve(true)
       })
     },

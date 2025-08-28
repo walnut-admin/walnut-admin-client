@@ -1,6 +1,6 @@
 export function useAppResize() {
-  const appAdapter = useAppStoreAdapter()
-  const appMenu = useAppStoreMenu()
+  const appStoreAdapter = useAppStoreAdapter()
+  const appStoreMenu = useAppStoreMenu()
 
   const breakpoints = useAppBreakpoints()
 
@@ -12,8 +12,8 @@ export function useAppResize() {
       // 3.no more collapse
       // 4.mobile only show `left-menu` layout
 
-      appAdapter.setDevice(AppConstDevice.MOBILE)
-      appMenu.setCollapse(false)
+      appStoreAdapter.setDevice(AppConstDevice.MOBILE)
+      appStoreMenu.setCollapse(false)
       // appSetting.settings.app.layout = AppConstLayoutMode.LEFT_MENU
     }
 
@@ -23,8 +23,8 @@ export function useAppResize() {
       // 2.device => 'tablet'
       // 3.auto collapse
 
-      appAdapter.setDevice(AppConstDevice.TABLET)
-      appMenu.setCollapse(true)
+      appStoreAdapter.setDevice(AppConstDevice.TABLET)
+      appStoreMenu.setCollapse(true)
     }
 
     if (breakpoints.isInBetween('lg', 'xl')) {
@@ -33,8 +33,8 @@ export function useAppResize() {
       // 2.device => 'laptop'
       // 3.no collapse
 
-      appAdapter.setDevice(AppConstDevice.LAPTOP)
-      appMenu.setCollapse(false)
+      appStoreAdapter.setDevice(AppConstDevice.LAPTOP)
+      appStoreMenu.setCollapse(false)
     }
 
     if (breakpoints.isGreater('xl')) {
@@ -43,8 +43,8 @@ export function useAppResize() {
       // 2.device => 'desktop'
       // 3.no collapse
 
-      appAdapter.setDevice(AppConstDevice.DESKTOP)
-      appMenu.setCollapse(false)
+      appStoreAdapter.setDevice(AppConstDevice.DESKTOP)
+      appStoreMenu.setCollapse(false)
     }
   }
 

@@ -20,7 +20,7 @@ export function useTableAPI<T>(
   listParams: ICompUITableHooksAPIListParams<T>,
 ) {
   const { t } = useAppI18n()
-  const userPermission = useAppStoreUserPermission()
+  const userStorePermission = useAppStoreUserPermission()
   const { getProps: props, setProps } = propsCtx
 
   const { apiListParams, resetParams, commitParams } = listParams
@@ -30,7 +30,7 @@ export function useTableAPI<T>(
   // api list
   const onApiList = async () => {
     // no list auth, return
-    if (!userPermission.hasPermission(props.value.auths?.list as string)) {
+    if (!userStorePermission.hasPermission(props.value.auths?.list as string)) {
       useAppNotiError(t('sys.msg.noAuthority'))
       return
     }

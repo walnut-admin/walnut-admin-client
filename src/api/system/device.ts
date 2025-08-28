@@ -2,8 +2,8 @@ import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
-const appFingerprint = useAppStoreFingerprint()
-const appGeoIP = useAppStoreGeoIP()
+const appStoreFingerprint = useAppStoreFingerprint()
+const appStoreGeoIP = useAppStoreGeoIP()
 
 export const deviceAPI = new BaseAPI<AppSystemDictType>({
   model: 'system',
@@ -17,8 +17,8 @@ export async function initialDeviceAPI() {
   return AppAxios.post<{ deviceId: string }>({
     url: '/system/device/initial',
     data: {
-      rawDeviceId: appFingerprint.getFingerprint,
-      deviceName: `${detectDeviceType()}_${appFingerprint.getFingerprint.slice(0, 6)}`.toLocaleUpperCase(),
+      rawDeviceId: appStoreFingerprint.getFingerprint,
+      deviceName: `${detectDeviceType()}_${appStoreFingerprint.getFingerprint.slice(0, 6)}`.toLocaleUpperCase(),
       sr: {
         width: window.screen.width,
         height: window.screen.height,
@@ -32,21 +32,21 @@ export async function initialDeviceAPI() {
         memory: getMemoryGB(),
         gpu: await getGPUArchitecture(),
       },
-      ipHistory: [appGeoIP.getGeoInfo.ip],
+      ipHistory: [appStoreGeoIP.getGeoInfo.ip],
       geoLocation: {
         type: 'Point',
-        coordinates: [appGeoIP.getGeoInfo.longitude, appGeoIP.getGeoInfo.latitude],
+        coordinates: [appStoreGeoIP.getGeoInfo.longitude, appStoreGeoIP.getGeoInfo.latitude],
       },
       deviceInfo: {
         // @ts-expect-error https://developer.mozilla.org/zh-CN/docs/Web/API/NetworkInformation/effectiveType
         netType: navigator.connection?.effectiveType,
         platform: navigator.platform,
-        isp: appGeoIP.getGeoInfo.isp,
+        isp: appStoreGeoIP.getGeoInfo.isp,
       },
       locationInfo: {
-        country: appGeoIP.getGeoInfo.country,
-        city: appGeoIP.getGeoInfo.city,
-        region: appGeoIP.getGeoInfo.region,
+        country: appStoreGeoIP.getGeoInfo.country,
+        city: appStoreGeoIP.getGeoInfo.city,
+        region: appStoreGeoIP.getGeoInfo.region,
       },
     } as AppSystemDevice,
   })

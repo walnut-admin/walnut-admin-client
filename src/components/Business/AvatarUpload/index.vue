@@ -11,8 +11,8 @@ const emits = defineEmits<{ change: [cropperUrl: string], success: [newAvatar: s
 
 const { t } = useAppI18n()
 
-const userProfile = useAppStoreUserProfile()
-const userId = userProfile.profile._id!
+const userStoreProfile = useAppStoreUserProfile()
+const userId = userStoreProfile.profile._id!
 
 const show = ref(false)
 const loading = ref(false)
@@ -71,7 +71,7 @@ defineExpose({
 
 onMounted(async () => {
   // to fix cors error, transform url to base64
-  avatarUrl.value = await imgUrlToBase64(userProfile.getAvatar)
+  avatarUrl.value = await imgUrlToBase64(userStoreProfile.getAvatar)
 })
 </script>
 

@@ -11,7 +11,11 @@ const useAppStoreCapJSTokenInside = defineStore(StoreKeys.APP_CAPJS_TOKEN, {
     onCapSuccess: null,
   }),
 
-  getters: {},
+  getters: {
+    getCapComponent(state) {
+      return state.capComponent!
+    },
+  },
 
   actions: {
     loadCap(): Promise<ICapInst> {

@@ -1,4 +1,4 @@
-const appFingerprint = useAppStoreFingerprint()
+const appStoreFingerprint = useAppStoreFingerprint()
 
 export function sendUserMonitorBeacon(data: Partial<AppMonitorUserModel>) {
   const { httpUrl } = useAppEnvProxy()
@@ -7,7 +7,7 @@ export function sendUserMonitorBeacon(data: Partial<AppMonitorUserModel>) {
     [
       JSON.stringify({
         ...data,
-        visitorId: appFingerprint.getFingerprint,
+        visitorId: appStoreFingerprint.getFingerprint,
       }),
     ],
     { type: 'application/json; charset=UTF-8' },
@@ -58,10 +58,10 @@ export function useAppUserMonitor() {
   })
 
   tryOnMounted(() => {
-    const userAuth = useAppStoreUserAuth()
+    const userStoreAuth = useAppStoreUserAuth()
 
     sendUserMonitorBeacon({
-      auth: !!userAuth.accessToken,
+      auth: !!userStoreAuth.accessToken,
       focus: true,
       left: false,
     })

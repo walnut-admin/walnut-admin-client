@@ -1,10 +1,10 @@
 import { SingletonPromise } from '@/utils/queue'
 
-const appSign = useAppStoreSecurity()
+const appStoreSecurity = useAppStoreSecurity()
 const signQueue = new SingletonPromise<string>()
 
 export function SingletonPromiseSign() {
   return signQueue.run(async () => {
-    return await appSign.getSignAesKey()
+    return await appStoreSecurity.getSignAesKey()
   })
 }

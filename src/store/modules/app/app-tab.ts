@@ -413,7 +413,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
         case AppConstTabDeleteType.TAB_ALL:
           {
             const nameList: string[] = []
-            const appMenu = useAppStoreMenu()
+            const appStoreMenu = useAppStoreMenu()
 
             this.tabs.forEach((item) => {
               // find all not affixed tabs
@@ -423,7 +423,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
             // Just back to index page
             await this.goTab(
-              appMenu.indexMenuName!,
+              appStoreMenu.getIndexMenuName!,
               currentTab.query,
               currentTab.params,
             )

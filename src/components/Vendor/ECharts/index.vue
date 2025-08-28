@@ -15,13 +15,13 @@ const chartId = ref(`echarts-${genString(8)}`)
 // third party libs should use shallowRef !!!
 const chartInst = shallowRef<echarts.ECharts>()
 
-const appLocale = useAppStoreLocale()
-const appSettings = useAppStoreSetting()
+const appStoreLocale = useAppStoreLocale()
+const appStoreSettings = useAppStoreSetting()
 
 const getSkinName = computed(() => (isDark.value ? 'dark' : undefined))
 
 const getLangName = computed(() =>
-  appLocale.getLocale.split('_')[0].toUpperCase(),
+  appStoreLocale.getLocale.split('_')[0].toUpperCase(),
 )
 
 useEventListener('resize', () => {
@@ -54,10 +54,10 @@ function onInit() {
     isDark.value
       ? Object.assign(props.option, {
           backgroundColor: 'transparent',
-          animation: !appSettings.app.reducedMotion,
+          animation: !appStoreSettings.app.reducedMotion,
         })
       : Object.assign(props.option, {
-          animation: !appSettings.app.reducedMotion,
+          animation: !appStoreSettings.app.reducedMotion,
         }),
   )
 }

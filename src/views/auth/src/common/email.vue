@@ -14,9 +14,9 @@ defineOptions({
 })
 
 const { t } = useAppI18n()
-const appAuth = useAppStoreUserAuth()
-const appNaive = useAppStoreNaive()
-const appCapJSToken = useAppStoreCapJSToken()
+const userStoreAuth = useAppStoreUserAuth()
+const appStoreNaive = useAppStoreNaive()
+const appStoreCapJSToken = useAppStoreCapJSToken()
 
 const { loading } = useAuthContext()
 
@@ -30,13 +30,13 @@ async function onSignIn() {
   loading.value = true
 
   try {
-    await appAuth.AuthWithEmailAddress({
+    await userStoreAuth.AuthWithEmailAddress({
       emailAddress: emailFormData.emailAddress!,
       verifyCode: +emailFormData.verifyCode!,
     })
 
     // close demonstrate notification
-    appNaive.destroyAllNotiInst()
+    appStoreNaive.destroyAllNotiInst()
   }
   finally {
     loading.value = false
@@ -121,7 +121,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
 
           if (needCap) {
             return new Promise<boolean>((resolve) => {
-              appCapJSToken.onOpenCapModal(async () => {
+              appStoreCapJSToken.onOpenCapModal(async () => {
                 await sendAuthEmailAPI({
                   emailAddress: emailFormData.emailAddress!,
                 })

@@ -10,7 +10,14 @@ const useAppStoreForceQuitInside = defineStore(StoreKeys.APP_FORCE_QUIT, {
     quitButton: false,
   }),
 
-  getters: {},
+  getters: {
+    getForceQuitComponent(state) {
+      return state.forceQuitComponent!
+    },
+    getShowQuitButton(state) {
+      return state.quitButton
+    },
+  },
 
   actions: {
     async onOpenForceQuitModal(quitButton = false) {

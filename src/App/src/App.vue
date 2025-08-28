@@ -21,11 +21,11 @@ useAppUserMonitor()
 useAppReducedMotion()
 
 // get public setting first
-const appBackendSettings = useAppStoreSettingBackend()
-appBackendSettings.onInitPublicSettings().then(() => {
+const appStoreBackendSettings = useAppStoreSettingBackend()
+appStoreBackendSettings.onInitPublicSettings().then(() => {
   // if locale enable
-  if (appBackendSettings.getLocaleEnabled) {
-    useAppLocale()
+  if (appStoreBackendSettings.getLocaleEnabled) {
+    useappStoreLocale()
   }
 })
 </script>

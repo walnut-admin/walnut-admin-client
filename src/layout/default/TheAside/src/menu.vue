@@ -14,9 +14,9 @@ interface MenuMeta {
   url: string
 }
 
-const appMenu = useAppStoreMenu()
-const appTab = useAppStoreTab()
-const appAdapter = useAppStoreAdapter()
+const appStoreMenu = useAppStoreMenu()
+const appStoreTab = useAppStoreTab()
+const appStoreAdapter = useAppStoreAdapter()
 const appSetting = useAppStoreSetting()
 
 const { t } = useAppI18n()
@@ -30,7 +30,7 @@ const getCurrentMenuName = computed((): string =>
 
 // format to naive-ui menu option data structure
 const getMenuOptions = computed(() =>
-  formatTree<AppSystemMenu, MenuOption>(toRaw(appMenu.menus), node => ({
+  formatTree<AppSystemMenu, MenuOption>(toRaw(appStoreMenu.menus), node => ({
     key: node.name,
     label: t(node.title!),
     icon: () => {
@@ -65,7 +65,7 @@ watch(
   () => getCurrentMenuName.value,
   async (v, oldV) => {
     const paths = findPath<AppSystemMenu>(
-      appMenu.menus,
+      appStoreMenu.menus,
       n => n.name === v,
     )
 
@@ -77,7 +77,7 @@ watch(
     }
     else {
       const oldPaths = findPath<AppSystemMenu>(
-        appMenu.menus,
+        appStoreMenu.menus,
         n => n.name === oldV,
       )
 
@@ -95,8 +95,8 @@ watch(
 
 async function onUpdateValue(key: string, item: MenuOption & { meta?: MenuMeta }) {
   // If isMobile and showAside true, set showAside to false to close drawer
-  if (appAdapter.isMobile && appMenu.showAside)
-    appMenu.showAside = false
+  if (appStoreAdapter.isMobile && appStoreMenu.getShowAside)
+    appStoreMenu.setShowAside(false)
 
   // normal won't trigger the if below if the routers are configed correctly
   // only trigger when one catelog menu has no children menus
@@ -113,9 +113,9 @@ async function onUpdateValue(key: string, item: MenuOption & { meta?: MenuMeta }
 
   // omit the query field when click the side menu
   // should do so, otherwise once the route has query, user cannot get rid of it
-  const targetTab = appTab.tabs.find(i => i.name === key)
+  const targetTab = appStoreTab.tabs.find(i => i.name === key)
   if (targetTab)
-    appTab.setTabByName(key, omit(targetTab, 'query'), 'splice')
+    appStoreTab.setTabByName(key, omit(targetTab, 'query'), 'splice')
 
   await useAppRouterPush({ name: key })
 }
@@ -154,7 +154,7 @@ function onNodeProps(option: MenuOption) {
         :icon-size="appSetting.menu.iconSize"
         :indent="appSetting.menu.indent"
         :options="getMenuOptions"
-        :collapsed="appMenu.collapse"
+        :collapsed="appStoreMenu.getCollapse"
         :value="getCurrentMenuName"
         :node-props="onNodeProps"
         @update:value="onUpdateValue"

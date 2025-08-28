@@ -6,7 +6,7 @@ export function useAppLock() {
 
   const { currentRoute, addRoute, removeRoute } = useAppRouter()
 
-  const appLock = useAppStoreLock()
+  const appStoreLock = useAppStoreLock()
   const appSetting = useAppStoreSetting()
 
   watch(
@@ -58,7 +58,7 @@ export function useAppLock() {
                             isIdle,
                             async (v) => {
                               if (v && appSetting.app.lockIdleSeconds !== 0)
-                                await appLock.lock(currentRoute)
+                                await appStoreLock.lock(currentRoute)
                             },
                             { immediate: true },
                           )
@@ -84,7 +84,7 @@ export function useAppLock() {
                       isIdle,
                       async (v) => {
                         if (v)
-                          await appLock.lock(currentRoute)
+                          await appStoreLock.lock(currentRoute)
                       },
                       { immediate: true },
                     )
@@ -94,7 +94,7 @@ export function useAppLock() {
                       isPageLeave,
                       async (v) => {
                         if (v)
-                          await appLock.lock(currentRoute)
+                          await appStoreLock.lock(currentRoute)
                       },
                       { debounce: 200, immediate: true },
                     )
@@ -108,7 +108,7 @@ export function useAppLock() {
                           === AppConstLockMode.SECURITY
                           && !v
                         ) {
-                          await appLock.lock(currentRoute)
+                          await appStoreLock.lock(currentRoute)
                         }
                       },
                       { immediate: true },
@@ -127,8 +127,8 @@ export function useAppLock() {
         })
       }
       else {
-        appLock.setIsLock(false)
-        appLock.setLockRoute({})
+        appStoreLock.setIsLock(false)
+        appStoreLock.setLockRoute({})
         removeRoute(AppLockName)
         lockScope?.stop()
       }

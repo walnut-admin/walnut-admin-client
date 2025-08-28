@@ -4,7 +4,7 @@ defineOptions({
   defaultView: false,
 })
 
-const appNaive = useAppStoreNaive()
+const appStoreNaive = useAppStoreNaive()
 
 const notiPool: Record<number, Fn> = {
   1: () => useAppNotiSuccess('Notification Success'),
@@ -12,8 +12,8 @@ const notiPool: Record<number, Fn> = {
   3: () => useAppNotiWarning('Notification Warning', { duration: 1000 }),
   4: () => useAppNotiError('Notification Error', { placement: 'top-left' }),
   5: () => useAppNotiError('Got a 64px margin top', { containerStyle: { marginTop: '64px' } }),
-  6: () => appNaive.destroyCurrentNotiInst(),
-  7: () => appNaive.destroyAllNotiInst(),
+  6: () => appStoreNaive.destroyCurrentNotiInst(),
+  7: () => appStoreNaive.destroyAllNotiInst(),
 }
 
 function onOpenNoti(type: number) {

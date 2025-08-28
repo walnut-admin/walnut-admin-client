@@ -11,7 +11,7 @@ const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
 
 const appSetting = useAppStoreSetting()
-const appAdapter = useAppStoreAdapter()
+const appStoreAdapter = useAppStoreAdapter()
 
 const tabsItem = useTemplateRef('tabsItem')
 const isHovered = useElementHover(tabsItem)
@@ -26,7 +26,7 @@ const { onTabRemove } = getTabsContext()
 // pnly show when affix mode is pin
 const getShowAffixedPinIcon = computed(
   () =>
-    !appAdapter.isMobile
+    !appStoreAdapter.isMobile
     && item.meta.affix
     && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN,
 )
@@ -50,7 +50,7 @@ const getShowIcon = computed(
 // current tab
 const getShowDot = computed(
   () =>
-    !appAdapter.isMobile
+    !appStoreAdapter.isMobile
     && !item.meta.affix
     && !appSetting.tabs.showIcon
     && currentRoute.value.name === item.name,

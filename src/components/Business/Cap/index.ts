@@ -1,8 +1,8 @@
 import { createAsyncComponent } from '@/utils/factory/asyncComponent'
 
-const appCapJSToken = useAppStoreCapJSToken()
+const appStoreCapJSToken = useAppStoreCapJSToken()
 
 export default createAsyncComponent(async () => {
-  await appCapJSToken.loadCap()
+  await appStoreCapJSToken.loadCap()
   return import('./index.vue')
 })

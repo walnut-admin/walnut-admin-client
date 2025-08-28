@@ -15,7 +15,7 @@ const emits = defineEmits<{ success: [] }>()
 const AppAuthorizeIPTC = createAsyncComponent(() => import('./IPTC.vue'))
 const AppNotAuthorized = createAsyncComponent(() => import('../AppNotAuthorized'))
 
-const userPermission = useAppStoreUserPermission()
+const userStorePermission = useAppStoreUserPermission()
 
 function onSuccess() {
   emits('success')
@@ -32,7 +32,7 @@ function onSuccess() {
   >
     <slot />
   </AppAuthorizeIPTC>
-  <slot v-else-if="value && userPermission.hasPermission(value)" />
+  <slot v-else-if="value && userStorePermission.hasPermission(value)" />
   <div v-else-if="preset === 'null'" />
   <AppNotAuthorized
     v-else-if="preset === 'tip'"

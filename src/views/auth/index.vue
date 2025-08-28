@@ -14,7 +14,7 @@ defineOptions({
 const { t, locale } = useAppI18n()
 const { title: envTitle } = useAppEnvTitle()
 
-const appBackendSettings = useAppStoreSettingBackend()
+const appStoreBackendSettings = useAppStoreSettingBackend()
 
 const { signInRef } = useDemonstrate()
 
@@ -42,10 +42,10 @@ watch(locale, () => {
   <section class="min-h-screen flex items-stretch">
     <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">
       <n-button text>
-        <WAppLocalePicker v-if="appBackendSettings.getLocaleEnabled" />
+        <WappStoreLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" />
       </n-button>
       <n-button text>
-        <WAppDarkMode v-if="appBackendSettings.getDarkEnabled" />
+        <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" />
       </n-button>
     </div>
 

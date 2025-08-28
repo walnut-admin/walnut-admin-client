@@ -3,12 +3,12 @@ import { AppCoreFn1 } from '@/core'
 import { SingletonPromise } from '@/utils/queue'
 import { setTokenHeaderWithConfig } from '../../utils'
 
-const userAuth = useAppStoreUserAuth()
+const userStoreAuth = useAppStoreUserAuth()
 const refreshQueue = new SingletonPromise<string>()
 
 export function SingletonPromiseRefreshToken(config: AxiosRequestConfig) {
   return refreshQueue.run(async () => {
-    const newAccessToken = await userAuth.GetNewATWithRT()
+    const newAccessToken = await userStoreAuth.GetNewATWithRT()
 
     setTokenHeaderWithConfig(config, newAccessToken)
 

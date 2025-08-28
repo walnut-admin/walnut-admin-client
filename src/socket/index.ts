@@ -2,7 +2,7 @@ import type { Recordable } from 'easy-fns-ts'
 import type { Socket } from 'socket.io-client'
 import { io } from 'socket.io-client'
 
-const appFingerprint = useAppStoreFingerprint()
+const appStoreFingerprint = useAppStoreFingerprint()
 
 /**
  * @description socket
@@ -27,14 +27,14 @@ class SocketService {
     }
 
     const { ws } = useAppEnvProxy()
-    const userAuth = useAppStoreUserAuth()
+    const userStoreAuth = useAppStoreUserAuth()
     const useProxy = +ws[0] === 1
     const url = useProxy ? `/${ws[4]}` : `${ws[2]}/${ws[4]}`
     const path = useProxy ? ws[1] : ws[3]
 
     this._socket = io(url, {
       path,
-      query: { fingerprint: appFingerprint.getFingerprint, accessToken: userAuth.accessToken },
+      query: { fingerprint: appStoreFingerprint.getFingerprint, accessToken: userStoreAuth.accessToken },
     })
 
     this._socket.on('connect', () => {
@@ -49,8 +49,8 @@ class SocketService {
     this._socket.on(AppSocketEvents.FORCE_QUIT(), async (payload: { visitor: string, strategy: string }) => {
       const ForceQuitMap: Recordable = {
         FORCE_IMMEDIATE_SIGNOUT: async () => {
-          const userAuth = useAppStoreUserAuth()
-          await userAuth.Signout()
+          const userStoreAuth = useAppStoreUserAuth()
+          await userStoreAuth.Signout()
         },
         FORCE_COUNTDOWN_MODAL: () => {
           const appForcequit = useAppStoreForceQuit()

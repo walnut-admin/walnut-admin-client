@@ -16,7 +16,7 @@ const rightPermission = ref(false)
 const inputValid = ref(true)
 
 const { t } = useAppI18n()
-const userPermission = useAppStoreUserPermission()
+const userStorePermission = useAppStoreUserPermission()
 
 function onSuccess() {
   emits('success')
@@ -27,7 +27,7 @@ function onSuccess() {
 watch(
   () => props.value,
   (v) => {
-    if (v && userPermission.hasPermission(v))
+    if (v && userStorePermission.hasPermission(v))
       onSuccess()
   },
   {

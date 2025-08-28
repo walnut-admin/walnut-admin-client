@@ -39,11 +39,11 @@ async function onRefresh() {
   loading.value = true
 
   try {
-    const appLocale = useAppStoreLocale()
+    const appStoreLocale = useAppStoreLocale()
 
-    const res = await AppI18nGetI18nMsg(appLocale.getLocale, 0)
+    const res = await AppI18nGetI18nMsg(appStoreLocale.getLocale, 0)
 
-    AppI18n().global.setLocaleMessage(appLocale.getLocale, res)
+    AppI18n().global.setLocaleMessage(appStoreLocale.getLocale, res)
   }
   finally {
     loading.value = false
@@ -62,7 +62,7 @@ onDeactivated(() => {
     :options="options"
 
     :render-label="onRenderLabel"
-    clearable tooltip filterable
+    clearable filterable tooltip
     :tooltip-props="{
       placement: 'right',
     }"

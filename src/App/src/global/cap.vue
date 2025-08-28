@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-const appCapJSToken = useAppStoreCapJSToken()
+const appStoreCapJSToken = useAppStoreCapJSToken()
 </script>
 
 <template>
-  <component :is="appCapJSToken.capComponent" v-if="appCapJSToken.capComponent" />
+  <component :is="appStoreCapJSToken.getCapComponent" v-if="appStoreCapJSToken.getCapComponent" />
 </template>

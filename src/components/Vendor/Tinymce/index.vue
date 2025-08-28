@@ -28,13 +28,13 @@ const editorRef = shallowRef<TinymceVueInstance>()
 
 const loading = ref(false)
 
-const appLocale = useAppStoreLocale()
+const appStoreLocale = useAppStoreLocale()
 
 const getSkinName = computed(() =>
   isDark.value ? 'tinymce-5-dark' : 'tinymce-5',
 )
 
-const getLangName = computed(() => appLocale.locale!)
+const getLangName = computed(() => appStoreLocale.locale!)
 
 const tinymceOptions = computed((): RawEditorOptions => {
   return {

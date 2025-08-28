@@ -15,9 +15,9 @@ interface AppMessageOptions {
  * @description message usage
  */
 export function AppMsg(msg: string, options: AppMessageOptions) {
-  const appNaive = useAppStoreNaive()
+  const appStoreNaive = useAppStoreNaive()
 
-  appNaive.setMsgPlacement(options?.placement ?? 'top')
+  appStoreNaive.setMsgPlacement(options?.placement ?? 'top')
 
   useAppMessage().create(msg, {
     duration: options?.duration ?? 3000,

@@ -5,7 +5,7 @@ import type { AppTabUtilListItem } from '../types'
 export function useTabsUtils(scrollRef: Ref<Nullable<ICompExtraScrollbarInst>>, scrollToCurrentTab: Fn) {
   const { t } = useAppI18n()
 
-  const appTabs = useAppStoreTab()
+  const appStoreTab = useAppStoreTab()
 
   const leftUtils: AppTabUtilListItem[] = [
     {
@@ -21,9 +21,9 @@ export function useTabsUtils(scrollRef: Ref<Nullable<ICompExtraScrollbarInst>>, 
       event: () => {
         scrollToCurrentTab()
 
-        appTabs.setCurrentTabMeta({ _hovered: true })
+        appStoreTab.setCurrentTabMeta({ _hovered: true })
         const { stop } = useTimeoutFn(() => {
-          appTabs.setCurrentTabMeta({ _hovered: false })
+          appStoreTab.setCurrentTabMeta({ _hovered: false })
           stop()
         }, 3000)
       },

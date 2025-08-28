@@ -6,7 +6,7 @@ defineOptions({
   defaultView: false,
 })
 
-const userProfile = useAppStoreUserProfile()
+const userStoreProfile = useAppStoreUserProfile()
 
 const avatarUpload = useTemplateRef<WAvatarUploadInst>('avatarUpload')
 
@@ -17,7 +17,7 @@ function onAvatarChange(cropperUrl: string) {
 }
 
 function onUploadSuccess(newAvatar: string) {
-  userProfile.setAvatar(newAvatar)
+  userStoreProfile.setAvatar(newAvatar)
 }
 
 async function onUploadAvatar() {
