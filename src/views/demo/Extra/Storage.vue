@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { enhancedAesGcmLocalStorage, enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
-import { removeLocalStorageItemsContaining } from '@/utils/persistent/shared'
+import { removeStorageItemsContaining } from '@/utils/persistent/shared'
 import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { getRandomInt } from 'easy-fns-ts'
@@ -119,8 +119,9 @@ function onClearSet4() {
 }
 
 onUnmounted(() => {
-  removeLocalStorageItemsContaining('__TEST')
-  removeLocalStorageItemsContaining('test-storage-5')
+  removeStorageItemsContaining(localStorage, '__TEST')
+  removeStorageItemsContaining(localStorage, 'test-storage-5')
+  removeStorageItemsContaining(sessionStorage, '__TEST')
 })
 </script>
 
