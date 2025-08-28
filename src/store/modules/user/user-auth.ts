@@ -4,20 +4,26 @@ import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
 import { encryptRequestValueToEnvelope } from '@/utils/axios/interceptors/request/crypto'
-import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
+import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
+import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
+// eslint-disable-next-line antfu/no-top-level-await
+const accessTokenStorage = await useAppStorageAsync(AppConstPersistKey.ACCESS_TOKEN, '', { storage: enhancedAesGcmLocalStorage(true) })
+// eslint-disable-next-line antfu/no-top-level-await
+const rememberStorage = await useAppStorageAsync(AppConstPersistKey.REMEMBER, {
+  userName: '',
+  password: '',
+}, {
+  storage: enhancedAesGcmLocalStorage(true),
+})
+
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): IUserStoreAuth => ({
-    accessToken: useAppStorageSync(AppConstPersistKey.ACCESS_TOKEN, '', { storage: enhancedBase64LocalStorage() }),
-    remember: useAppStorageSync(AppConstPersistKey.REMEMBER, {
-      userName: '',
-      password: '',
-      // TODO password storage enhance
-    }),
+    accessToken: accessTokenStorage,
+    remember: rememberStorage,
   }),
 
   getters: {},

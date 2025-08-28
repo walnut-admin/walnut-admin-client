@@ -4,24 +4,31 @@ import { signAesKeyAPI, signInitialAPI } from '@/api/security/sign'
 import { AxiosQsParamsSerializer } from '@/utils/axios/core/config'
 import { generateNonce } from '@/utils/axios/utils'
 import { decryptWithPrivateKey, generateRSAKeyPair } from '@/utils/crypto/asymmetric/rsaoaep'
-import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
+import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
+import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { objectToPaths } from '@/utils/shared'
 import CryptoJS from 'crypto-js'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
+// eslint-disable-next-line antfu/no-top-level-await
+const clientRsaPubKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
+// eslint-disable-next-line antfu/no-top-level-await
+const clientRsaPrivKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
+// eslint-disable-next-line antfu/no-top-level-await
+const signAesKeyStorage = await useAppStorageAsync(AppConstPersistKey.SIGN_AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
+
 const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
   state: (): IAppStoreSecurity => ({
     // get from API
     serverRsaPubKey: '',
     // 30 days
-    clientRsaPubKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
+    clientRsaPubKey: clientRsaPubKeyStorage,
     // 30 days
-    clientRsaPrivKey: useAppStorageSync<string>(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
+    clientRsaPrivKey: clientRsaPrivKeyStorage,
     // 15 minutes
-    signAesSecretKey: useAppStorageSync<string>(AppConstPersistKey.SIGN_AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedBase64LocalStorage() }),
+    signAesSecretKey: signAesKeyStorage,
   }),
 
   getters: {
