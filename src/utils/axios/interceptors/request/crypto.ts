@@ -8,8 +8,7 @@ interface CipherEnvelope {
   tag: string // base64(16-byte GCM tag)
 }
 
-// TODO _autoEncryptRequestData
-export async function encryptRequestValueToEnvelope(value: string): Promise<CipherEnvelope> {
+export async function encryptRequestValue(value: string) {
   // 1. Generate AES-256 key
   const aesKey = await generateAes256Key()
 
@@ -24,11 +23,13 @@ export async function encryptRequestValueToEnvelope(value: string): Promise<Ciph
   const encryptedAesKey = await rsaOaepEncrypt(rsaPublicKey, rawAesKey)
 
   // 4. Assemble encryption envelope
-  return {
+  const envelope: CipherEnvelope = {
     enc: 'AES_256_GCM',
     key: arrayBufferToBase64(encryptedAesKey),
     iv: arrayBufferToBase64(iv.buffer),
     ct: arrayBufferToBase64(ciphertext.buffer),
     tag: arrayBufferToBase64(tag.buffer),
   }
+
+  return btoa(JSON.stringify(envelope))
 }

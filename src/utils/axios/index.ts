@@ -6,5 +6,5 @@ import { AxiosTransform } from './interceptors'
 export const AppAxios = new Axios({
   originalConfig,
 
-  extendConfig: AxiosTransform,
+  transformers: AxiosTransform,
 })

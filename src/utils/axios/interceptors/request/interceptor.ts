@@ -1,13 +1,15 @@
 import type { AxiosRequestConfig } from 'axios'
 import { getBoolean } from '@/utils/shared'
+import { get, isArray, set } from 'lodash-es'
 import { setTokenHeaderWithConfig } from '../../utils'
+import { encryptRequestValue } from './crypto'
 
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreLocale = useAppStoreLocale()
 const appStoreSecurity = useAppStoreSecurity()
 const appStoreFingerprint = useAppStoreFingerprint()
 
-export function requestInterceptors(config: AxiosRequestConfig) {
+export async function requestInterceptors(config: AxiosRequestConfig) {
   // avoid use ! below for ts
   if (!config.headers) {
     config.headers = {}
@@ -44,6 +46,29 @@ export function requestInterceptors(config: AxiosRequestConfig) {
     else {
       config.params = {
         t: Date.now(),
+      }
+    }
+  }
+
+  // request data encrypt
+  if (config._autoEncryptRequestData && !config._encrypted) {
+    // tag this request to avoid encrypt again
+    config._encrypted = true
+
+    // we only handle request body data
+    if (config.data) {
+      const keys = config._autoEncryptRequestData
+
+      if (keys && (Array.isArray(keys) ? keys.length : true)) {
+        const keyList = isArray(keys) ? keys : [keys]
+
+        for (const key of keyList) {
+          const encryptedVal = get(config.data, key)
+          if (encryptedVal !== null) {
+            const decryptedVal = await encryptRequestValue(encryptedVal)
+            set(config.data, key, decryptedVal)
+          }
+        }
       }
     }
   }

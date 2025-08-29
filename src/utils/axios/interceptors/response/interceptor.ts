@@ -58,7 +58,7 @@ export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponse
   // refresh token is expired, so this user need to signout and re-signin
   if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
     await userStoreAuth.Signout(false)
-    return Promise.reject(new Error('Error'))
+    return Promise.reject(new Error('Refersh Token Expired'))
   }
 
   // custom error cdoe

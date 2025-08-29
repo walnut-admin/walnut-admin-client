@@ -24,11 +24,6 @@ declare module 'axios' {
     _sleep?: number
 
     /**
-     * auto decrypt response specific field data
-     */
-    _autoDecryptResponseData?: (keyof D)[]
-
-    /**
      * cache flag
      * optimised from https://github.com/kuitos/axios-extensions
      */
@@ -66,42 +61,37 @@ declare module 'axios' {
      * request id, nanoid
      */
     _request_id?: string
-  }
 
+    /**
+     * auto decrypt response specific field data
+     */
+    _autoDecryptResponseData?: (keyof D)[]
+
+    /**
+     * auto encrypt request specific field data
+     */
+    _autoEncryptRequestData?: string[]
+
+    /**
+     * prevent duplicate encrypt in request interceptor
+     */
+    _encrypted?: boolean
+  }
 }
 
 declare global {
-  interface WalnutAxiosConfig {
+  interface IAxiosConfig {
     originalConfig: AxiosRequestConfig
-    extendConfig: WalnutAxiosTransform
+    transformers: IAxiosTransformers
   }
 
   /**
    * @description Custom transform type
    */
-  interface WalnutAxiosTransform {
-    /**
-     * @description Axios original request interceptor
-     */
-    requestInterceptors?: (
-      config: AxiosRequestConfig
-    ) => AxiosRequestConfig | Promise<AppBaseModel>
-
-    /**
-     * @description Axios original request error catch
-     */
+  interface IAxiosTransformers {
+    requestInterceptors?: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>
     requestInterceptorsCatch?: (error: Error) => void
-
-    /**
-     * @description Axios original response interceptor
-     */
-    responseInterceptors?: (
-      res: AxiosResponse<WalnutBaseResponseStructure>
-    ) => Promise<AppBaseModel | void>
-
-    /**
-     * @description Axios original response error catch
-     */
+    responseInterceptors?: (res: AxiosResponse<WalnutBaseResponseStructure>) => Promise<AppBaseModel | void>
     responseInterceptorsCatch?: <T = any>(error: AxiosError<T>) => void
   }
 

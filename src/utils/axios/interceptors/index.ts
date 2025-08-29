@@ -4,7 +4,7 @@ import { responseInterceptorsCatch } from './response/catch'
 import { responseInterceptors } from './response/interceptor'
 
 // custom transform for req and res interceptors
-export const AxiosTransform: WalnutAxiosTransform = {
+export const AxiosTransform: IAxiosTransformers = {
   requestInterceptors,
   requestInterceptorsCatch,
   responseInterceptors,

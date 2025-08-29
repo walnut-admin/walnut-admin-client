@@ -5,15 +5,15 @@ import axios from 'axios'
 export class Axios {
   private readonly instance: AxiosInstance
 
-  constructor(options: WalnutAxiosConfig) {
+  constructor(options: IAxiosConfig) {
     this.instance = axios.create(options.originalConfig)
-    this.createInterceptors(options.extendConfig)
+    this.createInterceptors(options.transformers)
   }
 
   /**
    * @description create request/response interceptors
    */
-  private createInterceptors(transform: WalnutAxiosTransform) {
+  private createInterceptors(transform: IAxiosTransformers) {
     const {
       requestInterceptors,
       requestInterceptorsCatch,
@@ -45,7 +45,7 @@ export class Axios {
   /**
    * @description base request method
    */
-  request<T>(
+  request<T = any>(
     config: AxiosRequestConfig,
   ): Promise<T> {
     return new Promise((resolve, reject) => {
