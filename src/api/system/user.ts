@@ -25,6 +25,7 @@ export function updatePassowrdAPI(data: { userId: string, newPassword: string })
     data: {
       newPassword: data.newPassword,
     },
+    _autoEncryptRequestData: ['newPassword'],
   })
 }
 

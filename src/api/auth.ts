@@ -22,6 +22,7 @@ export function authWithPwdAPI(data: AppPayloadAuth.Password) {
     {
       url: Auth.PWD,
       data,
+      _autoEncryptRequestData: ['password'],
     },
   )
 }

@@ -3,7 +3,6 @@ import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
-import { encryptRequestValueToEnvelope } from '@/utils/axios/interceptors/request/crypto'
 import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
 import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { defineStore } from 'pinia'
@@ -91,10 +90,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description password way to auth
      */
     async AuthWithBasicPassword(payload: AppPayloadAuth.Password) {
-      const passwordEnvelope = await encryptRequestValueToEnvelope(payload.password)
       const res = await authWithPwdAPI({
         userName: payload.userName,
-        password: btoa(JSON.stringify(passwordEnvelope)),
+        password: payload.password,
       })
 
       // excute core fn
