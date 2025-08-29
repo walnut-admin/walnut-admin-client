@@ -70,7 +70,7 @@ function onShowAside() {
             id="walnut-search"
           />
 
-          <WappStoreLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" id="walnut-locale" />
+          <WAppLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" id="walnut-locale" />
 
           <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" id="walnut-dark" />
 
