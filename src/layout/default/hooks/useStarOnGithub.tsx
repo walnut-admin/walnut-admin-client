@@ -14,10 +14,10 @@ export async function useStarOnGithub() {
   }
 
   function onCheckboxChange(val: boolean) {
-    setCookie('dontShowStar', val)
+    setCookie('dont-show-star', val)
   }
 
-  const dontShow = getCookie('dontShowStar')
+  const dontShow = getCookie('dont-show-star')
 
   if (dontShow === true)
     return
