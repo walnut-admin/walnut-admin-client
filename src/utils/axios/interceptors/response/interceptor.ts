@@ -6,6 +6,7 @@ import { BussinessCodeConst, errorCodeList } from '../../constant'
 import { SingletonPromiseCapJSToken } from './capJSToken'
 import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
+import { SingletonPromiseRsaDecryptFailed } from './rsaDecrypt'
 import { SingletonPromiseSign } from './sign'
 
 const userStoreAuth = useAppStoreUserAuth()
@@ -59,6 +60,14 @@ export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponse
   if (code === BussinessCodeConst.REFRESH_TOKEN_EXPIRED) {
     await userStoreAuth.Signout(false)
     return Promise.reject(new Error('Refersh Token Expired'))
+  }
+
+  // rsa decrypt failed
+  if (code === BussinessCodeConst.RSA_DECRYPT_FAILED) {
+    // allow to excute encrypt logic in request interceptor again
+    res.config._encrypted = false
+    await SingletonPromiseRsaDecryptFailed(res)
+    return await AppAxios.request(res.config)
   }
 
   // custom error cdoe

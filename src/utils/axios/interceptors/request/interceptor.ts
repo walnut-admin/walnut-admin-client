@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 import { getBoolean } from '@/utils/shared'
-import { get, isArray, set } from 'lodash-es'
+import { cloneDeep, get, isArray, set } from 'lodash-es'
 import { setTokenHeaderWithConfig } from '../../utils'
 import { encryptRequestValue } from './crypto'
 
@@ -57,16 +57,19 @@ export async function requestInterceptors(config: AxiosRequestConfig) {
 
     // we only handle request body data
     if (config.data) {
+      // put original post data in _plainData
+      config._plainData = cloneDeep(config.data)
+
       const keys = config._autoEncryptRequestData
 
       if (keys && (Array.isArray(keys) ? keys.length : true)) {
         const keyList = isArray(keys) ? keys : [keys]
 
         for (const key of keyList) {
-          const encryptedVal = get(config.data, key)
-          if (encryptedVal !== null) {
-            const decryptedVal = await encryptRequestValue(encryptedVal)
-            set(config.data, key, decryptedVal)
+          const plain = get(config.data, key)
+          if (plain !== null) {
+            const cipher = await encryptRequestValue(plain)
+            set(config.data, key, cipher)
           }
         }
       }

@@ -76,6 +76,11 @@ declare module 'axios' {
      * prevent duplicate encrypt in request interceptor
      */
     _encrypted?: boolean
+
+    /**
+     * plain data, used for encrypt again in request interceptor
+     */
+    _plainData?: any
   }
 }
 

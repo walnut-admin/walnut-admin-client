@@ -50,6 +50,10 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
   },
 
   actions: {
+    clearServerRsaPubKey() {
+      this.serverRsaPubKey = ''
+    },
+
     async getServerRsaPubKey() {
       if (this.getSeverRsaPubKey) {
         return this.getSeverRsaPubKey

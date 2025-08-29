@@ -1,15 +1,11 @@
 export const BussinessCodeConst = {
   SUCCESS: 20000,
 
+  RSA_DECRYPT_FAILED: 40011,
   ACCESS_TOKEN_EXPIRED: 40101,
-
   REFRESH_TOKEN_EXPIRED: 40102,
-
   CAPJS_TOKEN_EXPIRED: 40111,
-
   SIGNATURE_EXPIRED: 40113,
-
-  PERMISSION_DENIED: 40105,
 
   DEVICE_NOT_ALLOWED: 40605,
 } as const
@@ -22,8 +18,6 @@ export const errorCodeList = [
   40003,
   40004,
   40100,
-  40101,
-  40102,
   40103,
   40104,
   40105,
@@ -32,9 +26,7 @@ export const errorCodeList = [
   40108,
   40109,
   40110,
-  40111,
   40112,
-  40113,
   40300,
   40400,
   40401,
@@ -43,7 +35,6 @@ export const errorCodeList = [
   40602,
   40603,
   40604,
-  40605,
   40800,
   42900,
   50000,
