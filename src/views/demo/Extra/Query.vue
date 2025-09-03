@@ -4,7 +4,7 @@ defineOptions({
   defaultView: false,
 })
 
-const q1 = useRouterQuery('q1')
+const q1 = useRouterQuery('q1', '1111')
 const q2 = useRouterQuery('q2')
 const q3 = useRouterQuery('q3')
 </script>
