@@ -18,10 +18,10 @@ const getKeepAliveInclude = computed(() => {
             v-if="appSetting.app.keepAlive"
             :include="getKeepAliveInclude"
           >
-            <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
+            <component :is="Component" v-if="localRefreshFlag" :key="route.path + JSON.stringify(route.params)" />
           </keep-alive>
 
-          <component :is="Component" v-else :key="route.fullPath" />
+          <component :is="Component" v-else :key="route.path + JSON.stringify(route.params)" />
         </WTransition>
 
         <template v-else>
@@ -29,10 +29,10 @@ const getKeepAliveInclude = computed(() => {
             v-if="appSetting.app.keepAlive"
             :include="getKeepAliveInclude"
           >
-            <component :is="Component" v-if="localRefreshFlag" :key="route.fullPath" />
+            <component :is="Component" v-if="localRefreshFlag" :key="route.path + JSON.stringify(route.params)" />
           </keep-alive>
 
-          <component :is="Component" v-else :key="route.fullPath" />
+          <component :is="Component" v-else :key="route.path + JSON.stringify(route.params)" />
         </template>
       </router-view>
     </template>
