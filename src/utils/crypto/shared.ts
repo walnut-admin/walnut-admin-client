@@ -9,6 +9,29 @@ export function arrayBufferToBase64(buf: ArrayBuffer | ArrayBufferLike): string 
 }
 
 /**
+ * Converts Uint8Array to Base64
+ * @description Converts a Uint8Array object to a Base64 encoded string
+ * @param uint8Array - The Uint8Array to convert
+ * @returns Base64 encoded string
+ */
+export function uint8ArrayToBase64(uint8Array: Uint8Array): string {
+  return btoa(String.fromCharCode(...uint8Array))
+}
+
+/**
+ * Base64 to Uint8Array
+ * @description Converts a Base64 encoded string to a Uint8Array object
+ * @param b64 - The Base64 string to convert
+ * @returns Uint8Array containing the decoded data
+ */
+export function base64ToUint8Array(b64: string): Uint8Array {
+  const str = atob(b64)
+  const buf = new Uint8Array(str.length)
+  for (let i = 0; i < str.length; i++) buf[i] = str.charCodeAt(i)
+  return buf
+}
+
+/**
  * Converts Base64 to ArrayBuffer
  * @description Converts a Base64 encoded string to an ArrayBuffer object
  * @param base64 - The Base64 string to convert
@@ -16,6 +39,22 @@ export function arrayBufferToBase64(buf: ArrayBuffer | ArrayBufferLike): string 
  */
 export function base64ToArrayBuffer(b64: string): ArrayBuffer {
   return Uint8Array.from(atob(b64), c => c.charCodeAt(0)).buffer
+}
+
+/**
+ * Uint8Array to binary string
+ */
+export function u8ToBinary(buf: Uint8Array): string {
+  return Array.from(buf, byte => String.fromCharCode(byte)).join('')
+}
+
+/**
+ * Binary string to Uint8Array
+ */
+export function binaryToU8(str: string): Uint8Array {
+  const arr = new Uint8Array(str.length)
+  for (let i = 0; i < str.length; i++) arr[i] = str.charCodeAt(i)
+  return arr
 }
 
 /**
@@ -146,61 +185,6 @@ export async function generateAes256Key(): Promise<CryptoKey> {
 }
 
 /**
- * AES-GCM Encryption (returns split IV, ciphertext, and tag)
- * @param key - AES key
- * @param plaintext - Plaintext string to encrypt
- * @returns { iv, ciphertext, tag } - Split encryption components
- */
-export async function aesGcmEncryptSplit(key: CryptoKey, plaintext: string): Promise<{
-  iv: Uint8Array
-  ciphertext: Uint8Array
-  tag: Uint8Array
-}> {
-  const iv = crypto.getRandomValues(new Uint8Array(12)) // 12-byte IV recommended for GCM
-  const encoder = new TextEncoder()
-  const cipherBuffer = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    encoder.encode(plaintext),
-  )
-
-  const cipherBytes = new Uint8Array(cipherBuffer)
-  return {
-    iv,
-    ciphertext: cipherBytes.slice(0, cipherBytes.length - 16), // Exclude 16-byte tag
-    tag: cipherBytes.slice(-16), // Extract 16-byte tag
-  }
-}
-
-/**
- * AES-GCM Decryption (accepts split IV, ciphertext, and tag)
- * @param key - AES key
- * @param iv - Initialization Vector
- * @param ciphertext - Encrypted ciphertext
- * @param tag - Authentication tag
- * @returns Decrypted plaintext string
- */
-export async function aesGcmDecryptSplit(
-  key: CryptoKey,
-  iv: Uint8Array,
-  ciphertext: Uint8Array,
-  tag: Uint8Array,
-): Promise<string> {
-  // Combine ciphertext and tag (GCM decryption requires complete ciphertext + tag)
-  const ctWithTag = new Uint8Array(ciphertext.length + tag.length)
-  ctWithTag.set(ciphertext)
-  ctWithTag.set(tag, ciphertext.length)
-
-  const plainBuffer = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: iv as BufferSource },
-    key,
-    ctWithTag,
-  )
-
-  return new TextDecoder().decode(plainBuffer)
-}
-
-/**
  * Exports AES key to raw format (ArrayBuffer)
  */
 export async function exportAesKeyRaw(key: CryptoKey): Promise<ArrayBuffer> {
@@ -216,6 +200,6 @@ export async function importAesKeyRaw(rawKey: ArrayBuffer): Promise<CryptoKey> {
     rawKey,
     { name: 'AES-GCM' },
     false,
-    ['decrypt'],
+    ['decrypt', 'encrypt'],
   )
 }

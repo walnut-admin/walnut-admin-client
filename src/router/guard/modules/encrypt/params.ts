@@ -1,11 +1,26 @@
 import type { Router } from 'vue-router'
-import { isUrlEncrypted, urlDecrypt, urlEncrypt } from '@/utils/url-masking'
+import { decryptUrlMasking, encryptUrlMasking } from '@/router/utils/crypto'
+import { version } from '~build/package'
 
-export function createRouteParamsEnhancedGuard(router: Router) {
+const ENHANCED_URL_PREFIX = `__ep__${version}__`
+
+function isUrlEncrypted(v: unknown): v is string {
+  return typeof v === 'string' && v.startsWith(ENHANCED_URL_PREFIX)
+}
+
+async function urlEncrypt(v: string) {
+  return ENHANCED_URL_PREFIX + await encryptUrlMasking(v)
+}
+
+async function urlDecrypt(v: string) {
+  return await decryptUrlMasking(v.slice(ENHANCED_URL_PREFIX.length))
+}
+
+export function createRouteParamEncryptGuard(router: Router) {
   const appSetting = useAppStoreSetting()
 
   // beforeEach
-  router.beforeEach((to, _from) => {
+  router.beforeEach(async (to, _from) => {
     // normal params
     if (!appSetting.app.urlMasking) {
       return true
@@ -24,14 +39,14 @@ export function createRouteParamsEnhancedGuard(router: Router) {
       return true
 
     const encrypted = { ...to.params }
-    needEncrypt.forEach(([k, v]) => {
-      encrypted[k] = urlEncrypt(v as string)
-    })
+    await Promise.all(needEncrypt.map(async ([k, v]) => {
+      encrypted[k] = await urlEncrypt(v as string)
+    }))
     return { ...to, params: encrypted, replace: true }
   })
 
   // beforeResolve
-  router.beforeResolve((to) => {
+  router.beforeResolve(async (to) => {
     // normal params
     if (!appSetting.app.urlMasking) {
       return true
@@ -48,15 +63,9 @@ export function createRouteParamsEnhancedGuard(router: Router) {
       return
 
     const resolved = { ...to.params }
-    encryptedEntries.forEach(([k, v]) => {
-      try {
-        resolved[k] = urlDecrypt(v as string)
-      }
-      catch (error) {
-        console.warn('Query decryption failed, fallback to empty', error)
-        resolved[k] = '[invalid]'
-      }
-    })
+    await Promise.all(encryptedEntries.map(async ([k, v]) => {
+      resolved[k] = await urlDecrypt(v as string)
+    }))
 
     to.meta._resolvedParams = resolved
   })

@@ -1,4 +1,5 @@
-import { aesGcmEncryptSplit, arrayBufferToBase64, exportAesKeyRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
+import { arrayBufferToBase64, exportAesKeyRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
+import { aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
 
 interface CipherEnvelope {
   enc: 'AES_256_GCM'
@@ -13,7 +14,7 @@ export async function encryptRequestValue(value: string) {
   const aesKey = await generateAes256Key()
 
   // 2. AES-GCM encrypt plaintext to get IV, ciphertext and tag
-  const { iv, ciphertext, tag } = await aesGcmEncryptSplit(aesKey, value)
+  const { iv, ciphertext, tag } = await aesGcmEncrypt(aesKey, value, true)
 
   // 3. Export raw AES key and encrypt with RSA
   const rawAesKey = await exportAesKeyRaw(aesKey)

@@ -1,10 +1,11 @@
 import type { Router } from 'vue-router'
 import { createAfterEachGuard } from './afterEach'
 import { createBeforeEachGuard } from './beforeEach'
+import { createRouteParamEncryptGuard } from './modules/encrypt/params'
+import { createRouteQueryEncryptGuard } from './modules/encrypt/querys'
 import { createLeaveTipGuard } from './modules/leaveTip'
 import { createLoadingbarGuard } from './modules/loadingbar'
 import { createLockGuard } from './modules/lock'
-import { createRouteParamsEnhancedGuard } from './modules/paramsEnhanced'
 
 // https://router.vuejs.org/guide/advanced/navigation-guards#The-Full-Navigation-Resolution-Flow
 // The Full Navigation Resolution Flow
@@ -24,7 +25,8 @@ export function createRouterGuard(router: Router) {
   createLoadingbarGuard(router)
   createLeaveTipGuard(router)
   createLockGuard(router)
-  createRouteParamsEnhancedGuard(router)
   createBeforeEachGuard(router)
   createAfterEachGuard(router)
+  createRouteParamEncryptGuard(router)
+  createRouteQueryEncryptGuard(router)
 }

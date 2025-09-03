@@ -1,5 +1,6 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Slots } from 'vue'
+import { Base64 } from 'js-base64'
 import { forEach, isArray, isPlainObject, isUndefined, set } from 'lodash-es'
 
 export function getDefaultSlotText(slots: Slots): string {
@@ -136,13 +137,9 @@ export function pathsToObject<T extends object, R extends Recordable = T>(pathsO
 }
 
 export function toUrlSafeBase64(b64: string): string {
-  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  return Base64.toBase64(b64, true)
 }
 
 export function fromUrlSafeBase64(b64url: string): string {
-  let b64 = b64url.replace(/-/g, '+').replace(/_/g, '/')
-  while (b64.length % 4) {
-    b64 += '='
-  }
-  return b64
+  return Base64.fromBase64(b64url)
 }

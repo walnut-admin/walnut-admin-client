@@ -1,5 +1,4 @@
 import type { Router } from 'vue-router'
-
 import { AppCoreFn1 } from '@/core'
 import { isEmpty, isUndefined } from 'lodash-es'
 

@@ -1,4 +1,5 @@
-import { aesGcmDecryptSplit, importAesKeyRaw, importRsaPrivateKey, rsaOaepDecrypt } from '@/utils/crypto/shared'
+import { importAesKeyRaw, importRsaPrivateKey, rsaOaepDecrypt } from '@/utils/crypto/shared'
+import { aesGcmDecrypt } from '@/utils/crypto/symmetric/aes-gcm'
 
 export async function decryptResponseValue(encryptedBase64: string): Promise<string> {
   try {
@@ -21,7 +22,10 @@ export async function decryptResponseValue(encryptedBase64: string): Promise<str
 
     // 4. Import AES key and decrypt
     const aesKey = await importAesKeyRaw(aesKeyBytes.buffer)
-    return aesGcmDecryptSplit(aesKey, iv, ct, tag)
+
+    const plainText = await aesGcmDecrypt(aesKey, { iv, ct, tag })
+
+    return plainText!
   }
   catch (error) {
     console.error(`Failed to decrypt response value`, error)
