@@ -61,6 +61,7 @@ declare global {
    */
   interface IAppStoreKey {
     baiduAK?: string
+    urlMaskingAesKey?: CryptoKey
   }
 
   /**

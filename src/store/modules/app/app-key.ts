@@ -1,4 +1,6 @@
+import { urlKeyAPI } from '@/api/app/key'
 import { getBaiduKeyAPI } from '@/api/auth'
+import { base64ToArrayBuffer, importAesKeyRaw } from '@/utils/crypto/shared'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -6,15 +8,21 @@ import { store } from '../../pinia'
 const useAppStoreKeyInside = defineStore(StoreKeys.APP_KEY, {
   state: (): IAppStoreKey => ({
     baiduAK: '',
+    urlMaskingAesKey: undefined,
   }),
 
   getters: {
-    getBaiduAK: state => state.baiduAK,
+    getBaiduAK: state => state.baiduAK!,
+    getUrlMaskingAesKey: state => state.urlMaskingAesKey!,
   },
 
   actions: {
     setBaiduAK(payload: string) {
       this.baiduAK = payload
+    },
+
+    setUrlMaskingAesKey(payload: CryptoKey) {
+      this.urlMaskingAesKey = payload
     },
 
     async initBaiduKey() {
@@ -24,6 +32,18 @@ const useAppStoreKeyInside = defineStore(StoreKeys.APP_KEY, {
       const res = await getBaiduKeyAPI()
 
       this.setBaiduAK(res.B!)
+    },
+
+    async initUrlMaskingAesKey() {
+      if (this.getUrlMaskingAesKey)
+        return
+
+      const res = await urlKeyAPI()
+
+      const raw = base64ToArrayBuffer(res.keyB64)
+      const aesKey = await importAesKeyRaw(raw)
+
+      this.setUrlMaskingAesKey(aesKey)
     },
   },
 })
