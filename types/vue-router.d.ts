@@ -14,5 +14,10 @@ declare module 'vue-router' {
      * @description used for enhanced params, to temp save resolved params
      */
     _resolvedParams?: Recordable
+
+    /**
+     * @description used for enhanced querys, to temp save resolved querys
+     */
+    _resolvedQuerys?: Recordable
   }
 }

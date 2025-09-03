@@ -13,7 +13,7 @@ export function useRouterParam(path: string) {
       return route.params[path] as string ?? undefined
     },
     set(val) {
-      router.replace({ ...router.currentRoute.value, params: { [path]: val } } as RouteLocationRaw)
+      router.replace({ ...router.currentRoute.value, params: { ...router.currentRoute.value.params, [path]: val } } as RouteLocationRaw)
     },
   })
 
