@@ -71,6 +71,9 @@ importers:
       echarts:
         specifier: 5.6.0
         version: 5.6.0
+      fflate:
+        specifier: 0.8.2
+        version: 0.8.2
       highlight.js:
         specifier: 11.11.1
         version: 11.11.1
@@ -80,6 +83,9 @@ importers:
       idb:
         specifier: 8.0.3
         version: 8.0.3
+      js-base64:
+        specifier: 3.7.8
+        version: 3.7.8
       libphonenumber-js:
         specifier: 1.12.7
         version: 1.12.7
@@ -3945,6 +3951,9 @@ packages:
       picomatch:
         optional: true
 
+  fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
+
   figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
     engines: {node: '>=8'}
@@ -4610,6 +4619,9 @@ packages:
 
   js-base64@2.6.4:
     resolution: {integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==}
+
+  js-base64@3.7.8:
+    resolution: {integrity: sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow==}
 
   js-string-escape@1.0.1:
     resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}
@@ -11137,6 +11149,8 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.3
 
+  fflate@0.8.2: {}
+
   figures@3.2.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -11843,6 +11857,8 @@ snapshots:
   jiti@2.4.2: {}
 
   js-base64@2.6.4: {}
+
+  js-base64@3.7.8: {}
 
   js-string-escape@1.0.1: {}
 
