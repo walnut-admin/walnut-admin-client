@@ -1,5 +1,5 @@
 import type { Router } from 'vue-router'
-import { decryptUrlMasking, encryptUrlMasking } from '@/router/utils/crypto'
+import { decryptRouterUrl, encryptRouterUrl } from '@/router/utils/crypto'
 import { version } from '~build/package'
 
 const ENHANCED_URL_PREFIX = `__eq__${version}__`
@@ -9,11 +9,11 @@ function isUrlQueryEncrypted(v: unknown): v is string {
 }
 
 export async function urlQueryEncrypt(v: string) {
-  return ENHANCED_URL_PREFIX + await encryptUrlMasking(v)
+  return ENHANCED_URL_PREFIX + await encryptRouterUrl(v)
 }
 
 async function urlQueryDecrypt(v: string) {
-  return await decryptUrlMasking(v.slice(ENHANCED_URL_PREFIX.length))
+  return await decryptRouterUrl(v.slice(ENHANCED_URL_PREFIX.length))
 }
 
 export function createRouteQueryEncryptGuard(router: Router) {

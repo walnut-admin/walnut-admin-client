@@ -1,4 +1,5 @@
 import type { IDBPDatabase } from 'idb'
+import { generateAes256Key } from '@/utils/crypto/shared'
 import { openDB } from 'idb'
 
 const DB_NAME = 'vault'
@@ -25,11 +26,7 @@ export async function getStorageIdbKey(): Promise<CryptoKey> {
   let key = await db.get(STORE, KEY_ID)
 
   if (!key) {
-    key = await crypto.subtle.generateKey(
-      { name: 'AES-GCM', length: 256 },
-      false,
-      ['encrypt', 'decrypt'],
-    )
+    key = await generateAes256Key()
     await db.put(STORE, key, KEY_ID)
   }
   return key as CryptoKey

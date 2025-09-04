@@ -1,61 +1,4 @@
-/**
- * Converts ArrayBuffer to Base64
- * @description Converts an ArrayBuffer object to a Base64 encoded string
- * @param buf - The ArrayBuffer to convert
- * @returns Base64 encoded string
- */
-export function arrayBufferToBase64(buf: ArrayBuffer | ArrayBufferLike): string {
-  return btoa(String.fromCharCode(...new Uint8Array(buf)))
-}
-
-/**
- * Converts Uint8Array to Base64
- * @description Converts a Uint8Array object to a Base64 encoded string
- * @param uint8Array - The Uint8Array to convert
- * @returns Base64 encoded string
- */
-export function uint8ArrayToBase64(uint8Array: Uint8Array): string {
-  return btoa(String.fromCharCode(...uint8Array))
-}
-
-/**
- * Base64 to Uint8Array
- * @description Converts a Base64 encoded string to a Uint8Array object
- * @param b64 - The Base64 string to convert
- * @returns Uint8Array containing the decoded data
- */
-export function base64ToUint8Array(b64: string): Uint8Array {
-  const str = atob(b64)
-  const buf = new Uint8Array(str.length)
-  for (let i = 0; i < str.length; i++) buf[i] = str.charCodeAt(i)
-  return buf
-}
-
-/**
- * Converts Base64 to ArrayBuffer
- * @description Converts a Base64 encoded string to an ArrayBuffer object
- * @param base64 - The Base64 string to convert
- * @returns ArrayBuffer containing the decoded data
- */
-export function base64ToArrayBuffer(b64: string): ArrayBuffer {
-  return Uint8Array.from(atob(b64), c => c.charCodeAt(0)).buffer
-}
-
-/**
- * Uint8Array to binary string
- */
-export function u8ToBinary(buf: Uint8Array): string {
-  return Array.from(buf, byte => String.fromCharCode(byte)).join('')
-}
-
-/**
- * Binary string to Uint8Array
- */
-export function binaryToU8(str: string): Uint8Array {
-  const arr = new Uint8Array(str.length)
-  for (let i = 0; i < str.length; i++) arr[i] = str.charCodeAt(i)
-  return arr
-}
+import { arrayBufferToBase64 } from './transformer'
 
 /**
  * Exports key to PEM format
@@ -166,6 +109,10 @@ export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): P
  * @returns Decrypted data (ArrayBuffer)
  */
 export async function rsaOaepDecrypt(privateKey: CryptoKey, encryptedData: ArrayBuffer): Promise<ArrayBuffer> {
+  if (privateKey.algorithm.name !== 'RSA-OAEP') {
+    throw new TypeError('Key must be RSA-OAEP')
+  }
+
   return crypto.subtle.decrypt(
     { name: 'RSA-OAEP' },
     privateKey,
@@ -180,6 +127,23 @@ export async function generateAes256Key(): Promise<CryptoKey> {
   return crypto.subtle.generateKey(
     { name: 'AES-GCM', length: 256 },
     true,
+    ['encrypt', 'decrypt'],
+  )
+}
+
+/**
+ * Core logic for RSA-OAEP key generation
+ * @returns RSA-OAEP key pair (CryptoKeyPair)
+ */
+export async function generateRsaOaepKeyPairCore(): Promise<CryptoKeyPair> {
+  return crypto.subtle.generateKey(
+    {
+      name: 'RSA-OAEP',
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([0x01, 0x00, 0x01]), // 65537
+      hash: 'SHA-256',
+    },
+    true, // extractable
     ['encrypt', 'decrypt'],
   )
 }
@@ -201,5 +165,49 @@ export async function importAesKeyRaw(rawKey: ArrayBuffer): Promise<CryptoKey> {
     { name: 'AES-GCM' },
     false,
     ['decrypt', 'encrypt'],
+  )
+}
+
+/**
+ * Core logic for AES-GCM encryption
+ * @param key AES-GCM secret key
+ * @param plaintext Plaintext data (ArrayBuffer)
+ * @param iv 12-byte random initialization vector
+ * @returns Encrypted ciphertext + tag (ArrayBuffer)
+ */
+export async function aesGcmEncryptCore(
+  key: CryptoKey,
+  plaintext: Uint8Array<ArrayBuffer>,
+  iv: Uint8Array<ArrayBuffer>,
+): Promise<ArrayBuffer> {
+  if (key.algorithm.name !== 'AES-GCM') {
+    throw new TypeError('Key must be AES-GCM')
+  }
+  return crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    key,
+    plaintext,
+  )
+}
+
+/**
+ * Core logic for AES-GCM decryption
+ * @param key AES-GCM secret key
+ * @param cipherWithTag Ciphertext + tag (ArrayBuffer)
+ * @param iv 12-byte vector used during encryption
+ * @returns Decrypted plaintext (ArrayBuffer)
+ */
+export async function aesGcmDecryptCore(
+  key: CryptoKey,
+  cipherWithTag: ArrayBuffer,
+  iv: Uint8Array<ArrayBuffer>,
+): Promise<ArrayBuffer> {
+  if (key.algorithm.name !== 'AES-GCM') {
+    throw new TypeError('Key must be AES-GCM')
+  }
+  return crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv },
+    key,
+    cipherWithTag,
   )
 }

@@ -1,4 +1,5 @@
-import { base64ToUint8Array, uint8ArrayToBase64 } from '../shared'
+import { aesGcmDecryptCore, aesGcmEncryptCore } from '../shared'
+import { base64ToUint8Array, u8ToUtf8, uint8ArrayToBase64, utf8ToU8 } from '../transformer'
 
 /**
  * Unified AES-256-GCM Encryption Interface
@@ -37,10 +38,10 @@ export async function aesGcmEncrypt(
   const TAG_LEN = 16 // 128-bit tag fixed for GCM
 
   const iv = crypto.getRandomValues(new Uint8Array(IV_LEN))
-  const cipherBuffer = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
+  const cipherBuffer = await aesGcmEncryptCore(
     key,
-    new TextEncoder().encode(plaintext),
+    utf8ToU8(plaintext),
+    iv,
   )
 
   const cipherBytes = new Uint8Array(cipherBuffer)
@@ -87,8 +88,8 @@ export async function aesGcmDecrypt(
   }
 
   try {
-    let iv: Uint8Array
-    let cipherWithTag: Uint8Array
+    let iv: Uint8Array<ArrayBuffer>
+    let cipherWithTag: Uint8Array<ArrayBuffer>
 
     /* ---------- Branch 1: Base64 string ---------- */
     if (typeof input === 'string') {
@@ -107,12 +108,12 @@ export async function aesGcmDecrypt(
       cipherWithTag.set(tag, ct.length)
     }
 
-    const plainBuffer = await crypto.subtle.decrypt(
-      { name: 'AES-GCM', iv: iv as BufferSource },
+    const plainBuffer = await aesGcmDecryptCore(
       key,
-      cipherWithTag as BufferSource,
+      cipherWithTag.buffer,
+      iv,
     )
-    return new TextDecoder().decode(plainBuffer)
+    return u8ToUtf8(new Uint8Array(plainBuffer))
   }
   catch (e) {
     console.warn('AES-GCM decryption failed', e)

@@ -1,5 +1,6 @@
-import { arrayBufferToBase64, exportAesKeyRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
+import { exportAesKeyRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
 import { aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
+import { arrayBufferToBase64 } from '@/utils/crypto/transformer'
 
 interface CipherEnvelope {
   enc: 'AES_256_GCM'

@@ -4,7 +4,8 @@
  * Algorithm: RSA-OAEP + SHA-256
  */
 
-import { base64ToArrayBuffer, exportKeyToPEM, importRsaPrivateKey, rsaOaepDecrypt } from '../shared'
+import { exportKeyToPEM, generateRsaOaepKeyPairCore, importRsaPrivateKey, rsaOaepDecrypt } from '../shared'
+import { base64ToArrayBuffer, u8ToUtf8 } from '../transformer'
 
 /**
  * Generates RSA-OAEP key pair
@@ -12,23 +13,8 @@ import { base64ToArrayBuffer, exportKeyToPEM, importRsaPrivateKey, rsaOaepDecryp
  * @returns Promise resolving to an object containing public and private keys in PEM format, or null on failure
  */
 export async function generateRSAKeyPair() {
-  if (!window.crypto?.subtle) {
-    console.error('Web Crypto API is not supported in this environment')
-    return null
-  }
-
   try {
-    const keyPair = await crypto.subtle.generateKey(
-      {
-        name: 'RSA-OAEP',
-        modulusLength: 2048, // Key length
-        publicExponent: new Uint8Array([0x01, 0x00, 0x01]), // 65537
-        hash: 'SHA-256',
-      },
-      true, // Extractable
-      ['encrypt', 'decrypt'],
-    )
-
+    const keyPair = await generateRsaOaepKeyPairCore()
     const publicKeyPem = await exportKeyToPEM(keyPair.publicKey, 'public')
     const privateKeyPem = await exportKeyToPEM(keyPair.privateKey, 'private')
 
@@ -54,11 +40,6 @@ export async function decryptWithPrivateKey(
   privateKeyPem: string,
   base64Cipher: string,
 ): Promise<string | null> {
-  if (!window.crypto?.subtle) {
-    console.error('Web Crypto API is not supported in this environment')
-    return null
-  }
-
   if (!privateKeyPem || !base64Cipher) {
     console.warn('Private key or ciphertext is empty')
     return null
@@ -74,7 +55,7 @@ export async function decryptWithPrivateKey(
     // Reuse RSA-OAEP decryption logic from shared.ts
     const decryptedBuffer = await rsaOaepDecrypt(privateKey, cipherBuffer)
 
-    return new TextDecoder().decode(decryptedBuffer)
+    return u8ToUtf8(new Uint8Array(decryptedBuffer))
   }
   catch (err) {
     console.error('Decryption failed:', err)
