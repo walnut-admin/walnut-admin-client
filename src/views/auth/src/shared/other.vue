@@ -55,15 +55,28 @@ async function onOAuth(type: string) {
   )
 
   eventSource.onmessage = async ({ data }) => {
-    const res = JSON.parse(data)
+    try {
+      const res = JSON.parse(data)
 
-    if (res.event === `token:${type}`) {
-      useAppMsgSuccess(t('app.oauth.success'))
-      await userStoreAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
+      if (res.success) {
+        if (res.data.event === `token:${type}`) {
+          useAppMsgSuccess(t('app.oauth.success'))
+          await userStoreAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
+        }
+
+        loading.value = false
+        eventSource.close()
+      }
+      else {
+        loading.value = false
+        eventSource.close()
+        childWindow?.close()
+        useAppMsgError(res.message)
+      }
     }
-
-    loading.value = false
-    eventSource.close()
+    catch (error) {
+      console.log(error)
+    }
   }
 
   const id = setInterval(() => {

@@ -38,8 +38,6 @@ export function useRouterQuery(path: string, defaultValue?: string) {
       // 3. Re-encrypt the entire object
       const encryptedQuery = await urlQueryEncrypt(JSON.stringify(resolved))
 
-      console.log(9)
-
       // 4. Write to _e
       router.replace({
         ...router.currentRoute.value,
