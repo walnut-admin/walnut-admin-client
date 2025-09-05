@@ -6,14 +6,14 @@ import devtoolsJson from 'vite-plugin-devtools-json'
 import { creatAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
-import { createCheckerPlugin } from './checker'
+// import { createCheckerPlugin } from './checker'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInfoPlugin } from './info'
-import { createLegacyPlugin } from './legacy'
+// import { createLegacyPlugin } from './legacy'
 import { createObfuscatorPlugin } from './obfuscator'
 // import { createPWAPlugin } from './pwa'
 // import { createCSPPlugin } from './csp'
@@ -83,7 +83,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     vitePlugins.push(createImageOptimizerPlugin())
 
     // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
-    vitePlugins.push(createLegacyPlugin())
+    // vitePlugins.push(createLegacyPlugin())
 
     // https://github.com/nonzzz/vite-plugin-cdn
     env.build.cdn && vitePlugins.push(createCdnImportPlugin())

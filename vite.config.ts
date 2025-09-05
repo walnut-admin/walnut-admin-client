@@ -110,6 +110,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       reportCompressedSize: false,
       // code split would caused build css not work
       cssCodeSplit: false,
+      target: 'esnext',
 
       chunkSizeWarningLimit: 600,
 
