@@ -173,7 +173,7 @@ declare global {
     serverRsaPubKey: string
     clientRsaPubKey: Ref<string | null>
     clientRsaPrivKey: Ref<string | null>
-    signAesSecretKey: Ref<string | null>
+    signAesSecretKey: string
   }
 
   type IAppTabIframe = Pick<AppSystemMenu, 'name'> & Pick<AppSystemMenuMeta, 'cache' | 'url'>

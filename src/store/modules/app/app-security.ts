@@ -16,8 +16,6 @@ import { store } from '../../pinia'
 const clientRsaPubKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
 // eslint-disable-next-line antfu/no-top-level-await
 const clientRsaPrivKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
-// eslint-disable-next-line antfu/no-top-level-await
-const signAesKeyStorage = await useAppStorageAsync(AppConstPersistKey.SIGN_AES_KEY, '', { expire: 15 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
 
 const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
   state: (): IAppStoreSecurity => ({
@@ -27,8 +25,8 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
     clientRsaPubKey: clientRsaPubKeyStorage,
     // 30 days
     clientRsaPrivKey: clientRsaPrivKeyStorage,
-    // 15 minutes
-    signAesSecretKey: signAesKeyStorage,
+    // in memory
+    signAesSecretKey: '',
   }),
 
   getters: {
@@ -85,7 +83,7 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
       // decrypt session key with private key
       const realAesKey = await decryptWithPrivateKey(this.getClientPrivKey, res.encryptedAes)
 
-      this.signAesSecretKey = realAesKey
+      this.signAesSecretKey = realAesKey!
 
       return realAesKey!
     },

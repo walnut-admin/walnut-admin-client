@@ -9,7 +9,6 @@ import { store } from '../../pinia'
 const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
   state: (): IAppStoreGeoIP => ({
     geoInfo: useAppStorageSync<Partial<ExternalGeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { expire: 24 * 60 * 60 * 1000 }),
-
   }),
 
   getters: {
