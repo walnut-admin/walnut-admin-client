@@ -26,6 +26,7 @@ export function useAppStorageSync<T>(
     storage = syncLocalStorage,
     usePresetKey = true,
     ttlMode = 'fixed',
+    resetBehavior = 'clear',
   } = options
 
   const realKey = usePresetKey ? getStorageKey(key) : key
@@ -41,9 +42,13 @@ export function useAppStorageSync<T>(
   function resetToInitial() {
     storage.removeItem(realKey)
     clearExpireTimer()
-    const fresh = cloneDeep(initialValue)
-    state.value = toShallowReactive(fresh)
-    write(fresh)
+    if (resetBehavior === 'keepInitial') {
+      const fresh = cloneDeep(initialValue)
+      state.value = toShallowReactive(fresh)
+    }
+    else {
+      state.value = null as any
+    }
   }
 
   function computeExpire(): number | null {

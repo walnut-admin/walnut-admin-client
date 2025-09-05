@@ -18,8 +18,9 @@ const v3 = useAppStorageSync<string>('test-storage-3', 'test-storage-3', {
 })
 const v4 = useAppStorageSync<string>('test-storage-4', '', { expire: 5 * 1000, storage: sessionStorage })
 const v5 = useAppStorageSync<string>('test-storage-5', 'test-storage-5', {
-  expire: 5 * 1000,
   usePresetKey: false,
+  resetBehavior: 'keepInitial',
+  expire: 5 * 1000,
 })
 const v6 = useAppStorageSync<string>('test-storage-6', 'test-storage-6', {
   storage: enhancedBase64LocalStorage(true),
@@ -40,7 +41,7 @@ const av3 = await useAppStorageAsync<string>('test-storage-33', 'test-storage-33
 
 const map1 = new Map<string, number>()
 map1.set('1', 123)
-const m1 = useAppStorageSync<Map<string, number>>('test-map-1', map1)
+const m1 = useAppStorageSync<Map<string, number>>('test-map-1', map1, { resetBehavior: 'keepInitial' })
 function onAddToMap1() {
   m1.value.set(`${getRandomInt(0, 99999)}`, getRandomInt(0, 99999))
 }
@@ -50,7 +51,7 @@ function onClearMap1() {
 
 const map2 = new Map<string, number>()
 map2.set('1', 123)
-const m2 = useAppStorageSync<Map<string, number>>('test-map-2', map2, { expire: 5 * 1000 })
+const m2 = useAppStorageSync<Map<string, number>>('test-map-2', map2, { expire: 5 * 1000, resetBehavior: 'keepInitial' })
 function onAddToMap2() {
   m2.value.set(`${getRandomInt(0, 99999)}`, getRandomInt(0, 99999))
 }
@@ -60,7 +61,7 @@ function onClearMap2() {
 
 const map3 = new Map<string, number>()
 map3.set('1', 123)
-const m3 = useAppStorageSync<Map<string, number>>('test-map-3', map3, { expire: 5 * 1000, ttlMode: 'sliding' })
+const m3 = useAppStorageSync<Map<string, number>>('test-map-3', map3, { expire: 5 * 1000, ttlMode: 'sliding', resetBehavior: 'keepInitial' })
 function onAddToMap3() {
   m3.value.set(`${getRandomInt(0, 99999)}`, getRandomInt(0, 99999))
 }
@@ -70,7 +71,7 @@ function onClearMap3() {
 
 const map4 = new Map<string, number>()
 map4.set('1', 123)
-const m4 = useAppStorageSync<Map<string, number>>('test-map-4', map4, { storage: enhancedBase64LocalStorage(true) })
+const m4 = useAppStorageSync<Map<string, number>>('test-map-4', map4, { storage: enhancedBase64LocalStorage(true), resetBehavior: 'keepInitial' })
 function onAddToMap4() {
   m4.value.set(`${getRandomInt(0, 99999)}`, getRandomInt(0, 99999))
 }
@@ -80,7 +81,7 @@ function onClearMap4() {
 
 const set1 = new Set<string>()
 set1.add('1')
-const s1 = useAppStorageSync<Set<string>>('test-set-1', set1)
+const s1 = useAppStorageSync<Set<string>>('test-set-1', set1, { resetBehavior: 'keepInitial' })
 function onAddToSet1() {
   s1.value.add(`${getRandomInt(0, 99999)}`)
 }
@@ -90,7 +91,7 @@ function onClearSet1() {
 
 const set2 = new Set<string>()
 set2.add('1')
-const s2 = useAppStorageSync<Set<string>>('test-set-2', set2, { expire: 5 * 1000 })
+const s2 = useAppStorageSync<Set<string>>('test-set-2', set2, { expire: 5 * 1000, resetBehavior: 'keepInitial' })
 function onAddToSet2() {
   s2.value.add(`${getRandomInt(0, 99999)}`)
 }
@@ -100,7 +101,7 @@ function onClearSet2() {
 
 const set3 = new Set<string>()
 set3.add('1')
-const s3 = useAppStorageSync<Set<string>>('test-set-3', set3, { expire: 5 * 1000, ttlMode: 'sliding' })
+const s3 = useAppStorageSync<Set<string>>('test-set-3', set3, { expire: 5 * 1000, ttlMode: 'sliding', resetBehavior: 'keepInitial' })
 function onAddToSet3() {
   s3.value.add(`${getRandomInt(0, 99999)}`)
 }
@@ -110,7 +111,7 @@ function onClearSet3() {
 
 const set4 = new Set<string>()
 set4.add('1')
-const s4 = await useAppStorageAsync<Set<string>>('test-set-4', set4, { storage: enhancedAesGcmLocalStorage(true) })
+const s4 = await useAppStorageAsync<Set<string>>('test-set-4', set4, { storage: enhancedAesGcmLocalStorage(true), resetBehavior: 'keepInitial' })
 function onAddToSet4() {
   s4.value?.add(`${getRandomInt(0, 99999)}`)
 }
@@ -176,7 +177,7 @@ onUnmounted(() => {
 
           <n-list-item>
             <WTitle prefix="bar" class="mb-2">
-              LocalStorage with No Prefix key
+              LocalStorage with No Prefix key & Expire would keep Initial Value
             </WTitle>
 
             <n-input v-model:value="v5" class="mb-2" />

@@ -7,14 +7,31 @@ declare global {
   }
 
   interface IStorageOptions<T> {
-    /* expire time（milliseconds），Infinity means never expire, default Infinity */
+    /**
+     * expire time（milliseconds），Infinity means never expire
+     * @default Infinity
+     */
     expire?: number
-    /* any object that implements the Storage interface, default localStorage */
+    /**
+     * any object that implements the Storage interface
+     * @default syncLocalStorage/asyncLocalStorage
+     */
     storage?: T
-    /* whether to use preset key, default true */
+    /**
+     * whether to use preset key
+     * @default true
+     */
     usePresetKey?: boolean
-    /** ttl mode */
+    /**
+     * ttl mode
+     * @default 'fixed'
+     */
     ttlMode?: 'fixed' | 'sliding'
+    /**
+     * reset behavior
+     * @default 'clear'
+     */
+    resetBehavior?: 'clear' | 'keepInitial'
   }
 
   interface IStorageData<T> {

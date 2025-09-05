@@ -26,6 +26,7 @@ export async function useAppStorageAsync<T>(
     storage = asyncLocalStorage,
     usePresetKey = true,
     ttlMode = 'fixed',
+    resetBehavior = 'clear',
   } = options
 
   const realKey = usePresetKey ? getStorageKey(key) : key
@@ -33,16 +34,20 @@ export async function useAppStorageAsync<T>(
 
   const { arm: armExpireTimer, clear: clearExpireTimer } = useExpireTimer({
     onExpire: async () => {
-      await storage.removeItem(realKey)
       resetToInitial()
     },
   })
 
   async function resetToInitial() {
+    await storage.removeItem(realKey)
     clearExpireTimer()
-    const fresh = cloneDeep(initialValue)
-    state.value = toShallowReactive(fresh)
-    await write(fresh)
+    if (resetBehavior === 'keepInitial') {
+      const fresh = cloneDeep(initialValue)
+      state.value = toShallowReactive(fresh)
+    }
+    else {
+      state.value = null as any
+    }
   }
 
   async function computeExpire(): Promise<number | null> {
@@ -93,7 +98,6 @@ export async function useAppStorageAsync<T>(
     exp ? armExpireTimer(exp) : clearExpireTimer()
   }
 
-  // 初始化
   const res = await read()
   if (res !== null) {
     state.value = toShallowReactive(res)
