@@ -28,7 +28,6 @@
   "scripts": {
     "predev": "esno build/generate/index.ts && npm run icon:dev",
     "dev": "vite",
-    "commit": "git-cz",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx simple-git-hooks",
     "prebuild": "esno build/generate/index.ts && npm run icon:prod",
@@ -39,6 +38,7 @@
     "release": "esno release.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix --concurrency=auto",
+    "commit:msg": "commitlint --edit",
     "types:check": "vue-tsc --noEmit",
     "types:check:log": "esno build/types.ts",
     "clean:cache": "rimraf node_modules/.vite",
@@ -127,7 +127,6 @@
     "case-police": "2.0.0",
     "chalk": "5.6.2",
     "commitizen": "4.3.1",
-    "cz-custom": "0.0.2",
     "deploy-cli-service": "1.5.3",
     "eslint": "9.35.0",
     "eslint-plugin-vue": "10.4.0",
@@ -174,16 +173,9 @@
     "workbox-window": "^7.3.0",
     "zod": "4.1.5"
   },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-custom"
-    },
-    "cz-custom": {
-      "config": "config/cz-custom/.cz-config.js"
-    }
-  },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "pnpm lint-staged",
+    "commit-msg": "pnpm commit:msg"
   },
   "lint-staged": {
     "*": "eslint --fix"
