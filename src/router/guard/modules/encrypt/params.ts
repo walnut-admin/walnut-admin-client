@@ -64,7 +64,10 @@ export function createRouteParamEncryptGuard(router: Router) {
 
     const resolved = { ...to.params }
     await Promise.all(encryptedEntries.map(async ([k, v]) => {
-      resolved[k] = await urlParamDecrypt(v as string)
+      const decrypted = await urlParamDecrypt(v as string)
+      if (decrypted) {
+        resolved[k] = decrypted
+      }
     }))
 
     to.meta._resolvedParams = resolved

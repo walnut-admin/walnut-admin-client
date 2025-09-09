@@ -5,7 +5,7 @@ defineOptions({
 })
 
 const state = ref({
-  location1: undefined,
+  location1: '',
   location2: '126.544844,45.726521',
 })
 </script>

@@ -32,8 +32,10 @@ export function createRouteQueryEncryptGuard(router: Router) {
   router.beforeResolve(async (to) => {
     if (appSetting.app.urlMasking && to.query._e) {
       const query = await urlQueryDecrypt(to.query._e as string)
-      const queryObj = JSON.parse(query)
-      to.meta._resolvedQuerys = queryObj
+      if (query) {
+        const queryObj = JSON.parse(query)
+        to.meta._resolvedQuerys = queryObj
+      }
     }
   })
 }

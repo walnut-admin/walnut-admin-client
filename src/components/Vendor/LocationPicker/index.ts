@@ -1,7 +1,7 @@
 export { default } from './index.vue'
 
 export interface IWCompVendorLocationPickerProps {
-  value?: number[]
+  value?: string
   height?: string
   width?: string
 }

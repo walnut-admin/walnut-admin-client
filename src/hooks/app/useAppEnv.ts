@@ -1,9 +1,3 @@
-export function useAppEnvCrypto() {
-  return {
-    url: import.meta.env.VITE_CRYPTO_URL,
-  }
-}
-
 export function useAppEnvTitle() {
   return {
     title: import.meta.env.VITE_APP_TITLE,
