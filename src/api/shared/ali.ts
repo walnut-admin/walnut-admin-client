@@ -13,7 +13,7 @@ export function getAliSTSTokenAPI() {
   }>(
     {
       url: '/shared/ali/sts',
-      _autoDecryptResponseData: true,
+      _autoDecryptResponseData: ['accessKeyId', 'accessKeySecret', 'stsToken'],
     },
   )
 }
