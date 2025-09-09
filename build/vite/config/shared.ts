@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-export const VITE_KEY_IV_VALIDATE = () => z.preprocess((v: unknown) => typeof v === 'string' && JSON.parse(v), z.array(z.string()).length(2))
-
 export function VITE_PROXY_VALIDATE() {
   return z.preprocess((v: unknown) => typeof v === 'string' && JSON.parse(v), z.tuple(
     [
