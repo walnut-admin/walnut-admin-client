@@ -50,7 +50,7 @@ const infoItems = computed<ICompUIDescriptionsItem[]>(
       },
       {
         label: t('desc.about.info.buildTime'),
-        value: now.toLocaleDateString(),
+        value: `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
         type: 'tag',
         typeProps: {
           type: 'info',
