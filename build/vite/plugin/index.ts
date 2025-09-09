@@ -6,7 +6,7 @@ import devtoolsJson from 'vite-plugin-devtools-json'
 import { creatAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
-// import { createCheckerPlugin } from './checker'
+import { createCheckerPlugin } from './checker'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
@@ -57,7 +57,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     createUnoCSSPlugin(),
 
     // https://github.com/fi3ework/vite-plugin-checker
-    // createCheckerPlugin(),
+    createCheckerPlugin(),
   ]
 
   // I'm pretty sure packages below will be removed when build

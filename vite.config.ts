@@ -58,8 +58,11 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
     define: {
       // https://vue-i18n.intlify.dev/guide/advanced/optimization#feature-build-flags
-      __VUE_I18N_FULL_INSTALL__: false,
-      __VUE_I18N_LEGACY_API__: false,
+      '__VUE_I18N_FULL_INSTALL__': false,
+      '__VUE_I18N_LEGACY_API__': false,
+      // https://github.com/fi3ework/vite-plugin-checker/issues/569
+      // https://github.com/vuejs/core/issues/13202#issuecomment-2804421417
+      'process.env.NODE_ENV': JSON.stringify('production'),
     },
 
     plugins: [...createVitePlugins(mode, processedEnv)],
