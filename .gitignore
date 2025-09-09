@@ -18,3 +18,4 @@ deploy.config.*
 tsconfig.tsbuildinfo
 dev-dist
 release-notes.md
+config/husky/*
