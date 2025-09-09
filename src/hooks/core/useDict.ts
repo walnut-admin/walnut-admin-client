@@ -1,5 +1,5 @@
-import type { IAppStoreMapDictValue } from '@/api/system/dict'
 import type { BaseDataType } from 'easy-fns-ts'
+import type { IAppStoreMapDictValue } from '@/api/system/dict'
 import { getDictByTypeAPI } from '@/api/system/dict'
 
 const AppStoreMapDict = ref(new Map<string, IAppStoreMapDictValue>())

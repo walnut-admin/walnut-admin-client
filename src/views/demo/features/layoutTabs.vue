@@ -17,10 +17,10 @@ const getOtherTabButtonDisabled = computed(
 
 function onCreate(type: number) {
   const query
-      = type === 1 ? { testQuery1: 1, testQuery2: 'abc', testQuery3: false } : {}
+    = type === 1 ? { testQuery1: 1, testQuery2: 'abc', testQuery3: false } : {}
 
   const params
-      = type === 2 ? { testParam1: 1, testParam2: 'abc', testParam3: false } : {}
+    = type === 2 ? { testParam1: 1, testParam2: 'abc', testParam3: false } : {}
 
   appStoreTab.createTabs({
     name: `name-${count.value}`,

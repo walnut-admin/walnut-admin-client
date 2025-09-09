@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { IconifyIconLoaderAbort } from '@iconify/vue'
 import type { ICompUIIconProps } from '.'
-import { Icon, iconExists, loadIcons } from '@iconify/vue'
+import { Icon, iconLoaded, loadIcons } from '@iconify/vue'
 
 defineOptions({
   name: 'WCompUIIcon',
@@ -21,7 +21,7 @@ const getSize = computed(() =>
 
 // Function to check if icon data is available
 function check(icon: string) {
-  const isLoaded = (loaded.value = iconExists(icon))
+  const isLoaded = (loaded.value = iconLoaded(icon))
 
   // Cancel old loder
   if (loader.value) {
@@ -31,7 +31,7 @@ function check(icon: string) {
 
   if (!isLoaded) {
     loader.value = loadIcons([icon], () => {
-      loaded.value = iconExists(icon)
+      loaded.value = iconLoaded(icon)
     })
   }
 }

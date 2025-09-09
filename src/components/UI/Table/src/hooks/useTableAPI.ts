@@ -1,10 +1,10 @@
-import type { IHooksUseProps } from '@/hooks/core/useProps'
-
 import type { StringOrNumber } from 'easy-fns-ts'
-import type { SorterMultiple } from 'naive-ui/es/data-table/src/interface'
 
+import type { SorterMultiple } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
+
 import type { ICompUITableHooksAPIListParams } from './useTableAPIListParams'
+import type { IHooksUseProps } from '@/hooks/core/useProps'
 import { isFunction, isNumber, isUndefined } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 import { extractDefaultFormDataFromSchemas } from '../../../Form/src/utils'

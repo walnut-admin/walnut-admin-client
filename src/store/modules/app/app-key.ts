@@ -1,8 +1,8 @@
+import { defineStore } from 'pinia'
 import { urlKeyAPI } from '@/api/app/key'
 import { getBaiduKeyAPI } from '@/api/auth'
 import { importAesKeyRaw } from '@/utils/crypto/shared'
 import { base64ToArrayBuffer } from '@/utils/crypto/transformer'
-import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

@@ -1,11 +1,11 @@
+import type { TreeNodeItem } from 'easy-fns-ts'
+
+import type { IAppSystemMenuForm } from './types'
 import type { WForm } from '@/components/UI/Form'
 
-import type { TreeNodeItem } from 'easy-fns-ts'
-import type { IAppSystemMenuForm } from './types'
-
+import { findPath } from 'easy-fns-ts'
 // TODO 111
 import WRadio from '@/components/UI/Radio'
-import { findPath } from 'easy-fns-ts'
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
 export function useMenuFormSchema(

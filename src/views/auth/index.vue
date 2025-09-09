@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { openExternalLink } from '@/utils/window/open'
 import { UnTyper } from 'untyper'
+import { openExternalLink } from '@/utils/window/open'
 import St21HoverGlareCard from './src/21st/hover-glare-card.vue'
 import St21LetterGlitch from './src/21st/letter-glitch.vue'
 import AuthFormTab from './src/index.vue'

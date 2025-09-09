@@ -1,8 +1,8 @@
+import { homepage } from '~build/package'
 // TODO 111
 import WIcon from '@/components/UI/Icon'
 import { getCookie, setCookie } from '@/utils/persistent/Cookie'
 import { openExternalLink } from '@/utils/window/open'
-import { homepage } from '~build/package'
 
 export async function useStarOnGithub() {
   const { t } = useAppI18n()

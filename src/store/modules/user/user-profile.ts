@@ -1,6 +1,6 @@
-import { getUserInfoAPI } from '@/api/auth'
 import { upperFirst } from 'easy-fns-ts'
 import { defineStore } from 'pinia'
+import { getUserInfoAPI } from '@/api/auth'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

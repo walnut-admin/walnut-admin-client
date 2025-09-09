@@ -1,6 +1,6 @@
 import type { IDBPDatabase } from 'idb'
-import { generateAes256Key } from '@/utils/crypto/shared'
 import { openDB } from 'idb'
+import { generateAes256Key } from '@/utils/crypto/shared'
 
 const DB_NAME = 'vault'
 const STORE = 'keyStore'

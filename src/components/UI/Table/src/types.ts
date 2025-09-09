@@ -1,12 +1,12 @@
-import type { IHooksUseProps } from '@/hooks/core/useProps'
-
 import type { Recordable, StringOrNumber } from 'easy-fns-ts'
+
 import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
 import type { HTMLAttributes, VNodeChild } from 'vue'
 import type { ICompUIButtonProps } from '../../Button'
 import type { WForm } from '../../Form'
 import type { ICompUIIconButtonProps } from '../../IconButton'
 import type { ICompUITableHooksMethods } from './hooks/useTableMethods'
+import type { IHooksUseProps } from '@/hooks/core/useProps'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
@@ -260,8 +260,8 @@ export declare namespace WTable {
   /**
    * @description Table Column
    */
-  type Column<T> =
-    | (ExtendType.Action<T>
+  type Column<T>
+    = | (ExtendType.Action<T>
       | ExtendType.Icon<T>
       | ExtendType.Link<T>
       | ExtendType.Dictionary<T>

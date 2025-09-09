@@ -1,11 +1,11 @@
 <script lang="tsx" setup>
 import type { NullableRecord } from 'easy-fns-ts'
+// TODO 111
+import { NRadio, NText } from 'naive-ui'
 import { getNeedCapAPI } from '@/api/app/capjs'
 import { sendAuthEmailAPI } from '@/api/auth/email'
 import { isEmailAddress } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
-// TODO 111
-import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({

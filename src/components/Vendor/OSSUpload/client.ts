@@ -1,7 +1,7 @@
 import type { UploadFileInfo } from 'naive-ui'
-import { getAliSTSTokenAPI } from '@/api/shared/ali'
 import OSS from 'ali-oss'
 import { omit } from 'lodash-es'
+import { getAliSTSTokenAPI } from '@/api/shared/ali'
 
 export class AliOSSClient {
   private static _instance: AliOSSClient

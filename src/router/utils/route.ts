@@ -1,9 +1,9 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 
 import type { RouteRecordMultipleViewsWithChildren, RouteRecordNameGeneric, RouteRecordRaw } from 'vue-router'
+import { findPath, formatTree } from 'easy-fns-ts'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
-import { findPath, formatTree } from 'easy-fns-ts'
 import { App404Route, App500Route } from '../routes/builtin'
 
 /**

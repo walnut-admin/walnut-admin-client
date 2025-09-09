@@ -6,8 +6,8 @@ import type {
 } from 'naive-ui'
 
 import type { ICompVendorOSSUploadProps } from '.'
-import { downloadByUrl } from '@/utils/file/download'
 import { genString } from 'easy-fns-ts'
+import { downloadByUrl } from '@/utils/file/download'
 import { AliOSSClient } from './client'
 
 defineOptions({

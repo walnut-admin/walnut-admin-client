@@ -1,5 +1,5 @@
-import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 import type { Nullable } from 'easy-fns-ts'
+import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 
 /**
  * @description App Tab Core Function

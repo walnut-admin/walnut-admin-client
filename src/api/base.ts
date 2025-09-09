@@ -1,6 +1,6 @@
 import type { StringOrNumber } from 'easy-fns-ts'
-import { AppAxios } from '@/utils/axios'
 import { omit } from 'lodash-es'
+import { AppAxios } from '@/utils/axios'
 
 export type BaseAPIType<T extends AppBaseModel> = InstanceType<typeof BaseAPI<T>>
 

@@ -1,6 +1,6 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
-import { getMenuTreeAPI } from '@/api/system/menu'
 import { formatTree } from 'easy-fns-ts'
+import { getMenuTreeAPI } from '@/api/system/menu'
 
 export function useMenuTree() {
   const { t } = useAppI18n()

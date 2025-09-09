@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
-import { AppCoreFn1 } from '@/core'
 import { isEmpty, isUndefined } from 'lodash-es'
+import { AppCoreFn1 } from '@/core'
 
 export function createBeforeEachGuard(router: Router) {
   router.beforeEach(async (to, _from) => {

@@ -1,5 +1,5 @@
-import { authCapApiEndpoint } from '@/api/app/capjs'
 import { defineStore } from 'pinia'
+import { authCapApiEndpoint } from '@/api/app/capjs'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

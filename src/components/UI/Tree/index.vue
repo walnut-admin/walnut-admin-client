@@ -6,15 +6,15 @@ import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
 import type { TreeNodeProps, TreeRenderProps } from 'naive-ui/es/tree/src/interface'
 
 import type { ICompUITreeInst, ICompUITreeProps } from '.'
+import { findPath, formatTree, treeToArr } from 'easy-fns-ts'
+import { cloneDeep } from 'lodash-es'
 // TODO 111
 import WTransition from '@/components/Extra/Transition'
+
 import { useDropdown } from '@/components/UI/Dropdown'
 import WIcon from '@/components/UI/Icon'
 
 import WIconButton from '@/components/UI/IconButton'
-import { findPath, formatTree, treeToArr } from 'easy-fns-ts'
-
-import { cloneDeep } from 'lodash-es'
 
 defineOptions({
   name: 'WCompUITree',
@@ -156,8 +156,7 @@ const getBottomChildKeys = computed(() => {
 
 const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
   dropdownProps: {
-    // @ts-expect-error don't know why
-    options: contextMenuOptions,
+    options: contextMenuOptions as unknown as any[],
     disabled: getProps.value.treeProps?.disabled,
     onSelect: (key) => {
       if (key === 'copy')

@@ -1,10 +1,10 @@
 <script lang="ts" setup generic="T extends AppBaseModel">
-import type { WForm } from '@/components/UI/Form'
-import type { WTable } from '@/components/UI/Table'
 import type { StringOrNumber } from 'easy-fns-ts'
 import type { WCrud } from './types'
-import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
+import type { WForm } from '@/components/UI/Form'
+import type { WTable } from '@/components/UI/Table'
 import { isEmpty, pick } from 'lodash-es'
+import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
 import { useSafeForm } from './useSafeForm'
 
 const props = withDefaults(defineProps<WCrud.Props<T>>(), {

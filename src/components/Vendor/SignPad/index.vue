@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { ICompVendorSignPadProps } from './types'
-import { downloadByBase64 } from '@/utils/file/download'
 import { genString } from 'easy-fns-ts'
 import { toJpeg, toPng } from 'html-to-image'
 import SignaturePad from 'signature_pad'
+import { downloadByBase64 } from '@/utils/file/download'
 
 defineOptions({
   name: 'WVendorSignaturePad',

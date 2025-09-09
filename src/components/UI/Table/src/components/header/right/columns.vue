@@ -2,8 +2,8 @@
 import type { StringOrNumber } from 'easy-fns-ts'
 import type { WTable } from '../../../types'
 
-import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 import { useSortable } from '@vueuse/integrations/useSortable'
+import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
 import { useTableContext } from '../../../hooks/useTableContext'
 import { getTableTranslated } from '../../../utils'
 

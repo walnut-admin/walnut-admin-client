@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import { getRandomInt } from 'easy-fns-ts'
 import { enhancedAesGcmLocalStorage, enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
 import { removeStorageItemsContaining } from '@/utils/persistent/shared'
 import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { useAppStorageSync } from '@/utils/persistent/storage/sync'
-import { getRandomInt } from 'easy-fns-ts'
 
 defineOptions({
   name: 'StorageDemo',

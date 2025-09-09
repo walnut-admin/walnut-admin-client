@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { OptionDataItem, Recordable, StringOrNumber } from 'easy-fns-ts'
-import { WithValueProps } from '@/components/HOC/WithValue'
 import { isFunction } from 'easy-fns-ts'
+import { WithValueProps } from '@/components/HOC/WithValue'
 
 // TODO rework
 defineOptions({

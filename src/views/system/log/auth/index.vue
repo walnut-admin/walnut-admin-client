@@ -100,7 +100,7 @@ const [register, {
             // TODO make this work in v-model
             // value-format use v-model:formatted-value
             valueFormat: 'yyyy-MM-dd',
-            onUpdateFormattedValue(v) {
+            onUpdateFormattedValue(v: string) {
               const queryFormData = onGetApiListParams()
               queryFormData.value.query = Object.assign(queryFormData.value.query!, { authenticated: v })
             },

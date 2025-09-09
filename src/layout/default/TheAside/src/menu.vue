@@ -1,12 +1,12 @@
 <script lang="tsx" setup>
 import type { MenuOption } from 'naive-ui'
 
+import { findPath, formatTree } from 'easy-fns-ts'
+import { omit } from 'lodash-es'
+
 // TODO 111
 import WIcon from '@/components/UI/Icon'
 import { openExternalLink } from '@/utils/window/open'
-
-import { findPath, formatTree } from 'easy-fns-ts'
-import { omit } from 'lodash-es'
 
 interface MenuMeta {
   type: ValueOfAppConstMenuType

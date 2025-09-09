@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
-import { BackendDepsAPI } from '@/api'
 import { dependencies, devDependencies, homepage, urls, version } from '~build/package'
 import now from '~build/time'
+import { BackendDepsAPI } from '@/api'
 
 defineOptions({
   name: 'About',

@@ -1,6 +1,6 @@
-import type { ICompExtraJSONProps } from '@/components/Extra/JSON'
 import type { BaseDataType } from 'easy-fns-ts'
 import type { DescriptionItemProps, DescriptionsProps, TagProps, TextProps } from 'naive-ui'
+import type { ICompExtraJSONProps } from '@/components/Extra/JSON'
 
 export { default } from './index.vue'
 
@@ -31,8 +31,8 @@ export interface ICompUIDescItemExtend<T, P> extends DescriptionItemProps {
   typeProps?: P
 }
 
-export type ICompUIDescriptionsItem<D = any> =
-  ICompUIDescTypeTag<D> | ICompUIDescTypeLink<D> | ICompUIDescTypeJson<D> | ICompUIDescTypeDict<D>
+export type ICompUIDescriptionsItem<D = any>
+  = ICompUIDescTypeTag<D> | ICompUIDescTypeLink<D> | ICompUIDescTypeJson<D> | ICompUIDescTypeDict<D>
 
 export interface ICompUIDescriptionProps extends /* @vue-ignore */ DescriptionsProps {
   items: ICompUIDescriptionsItem[]

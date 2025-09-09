@@ -1,12 +1,12 @@
 <script lang="tsx" setup>
-import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 import type { NullableRecord } from 'easy-fns-ts'
+import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+// TODO 111
+import { NRadio, NText } from 'naive-ui'
 import { getNeedCapAPI } from '@/api/app/capjs'
 import { sendAuthTextMsgAPI } from '@/api/auth/phone'
 import { isPhoneNumber } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
-// TODO 111
-import { NRadio, NText } from 'naive-ui'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({

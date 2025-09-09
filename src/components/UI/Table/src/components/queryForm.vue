@@ -2,7 +2,7 @@
 import { useTableContext } from '../hooks/useTableContext'
 
 const { tablePropsCtx, apiListParams, onApiQuery, onApiReset }
-    = useTableContext<T>()
+  = useTableContext<T>()
 
 const { getProps: tableProps } = tablePropsCtx
 

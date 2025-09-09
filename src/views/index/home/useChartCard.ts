@@ -1,6 +1,6 @@
 import type { WHomeChartCardProps } from './components/types'
-import echarts from '@/components/Vendor/ECharts/on-demand'
 import { getRandomInt } from 'easy-fns-ts'
+import echarts from '@/components/Vendor/ECharts/on-demand'
 
 function onGetOption1(): EChartsOption {
   return {

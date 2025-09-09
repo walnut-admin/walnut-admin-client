@@ -1,18 +1,3 @@
-// business
-import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
-import type { ICompBusinessDictProps } from '@/components/Business/Dict'
-// extra
-import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
-
-import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
-import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelect'
-import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
-import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
-import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
-import type { ICompExtraVerifyCodeProps } from '@/components/Extra/VerifyCode'
-import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
-import type { IHooksUseProps } from '@/hooks/core/useProps'
-
 import type { BaseDataType, Recordable, StringOrNumber } from 'easy-fns-ts'
 // raw
 import type {
@@ -23,8 +8,8 @@ import type {
   FormRules,
   SliderProps,
 } from 'naive-ui'
-
 import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
+
 import type { CSSProperties } from 'vue'
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
@@ -34,14 +19,15 @@ import type { ICompUIButtonRetryProps } from '../../ButtonRetry'
 import type { ICompUICheckboxProps } from '../../Checkbox'
 import type { ICompUIColorPickerProps } from '../../ColorPicker'
 import type { ICompUIDatePickerProps } from '../../DatePicker'
+
 import type { ICompUIDescriptionProps, ICompUIDescriptionsItem } from '../../Descriptions'
 import type { ICompUIDrawerProps } from '../../Drawer'
+
 import type { ICompUIDynamicTagsProps } from '../../DynamicTags'
 import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
 import type { ICompUIModalProps } from '../../Modal'
 import type { ICompUIRadioProps } from '../../Radio'
-
 import type { ICompUISelectProps } from '../../Select'
 import type { ICompUISwitchProps } from '../../Switch'
 import type { ICompUITimePickerProps } from '../../TimePicker'
@@ -52,6 +38,20 @@ import type { ICompUIFormItemExtendDividerProps } from './components/Extend/Divi
 import type { ICompUIFormItemExtendQueryProps } from './components/Extend/Query'
 import type { ICompUIFormHooksItemId } from './hooks/useFormItemId'
 import type { ICompUIFormHooksMethods } from './hooks/useFormMethods'
+// business
+import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
+import type { ICompBusinessDictProps } from '@/components/Business/Dict'
+
+// extra
+import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
+import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
+import type { ICompExtraLocaleSelectProps } from '@/components/Extra/LocaleSelect'
+import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
+import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
+import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
+import type { ICompExtraVerifyCodeProps } from '@/components/Extra/VerifyCode'
+import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
+import type { IHooksUseProps } from '@/hooks/core/useProps'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 
@@ -177,8 +177,8 @@ export declare namespace WForm {
     /**
      * @description model/drawer props
      */
-    dialogProps?: (ICompUIModalProps | ICompUIDrawerProps) &
-      ICompUIModalProps & Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
+    dialogProps?: (ICompUIModalProps | ICompUIDrawerProps)
+      & ICompUIModalProps & Partial<Pick<Inst.WFormInst<T>, 'onYes' | 'onNo'>> & {
 
         /**
          * @description  used to show different dialog title
@@ -378,8 +378,8 @@ export declare namespace WForm {
 
       type: T
 
-      componentProp?: ComponentPropPool<D>[T] &
-        DomProps & {
+      componentProp?: ComponentPropPool<D>[T]
+        & DomProps & {
         /**
          * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
          */
@@ -490,52 +490,52 @@ export declare namespace WForm {
       }>
     }
 
-    type Item<D> =
-      | SchemaItem.DividerSchema<D>
+    type Item<D>
+      = | SchemaItem.DividerSchema<D>
 
-      | SchemaItem.RoleSelectSchema<D>
-      | SchemaItem.TinymceSchema<D>
+        | SchemaItem.RoleSelectSchema<D>
+        | SchemaItem.TinymceSchema<D>
 
       // base
-      | SchemaItem.RenderSchema<D>
-      | SchemaItem.SlotSchema<D>
+        | SchemaItem.RenderSchema<D>
+        | SchemaItem.SlotSchema<D>
 
       // ui
-      | SchemaItem.ButtonSchema<D>
-      | SchemaItem.ButtonConfirmSchema<D>
-      | SchemaItem.ButtonGroupSchema<D>
-      | SchemaItem.ButtonRetry<D>
-      | SchemaItem.CheckboxSchema<D>
-      | SchemaItem.ColorPickerSchema<D>
-      | SchemaItem.DatePickerSchema<D>
-      | SchemaItem.DynamicTagsSchema<D>
-      | SchemaItem.InputSchema<D>
-      | SchemaItem.InputNumberSchema<D>
-      | SchemaItem.RadioSchema<D>
-      | SchemaItem.SelectSchema<D>
-      | SchemaItem.SwitchSchema<D>
-      | SchemaItem.TimePickerSchema<D>
-      | SchemaItem.TreeSchema<D>
-      | SchemaItem.TreeSelectSchema<D>
+        | SchemaItem.ButtonSchema<D>
+        | SchemaItem.ButtonConfirmSchema<D>
+        | SchemaItem.ButtonGroupSchema<D>
+        | SchemaItem.ButtonRetry<D>
+        | SchemaItem.CheckboxSchema<D>
+        | SchemaItem.ColorPickerSchema<D>
+        | SchemaItem.DatePickerSchema<D>
+        | SchemaItem.DynamicTagsSchema<D>
+        | SchemaItem.InputSchema<D>
+        | SchemaItem.InputNumberSchema<D>
+        | SchemaItem.RadioSchema<D>
+        | SchemaItem.SelectSchema<D>
+        | SchemaItem.SwitchSchema<D>
+        | SchemaItem.TimePickerSchema<D>
+        | SchemaItem.TreeSchema<D>
+        | SchemaItem.TreeSelectSchema<D>
 
       // extra
-      | SchemaItem.EmailInputSchema<D>
-      | SchemaItem.IconPickerSchema<D>
-      | SchemaItem.LocaleSchema<D>
-      | SchemaItem.PasswordSchema<D>
-      | SchemaItem.PhoneNumberInputSchema<D>
-      | SchemaItem.VerifyCodeSchema<D>
-      | SchemaItem.TransitionSelectSchema<D>
+        | SchemaItem.EmailInputSchema<D>
+        | SchemaItem.IconPickerSchema<D>
+        | SchemaItem.LocaleSchema<D>
+        | SchemaItem.PasswordSchema<D>
+        | SchemaItem.PhoneNumberInputSchema<D>
+        | SchemaItem.VerifyCodeSchema<D>
+        | SchemaItem.TransitionSelectSchema<D>
 
       // raw
-      | SchemaItem.DynamicInputSchema<D>
-      | SchemaItem.SliderSchema<D>
+        | SchemaItem.DynamicInputSchema<D>
+        | SchemaItem.SliderSchema<D>
 
       // business
-      | SchemaItem.AreaCacaderSchema<D>
-      | SchemaItem.DictSchema<D>
+        | SchemaItem.AreaCacaderSchema<D>
+        | SchemaItem.DictSchema<D>
 
       // extend
-      | SchemaItem.QuerySchema<D>
+        | SchemaItem.QuerySchema<D>
   }
 }

@@ -1,6 +1,6 @@
-import type { WithValueProp } from '@/components/HOC/WithValue'
-
 import type { CheckboxProps } from 'naive-ui'
+
+import type { WithValueProp } from '@/components/HOC/WithValue'
 import { WithValue } from '@/components/HOC/WithValue'
 import RawWCheckBox from './index.vue'
 

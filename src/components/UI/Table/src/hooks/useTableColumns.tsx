@@ -2,16 +2,16 @@ import type { Recordable } from 'easy-fns-ts'
 import type { DropdownOption, TagProps } from 'naive-ui'
 import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
+import { omit } from 'lodash-es'
+import { NA, NDropdown, NTag } from 'naive-ui'
 import WAppNotAuthorized from '@/components/App/AppNotAuthorized'
 // TODO 111
 import WDictLabel from '@/components/Business/DictLabel'
 import WMessage from '@/components/Extra/Message'
 import WIcon from '@/components/UI/Icon'
+
 import WIconButton from '@/components/UI/IconButton'
 import { getBoolean, getFunctionBoolean } from '@/utils/shared'
-
-import { omit } from 'lodash-es'
-import { NA, NDropdown, NTag } from 'naive-ui'
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
@@ -236,20 +236,20 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               const renderNormalButtons = normalButtons.map(renderButton)
 
               const dropdownOptions: DropdownOption[]
-              = dropdownButtons
-                .filter(i => userStorePermission.hasPermission(i.buttonProps?.auth as string))
-                .map(i => i.iconProps?.icon
-                  ? {
-                      type: 'render',
-                      key: i._builtInType,
-                      disabled: isDisabled(i),
-                      render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i)}</div> : undefined,
-                    }
-                  : {
-                      key: i._builtInType,
-                      label: i.buttonProps?.textProp,
-                      disabled: isDisabled(i),
-                    })
+                = dropdownButtons
+                  .filter(i => userStorePermission.hasPermission(i.buttonProps?.auth as string))
+                  .map(i => i.iconProps?.icon
+                    ? {
+                        type: 'render',
+                        key: i._builtInType,
+                        disabled: isDisabled(i),
+                        render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i)}</div> : undefined,
+                      }
+                    : {
+                        key: i._builtInType,
+                        label: i.buttonProps?.textProp,
+                        disabled: isDisabled(i),
+                      })
 
               return (
                 <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">

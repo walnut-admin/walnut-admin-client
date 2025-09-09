@@ -1,6 +1,6 @@
-import type { WithValueProp } from '@/components/HOC/WithValue'
-
 import type { RadioGroupProps, RadioProps } from 'naive-ui'
+
+import type { WithValueProp } from '@/components/HOC/WithValue'
 import { WithValue } from '@/components/HOC/WithValue'
 import RawWRadio from './index.vue'
 

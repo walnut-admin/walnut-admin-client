@@ -4,6 +4,7 @@ export const getStorageKey = (key: string) => `${name.toLocaleUpperCase().slice(
 
 /**
  * Remove all items in storage whose keys contain the specified substring
+ * @param storage The storage to remove items from
  * @param substring The substring to match
  * @returns Array of removed key names
  */

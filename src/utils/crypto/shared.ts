@@ -22,11 +22,11 @@ export async function exportKeyToPEM(key: CryptoKey, type: 'public' | 'private')
  * Imports a key from a PEM string
  * @description Mirror of `exportKeyToPEM`: reads a PEM-formatted public or
  *              private key and imports it into a CryptoKey object.
- * @param pem        - PEM string (-----BEGIN …-----)
- * @param type       - 'public' | 'private'  (which PEM block to expect)
- * @param algorithm  - Algorithm identifier / parameters for WebCrypto.importKey
- * @param extractable- Whether the resulting CryptoKey is extractable
- * @param keyUsages  - Array of usages for this key
+ * @param pem         - PEM string (-----BEGIN …-----)
+ * @param type        - 'public' | 'private'  (which PEM block to expect)
+ * @param algorithm   - Algorithm identifier / parameters for WebCrypto.importKey
+ * @param extractable - Whether the resulting CryptoKey is extractable
+ * @param keyUsages   - Array of usages for this key
  * @returns Promise resolving to the imported CryptoKey
  */
 export async function importKeyFromPEM(

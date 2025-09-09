@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { WAvatarUploadInst } from '@/components/Business/AvatarUpload'
-import { userAPI } from '@/api/system/user'
 import { pick } from 'lodash-es'
+import { userAPI } from '@/api/system/user'
 import WAvatar from '../components/avatar.vue'
 
 defineOptions({
@@ -110,7 +110,7 @@ const [register] = useForm<typeof formData.value>({
             // TODO upload refactor
             // upload avatar and get real avatar url
             const isAvatarUploadSuccess
-                = await avatarUploadRef.value?.onOSSUpload()
+              = await avatarUploadRef.value?.onOSSUpload()
 
             if (!isAvatarUploadSuccess)
               return

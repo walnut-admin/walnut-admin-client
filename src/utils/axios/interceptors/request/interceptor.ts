@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
-import { getBoolean } from '@/utils/shared'
 import { cloneDeep, get, isArray, set } from 'lodash-es'
+import { getBoolean } from '@/utils/shared'
 import { setTokenHeaderWithConfig } from '../../utils'
 import { encryptRequestValue } from './crypto'
 

@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
-import { getNeedCapAPI } from '@/api/app/capjs'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
+import { getNeedCapAPI } from '@/api/app/capjs'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({

@@ -1,6 +1,6 @@
-import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 import type { Nullable } from 'easy-fns-ts'
 import type { AppTabUtilListItem } from '../types'
+import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 
 export function useTabsUtils(scrollRef: Ref<Nullable<ICompExtraScrollbarInst>>, scrollToCurrentTab: Fn) {
   const { t } = useAppI18n()

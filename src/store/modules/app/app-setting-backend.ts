@@ -1,6 +1,6 @@
-import { getPublicSettingsAPI } from '@/api/app/setting'
 import { isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
+import { getPublicSettingsAPI } from '@/api/app/setting'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

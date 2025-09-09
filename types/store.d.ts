@@ -20,13 +20,13 @@ declare global {
   /**
    * Naive UI message placement type
    */
-  type MessagePlacement =
-    | 'top'
-    | 'top-left'
-    | 'top-right'
-    | 'bottom'
-    | 'bottom-left'
-    | 'bottom-right'
+  type MessagePlacement
+    = | 'top'
+      | 'top-left'
+      | 'top-right'
+      | 'bottom'
+      | 'bottom-left'
+      | 'bottom-right'
 
   /**
    * Naive UI notification placement type

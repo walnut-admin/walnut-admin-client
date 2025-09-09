@@ -8,8 +8,8 @@ import type {
   AppSettingsForTabs,
   AppSettingsForTheme,
 } from '~/settings'
-import settings from '@/settings.json'
 import { defineStore } from 'pinia'
+import settings from '@/settings.json'
 import { StoreKeys } from '../../constant'
 
 import { store } from '../../pinia'

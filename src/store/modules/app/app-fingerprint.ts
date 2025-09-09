@@ -1,10 +1,10 @@
 import type { BuiltinComponents, UnknownComponents } from '@fingerprintjs/fingerprintjs'
 import type { AxiosRequestConfig } from 'axios'
-import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { pick } from 'lodash-es'
 import { defineStore } from 'pinia'
+import { enhancedBase64LocalStorage } from '@/utils/persistent/enhance'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

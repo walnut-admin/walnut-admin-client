@@ -1,7 +1,7 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { clone, isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
+import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

@@ -1,7 +1,7 @@
+import type { StringOrNumber } from 'easy-fns-ts'
 import type { BaseAPIType } from '@/api/base'
 import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
-import type { StringOrNumber } from 'easy-fns-ts'
 
 export declare namespace WCrud {
   type SetProps<T extends AppBaseModel> = (p: Partial<Props<T>>) => void

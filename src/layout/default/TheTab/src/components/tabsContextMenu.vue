@@ -1,15 +1,15 @@
 <script lang="tsx" setup>
 import type { DropdownOption } from 'naive-ui'
 
+import { toJpeg } from 'html-to-image'
 import { getThemeOverridesCommon } from '@/App/src/naive/src/theme'
+
 // TODO 111
 import WIcon from '@/components/UI/Icon'
-
 import { isDev } from '@/utils/constant/vue'
-import { downloadByBase64 } from '@/utils/file/download'
 
+import { downloadByBase64 } from '@/utils/file/download'
 import { openExternalLink } from '@/utils/window/open'
-import { toJpeg } from 'html-to-image'
 import { getTabsContext } from '../hooks/useTabsContext'
 
 const { t } = useAppI18n()
@@ -65,12 +65,12 @@ const getOtherDisabled = computed(
   () => currentRoute.value.name !== currentMouseTab.value?.name,
 )
 
-async function onSelect(key: ValueOfAppConstTabDeleteType &
-  'Refresh' &
-  'Screen Full' &
-  'Fix' &
-  'Snapshot' &
-  'NewWindow') {
+async function onSelect(key: ValueOfAppConstTabDeleteType
+  & 'Refresh'
+  & 'Screen Full'
+  & 'Fix'
+  & 'Snapshot'
+  & 'NewWindow') {
   if (Object.values(AppConstTabDeleteType).includes(key))
     onTabRemove(currentMouseTab.value?.name as string, key)
 

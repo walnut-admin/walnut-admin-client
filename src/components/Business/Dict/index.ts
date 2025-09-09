@@ -22,7 +22,7 @@ interface ICompBusinessDictRadioProps {
   componentProps?: ICompUIRadioProps
 }
 
-export type ICompBusinessDictProps =
-  | ICompBusinessDictSelectProps
-  | ICompBusinessDictCheckboxProps
-  | ICompBusinessDictRadioProps
+export type ICompBusinessDictProps
+  = | ICompBusinessDictSelectProps
+    | ICompBusinessDictCheckboxProps
+    | ICompBusinessDictRadioProps

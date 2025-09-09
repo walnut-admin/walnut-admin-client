@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia'
 import { authWithPwdAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
@@ -5,7 +6,6 @@ import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
 import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
 import { useAppStorageAsync } from '@/utils/persistent/storage/async'
-import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { WForm } from '@/components/UI/Form'
-
 import type { StringOrNumber } from 'easy-fns-ts'
+
 import type { IAppSystemMenuForm } from './types'
+import type { WForm } from '@/components/UI/Form'
+import { omit } from 'lodash-es'
 import { menuAPI } from '@/api/system/menu'
 import { useTree } from '@/components/UI/Tree'
 import { objectToPaths, pathsToObject } from '@/utils/shared'
-import { omit } from 'lodash-es'
 import { useMenuTree } from '../role/useMenuTree'
 import { useMenuFormSchema } from './useMenuFormSchema'
 
@@ -53,7 +53,7 @@ const { stateRef: formData, resetState: resetFormData, commit } = useState<IAppS
 commit()
 
 const { getLeftMenu, getTreeSelect, onInit, menuActiveNamesOptions }
-    = useMenuTree()
+  = useMenuTree()
 
 const [registerTree] = useTree<AppSystemMenu>({
   presetPrefixIcon: true,
@@ -91,8 +91,7 @@ const [registerTree] = useTree<AppSystemMenu>({
   },
 
   treeProps: {
-    // @ts-expect-error actually works
-    data: getLeftMenu,
+    data: getLeftMenu as unknown as any[],
     keyField,
     blockLine: true,
     blockNode: true,
