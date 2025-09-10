@@ -15,7 +15,7 @@ import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInfoPlugin } from './info'
 // import { createLegacyPlugin } from './legacy'
 import { createObfuscatorPlugin } from './obfuscator'
-// import { createPWAPlugin } from './pwa'
+import { createPWAPlugin } from './pwa'
 // import { createCSPPlugin } from './csp'
 import { createRestartPlugin } from './restart'
 import { createTurboConsolePlugin } from './turbo-console'
@@ -102,7 +102,7 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
   }
 
   // https://github.com/vite-pwa/vite-plugin-pwa
-  // vitePlugins.push(createPWAPlugin(env))
+  vitePlugins.push(createPWAPlugin(env))
 
   return vitePlugins
 }

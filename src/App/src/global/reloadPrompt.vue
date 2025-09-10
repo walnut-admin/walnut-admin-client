@@ -1,71 +1,46 @@
 <script setup lang="ts">
-// import { useRegisterSW } from 'virtual:pwa-register/vue'
+import { useRegisterSW } from 'virtual:pwa-register/vue'
 
-// const intervalMS = 60 * 60 * 1000
+const intervalMS = 60 * 60 * 1000
 
-// const {
-//   offlineReady,
-//   needRefresh,
-//   updateServiceWorker,
-// } = useRegisterSW({
-//   onRegistered(r) {
-//     r && setInterval(() => {
-//       r.update()
-//     }, intervalMS)
-//   },
-// })
+const {
+  offlineReady,
+  needRefresh,
+  updateServiceWorker,
+} = useRegisterSW({
+  onRegistered(r) {
+    r && setInterval(() => {
+      r.update()
+    }, intervalMS)
+  },
+})
 
-// async function close() {
-//   offlineReady.value = false
-//   needRefresh.value = false
-// }
+async function close() {
+  offlineReady.value = false
+  needRefresh.value = false
+}
 </script>
 
 <template>
-  <!-- <div
+  <div
     v-if="offlineReady || needRefresh"
-    class="pwa-toast"
     role="alert"
+    class="bg-base-color fixed bottom-4 right-0 z-999 m-4 border border-gray-400/50 rounded p-3 text-left shadow"
   >
-    <div class="message">
-      <span v-if="offlineReady">
+    <div class="mb-2">
+      <n-text v-if="offlineReady">
         App ready to work offline
-      </span>
-      <span v-else>
+      </n-text>
+      <n-text v-else>
         New content available, click on reload button to update.
-      </span>
+      </n-text>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">
-      Reload
-    </button>
-    <button @click="close">
-      Close
-    </button>
-  </div> -->
-</template>
 
-<style>
-.pwa-toast {
-  position: fixed;
-  right: 8px;
-  bottom: 16px;
-  margin: 16px;
-  padding: 12px;
-  border: 1px solid #8885;
-  border-radius: 4px;
-  z-index: 1;
-  text-align: left;
-  box-shadow: 3px 4px 5px 0 #8885;
-  background-color: white;
-}
-.pwa-toast .message {
-  margin-bottom: 8px;
-}
-.pwa-toast button {
-  border: 1px solid #8885;
-  outline: none;
-  margin-right: 5px;
-  border-radius: 2px;
-  padding: 3px 10px;
-}
-</style>
+    <n-button v-if="needRefresh" size="tiny" class="mr-2" @click="updateServiceWorker()">
+      Reload
+    </n-button>
+    <n-button size="tiny" @click="close">
+      Close
+    </n-button>
+  </div>
+</template>
