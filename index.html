@@ -11,21 +11,6 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
   <title>%VITE_APP_TITLE%</title>
-
-  <script>
-    const GA_ID = '%VITE_GA_ID%';
-    if (GA_ID) {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-      document.head.appendChild(script);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', GA_ID);
-    }
-  </script>
 </head>
 
 <body>

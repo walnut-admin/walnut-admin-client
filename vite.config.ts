@@ -20,6 +20,7 @@ function useBuildEnv(env: Record<keyof ImportMetaEnv, string>): IViteEnv {
     title: env.VITE_APP_TITLE,
     publicPath: env.VITE_PUBLIC_PATH,
     proxy: JSON.parse(env.VITE_PROXY as string),
+    gaId: env.VITE_GA_ID,
 
     dev: {
       csp: env.VITE_DEV_CSP === 'true',

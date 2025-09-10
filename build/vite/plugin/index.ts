@@ -11,6 +11,7 @@ import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
 import { createDisableDevtoolPlugin } from './disable-devtool'
+import { createGoogleAnalyticsPlugin } from './google-analytics'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInfoPlugin } from './info'
@@ -59,7 +60,11 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/fi3ework/vite-plugin-checker
     createCheckerPlugin(),
+
   ]
+
+  // https://analytics.google.com
+  env.gaId && vitePlugins.push(createGoogleAnalyticsPlugin(env))
 
   // I'm pretty sure packages below will be removed when build
   // It's just a symbol to tell you that when this plugin will be used

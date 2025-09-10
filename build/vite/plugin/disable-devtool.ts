@@ -6,12 +6,12 @@ export function createDisableDevtoolPlugin(): Plugin {
     enforce: 'pre',
 
     transformIndexHtml: {
+      order: 'pre',
       handler(html) {
         const scriptTag = `<script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool"></script>`
         html = html.replace(/<\/head>/, `${scriptTag}\n</head>`)
         return html
       },
-      order: 'pre',
     },
   }
 }

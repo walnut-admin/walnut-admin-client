@@ -22,6 +22,7 @@ interface IViteEnv {
   title: string
   publicPath: string
   proxy: [[number, string, string], [number, string, string, string, string]]
+  gaId: string
 
   dev: {
     csp: boolean
