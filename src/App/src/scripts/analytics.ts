@@ -1,9 +1,3 @@
-import { useScriptTag } from '@vueuse/core'
-
-const GA_ID = 'G-WGQ40NJL90' // Replace with your own ID
-const GTAG_URL = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`
-const WV_URL = 'https://cdn.jsdmirror.com/npm/web-vitals@5.1.0/dist/web-vitals.attribution.iife.js'
-
 function getDebugInfo(name: string, attribution: any) {
   if (!attribution)
     return { debug_target: '(not set)' }
@@ -50,25 +44,13 @@ function sendToGoogleAnalytics({ name, delta, value, id, attribution }: any) {
 }
 
 export async function setupGoogleAnalytics() {
-  // 1. Load gtag
-  const { load: loadGtag } = useScriptTag(
-    GTAG_URL,
-    () => {
-      window.dataLayer = window.dataLayer || []
-      window.gtag = function (...args: any[]) {
-        window.dataLayer.push(args)
-      }
-      window.gtag('js', new Date())
-      window.gtag('config', GA_ID)
-    },
-    { async: true },
-  )
+  if (!import.meta.env.VITE_GA_ID)
+    return
 
-  // 2. Load web-vitals
-  const { load: loadWV } = useScriptTag(
+  const WV_URL = 'https://cdn.jsdmirror.com/npm/web-vitals@5.1.0/dist/web-vitals.attribution.iife.js'
+  useScriptTag(
     WV_URL,
     () => {
-      // When the script executes, it places webVitals on global
       const { onCLS, onINP, onLCP } = window.webVitals
       onCLS(sendToGoogleAnalytics)
       onINP(sendToGoogleAnalytics)
@@ -76,6 +58,4 @@ export async function setupGoogleAnalytics() {
     },
     { async: true },
   )
-
-  await Promise.all([loadGtag(), loadWV()])
 }

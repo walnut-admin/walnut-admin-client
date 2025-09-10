@@ -6,6 +6,8 @@ const appStoreFingerprint = useAppStoreFingerprint()
 const appStoreGeoIP = useAppStoreGeoIP()
 
 export async function setupAppScripts() {
+  await setupGoogleAnalytics()
+
   await appStoreFingerprint.setupFingerprint()
 
   await appStoreGeoIP.setupGeoIP()
@@ -13,6 +15,4 @@ export async function setupAppScripts() {
   await setupDevice()
 
   await appStoreSecurity.setupSign()
-
-  await setupGoogleAnalytics()
 }

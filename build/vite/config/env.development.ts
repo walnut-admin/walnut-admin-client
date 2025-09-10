@@ -4,6 +4,7 @@ import { VITE_PROXY_VALIDATE } from './shared'
 
 export default defineConfig({
   VITE_APP_TITLE: z.string(),
+  VITE_GA_ID: z.string(),
 
   VITE_PORT: z.coerce.number(),
   VITE_HOST: z.string(),
