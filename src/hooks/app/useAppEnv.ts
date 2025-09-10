@@ -18,12 +18,6 @@ export function useAppEnvProxy() {
   }
 }
 
-export function useAppEnvBuild() {
-  return {
-    publicPath: import.meta.env.VITE_PUBLIC_PATH,
-  }
-}
-
 export function useAppEnvSeconds() {
   return {
     axiosTimeout: import.meta.env.VITE_SECONDS_AXIOS_TIMEOUT,
