@@ -10,6 +10,7 @@ import { createCheckerPlugin } from './checker'
 import { createComponentPlugin } from './component'
 import { createCompressionPlugin } from './compression'
 import { createDevtoolsPlugin } from './devtool'
+import { createDisableDevtoolPlugin } from './disable-devtool'
 import { createHttpsPlugin } from './https'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInfoPlugin } from './info'
@@ -99,6 +100,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/nonzzz/vite-bundle-analyzer
     env.build.analyzer && vitePlugins.push(createVisualizerPlugin(env.title))
+
+    // https://github.com/theajack/disable-devtool
+    env.build.disableBrowserDevtool && vitePlugins.push(createDisableDevtoolPlugin())
   }
 
   // https://github.com/vite-pwa/vite-plugin-pwa
