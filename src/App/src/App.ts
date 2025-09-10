@@ -4,16 +4,7 @@ import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'
 import { isDev } from '@/utils/constant/vue'
-
-function setupErrorhandler(app: App) {
-  app.config.errorHandler = (error) => {
-    console.error('AppErrorHandler', error)
-  }
-
-  app.config.warnHandler = (warn) => {
-    console.warn('AppWarnHandler', warn)
-  }
-}
+import { setupSentry } from './scripts/sentry'
 
 /**
  * @description Entry to set up Vue App
@@ -21,11 +12,11 @@ function setupErrorhandler(app: App) {
 export async function setupApp(app: App) {
   await setupI18n(app)
 
-  setupRouter(app)
+  const router = setupRouter(app)
+
+  setupSentry(app, router)
 
   setupStore(app)
-
-  setupErrorhandler(app)
 
   if (isDev())
     app.config.performance = true

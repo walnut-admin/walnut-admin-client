@@ -36,6 +36,13 @@ function useBuildEnv(env: Record<keyof ImportMetaEnv, string>): IViteEnv {
       banner: env.VITE_BUILD_BANNER === 'true',
       cdn: env.VITE_BUILD_CDN === 'true',
       disableBrowserDevtool: env.VITE_BUILD_DISABLE_BROWSER_DEVTOOL === 'true',
+      sentry: {
+        enabled: env.VITE_BUILD_SENTRY === 'true',
+        dsn: env.VITE_BUILD_SENTRY_DSN,
+        org: env.VITE_BUILD_SENTRY_ORG,
+        project: env.VITE_BUILD_SENTRY_PROJECT,
+        authToken: env.VITE_BUILD_SENTRY_AUTH_TOKEN,
+      },
     },
   }
 }
@@ -115,6 +122,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       // code split would caused build css not work
       cssCodeSplit: false,
       target: 'esnext',
+      sourcemap: processedEnv.build.sentry.enabled,
 
       chunkSizeWarningLimit: 600,
 

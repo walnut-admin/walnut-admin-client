@@ -21,6 +21,7 @@ export function setupRouter(app: App) {
   createRouterGuard(AppRouter)
   // turbo-console-disable-next-line
   console.info('Router', 'Router Initializing...')
+  return AppRouter
 }
 
 export function useAppRoute() {

@@ -31,3 +31,10 @@ export function useAppEnvSeconds() {
     persist: import.meta.env.VITE_SECONDS_PERSIST,
   }
 }
+
+export function useAppEnvSentry() {
+  return {
+    sentry: import.meta.env.VITE_BUILD_SENTRY,
+    dsn: import.meta.env.VITE_BUILD_SENTRY_DSN,
+  }
+}

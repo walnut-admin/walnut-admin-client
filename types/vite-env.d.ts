@@ -38,5 +38,12 @@ interface IViteEnv {
     banner: boolean
     cdn: boolean
     disableBrowserDevtool: boolean
+    sentry: {
+      enabled: boolean
+      dsn: string
+      org: string
+      project: string
+      authToken: string
+    }
   }
 }

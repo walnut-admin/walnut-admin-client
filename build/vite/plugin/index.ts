@@ -20,6 +20,7 @@ import { createObfuscatorPlugin } from './obfuscator'
 import { createPWAPlugin } from './pwa'
 // import { createCSPPlugin } from './csp'
 import { createRestartPlugin } from './restart'
+import { createSentryPlugin } from './sentry'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
 import { creatValidateEnvPlugin } from './validate-env'
@@ -108,6 +109,9 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
 
     // https://github.com/theajack/disable-devtool
     env.build.disableBrowserDevtool && vitePlugins.push(createDisableDevtoolPlugin())
+
+    // https://sentry.io
+    env.build.sentry && vitePlugins.push(createSentryPlugin(env))
   }
 
   // https://github.com/vite-pwa/vite-plugin-pwa

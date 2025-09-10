@@ -19,4 +19,10 @@ export default defineConfig({
   VITE_BUILD_ANALYZER: z.coerce.boolean(),
   VITE_BUILD_BANNER: z.coerce.boolean(),
   VITE_BUILD_DISABLE_BROWSER_DEVTOOL: z.coerce.boolean(),
+
+  VITE_BUILD_SENTRY: z.coerce.boolean(),
+  VITE_BUILD_SENTRY_DSN: z.string(),
+  VITE_BUILD_SENTRY_ORG: z.string(),
+  VITE_BUILD_SENTRY_PROJECT: z.string(),
+  VITE_BUILD_SENTRY_AUTH_TOKEN: z.string(),
 })
