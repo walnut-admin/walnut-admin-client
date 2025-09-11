@@ -1,5 +1,5 @@
 import type { IModels } from '../models'
-import type { IStoreApp } from '@/store/types'
+import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
@@ -16,7 +16,7 @@ export const appSettingAPI = new BaseAPI<IModels.AppSettings>({
  * @description get public settings
  */
 export function getPublicSettingsAPI() {
-  return AppAxios.get<IStoreApp.SettingBackend>({
+  return AppAxios.get<IResponseData.App.Setting>({
     url: appSetting.PUBLIC,
   })
 }

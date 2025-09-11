@@ -1,3 +1,4 @@
+import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 
 /**
@@ -16,7 +17,7 @@ export async function signInitialAPI(rsaPubKey: string) {
  * @description sign aes key
  */
 export async function signAesKeyAPI() {
-  return await AppAxios.post<AppPayloadAuth.SignSessionKeyPayload>({
+  return await AppAxios.post<IResponseData.Security.Sign.AesKey>({
     url: `/security/sign/aes-key`,
   })
 }

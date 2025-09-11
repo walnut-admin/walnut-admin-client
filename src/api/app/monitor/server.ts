@@ -1,83 +1,26 @@
+import type { IResponseData } from '@/api/response'
 import { AppAxios } from '@/utils/axios'
 
-export namespace IServerInfo {
-  export interface CPU {
-    cores: number
-    brand: string
-    speed: number
-    manufacturer: string
-  }
-
-  export interface Mem {
-    total: number
-    free: number
-    used: number
-    avaiable: number
-  }
-
-  export interface OS {
-    hostname: string
-    arch: string
-    platform: string
-    distro: string
-  }
-
-  export interface System {
-    manufacturer: string
-    model: string
-    version: string
-    uuid: string
-  }
-
-  export interface Disk {
-    name: string
-    size: number
-    device: string
-    type: string
-  }
-
-  export interface Battery {
-    voltage: number
-    designedCapacity: number
-    currentCapacity: number
-    percent: number
-  }
-
-  export interface Time {
-    current: number
-    uptime: number
-    timezone: string
-    timezoneName: string
-  }
-
-  export interface Network {
-    iface: string
-    ip4: string
-    mac: string
-    netSpeed: string
-  }
-}
-
 export function getCpuInfoAPI() {
-  return AppAxios.get<IServerInfo.CPU>({
+  return AppAxios.get<IResponseData.App.Monitor.CPU>({
     url: '/app/monitor/server/cpu',
   })
 }
 
 export function getMemInfoAPI() {
-  return AppAxios.get<IServerInfo.Mem>({
+  return AppAxios.get<IResponseData.App.Monitor.Mem>({
     url: '/app/monitor/server/mem',
   })
 }
 
 export function getOSInfoAPI() {
-  return AppAxios.get<IServerInfo.OS>({
+  return AppAxios.get<IResponseData.App.Monitor.OS>({
     url: '/app/monitor/server/os',
   })
 }
 
 export function getSysInfoAPI() {
-  return AppAxios.get<IServerInfo.System>(
+  return AppAxios.get<IResponseData.App.Monitor.System>(
     {
       url: '/app/monitor/server/sys',
     },
@@ -85,25 +28,25 @@ export function getSysInfoAPI() {
 }
 
 export function getDiskInfoAPI() {
-  return AppAxios.get<IServerInfo.Disk[]>({
+  return AppAxios.get<IResponseData.App.Monitor.Disk[]>({
     url: '/app/monitor/server/disk',
   })
 }
 
 export function getBatteryInfoAPI() {
-  return AppAxios.get<IServerInfo.Battery>({
+  return AppAxios.get<IResponseData.App.Monitor.Battery>({
     url: '/app/monitor/server/battery',
   })
 }
 
 export function getTimeInfoAPI() {
-  return AppAxios.get<IServerInfo.Time>({
+  return AppAxios.get<IResponseData.App.Monitor.Time>({
     url: '/app/monitor/server/time',
   })
 }
 
 export function getNetworkInfoAPI() {
-  return AppAxios.get<IServerInfo.Network>(
+  return AppAxios.get<IResponseData.App.Monitor.Network>(
     {
       url: '/app/monitor/server/network',
     },

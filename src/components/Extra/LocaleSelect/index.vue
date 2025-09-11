@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import type { ICompExtraLocaleSelectProps } from '.'
+import { AppI18nGetI18nMsg } from '@/api/system/locale'
 
 defineOptions({
   name: 'WCompExtraLocaleSelect',

@@ -2,7 +2,7 @@ import type { IModels } from '@/api/models'
 import type { IStoreUser } from '@/store/types'
 import { upperFirst } from 'easy-fns-ts'
 import { defineStore } from 'pinia'
-import { getUserInfoAPI } from '@/api/auth'
+import { getUserProfileAPI } from '@/api/auth'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -47,7 +47,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     },
 
     async getProfile() {
-      const res = await getUserInfoAPI()
+      const res = await getUserProfileAPI()
       this.setProfile(res?.user)
     },
 

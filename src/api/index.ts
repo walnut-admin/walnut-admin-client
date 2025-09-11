@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-import type { Recordable } from 'easy-fns-ts'
+import type { IResponseData } from './response'
 import { AppAxios } from '@/utils/axios'
 
 export function HelloAPI(config: AxiosRequestConfig) {
@@ -21,7 +21,7 @@ export function HelloWithTokenAPI(config: AxiosRequestConfig) {
 }
 
 export function BackendDepsAPI() {
-  return AppAxios.get<{ dependencies: Recordable, devDependencies: Recordable }>(
+  return AppAxios.get<IResponseData.BackendDeps>(
     {
       url: '/deps',
     },

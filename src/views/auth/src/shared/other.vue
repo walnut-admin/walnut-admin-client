@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Recordable } from 'easy-fns-ts'
-import { getGiteeURIAPI, getGitHubURIAPI, getWeiboURIAPI } from '@/api/auth/third'
+import { getGiteeURIAPI, getGitHubURIAPI } from '@/api/auth/third'
 import { openOAuthWindow } from '@/utils/window/open'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -40,7 +40,6 @@ async function onOAuth(type: string) {
   const api: Recordable = {
     gitee: getGiteeURIAPI,
     github: getGitHubURIAPI,
-    weibo: getWeiboURIAPI,
   }
 
   const res = await api[type]()

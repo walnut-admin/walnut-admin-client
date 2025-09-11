@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
+import { AppI18nGetLangLists } from '@/api/system/lang'
 
 defineOptions({
   name: 'AppStoreLocalePicker',

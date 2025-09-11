@@ -1,4 +1,5 @@
 import type { IModels } from '../models'
+import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
@@ -15,7 +16,7 @@ export const deviceAPI = new BaseAPI<IModels.SystemDictType>({
  * @description initial device
  */
 export async function initialDeviceAPI() {
-  return AppAxios.post<{ deviceId: string }>({
+  return AppAxios.post<IResponseData.System.Device.Initial>({
     url: '/system/device/initial',
     data: {
       rawDeviceId: appStoreFingerprint.getFingerprint,

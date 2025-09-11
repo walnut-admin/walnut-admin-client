@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import type { I18n, I18nOptions, Locale } from 'vue-i18n'
 import { createI18n } from 'vue-i18n'
+import { AppI18nGetI18nMsg } from '@/api/system/locale'
 
 /**
  * @description i18n

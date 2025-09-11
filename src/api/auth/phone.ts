@@ -1,3 +1,4 @@
+import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 
 const authPhone = {
@@ -9,7 +10,7 @@ const authPhone = {
  * @description auth with text message
  */
 export function authWithPhoneNumberAPI(data: AppPayloadAuth.PhoneNumber) {
-  return AppAxios.post<AppPayloadAuth.TokenPayload>({
+  return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: authPhone.AUTH_PHONE,
     data,
   })

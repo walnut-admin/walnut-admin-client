@@ -1,10 +1,10 @@
 import type { BaseDataType } from 'easy-fns-ts'
-import type { IAppStoreMapDictValue } from '@/api/system/dict'
+import type { IResponseData } from '@/api/response'
 import { getDictByTypeAPI } from '@/api/system/dict'
 
-const AppStoreMapDict = ref(new Map<string, IAppStoreMapDictValue>())
+const AppStoreMapDict = ref(new Map<string, IResponseData.System.Dict.MapDictValue>())
 
-function setDictIntoMap(type: string, data: IAppStoreMapDictValue) {
+function setDictIntoMap(type: string, data: IResponseData.System.Dict.MapDictValue) {
   return AppStoreMapDict.value.set(type, data)
 }
 
@@ -45,8 +45,8 @@ export async function initDict(types: string[]) {
 }
 
 // typescript overload
-export function useDict(types: string): { loading: Ref<boolean>, execDict: () => Promise<IAppStoreMapDictValue>, dictData: ComputedRef<IAppStoreMapDictValue> }
-export function useDict(types: string[]): { loading: Ref<boolean>, execDict: () => Promise<IAppStoreMapDictValue[]>, dictData: ComputedRef<IAppStoreMapDictValue[]> }
+export function useDict(types: string): { loading: Ref<boolean>, execDict: () => Promise<IResponseData.System.Dict.MapDictValue>, dictData: ComputedRef<IResponseData.System.Dict.MapDictValue> }
+export function useDict(types: string[]): { loading: Ref<boolean>, execDict: () => Promise<IResponseData.System.Dict.MapDictValue[]>, dictData: ComputedRef<IResponseData.System.Dict.MapDictValue[]> }
 export function useDict(types: string | string[]): void
 export function useDict(types: string | string[]) {
   if (!types || types.length === 0) {

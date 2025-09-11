@@ -1,4 +1,5 @@
 import type { IModels } from '../models'
+import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
@@ -12,16 +13,9 @@ export const dictDataAPI = new BaseAPI<IModels.SystemDictType>({
   section: 'dict/data',
 })
 
-export type IAppDictDataPicked = Pick<
-  IModels.SystemDictData,
-  'value' | 'label' | 'description' | 'order' | 'tagType'
->
-
-export type IAppStoreMapDictValue = (Pick<IModels.SystemDictType, 'type' | 'name'> & { dictData: IAppDictDataPicked[] })
-
 // default all dict will cacahed for 10 minutes
 export function getDictByTypeAPI(types: string | string[]) {
-  return AppAxios.get<IAppStoreMapDictValue[]>(
+  return AppAxios.get<IResponseData.System.Dict.MapDictValue[]>(
     {
       url: '/system/dict/type/s',
       params: { types },

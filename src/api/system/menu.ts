@@ -1,5 +1,5 @@
-import type { TreeNodeItem } from 'easy-fns-ts'
 import type { IModels } from '../models'
+import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
@@ -10,7 +10,7 @@ export const menuAPI = new BaseAPI<IModels.SystemMenu>({
 
 // get tree data for menu page
 export function getMenuTreeAPI() {
-  return AppAxios.get<{ fullTree: TreeNodeItem<IModels.SystemMenu>[], treeWithoutTypeElement: TreeNodeItem<IModels.SystemMenu>[], menuActiveNamesOptions: Pick<IModels.SystemMenu, 'title' | 'name'>[] }>(
+  return AppAxios.get<IResponseData.System.Menu.Tree>(
     {
       url: '/system/menu/tree',
     },

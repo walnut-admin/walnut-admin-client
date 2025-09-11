@@ -1,3 +1,5 @@
+import { AppI18nGetI18nMsg } from '@/api/system/locale'
+
 /**
  * @link https://vue-i18n-next.intlify.dev/guide/advanced/lazy.html
  */
