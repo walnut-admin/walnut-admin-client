@@ -1,11 +1,12 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 
+import type { IAxios } from '../types'
 import axios from 'axios'
 
 export class Axios {
   private readonly instance: AxiosInstance
 
-  constructor(options: IAxiosConfig) {
+  constructor(options: IAxios.Config) {
     this.instance = axios.create(options.originalConfig)
     this.createInterceptors(options.transformers)
   }
@@ -13,7 +14,7 @@ export class Axios {
   /**
    * @description create request/response interceptors
    */
-  private createInterceptors(transform: IAxiosTransformers) {
+  private createInterceptors(transform: IAxios.Transformers) {
     const {
       requestInterceptors,
       requestInterceptorsCatch,

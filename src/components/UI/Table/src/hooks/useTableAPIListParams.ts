@@ -1,9 +1,11 @@
+import type { IAxios } from '@/utils/axios/types'
+
 export function useTableAPIListParams<T>() {
   const {
     stateRef: apiListParams,
     resetState: resetParams,
     commit: commitParams,
-  } = useState<WalnutBaseListParams<T>>({
+  } = useState<IAxios.BaseListParams<T>>({
     query: {} as T,
     sort: [],
     page: {

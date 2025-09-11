@@ -3,6 +3,7 @@ import type { BaseAPIType } from '@/api/base'
 import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
+import type { IAxios } from '@/utils/axios/types'
 
 export declare namespace WCrud {
   type SetProps<T extends IModels.Base> = (p: Partial<Props<T>>) => void
@@ -67,7 +68,7 @@ export declare namespace WCrud {
       onGetFormData: () => Ref<T>
       onGetActionType: () => Ref<IActionType>
       onApiList: () => Promise<void>
-      onGetApiListParams: () => Ref<WalnutBaseListParams<T>>
+      onGetApiListParams: () => Ref<IAxios.BaseListParams<T>>
     }
   }
 

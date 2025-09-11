@@ -1,5 +1,5 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
+import type { DataTableSortOrder } from 'naive-ui'
 import type { IModels } from '@/api/models'
 
 declare module 'axios' {
@@ -85,26 +85,26 @@ declare module 'axios' {
   }
 }
 
-declare global {
-  interface IAxiosConfig {
+export namespace IAxios {
+  export interface Config {
     originalConfig: AxiosRequestConfig
-    transformers: IAxiosTransformers
+    transformers: Transformers
   }
 
   /**
    * @description Custom transform type
    */
-  interface IAxiosTransformers {
+  export interface Transformers {
     requestInterceptors?: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>
     requestInterceptorsCatch?: (error: Error) => void
-    responseInterceptors?: (res: AxiosResponse<WalnutBaseResponseStructure>) => Promise<IModels.Base | void>
+    responseInterceptors?: (res: AxiosResponse<BaseResponse>) => Promise<IModels.Base | void>
     responseInterceptorsCatch?: <T = any>(error: AxiosError<T>) => void
   }
 
   /**
    * @description Back end api base result structure
    */
-  interface WalnutBaseResponseStructure<T = IModels.Base> {
+  export interface BaseResponse<T = IModels.Base> {
     /**
      * @description request code, not equal to axios `statusCode`. This is customizable code
      */
@@ -124,7 +124,7 @@ declare global {
   /**
    * @description Back list api response structure
    */
-  interface WalnutBaseListResponse<T = IModels.Base> {
+  export interface BaseListResponse<T = IModels.Base> {
     /**
      * @description List base structure
      */
@@ -139,16 +139,16 @@ declare global {
   /**
    * @description base sort params
    */
-  type WalnutBaseSortParams<T = IModels.Base> = {
+  export type BaseSortParams<T = IModels.Base> = {
     field: keyof T
-    order: SortOrder
+    order: DataTableSortOrder
     priority: number
   }[]
 
   /**
    * @description base page params
    */
-  interface WalnutBasePageParams {
+  export interface BasePageParams {
     page: number
     pageSize: number
   }
@@ -156,7 +156,7 @@ declare global {
   /**
    * @description Back list api params structure
    */
-  interface WalnutBaseListParams<T = IModels.Base> {
+  export interface BaseListParams<T = IModels.Base> {
     /**
      * @description query object
      */
@@ -165,13 +165,11 @@ declare global {
     /**
      * @description sort object
      */
-    sort?: WalnutBaseSortParams<T>
+    sort?: BaseSortParams<T>
 
     /**
      * @description pagination object
      */
-    page?: WalnutBasePageParams
+    page?: BasePageParams
   }
 }
-
-export { }

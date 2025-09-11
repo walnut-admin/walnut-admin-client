@@ -1,4 +1,5 @@
 import type { AxiosResponse } from 'axios'
+import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
 import { get, isArray, set } from 'lodash-es'
 import { AppAxios } from '../..'
@@ -12,7 +13,7 @@ import { SingletonPromiseSign } from './sign'
 
 const userStoreAuth = useAppStoreUserAuth()
 
-export async function responseInterceptors(res: AxiosResponse<WalnutBaseResponseStructure<IModels.Base>, any>) {
+export async function responseInterceptors(res: AxiosResponse<IAxios.BaseResponse<IModels.Base>, any>) {
   // code below is custom code in `axios.response.data`
   const { code, data, msg } = res.data
 

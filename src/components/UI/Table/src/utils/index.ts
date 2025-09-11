@@ -3,6 +3,7 @@ import type {
   SorterMultiple,
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
+import type { IAxios } from '@/utils/axios/types'
 import { getBoolean } from '@/utils/shared'
 import { isBaseI18nKey } from '../../../shared'
 
@@ -25,7 +26,7 @@ export function generateDefaultSortParams<T>(columns: WTable.Column<T>[]) {
 /**
  * @description generate base sort object
  */
-export function generateSortParams<T>(sort: DataTableSortState | DataTableSortState[]): WalnutBaseSortParams<T> {
+export function generateSortParams<T>(sort: DataTableSortState | DataTableSortState[]): IAxios.BaseSortParams<T> {
   const getBase = (i: DataTableSortState) => ({
     field: i.columnKey as keyof T,
     order: i.order,

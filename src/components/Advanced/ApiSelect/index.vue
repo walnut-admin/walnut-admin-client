@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { OptionDataItem, Recordable, StringOrNumber } from 'easy-fns-ts'
+import type { IAxios } from '@/utils/axios/types'
 import { isFunction } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
 
@@ -14,7 +15,7 @@ const props = defineProps({
 
   listFn: {
     type: Function as PropType<
-      (data?: WalnutBaseListParams<any>) => Promise<WalnutBaseListResponse<any>>
+      (data?: IAxios.BaseListParams<any>) => Promise<IAxios.BaseListResponse<any>>
     >,
     required: true,
   },
@@ -34,7 +35,7 @@ const total = ref(0)
 const options = ref<OptionDataItem[]>([])
 const valueOptions = ref<OptionDataItem[]>([])
 
-const { stateRef: params, resetState } = useState<WalnutBaseListParams<Recordable>>({
+const { stateRef: params, resetState } = useState<IAxios.BaseListParams<Recordable>>({
   page: { page: 1, pageSize: 10 },
   query: {},
 })

@@ -7,6 +7,7 @@ import type { WForm } from '../../Form'
 import type { ICompUIIconButtonProps } from '../../IconButton'
 import type { ICompUITableHooksMethods } from './hooks/useTableMethods'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
+import type { IAxios } from '@/utils/axios/types'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
@@ -63,7 +64,7 @@ export declare namespace WTable {
       /**
        * @description get list params
        */
-      onGetApiListParams: () => Ref<WalnutBaseListParams<T>>
+      onGetApiListParams: () => Ref<IAxios.BaseListParams<T>>
 
     }
 
@@ -178,15 +179,15 @@ export declare namespace WTable {
     apiProps?: {
       /**
        * @description before request hook, you can change the request params here or do some request
-       * @retrurn WalnutBaseListParams<T>
+       * @retrurn IAxios.BaseListParams<T>
        */
       onBeforeRequest?: (params: T) => Promise<T>
 
       /**
        * @description list api, need to follow response structure
-       * @retrurn WalnutBaseListResponse<T>
+       * @retrurn IAxios.BaseListResponse<T>
        */
-      listApi?: (params: WalnutBaseListParams<T>) => Promise<WalnutBaseListResponse<T>>
+      listApi?: (params: IAxios.BaseListParams<T>) => Promise<IAxios.BaseListResponse<T>>
 
       /**
        * @description delete api, need to follow response structure
@@ -242,7 +243,7 @@ export declare namespace WTable {
     tableEvent: ShortEmits<Emits<T>>
     tablePropsCtx: IHooksUseProps<Props<T>>
 
-    apiListParams: Ref<WalnutBaseListParams<T>>
+    apiListParams: Ref<IAxios.BaseListParams<T>>
     onApiList: () => Promise<void>
     onApiQuery: WForm.onFinishFormLoadingCallback
     onApiReset: WForm.onFinishFormLoadingCallback

@@ -1,5 +1,6 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Slots } from 'vue'
+import type { IAxios } from './axios/types'
 import { Base64 } from 'js-base64'
 import { forEach, isArray, isPlainObject, isUndefined, set } from 'lodash-es'
 
@@ -27,7 +28,7 @@ export const getFunctionBoolean = <T>(val: any, cbParams: T, defaultVal = true) 
  * @description mock list endpoint
  */
 export function mockListApi<T>(arr: T[]) {
-  return (params: WalnutBaseListParams) => {
+  return (params: IAxios.BaseListParams) => {
     const num = params.page?.page || 1
     const size = params.page?.pageSize || 10
     const total = arr.length

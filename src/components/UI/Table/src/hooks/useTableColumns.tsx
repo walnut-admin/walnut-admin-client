@@ -2,20 +2,21 @@ import type { Recordable } from 'easy-fns-ts'
 import type { DropdownOption, TagProps } from 'naive-ui'
 import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
+import type { IAxios } from '@/utils/axios/types'
 import { omit } from 'lodash-es'
 import { NA, NDropdown, NTag } from 'naive-ui'
 import WAppNotAuthorized from '@/components/App/AppNotAuthorized'
 // TODO 111
 import WDictLabel from '@/components/Business/DictLabel'
 import WMessage from '@/components/Extra/Message'
-import WIcon from '@/components/UI/Icon'
 
+import WIcon from '@/components/UI/Icon'
 import WIconButton from '@/components/UI/IconButton'
 import { getBoolean, getFunctionBoolean } from '@/utils/shared'
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
-export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, apiListParams: Ref<WalnutBaseListParams<T>>) {
+export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, apiListParams: Ref<IAxios.BaseListParams<T>>) {
   const columns = ref<WTable.Column<T>[]>([])
   const { t } = useAppI18n()
   const userStorePermission = useAppStoreUserPermission()
