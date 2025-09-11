@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IStoreApp } from '@/store/types'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import { getTabsContext } from '../hooks/useTabsContext'
 import TabsItem from './tabsItem.vue'
@@ -45,7 +46,7 @@ const {
   getTabsWidth,
 } = getTabsContext()
 
-function onOpenContextMenu(e: MouseEvent, item: AppTab, index: number) {
+function onOpenContextMenu(e: MouseEvent, item: IStoreApp.Tab.Item, index: number) {
   currentMouseTab.value = item
   currentMouseTabIndex.value = index
 

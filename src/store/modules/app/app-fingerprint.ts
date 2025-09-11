@@ -1,5 +1,6 @@
 import type { BuiltinComponents, UnknownComponents } from '@fingerprintjs/fingerprintjs'
 import type { AxiosRequestConfig } from 'axios'
+import type { IStoreApp } from '@/store/types'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { pick } from 'lodash-es'
 import { defineStore } from 'pinia'
@@ -53,7 +54,7 @@ const excludeComponents: (keyof BuiltinComponents)[] = [
 ]
 
 const useAppStoreFingerprintInside = defineStore(StoreKeys.APP_FINGERPRINT, {
-  state: (): IAppStoreFingerprint => ({
+  state: (): IStoreApp.Fingerprint => ({
     fingerprint: useAppStorageSync<string>(AppConstPersistKey.FINGERPRINT, '', { storage: enhancedBase64LocalStorage() }),
   }),
 

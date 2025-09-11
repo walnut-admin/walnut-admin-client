@@ -1,8 +1,9 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 
 import type { IAppSystemMenuForm } from './types'
-import type { WForm } from '@/components/UI/Form'
+import type { IModels } from '@/api/models'
 
+import type { WForm } from '@/components/UI/Form'
 import { findPath } from 'easy-fns-ts'
 // TODO 111
 import WRadio from '@/components/UI/Radio'
@@ -11,8 +12,8 @@ import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 export function useMenuFormSchema(
   actionType: Ref<IActionType>,
   formData: Ref<IAppSystemMenuForm>,
-  treeData: ComputedRef<TreeNodeItem<AppSystemMenu>[] | undefined>,
-  menuActiveNamesOptions: Ref<Pick<AppSystemMenu, 'title' | 'name'>[]>,
+  treeData: ComputedRef<TreeNodeItem<IModels.SystemMenu>[] | undefined>,
+  menuActiveNamesOptions: Ref<Pick<IModels.SystemMenu, 'title' | 'name'>[]>,
 ) {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()

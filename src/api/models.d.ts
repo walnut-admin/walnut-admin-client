@@ -1,98 +1,15 @@
-import type { Recordable } from 'easy-fns-ts'
-import type { RouteMeta } from 'vue-router'
+import type { PromiseFn } from 'easy-fns-ts'
+import type { ValueOfAppConstMenuType } from '@/const'
 
-declare global {
-  interface AppSecretKeysInterface {
-    B?: string
-  }
-
-  /**
-   * @description app base database schema model
-   */
-  interface AppBaseModel {
+export namespace IModels {
+  export interface Base {
     _id?: string
     createdAt?: Date
     updatedAt?: Date
   }
 
-  /**
-   * @description app tab meta extend fields
-   */
-  interface AppTabMetaExtend {
-    /**
-     * @description tab hover state, manually managed
-     */
-    _hovered?: boolean
-
-    /**
-     * @description whether confirmed leave already, used to fixed the `tab-close-self` and `route-guard` conflict with each other
-     */
-    _confirm_leave?: boolean
-
-    /**
-     * @description this is a hack for the changed title
-     * first try to render this, normally undefined
-     * then try to render title
-     * used for dynamic tab title
-     */
-    _title?: string
-
-    /**
-     * @description _title scroll speed
-     */
-    _title_speed?: number
-
-    /**
-     * @description max length to scroll
-     * default is 10
-     */
-    _title_maxLength?: number
-
-    /**
-     * @description this is a hack for the changed icon
-     * first try to render this, normally undefined
-     * then try to render icon
-     * used for dynamic tab icon
-     */
-    _icon?: string
-
-    /**
-     * @description _icon animate type
-     */
-    _icon_animate?: boolean
-
-    /**
-     * @description _icon animate speed
-     */
-    _icon_animate_duration?: 1000 | 2000 | 3000 | 4000
-  }
-
-  interface AppTabExtendTitleOptions {
-    timeout?: number
-    speed?: number
-    maxLength?: number
-  }
-
-  interface AppTabExtendIconOptions {
-    timeout?: number
-    animate?: boolean
-    duration?: 1000 | 2000 | 3000 | 4000
-  }
-
-  type AppTabMeta = RouteMeta & AppTabMetaExtend
-
-  // tab
-  // almost same as RouteRecord
-  interface AppTab {
-    name: string
-    path: string
-    meta: AppTabMeta
-    query?: Recordable
-    params?: Recordable
-  }
-
   // system menu meta
-  interface AppSystemMenuMeta {
+  export interface SystemMenuMeta {
     order?: number
     ternal?: ValueOfAppConstMenuTernal
     url?: string
@@ -111,7 +28,7 @@ declare global {
   }
 
   // system menu
-  interface AppSystemMenu extends AppBaseModel {
+  export interface SystemMenu extends Base {
     pid?: string
     type?: ValueOfAppConstMenuType
     path?: string
@@ -120,11 +37,11 @@ declare global {
     title?: string
     icon?: string
 
-    meta: AppSystemMenuMeta
+    meta: SystemMenuMeta
   }
 
   // system role
-  interface AppSystemRole extends AppBaseModel {
+  export interface SystemRole extends Base {
     roleName?: string
     description?: string
     order?: number
@@ -133,7 +50,7 @@ declare global {
   }
 
   // system user
-  interface AppSystemUser extends AppBaseModel {
+  export interface SystemUser extends Base {
     userName?: string
     nickName?: string
     age?: number
@@ -147,11 +64,11 @@ declare global {
     roleMode?: 'switchable' | 'combinable'
     currentRole?: string
 
-    populated_rolesList?: AppSystemRole[]
+    populated_rolesList?: SystemRole[]
   }
 
   // system device
-  interface AppSystemDevice extends AppBaseModel {
+  export interface SystemDevice extends Base {
     deviceName?: string
     deviceId?: string
     deviceInfo?: {
@@ -192,7 +109,7 @@ declare global {
   }
 
   // system lang
-  interface AppSystemLang extends AppBaseModel {
+  export interface SystemLang extends Base {
     lang?: string
     description?: string
     order?: number
@@ -203,7 +120,7 @@ declare global {
   }
 
   // system locale
-  interface AppSystemLocale extends AppBaseModel {
+  export interface SystemLocale extends Base {
     langId?: string
     key?: string
     value?: string
@@ -212,7 +129,7 @@ declare global {
   }
 
   // system dict type
-  interface AppSystemDictType extends AppBaseModel {
+  export interface SystemDictType extends Base {
     name?: string
     type?: string
     status?: boolean
@@ -220,7 +137,7 @@ declare global {
   }
 
   // system dict data
-  interface AppSystemDictData extends AppBaseModel {
+  export interface SystemDictData extends Base {
     typeId?: string
     label?: string
     value?: string
@@ -231,7 +148,7 @@ declare global {
   }
 
   // system operate log
-  interface AppSystemLogOperate extends AppBaseModel {
+  export interface SystemLogOperate extends Base {
     title?: string
     actionType?: string
     method?: string
@@ -253,7 +170,7 @@ declare global {
   }
 
   // system signin log
-  interface AppSystemLogAuth extends AppBaseModel {
+  export interface SystemLogAuth extends Base {
     ip?: string
     location?: string
     os?: string
@@ -266,7 +183,7 @@ declare global {
   }
 
   // system delete
-  interface AppSystemDeleted extends Omit<AppBaseModel, 'updatedAt'> {
+  export interface SystemDeleted extends Omit<Base, 'updatedAt'> {
     content?: string
     modelName?: string
     collectionName?: string
@@ -275,18 +192,11 @@ declare global {
     deletedBy?: string
     logOperateId?: string
 
-    populated_user?: AppSystemUser
-  }
-
-  // shared area
-  interface AppSharedArea {
-    code?: string
-    name?: string
-    pcode?: string
+    populated_user?: SystemUser
   }
 
   // app setting
-  interface AppSettingsModel extends AppBaseModel {
+  export interface AppSettings extends Base {
     settingName?: string
     settingKey?: string
     settingValue?: string
@@ -294,7 +204,7 @@ declare global {
   }
 
   // app monitor cache model
-  interface AppMonitorCacheModel extends AppBaseModel {
+  export interface AppMonitorCache extends Base {
     key?: string
     value?: string
     type?: 'built-in' | 'auth-permissions' | 'verify-code' | 'controller' | 'shared-area' | 'sys-locale-messages' | 'sys-lang-id-list' | 'sys-device-id-list'
@@ -305,7 +215,7 @@ declare global {
   }
 
   // app monitor user model
-  interface AppMonitorUserModel extends Omit<AppBaseModel, 'createdAt' | 'updatedAt'> {
+  export interface AppMonitorUser extends Omit<Base, 'createdAt' | 'updatedAt'> {
     visitorId: string
     userId?: string | null
     deviceId?: string
@@ -318,7 +228,14 @@ declare global {
     firstVisitAt?: Date
     lastActiveAt?: Date
 
-    populated_device?: AppSystemDevice
-    populated_user?: AppSystemUser
+    populated_device?: SystemDevice
+    populated_user?: SystemUser
+  }
+
+  // shared area
+  export interface SharedArea {
+    code?: string
+    name?: string
+    pcode?: string
   }
 }

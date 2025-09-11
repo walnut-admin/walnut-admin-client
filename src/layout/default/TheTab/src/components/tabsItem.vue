@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+import type { IStoreApp } from '@/store/types'
 import { getTabsContext } from '../hooks/useTabsContext'
 
 defineOptions({
   name: 'TabsItem',
 })
 
-const { item } = defineProps<{ item: AppTab, index: number }>()
+const { item } = defineProps<{ item: IStoreApp.Tab.Item, index: number }>()
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()

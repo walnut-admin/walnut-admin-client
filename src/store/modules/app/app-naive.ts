@@ -1,11 +1,12 @@
-import type { NotificationReactive } from 'naive-ui'
+import type { NotificationPlacement, NotificationReactive } from 'naive-ui'
 import type { CSSProperties } from 'vue'
+import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
-  state: (): IAppStoreMsg => ({
+  state: (): IStoreApp.Naive => ({
     notiMax: 5,
     msgMax: 5,
     notiPlacement: 'top-right',
@@ -58,7 +59,7 @@ const useAppStoreNaiveInside = defineStore(StoreKeys.APP_MSG, {
     /**
      * message
      */
-    setMsgPlacement(payload: MessagePlacement) {
+    setMsgPlacement(payload: NotificationPlacement) {
       this.msgPlacement = payload
     },
   },

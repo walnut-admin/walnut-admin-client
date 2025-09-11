@@ -1,15 +1,16 @@
 import type { StringOrNumber } from 'easy-fns-ts'
 import type { BaseAPIType } from '@/api/base'
+import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
 
 export declare namespace WCrud {
-  type SetProps<T extends AppBaseModel> = (p: Partial<Props<T>>) => void
+  type SetProps<T extends IModels.Base> = (p: Partial<Props<T>>) => void
 
   /**
    * @description Props
    */
-  interface Props<T extends AppBaseModel> {
+  interface Props<T extends IModels.Base> {
     baseAPI?: BaseAPIType<T>
     onBeforeRequest?: (data: T) => T
     tableProps?: Omit<WTable.Props<T>, 'apiProps'>
@@ -49,7 +50,7 @@ export declare namespace WCrud {
   /**
    * @description Emits
    */
-  interface Emits<T extends AppBaseModel> {
+  interface Emits<T extends IModels.Base> {
     hook: [inst: Inst.WCrudInst<T>]
   }
 
@@ -57,7 +58,7 @@ export declare namespace WCrud {
    * @description Inst
    */
   namespace Inst {
-    interface WCrudInst<T extends AppBaseModel> {
+    interface WCrudInst<T extends IModels.Base> {
       setProps: SetProps<T>
       onOpenCreateForm: (generateDefaultFormData?: boolean) => void
       onReadAndOpenUpdateForm: (id: StringOrNumber) => Promise<void>
@@ -75,11 +76,11 @@ export declare namespace WCrud {
    */
   namespace Hooks {
     namespace UseCRUD {
-      type Props<T extends AppBaseModel> = WCrud.Props<T> | ComputedRef<WCrud.Props<T>> | IDeepMaybeRef<WCrud.Props<T>>
+      type Props<T extends IModels.Base> = WCrud.Props<T> | ComputedRef<WCrud.Props<T>> | IDeepMaybeRef<WCrud.Props<T>>
 
-      type Methods<T extends AppBaseModel> = Omit<Inst.WCrudInst<T>, 'setProps'>
+      type Methods<T extends IModels.Base> = Omit<Inst.WCrudInst<T>, 'setProps'>
 
-      type ReturnType<T extends AppBaseModel> = [
+      type ReturnType<T extends IModels.Base> = [
         (instance: Inst.WCrudInst<T>) => void,
         Methods<T>,
       ]

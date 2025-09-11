@@ -1,9 +1,10 @@
+import type { IStoreUser } from '@/store/types'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreUserPermissionInside = defineStore(StoreKeys.USER_PERMISSION, {
-  state: (): IUserStorePermission => ({
+  state: (): IStoreUser.Permission => ({
     permissions: [],
   }),
 

@@ -1,10 +1,11 @@
+import type { IModels } from '@/api/models'
+import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
-
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
-  state: (): IAppStoreMenu => ({
+  state: (): IStoreApp.Menu => ({
     collapse: false,
     showAside: false,
 
@@ -29,7 +30,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
       this.showAside = payload
     },
 
-    setMenus(payload: AppSystemMenu[]) {
+    setMenus(payload: IModels.SystemMenu[]) {
       this.menus = payload
     },
 

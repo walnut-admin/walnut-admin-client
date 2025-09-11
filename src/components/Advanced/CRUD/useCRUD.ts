@@ -1,8 +1,9 @@
 import type { StringOrNumber } from 'easy-fns-ts'
 import type { WCrud } from './types'
+import type { IModels } from '@/api/models'
 import { isInSetup } from '@/utils/shared'
 
-export function useCRUD<T extends AppBaseModel>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.UseCRUD.ReturnType<T> {
+export function useCRUD<T extends IModels.Base>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.UseCRUD.ReturnType<T> {
   isInSetup()
 
   const wCrudRef = shallowRef<WCrud.Inst.WCrudInst<T>>()

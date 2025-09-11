@@ -1,9 +1,10 @@
 import type { Recordable } from 'easy-fns-ts'
+import type { IModels } from '@/api/models'
 
 export { }
 
 declare module 'vue-router' {
-  interface RouteMeta extends AppSystemMenuMeta, Pick<AppSystemMenu, 'type' | 'title' | 'icon'> {
+  interface RouteMeta extends IModels.SystemMenuMeta, Pick<IModels.SystemMenu, 'type' | 'title' | 'icon'> {
     /**
      * @description this is an option that only works for routes hard-coded in front-end code
      * for those routes that do not need to fetch permissions from backend

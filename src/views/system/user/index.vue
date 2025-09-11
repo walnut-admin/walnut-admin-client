@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { resetPassowrdAPI, updatePassowrdAPI, userAPI } from '@/api/system/user'
 
 defineOptions({
@@ -64,7 +65,7 @@ const [
     onDeleteManyConfirm,
     onApiList,
   },
-] = useCRUD<AppSystemUser>({
+] = useCRUD<IModels.SystemUser>({
   baseAPI: userAPI,
 
   strictFormData: true,
@@ -333,7 +334,7 @@ async function onYes(_: any, done: () => void) {
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemUser} -->
+    <!-- @vue-generic {IModels.SystemUser} -->
     <WCRUD @hook="register" />
 
     <WForm :model="updatePasswordFormData" @hook="registerUpdatePassword" />

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { forceQuitAPI, monitorUserAPI } from '@/api/app/monitor/user'
 
 defineOptions({
@@ -12,7 +13,7 @@ const keyField = '_id'
 
 const { t } = useAppI18n()
 
-const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUserModel>({
+const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<IModels.AppMonitorUser>({
   baseAPI: monitorUserAPI,
 
   tableProps: {
@@ -484,7 +485,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<AppMonitorUse
 
 <template>
   <div>
-    <!-- @vue-generic {AppMonitorUserModel} -->
+    <!-- @vue-generic {IModels.AppMonitorUser} -->
     <WCRUD @hook="register" />
   </div>
 </template>

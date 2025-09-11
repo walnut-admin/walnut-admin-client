@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { logAuthAPI } from '@/api/system/log'
 
 defineOptions({
@@ -16,7 +17,7 @@ const [register, {
   onDeleteConfirm,
   onApiList,
   onGetApiListParams,
-}] = useCRUD<AppSystemLogAuth>({
+}] = useCRUD<IModels.SystemLogAuth>({
   baseAPI: logAuthAPI,
 
   tableProps: {
@@ -238,7 +239,7 @@ const [register, {
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemLogAuth} -->
+    <!-- @vue-generic {IModels.SystemLogAuth} -->
     <WCRUD @hook="register" />
   </div>
 </template>

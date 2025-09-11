@@ -1,14 +1,15 @@
 import type { StringOrNumber } from 'easy-fns-ts'
+import type { IModels } from './models'
 import { omit } from 'lodash-es'
 import { AppAxios } from '@/utils/axios'
 
-export type BaseAPIType<T extends AppBaseModel> = InstanceType<typeof BaseAPI<T>>
+export type BaseAPIType<T extends IModels.Base> = InstanceType<typeof BaseAPI<T>>
 
-function omitUnnecessaryFields<T extends AppBaseModel>(data: T) {
+function omitUnnecessaryFields<T extends IModels.Base>(data: T) {
   return omit(data, ['_id', 'createdAt', 'updatedAt'])
 }
 
-export class BaseAPI<T extends AppBaseModel> {
+export class BaseAPI<T extends IModels.Base> {
   private readonly baseAPI: string
 
   constructor({ model, section }: { model: string, section: string }) {

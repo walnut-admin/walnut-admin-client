@@ -1,9 +1,10 @@
 <script lang="tsx" setup>
 import type { MenuOption } from 'naive-ui'
 
+import type { IModels } from '@/api/models'
 import { findPath, formatTree } from 'easy-fns-ts'
-import { omit } from 'lodash-es'
 
+import { omit } from 'lodash-es'
 // TODO 111
 import WIcon from '@/components/UI/Icon'
 import { openExternalLink } from '@/utils/window/open'
@@ -30,7 +31,7 @@ const getCurrentMenuName = computed((): string =>
 
 // format to naive-ui menu option data structure
 const getMenuOptions = computed(() =>
-  formatTree<AppSystemMenu, MenuOption>(toRaw(appStoreMenu.menus), node => ({
+  formatTree<IModels.SystemMenu, MenuOption>(toRaw(appStoreMenu.menus), node => ({
     key: node.name,
     label: t(node.title!),
     icon: () => {
@@ -64,7 +65,7 @@ const getMenuOptions = computed(() =>
 watch(
   () => getCurrentMenuName.value,
   async (v, oldV) => {
-    const paths = findPath<AppSystemMenu>(
+    const paths = findPath<IModels.SystemMenu>(
       appStoreMenu.menus,
       n => n.name === v,
     )
@@ -73,10 +74,10 @@ watch(
       return
 
     if (appSetting.menu.accordion) {
-      expandedKeys.value = (paths as AppSystemMenu[]).map(i => i.name!)
+      expandedKeys.value = (paths as IModels.SystemMenu[]).map(i => i.name!)
     }
     else {
-      const oldPaths = findPath<AppSystemMenu>(
+      const oldPaths = findPath<IModels.SystemMenu>(
         appStoreMenu.menus,
         n => n.name === oldV,
       )
@@ -84,7 +85,7 @@ watch(
       if (!oldPaths)
         return
 
-      expandedKeys.value = [...(oldPaths as AppSystemMenu[]).map(i => i.name!), ...(paths as AppSystemMenu[]).map(i => i.name!)]
+      expandedKeys.value = [...(oldPaths as IModels.SystemMenu[]).map(i => i.name!), ...(paths as IModels.SystemMenu[]).map(i => i.name!)]
     }
 
     await nextTick()

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { appSettingAPI } from '@/api/app/setting'
 
 defineOptions({
@@ -13,7 +14,7 @@ const keyField = '_id'
 const [
   register,
   { onOpenCreateForm, onApiList, onReadAndOpenUpdateForm, onGetActionType },
-] = useCRUD<AppSettingsModel>({
+] = useCRUD<IModels.AppSettings>({
   baseAPI: appSettingAPI,
 
   tableProps: {
@@ -250,7 +251,7 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppSettingsModel} -->
+    <!-- @vue-generic {IModels.AppSettings} -->
     <WCRUD @hook="register" />
   </div>
 </template>

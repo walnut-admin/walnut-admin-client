@@ -1,5 +1,7 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 import type { RouteRecordRaw } from 'vue-router'
+import type { IModels } from './models'
+import type { IStoreApp } from '@/store/types'
 import { AppAxios } from '@/utils/axios'
 
 const Auth = {
@@ -50,12 +52,12 @@ export function refreshTokenAPI() {
  */
 export function getPermissionsAPI() {
   return AppAxios.get<{
-    permissionMenuTree: TreeNodeItem<AppSystemMenu>[]
+    permissionMenuTree: TreeNodeItem<IModels.SystemMenu>[]
     permissionRouteTree: RouteRecordRaw[]
     permissionStrings: string[]
     keepAliveNames: string[]
     indexMenuName: string
-    affixedTabs: AppTab[]
+    affixedTabs: IStoreApp.Tab.Item[]
     internalIframeList: { name: string, url: string, cache: boolean }[]
   }>({
     url: Auth.PERMISSION,
@@ -66,7 +68,7 @@ export function getPermissionsAPI() {
  * @description Signin user detail info api
  */
 export function getUserInfoAPI() {
-  return AppAxios.get<{ user: AppSystemUser, roleNames: string[] }>({
+  return AppAxios.get<{ user: IModels.SystemUser, roleNames: string[] }>({
     url: Auth.PROFILE,
   })
 }
@@ -75,7 +77,9 @@ export function getUserInfoAPI() {
  * @description get baidu ak from backend
  */
 export function getBaiduKeyAPI() {
-  return AppAxios.get<AppSecretKeysInterface>(
+  return AppAxios.get<{
+    B?: string
+  }>(
     {
       url: Auth.KEYS,
       _autoDecryptResponseData: ['B'],

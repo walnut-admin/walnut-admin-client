@@ -1,6 +1,8 @@
+import type { IModels } from '@/api/models'
+
 const appStoreFingerprint = useAppStoreFingerprint()
 
-export function sendUserMonitorBeacon(data: Partial<AppMonitorUserModel>) {
+export function sendUserMonitorBeacon(data: Partial<IModels.AppMonitorUser>) {
   const { httpUrl } = useAppEnvProxy()
 
   const blob = new Blob(

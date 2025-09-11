@@ -1,3 +1,4 @@
+import type { IStoreUser } from '@/store/types'
 import { defineStore } from 'pinia'
 import { authWithPwdAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
@@ -20,7 +21,7 @@ const rememberStorage = await useAppStorageAsync(AppConstPersistKey.REMEMBER, {
 })
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
-  state: (): IUserStoreAuth => ({
+  state: (): IStoreUser.Auth => ({
     accessToken: accessTokenStorage,
     remember: rememberStorage,
   }),

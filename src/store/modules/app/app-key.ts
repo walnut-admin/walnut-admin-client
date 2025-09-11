@@ -1,3 +1,4 @@
+import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { urlKeyAPI } from '@/api/app/key'
 import { getBaiduKeyAPI } from '@/api/auth'
@@ -7,7 +8,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreKeyInside = defineStore(StoreKeys.APP_KEY, {
-  state: (): IAppStoreKey => ({
+  state: (): IStoreApp.Key => ({
     baiduAK: '',
     urlMaskingAesKey: undefined,
   }),

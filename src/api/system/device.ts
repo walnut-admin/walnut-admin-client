@@ -1,3 +1,4 @@
+import type { IModels } from '../models'
 import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
@@ -5,7 +6,7 @@ import { BaseAPI } from '../base'
 const appStoreFingerprint = useAppStoreFingerprint()
 const appStoreGeoIP = useAppStoreGeoIP()
 
-export const deviceAPI = new BaseAPI<AppSystemDictType>({
+export const deviceAPI = new BaseAPI<IModels.SystemDictType>({
   model: 'system',
   section: 'device',
 })
@@ -48,6 +49,6 @@ export async function initialDeviceAPI() {
         city: appStoreGeoIP.getGeoInfo.city,
         region: appStoreGeoIP.getGeoInfo.region,
       },
-    } as AppSystemDevice,
+    } as IModels.SystemDevice,
   })
 }

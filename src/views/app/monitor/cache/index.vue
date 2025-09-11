@@ -1,4 +1,5 @@
 <script lang="tsx" setup>
+import type { IModels } from '@/api/models'
 import { monitorCacheAPI } from '@/api/app/monitor/cache'
 
 // TODO 111
@@ -18,7 +19,7 @@ const { t } = useAppI18n()
 const [
   register,
   { onReadAndOpenUpdateForm, onDeleteConfirm, onApiList },
-] = useCRUD<AppMonitorCacheModel>({
+] = useCRUD<IModels.AppMonitorCache>({
   baseAPI: monitorCacheAPI,
 
   tableProps: {
@@ -213,7 +214,7 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppMonitorCacheModel} -->
+    <!-- @vue-generic {IModels.AppMonitorCache} -->
     <WCRUD @hook="register" />
   </div>
 </template>

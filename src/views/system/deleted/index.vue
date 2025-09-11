@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { deletedAPI, recoverAPI } from '@/api/system/deleted'
 import { logOperateAPI } from '@/api/system/log'
 import { logOperateFormSchema } from '../log/operate/schema'
@@ -15,9 +16,9 @@ const keyField = '_id'
 
 const { t } = useAppI18n()
 
-const logOperateFormData = ref<AppSystemLogOperate>({})
+const logOperateFormData = ref<IModels.SystemLogOperate>({})
 
-const [registerLogOperate, { onOpen }] = useForm<AppSystemLogOperate>({
+const [registerLogOperate, { onOpen }] = useForm<IModels.SystemLogOperate>({
   localeUniqueKey: 'log.operate',
   localeWithTable: true,
   dialogPreset: 'drawer',
@@ -53,7 +54,7 @@ const [
     onApiList,
     onGetApiListParams,
   },
-] = useCRUD<AppSystemDeleted>({
+] = useCRUD<IModels.SystemDeleted>({
   baseAPI: deletedAPI,
 
   tableProps: {
@@ -359,10 +360,10 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemDeleted} -->
+    <!-- @vue-generic {IModels.SystemDeleted} -->
     <WCRUD @hook="register" />
 
-    <!-- @vue-generic {AppSystemLogOperate} -->
+    <!-- @vue-generic {IModels.SystemLogOperate} -->
     <WForm :model="logOperateFormData" @hook="registerLogOperate" />
   </div>
 </template>

@@ -2,6 +2,7 @@
 import type { StringOrNumber } from 'easy-fns-ts'
 
 import type { IAppSystemMenuForm } from './types'
+import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 import { omit } from 'lodash-es'
 import { menuAPI } from '@/api/system/menu'
@@ -55,7 +56,7 @@ commit()
 const { getLeftMenu, getTreeSelect, onInit, menuActiveNamesOptions }
   = useMenuTree()
 
-const [registerTree] = useTree<AppSystemMenu>({
+const [registerTree] = useTree<IModels.SystemMenu>({
   presetPrefixIcon: true,
   presetContextMenu: true,
   deletable: true,
@@ -99,7 +100,7 @@ const [registerTree] = useTree<AppSystemMenu>({
 
     filter: (pattern, node) => {
       const text = node.type === AppConstMenuType.ELEMENT
-        ? ((node as unknown as AppSystemMenu).meta.permission as string)
+        ? ((node as unknown as IModels.SystemMenu).meta.permission as string)
         : (node.title as string)
 
       if (text && (text as string).toLowerCase().includes(pattern)) {
@@ -111,7 +112,7 @@ const [registerTree] = useTree<AppSystemMenu>({
 
     renderLabel: ({ option }) =>
       option.type === AppConstMenuType.ELEMENT
-        ? ((option as unknown as AppSystemMenu).meta.permission as string)
+        ? ((option as unknown as IModels.SystemMenu).meta.permission as string)
         : (option.title as string),
   },
 })
@@ -161,7 +162,7 @@ const [register, { validate, restoreValidation }] = useForm<IAppSystemMenuForm>(
               loading.value = true
 
               try {
-                await menuAPI[actionType.value](pathsToObject<typeof formData.value, AppSystemMenu>(formData.value))
+                await menuAPI[actionType.value](pathsToObject<typeof formData.value, IModels.SystemMenu>(formData.value))
                 useAppMsgSuccess()
                 await onInit()
                 targetTreeItem.value = ''
@@ -214,7 +215,7 @@ async function onUpdateTreeValue(v?: StringOrNumber | StringOrNumber[]) {
         }"
       >
         <template #default>
-          <!-- @vue-generic {AppSystemMenu} -->
+          <!-- @vue-generic {IModels.SystemMenu} -->
           <WTree v-model:value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
         </template>
       </n-card>

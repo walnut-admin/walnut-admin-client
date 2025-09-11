@@ -1,4 +1,5 @@
 import type { EffectScope } from 'vue'
+import type { IStoreApp } from '@/store/types'
 import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 
 export function useTabsPersistent() {
@@ -14,7 +15,7 @@ export function useTabsPersistent() {
         scope = effectScope()
 
         scope.run(() => {
-          const _storaged_tabs = useAppStorageSync<AppTab[]>(
+          const _storaged_tabs = useAppStorageSync<IStoreApp.Tab.Item[]>(
             AppConstPersistKey.TABS,
             appStoreTab.tabs,
           )

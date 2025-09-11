@@ -1,5 +1,6 @@
 import type { Nullable } from 'easy-fns-ts'
 import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
+import type { IStoreApp } from '@/store/types'
 
 export interface AppTabUtilListItem {
   icon: string
@@ -15,14 +16,14 @@ export interface AppTabContext {
   y: Ref<number>
   ctxMenuShow: Ref<boolean>
 
-  onTabClick: (item: AppTab) => void
+  onTabClick: (item: IStoreApp.Tab.Item) => void
   onTabRemove: (name: string, type?: ValueOfAppConstTabDeleteType) => void
 
   onOpenCtxMenu: (event: MouseEvent) => void
   onCloseCtxMenu: () => void
 
   devToolShow: Ref<boolean>
-  currentMouseTab: Ref<AppTab | undefined>
+  currentMouseTab: Ref<IStoreApp.Tab.Item | undefined>
   currentMouseTabIndex: Ref<number>
   onOpenDevTool: Fn
   onOpenFile: Fn

@@ -1,4 +1,5 @@
 import type { Recordable } from 'easy-fns-ts'
+import type { IModels } from '@/api/models'
 import { AppAxios } from '@/utils/axios'
 
 /**
@@ -7,7 +8,7 @@ import { AppAxios } from '@/utils/axios'
  */
 export async function AppI18nGetLangLists() {
   const lists = await AppAxios.get<
-    Pick<AppSystemLang, 'lang' | 'description' | 'order'>[]
+    Pick<IModels.SystemLang, 'lang' | 'description' | 'order'>[]
   >({
     url: '/system/lang/list/public',
   })

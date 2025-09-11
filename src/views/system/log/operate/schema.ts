@@ -1,6 +1,7 @@
+import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 
-export const logOperateFormSchema: WForm.Schema.Item<AppSystemLogOperate>[] = [
+export const logOperateFormSchema: WForm.Schema.Item<IModels.SystemLogOperate>[] = [
   {
     type: 'Base:Input',
     formProp: {

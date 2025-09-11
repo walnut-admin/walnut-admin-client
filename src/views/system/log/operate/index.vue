@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { logOperateAPI } from '@/api/system/log'
 import { logOperateFormSchema } from './schema'
 
@@ -20,7 +21,7 @@ const [
     onApiList,
     onGetApiListParams,
   },
-] = useCRUD<AppSystemLogOperate>({
+] = useCRUD<IModels.SystemLogOperate>({
   baseAPI: logOperateAPI,
 
   tableProps: {
@@ -254,7 +255,7 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemLogOperate} -->
+    <!-- @vue-generic {IModels.SystemLogOperate} -->
     <WCRUD @hook="register" />
   </div>
 </template>

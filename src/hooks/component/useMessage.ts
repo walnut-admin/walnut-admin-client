@@ -1,4 +1,4 @@
-import type { MessageType } from 'naive-ui'
+import type { MessageType, NotificationPlacement } from 'naive-ui'
 
 export function useAppMessage() {
   return window.$message
@@ -8,7 +8,7 @@ interface AppMessageOptions {
   type?: MessageType
   duration?: number
   closable?: boolean
-  placement?: MessagePlacement
+  placement?: NotificationPlacement
 }
 
 /**

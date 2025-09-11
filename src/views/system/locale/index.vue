@@ -1,4 +1,5 @@
 <script lang="tsx" setup>
+import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 import { localeAPI } from '@/api/system/locale'
 import WBussinessLangSelect from '@/components/Business/LangSelect'
@@ -26,7 +27,7 @@ const [
     onGetFormData,
     onApiList,
   },
-] = useCRUD<AppSystemLocale>({
+] = useCRUD<IModels.SystemLocale>({
   baseAPI: localeAPI,
 
   safeForm: true,
@@ -201,7 +202,7 @@ const [
     labelWidth: 100,
     xGap: 0,
     // @ts-expect-error create/update form schemas
-    schemas: computed<WForm.Schema.Item<AppSystemLocale>[]>(() => [
+    schemas: computed<WForm.Schema.Item<IModels.SystemLocale>[]>(() => [
       {
         type: 'Base:Input',
         formProp: {
@@ -213,10 +214,10 @@ const [
         },
       },
 
-      ...langList.value.map<WForm.Schema.Item<AppSystemLocale>>(i => ({
+      ...langList.value.map<WForm.Schema.Item<IModels.SystemLocale>>(i => ({
         type: 'Base:Input',
         formProp: {
-          path: i.value as keyof AppSystemLocale,
+          path: i.value as keyof IModels.SystemLocale,
           label: i.label,
           locale: false,
           rule: false,
@@ -248,7 +249,7 @@ onActivated(() => {
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemLocale} -->
+    <!-- @vue-generic {IModels.SystemLocale} -->
     <WCRUD @hook="register" />
   </div>
 </template>

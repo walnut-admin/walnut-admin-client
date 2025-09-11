@@ -2,8 +2,9 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 import type { DropdownOption } from 'naive-ui'
 
-import { findPath } from 'easy-fns-ts'
+import type { IModels } from '@/api/models'
 
+import { findPath } from 'easy-fns-ts'
 import { isEmpty } from 'lodash-es'
 import { darkTheme } from 'naive-ui'
 import { getTheme } from '@/App/src/naive/src/theme'
@@ -16,10 +17,10 @@ const appSetting = useAppStoreSetting()
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
 
-const [DefineBase, ReuseBase] = createReusableTemplate<{ item: TreeNodeItem<AppSystemMenu> }>()
+const [DefineBase, ReuseBase] = createReusableTemplate<{ item: TreeNodeItem<IModels.SystemMenu> }>()
 
-const getChildren = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
-  const matched = findPath<AppSystemMenu>(
+const getChildren = computed((): TreeNodeItem<IModels.SystemMenu>[] | undefined => {
+  const matched = findPath<IModels.SystemMenu>(
     appStoreMenu.menus,
     n =>
       n.name
@@ -42,7 +43,7 @@ const getChildren = computed((): TreeNodeItem<AppSystemMenu>[] | undefined => {
   return matched?.filter(item => item.title)
 })
 
-function getDropdownOptions(arr?: TreeNodeItem<AppSystemMenu>[]): DropdownOption[] | undefined {
+function getDropdownOptions(arr?: TreeNodeItem<IModels.SystemMenu>[]): DropdownOption[] | undefined {
   if (isEmpty(arr)) {
     return undefined
   }

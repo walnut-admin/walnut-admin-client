@@ -1,7 +1,8 @@
+import type { IModels } from '@/api/models'
 import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../../base'
 
-export const monitorUserAPI = new BaseAPI<AppMonitorUserModel>({
+export const monitorUserAPI = new BaseAPI<IModels.AppMonitorUser>({
   model: 'app',
   section: 'monitor/user',
 })

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import type { WAvatarUploadInst } from '@/components/Business/AvatarUpload'
 import { pick } from 'lodash-es'
 import { userAPI } from '@/api/system/user'
@@ -13,7 +14,7 @@ const { t } = useAppI18n()
 const userStoreProfile = useAppStoreUserProfile()
 
 const avatarUploadRef = ref<WAvatarUploadInst>()
-const formData = ref<AppSystemUser>({
+const formData = ref<IModels.SystemUser>({
   ...pick(userStoreProfile.profile, [
     '_id',
     'userName',

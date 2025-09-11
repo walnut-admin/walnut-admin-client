@@ -1,5 +1,6 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { SortOrder } from 'naive-ui/lib/data-table/src/interface'
+import type { IModels } from '@/api/models'
 
 declare module 'axios' {
   interface AxiosRequestConfig<D> {
@@ -96,14 +97,14 @@ declare global {
   interface IAxiosTransformers {
     requestInterceptors?: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>
     requestInterceptorsCatch?: (error: Error) => void
-    responseInterceptors?: (res: AxiosResponse<WalnutBaseResponseStructure>) => Promise<AppBaseModel | void>
+    responseInterceptors?: (res: AxiosResponse<WalnutBaseResponseStructure>) => Promise<IModels.Base | void>
     responseInterceptorsCatch?: <T = any>(error: AxiosError<T>) => void
   }
 
   /**
    * @description Back end api base result structure
    */
-  interface WalnutBaseResponseStructure<T = AppBaseModel> {
+  interface WalnutBaseResponseStructure<T = IModels.Base> {
     /**
      * @description request code, not equal to axios `statusCode`. This is customizable code
      */
@@ -123,7 +124,7 @@ declare global {
   /**
    * @description Back list api response structure
    */
-  interface WalnutBaseListResponse<T = AppBaseModel> {
+  interface WalnutBaseListResponse<T = IModels.Base> {
     /**
      * @description List base structure
      */
@@ -138,7 +139,7 @@ declare global {
   /**
    * @description base sort params
    */
-  type WalnutBaseSortParams<T = AppBaseModel> = {
+  type WalnutBaseSortParams<T = IModels.Base> = {
     field: keyof T
     order: SortOrder
     priority: number
@@ -155,7 +156,7 @@ declare global {
   /**
    * @description Back list api params structure
    */
-  interface WalnutBaseListParams<T = AppBaseModel> {
+  interface WalnutBaseListParams<T = IModels.Base> {
     /**
      * @description query object
      */

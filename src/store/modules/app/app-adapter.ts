@@ -1,9 +1,10 @@
+import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreAdapterInside = defineStore(StoreKeys.APP_ADAPTER, {
-  state: (): IAppStoreAdapter => ({
+  state: (): IStoreApp.Adapter => ({
     device: AppConstDevice.DESKTOP,
   }),
 

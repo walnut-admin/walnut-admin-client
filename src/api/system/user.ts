@@ -1,7 +1,8 @@
+import type { IModels } from '../models'
 import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
-export const userAPI = new BaseAPI<AppSystemUser>({
+export const userAPI = new BaseAPI<IModels.SystemUser>({
   model: 'system',
   section: 'user',
 })

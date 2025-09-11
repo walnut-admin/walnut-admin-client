@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { dictDataAPI } from '@/api/system/dict'
 
 defineOptions({
@@ -29,7 +30,7 @@ const [
     onDeleteConfirm,
     onGetFormData,
   },
-] = useCRUD<AppSystemDictData>({
+] = useCRUD<IModels.SystemDictData>({
   baseAPI: dictDataAPI,
 
   safeForm: true,
@@ -340,7 +341,7 @@ const [
     <n-card>
       <n-page-header v-if="title" :title="$t(title)" @back="onBack" />
     </n-card>
-    <!-- @vue-generic {AppSystemDictData} -->
+    <!-- @vue-generic {IModels.SystemDictData} -->
     <WCRUD @hook="register" />
   </div>
 </template>

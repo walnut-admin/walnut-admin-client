@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { langAPI } from '@/api/system/lang'
 
 defineOptions({
@@ -15,7 +16,7 @@ const [
     onOpenCreateForm,
     onReadAndOpenUpdateForm,
   },
-] = useCRUD<AppSystemLang>({
+] = useCRUD<IModels.SystemLang>({
   baseAPI: langAPI,
 
   safeForm: true,
@@ -214,7 +215,7 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemLang} -->
+    <!-- @vue-generic {IModels.SystemLang} -->
     <WCRUD @hook="register" />
   </div>
 </template>

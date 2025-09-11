@@ -1,6 +1,7 @@
-<script lang="ts" setup generic="T extends AppBaseModel">
+<script lang="ts" setup generic="T extends IModels.Base">
 import type { StringOrNumber } from 'easy-fns-ts'
 import type { WCrud } from './types'
+import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 import type { WTable } from '@/components/UI/Table'
 import { isEmpty, pick } from 'lodash-es'

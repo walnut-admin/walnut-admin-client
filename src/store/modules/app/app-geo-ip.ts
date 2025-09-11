@@ -1,3 +1,4 @@
+import type { IStoreApp } from '@/store/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { isDev } from '@/utils/constant/vue'
@@ -7,8 +8,8 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
-  state: (): IAppStoreGeoIP => ({
-    geoInfo: useAppStorageSync<Partial<ExternalGeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { expire: 24 * 60 * 60 * 1000 }),
+  state: (): IStoreApp.GeoIP => ({
+    geoInfo: useAppStorageSync<Partial<IStoreApp.GeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { expire: 24 * 60 * 60 * 1000 }),
   }),
 
   getters: {
@@ -41,7 +42,7 @@ const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
       if (!needRefresh)
         return
 
-      const res = await axios.get<ExternalGeoIPInfo>(EXTERNAL_LINKS.GEOIP)
+      const res = await axios.get<IStoreApp.GeoIPInfo>(EXTERNAL_LINKS.GEOIP)
 
       if (res.status === 200)
         this.geoInfo = res.data

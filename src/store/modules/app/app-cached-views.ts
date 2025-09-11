@@ -1,10 +1,11 @@
 import type { RouteRecordNameGeneric } from 'vue-router'
+import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreCachedViewsInside = defineStore(StoreKeys.APP_CACHED_VIEWS, {
-  state: (): IAppStoreCachedViews => ({
+  state: (): IStoreApp.CachedViews => ({
     cachedViewNameList: [],
   }),
 

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { roleAPI } from '@/api/system/role'
 import { useMenuTree } from './useMenuTree'
 
@@ -20,7 +21,7 @@ const [
     onGetActionType,
     onApiList,
   },
-] = useCRUD<AppSystemRole>({
+] = useCRUD<IModels.SystemRole>({
   baseAPI: roleAPI,
 
   strictFormData: true,
@@ -239,7 +240,7 @@ const [
             labelField: 'title',
             renderLabel: ({ option }) =>
               option.type === AppConstMenuType.ELEMENT
-                ? ((option as unknown as AppSystemMenu).meta.permission as string)
+                ? ((option as unknown as IModels.SystemMenu).meta.permission as string)
                 : (option.title as string),
           },
         },
@@ -251,7 +252,7 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemRole} -->
+    <!-- @vue-generic {IModels.SystemRole} -->
     <WCRUD @hook="register" />
   </div>
 </template>

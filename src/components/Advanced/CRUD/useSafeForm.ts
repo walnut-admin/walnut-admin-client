@@ -1,10 +1,11 @@
 import type { WCrud } from './types'
+import type { IModels } from '@/api/models'
 import { isEqual, omit } from 'lodash-es'
 
 const tempStorageMap = ref(new Map())
 const freezeInitStorageMap = ref(new Map())
 
-export function useSafeForm<T extends AppBaseModel>(
+export function useSafeForm<T extends IModels.Base>(
   formData: Ref<T>,
   props: ComputedRef<WCrud.Props<T>>,
   actionType: Ref<IActionType>,

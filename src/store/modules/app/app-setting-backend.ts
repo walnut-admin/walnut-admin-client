@@ -1,3 +1,4 @@
+import type { IStoreApp } from '@/store/types'
 import { isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { getPublicSettingsAPI } from '@/api/app/setting'
@@ -7,7 +8,7 @@ import { store } from '../../pinia'
 const useAppStoreSettingBackendInside = defineStore(
   StoreKeys.APP_SETTING_BACKEND,
   {
-    state: (): IAppStoreSettingBackend => ({
+    state: (): IStoreApp.SettingBackend => ({
       auth: {},
       frontend: {},
     }),

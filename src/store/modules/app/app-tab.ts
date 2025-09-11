@@ -1,4 +1,5 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import type { IStoreApp } from '@/store/types'
 import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { StoreKeys, tabBlackListName } from '../../constant'
@@ -11,7 +12,7 @@ const _title_map_ = new Map()
 const _icon_map_ = new Map()
 
 const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
-  state: (): IAppStoreTab => ({
+  state: (): IStoreApp.Tab.State => ({
     tabs: [],
     iframeList: [],
     visitedTabs: new Map(),
@@ -24,7 +25,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
       )
     },
 
-    getCurrentTab(state): AppTab {
+    getCurrentTab(state): IStoreApp.Tab.Item {
       return state.tabs[this.getCurrentIndex]
     },
 
@@ -42,18 +43,18 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description set single tab state through index in tabs
      */
-    setTabByIndex(index: number, payload: Partial<AppTab>, type: 'merge' | 'splice' = 'merge') {
+    setTabByIndex(index: number, payload: Partial<IStoreApp.Tab.Item>, type: 'merge' | 'splice' = 'merge') {
       if (type === 'merge')
         this.tabs[index] = merge(this.tabs[index], payload)
 
       if (type === 'splice')
-        this.tabs.splice(index, 1, payload as AppTab)
+        this.tabs.splice(index, 1, payload as IStoreApp.Tab.Item)
     },
 
     /**
      * @description set single tab state through name in tabs
      */
-    setTabByName(name: string, payload: Partial<AppTab>, type: 'merge' | 'splice' = 'merge') {
+    setTabByName(name: string, payload: Partial<IStoreApp.Tab.Item>, type: 'merge' | 'splice' = 'merge') {
       const index = this.tabs.findIndex(i => i.name === name)
       if (index !== -1)
         this.setTabByIndex(index, payload, type)
@@ -62,7 +63,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description set single tab meta data
      */
-    setTabMeta(name: string, meta: AppTabMeta) {
+    setTabMeta(name: string, meta: IStoreApp.Tab.Meta) {
       const index = this.tabs.findIndex(i => i.name === name)
 
       if (index === -1)
@@ -76,7 +77,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description set current tab meta data
      */
-    setCurrentTabMeta(meta: AppTabMeta) {
+    setCurrentTabMeta(meta: IStoreApp.Tab.Meta) {
       this.setTabMeta(this.tabs[this.getCurrentIndex].name, meta)
     },
 
@@ -87,7 +88,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     setTabTitle(
       name: string,
       title: string,
-      options?: AppTabExtendTitleOptions,
+      options?: IStoreApp.Tab.MetaExtendTitleOptions,
     ) {
       const index = this.tabs.findIndex(i => i.name === name)
 
@@ -138,7 +139,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     setCurrentTabTitle(
       title: string,
-      options?: AppTabExtendTitleOptions,
+      options?: IStoreApp.Tab.MetaExtendTitleOptions,
     ) {
       this.setTabTitle(this.tabs[this.getCurrentIndex].name, title, options)
     },
@@ -157,7 +158,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     setTabIcon(
       name: string,
       icon: string,
-      options?: AppTabExtendIconOptions,
+      options?: IStoreApp.Tab.MetaExtendIconOptions,
     ) {
       const index = this.tabs.findIndex(i => i.name === name)
 
@@ -209,7 +210,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
      */
     setCurrentTabIcon(
       icon: string,
-      options?: AppTabExtendIconOptions,
+      options?: IStoreApp.Tab.MetaExtendIconOptions,
     ) {
       this.setTabIcon(this.tabs[this.getCurrentIndex].name, icon, options)
     },
@@ -221,7 +222,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
       this.recoverTabIcon(this.tabs[this.getCurrentIndex].name)
     },
 
-    setTabs(payload: AppTab[]) {
+    setTabs(payload: IStoreApp.Tab.Item[]) {
       this.tabs = payload
     },
 
@@ -236,7 +237,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description create tab object based on route object
      */
-    createTabByRoute(route: RouteLocationNormalizedLoaded): AppTab {
+    createTabByRoute(route: RouteLocationNormalizedLoaded): IStoreApp.Tab.Item {
       return {
         name: route.name as string,
         path: route.path,
@@ -249,7 +250,7 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description create tabs main function
      */
-    createTabs(payload: AppTab, method: 'push' | 'unshift' = 'push') {
+    createTabs(payload: IStoreApp.Tab.Item, method: 'push' | 'unshift' = 'push') {
       // redirect/404 etc pages do not need to add into tab
       if (this.getTabBlackListName.includes(payload.name))
         return
@@ -471,14 +472,14 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description set initial affixed tabs
      */
-    setAffixedTabs(payload: AppTab[]) {
+    setAffixedTabs(payload: IStoreApp.Tab.Item[]) {
       payload.map(tab => this.createTabs(tab, 'unshift'))
     },
 
     /**
      * @description set iframe list
      */
-    setIframeList(payload: IAppTabIframe[]) {
+    setIframeList(payload: IStoreApp.Tab.Iframe[]) {
       this.iframeList = payload
     },
 

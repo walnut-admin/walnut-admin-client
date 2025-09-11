@@ -1,10 +1,11 @@
 import type { AxiosResponse } from 'axios'
+import type { IModels } from '@/api/models'
 import { SingletonPromise } from '@/utils/queue'
 
 const appStoreSecurity = useAppStoreSecurity()
 const capJSQueue = new SingletonPromise<string>()
 
-export function SingletonPromiseRsaDecryptFailed(res: AxiosResponse<WalnutBaseResponseStructure<AppBaseModel>, any>) {
+export function SingletonPromiseRsaDecryptFailed(res: AxiosResponse<WalnutBaseResponseStructure<IModels.Base>, any>) {
   return capJSQueue.run(async () => {
     // clear server rsa pub key
     appStoreSecurity.clearServerRsaPubKey()

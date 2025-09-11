@@ -15,7 +15,7 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
-  state: (): IAppStoreSetting => ({
+  state: (): AppSettings => ({
     themes: settings.themes as AppSettingsForTheme,
 
     app: settings.app as AppSettingsForApp,

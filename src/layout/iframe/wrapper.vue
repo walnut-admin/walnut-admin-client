@@ -1,4 +1,5 @@
 <script lang="tsx" setup>
+import type { IStoreApp } from '@/store/types'
 import WTransition from '@/components/Extra/Transition'
 import WIFrame from './index.vue'
 
@@ -6,7 +7,7 @@ defineOptions({
   name: 'TheIFrameWrapper',
 })
 
-const [DefineIframe, ReuseIframe] = createReusableTemplate<{ item: IAppTabIframe }>()
+const [DefineIframe, ReuseIframe] = createReusableTemplate<{ item: IStoreApp.Tab.Iframe }>()
 
 const appSetting = useAppStoreSetting()
 const appStoreTab = useAppStoreTab()
@@ -19,7 +20,7 @@ const getIframeList = computed(() =>
 
 const TransitionWrapper = defineComponent({
   props: {
-    item: { type: Object as PropType<IAppTabIframe>, required: true },
+    item: { type: Object as PropType<IStoreApp.Tab.Iframe>, required: true },
   },
   setup(props) {
     return () => appSetting.getTransition

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { IModels } from '@/api/models'
 import { dictTypeAPI } from '@/api/system/dict'
 
 defineOptions({
@@ -21,7 +22,7 @@ const [
     onGetFormData,
     onApiList,
   },
-] = useCRUD<AppSystemDictType>({
+] = useCRUD<IModels.SystemDictType>({
   baseAPI: dictTypeAPI,
 
   safeForm: true,
@@ -269,7 +270,7 @@ const [
 
 <template>
   <div>
-    <!-- @vue-generic {AppSystemDictType} -->
+    <!-- @vue-generic {IModels.SystemDictType} -->
     <WCRUD @hook="register" />
   </div>
 </template>

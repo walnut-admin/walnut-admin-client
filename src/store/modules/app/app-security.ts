@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
+import type { IStoreApp } from '@/store/types'
 import CryptoJS from 'crypto-js'
 import { defineStore } from 'pinia'
 import { rsaPublicKeyAPI } from '@/api/security/rsa'
@@ -18,7 +19,7 @@ const clientRsaPubKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_P
 const clientRsaPrivKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
 
 const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
-  state: (): IAppStoreSecurity => ({
+  state: (): IStoreApp.Security => ({
     // get from API
     serverRsaPubKey: '',
     // 30 days
