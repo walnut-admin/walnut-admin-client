@@ -89,15 +89,6 @@ declare global {
   }
 
   /**
-   * App force quit state
-   */
-  interface IAppStoreForceQuit {
-    modalShow: Ref<boolean | null>
-    forceQuitComponent: null | string
-    quitButton: boolean
-  }
-
-  /**
    * App geo ip state
    */
   interface IAppStoreGeoIP {

@@ -2,18 +2,18 @@
 import { authCapApiEndpoint } from '@/api/app/capjs'
 
 defineOptions({
-  name: 'WCompBusinessCap',
+  name: 'WCompGlobalCap',
   inheritAttrs: false,
 })
 
-const appStoreCapJSToken = useAppStoreCapJSToken()
+const compStoreCapJS = useStoreCompCapJS()
 
 function onCapSolve(e: { detail: { token: string } }) {
   const token = e.detail.token
 
-  appStoreCapJSToken.onCapSuccess!(token)
+  compStoreCapJS.onSuccess!(token)
   const id = setTimeout(() => {
-    appStoreCapJSToken.onCloseCapModal()
+    compStoreCapJS.onCloseCapModal()
     clearTimeout(id)
   }, 1000)
 }
@@ -21,7 +21,7 @@ function onCapSolve(e: { detail: { token: string } }) {
 
 <template>
   <WModal
-    v-model:show="appStoreCapJSToken.capShow"
+    v-model:show="compStoreCapJS.getShow"
     :close-on-esc="false"
     :closable="false"
     :mask-closable="false"

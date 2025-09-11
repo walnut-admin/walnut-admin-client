@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'WCompBusinessForceQuit',
+  name: 'WCompGlobalForceQuit',
   inheritAttrs: false,
 })
 
 const loading = ref(false)
 
-const appForcequit = useAppStoreForceQuit()
+const compStoreForceQuit = useStoreCompForceQuit()
 const { retryText, resume } = useCountdownStorage({ persistKey: 'force-quit', persistSeconds: 10, onCountdownComplete: onForceQuit })
 resume()
 
@@ -14,10 +14,10 @@ async function onForceQuit() {
   loading.value = true
 
   try {
-    appForcequit.onCloseForceQuitModal()
+    compStoreForceQuit.onCloseForceQuitModal()
     const userStoreAuth = useAppStoreUserAuth()
     await userStoreAuth.Signout()
-    appForcequit.$reset()
+    compStoreForceQuit.$reset()
   }
   finally {
     loading.value = false
@@ -27,13 +27,13 @@ async function onForceQuit() {
 
 <template>
   <WModal
-    v-model:show="appForcequit.modalShow!"
+    v-model:show="compStoreForceQuit.getShow"
     :close-on-esc="false"
     :closable="false"
     :mask-closable="false"
     :default-button="false"
     :fullscreen="false"
-    :title="$t('comp.forceQuit.title')"
+    :title="$t('comp.global.forceQuit.title')"
     width="330px"
     type="warning"
   >
@@ -41,10 +41,10 @@ async function onForceQuit() {
       {{ retryText }}
     </div>
 
-    <template v-if="appForcequit.getShowQuitButton" #action>
+    <template v-if="compStoreForceQuit.getShowQuitButton" #action>
       <div class="text-right">
         <WButton type="warning" :loading="loading" :debounce="500" @click="onForceQuit">
-          {{ $t('comp.forceQuit.now') }}
+          {{ $t('comp.global.forceQuit.now') }}
         </WButton>
       </div>
     </template>

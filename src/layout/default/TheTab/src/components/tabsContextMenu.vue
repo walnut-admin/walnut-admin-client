@@ -148,7 +148,7 @@ const options = computed<DropdownOption[]>(() => [
 
   {
     key: AppConstTabDeleteType.TAB_SINGLE,
-    label: t('app.tab.ctx.close'),
+    label: t('app.base.close'),
     icon: () => <WIcon height="24" icon="ant-design:close-outlined"></WIcon>,
     disabled: getCloseDisabled.value,
   },

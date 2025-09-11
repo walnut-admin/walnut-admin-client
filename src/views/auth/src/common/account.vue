@@ -12,7 +12,7 @@ defineOptions({
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
-const appStoreCapJSToken = useAppStoreCapJSToken()
+const compStoreCapJS = useStoreCompCapJS()
 
 const { loading } = useAuthContext()
 
@@ -46,7 +46,7 @@ async function onSubmit() {
   const needCap = await getNeedCapAPI('userName', accountFormData.value.userName)
 
   if (needCap) {
-    await appStoreCapJSToken.onOpenCapModal(async () => {
+    await compStoreCapJS.onOpenCapModal(async () => {
       await onSignIn()
     })
   }

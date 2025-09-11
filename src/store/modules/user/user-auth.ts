@@ -135,7 +135,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const userStorePermission = useAppStoreUserPermission()
       const appStoreMenu = useAppStoreMenu()
       const appStoreTab = useAppStoreTab()
-      const appStoreCapJSToken = useAppStoreCapJSToken()
+      const compStoreCapJS = useStoreCompCapJS()
       const appStoreCachedViews = useAppStoreCachedViews()
       const appStoreLock = useAppStoreLock()
 
@@ -148,7 +148,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       this.clearTokens()
 
       // clear capjs token
-      appStoreCapJSToken.$reset()
+      compStoreCapJS.$reset()
 
       // clear user profile
       userStoreProfile.$reset()

@@ -5,6 +5,7 @@ import { setupStorageMigrations } from '@/utils/persistent/migrate'
 // import '~console/theme-detect'
 
 import { App, setupApp, setupAppScripts } from './App'
+import { installAppPlugins } from './plugins'
 // unocss
 import 'virtual:uno.css'
 // LINK https://github.com/unocss/unocss/issues/2127
@@ -24,6 +25,8 @@ import './assets/styles/main.scss'
   setupStorageMigrations()
 
   await setupApp(app)
+
+  installAppPlugins()
 
   app.mount('#app')
 })()

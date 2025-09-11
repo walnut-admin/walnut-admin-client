@@ -53,12 +53,12 @@ class SocketService {
           await userStoreAuth.Signout()
         },
         FORCE_COUNTDOWN_MODAL: () => {
-          const appForcequit = useAppStoreForceQuit()
-          appForcequit.onOpenForceQuitModal()
+          const compStoreForceQuit = useStoreCompForceQuit()
+          compStoreForceQuit.onOpenForceQuitModal()
         },
         MANUAL_COUNTDOWN_MODAL: () => {
-          const appForcequit = useAppStoreForceQuit()
-          appForcequit.onOpenForceQuitModal(true)
+          const compStoreForceQuit = useStoreCompForceQuit()
+          compStoreForceQuit.onOpenForceQuitModal(true)
         },
       }
 

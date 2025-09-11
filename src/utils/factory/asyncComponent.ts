@@ -34,7 +34,6 @@ type AsyncComponentWithJSX<T extends Component>
   }
     : T
 
-// Used 1: w-form async component
 export function createAsyncComponent<T extends Component = Component>(loader: () => Promise<T>) {
   return defineAsyncComponent<T>({
     // The factory function

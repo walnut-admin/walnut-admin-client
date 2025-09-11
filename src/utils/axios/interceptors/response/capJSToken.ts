@@ -1,10 +1,10 @@
 import { SingletonPromise } from '@/utils/queue'
 
-const appStoreCapJSToken = useAppStoreCapJSToken()
+const compStoreCapJS = useStoreCompCapJS()
 const capJSQueue = new SingletonPromise<string>()
 
 export function SingletonPromiseCapJSToken() {
   return capJSQueue.run(async () => {
-    return await appStoreCapJSToken.refreshCapJSToken()
+    return await compStoreCapJS.refreshCapJSToken()
   })
 }

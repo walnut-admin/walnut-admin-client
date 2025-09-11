@@ -4,16 +4,16 @@ defineOptions({
   defaultView: false,
 })
 
-const appStoreCapJSToken = useAppStoreCapJSToken()
+const compStoreCapJS = useStoreCompCapJS()
 
 async function onNormalMode() {
-  await appStoreCapJSToken.onOpenCapModal(async (token) => {
+  await compStoreCapJS.onOpenCapModal(async (token) => {
     useAppMsgSuccess(token)
   })
 }
 
 async function onInvisible() {
-  const token = await appStoreCapJSToken.refreshCapJSToken()
+  const token = await compStoreCapJS.refreshCapJSToken()
   useAppMsgSuccess(token)
 }
 </script>

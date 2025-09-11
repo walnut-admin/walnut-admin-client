@@ -16,7 +16,7 @@ defineOptions({
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
-const appStoreCapJSToken = useAppStoreCapJSToken()
+const compStoreCapJS = useStoreCompCapJS()
 
 const { loading } = useAuthContext()
 
@@ -121,7 +121,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
 
           if (needCap) {
             return new Promise<boolean>((resolve) => {
-              appStoreCapJSToken.onOpenCapModal(async () => {
+              compStoreCapJS.onOpenCapModal(async () => {
                 await sendAuthEmailAPI({
                   emailAddress: emailFormData.emailAddress!,
                 })

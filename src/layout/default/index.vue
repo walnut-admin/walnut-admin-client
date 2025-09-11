@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import TheAppGlobalComponents from './Features/global.vue'
 import TheAppWatermark from './Features/watermark.vue'
 import { useStarOnGithub } from './hooks/useStarOnGithub'
 import TheScrollContent from './scrollContent.vue'
@@ -70,6 +71,7 @@ function onBackToTop() {
 
       <WAppSettings @back-to-top="onBackToTop" />
       <TheAppWatermark />
+      <TheAppGlobalComponents />
     </div>
   </n-layout>
 </template>
