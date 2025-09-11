@@ -1,4 +1,5 @@
 import type { IModels } from '../models'
+import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
@@ -50,6 +51,6 @@ export async function initialDeviceAPI() {
         city: appStoreGeoIP.getGeoInfo.city,
         region: appStoreGeoIP.getGeoInfo.region,
       },
-    } as IModels.SystemDevice,
+    } as IRequestPayload.System.Deivce.Initial,
   })
 }

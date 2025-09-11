@@ -1,3 +1,4 @@
+import type { IRequestPayload } from '@/api/request'
 import type { IStoreUser } from '@/store/types'
 import { defineStore } from 'pinia'
 import { authWithPwdAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
@@ -32,7 +33,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     setAccessToken(payload: string) {
       this.accessToken = payload
     },
-    setRemember(payload: AppPayloadAuth.Password | undefined) {
+    setRemember(payload: IRequestPayload.Auth.Password | undefined) {
       this.remember = payload
     },
 
@@ -90,7 +91,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description password way to auth
      */
-    async AuthWithBasicPassword(payload: AppPayloadAuth.Password) {
+    async AuthWithBasicPassword(payload: IRequestPayload.Auth.Password) {
       const res = await authWithPwdAPI({
         userName: payload.userName,
         password: payload.password,
@@ -111,7 +112,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description email way to auth
      */
-    async AuthWithEmailAddress(payload: AppPayloadAuth.EmailAddress) {
+    async AuthWithEmailAddress(payload: IRequestPayload.Auth.Email.Verify) {
       const res = await authWithEmailAPI(payload)
 
       // excute core fn
@@ -121,7 +122,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description text message way to auth
      */
-    async AuthWithPhoneNumber(payload: AppPayloadAuth.PhoneNumber) {
+    async AuthWithPhoneNumber(payload: IRequestPayload.Auth.Phone.Verify) {
       const res = await authWithPhoneNumberAPI(payload)
 
       // excute core fn

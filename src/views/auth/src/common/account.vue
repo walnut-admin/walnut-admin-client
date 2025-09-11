@@ -1,4 +1,5 @@
 <script lang="tsx" setup>
+import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
 import { getNeedCapAPI } from '@/api/app/capjs'
@@ -16,7 +17,7 @@ const compStoreCapJS = useStoreCompCapJS()
 
 const { loading } = useAuthContext()
 
-const accountFormData = ref<AppPayloadAuth.Password>({
+const accountFormData = ref<IRequestPayload.Auth.Password>({
   userName: '',
   password: '',
   rememberMe: true,

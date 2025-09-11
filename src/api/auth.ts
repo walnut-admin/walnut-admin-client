@@ -1,3 +1,4 @@
+import type { IRequestPayload } from './request'
 import type { IResponseData } from './response'
 import { AppAxios } from '@/utils/axios'
 
@@ -13,7 +14,7 @@ const Auth = {
 /**
  * @description auth with pwd
  */
-export function authWithPwdAPI(data: AppPayloadAuth.Password) {
+export function authWithPwdAPI(data: IRequestPayload.Auth.Password) {
   return AppAxios.post<IResponseData.Auth.TokenPayload>(
     {
       url: Auth.PWD,

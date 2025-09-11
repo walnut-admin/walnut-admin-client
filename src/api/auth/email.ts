@@ -1,3 +1,4 @@
+import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 
@@ -9,7 +10,7 @@ const authEmail = {
 /**
  * @description auth with email
  */
-export function authWithEmailAPI(data: AppPayloadAuth.EmailAddress) {
+export function authWithEmailAPI(data: IRequestPayload.Auth.Email.Verify) {
   return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: authEmail.AUTH_EMAIL,
     data,
@@ -19,7 +20,7 @@ export function authWithEmailAPI(data: AppPayloadAuth.EmailAddress) {
 /**
  * @description send verify code email
  */
-export function sendAuthEmailAPI(data: Pick<AppPayloadAuth.EmailAddress, 'emailAddress'>) {
+export function sendAuthEmailAPI(data: IRequestPayload.Auth.Email.Send) {
   return AppAxios.post<boolean>({
     url: authEmail.AUTH_EMAIL_SEND,
     data,

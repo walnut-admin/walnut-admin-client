@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
 import type { NullableRecord } from 'easy-fns-ts'
+import type { IRequestPayload } from '@/api/request'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
@@ -22,7 +23,7 @@ const compStoreCapJS = useStoreCompCapJS()
 const { loading } = useAuthContext()
 
 const countryCallingCode = ref()
-const SMSFormData = reactive<NullableRecord<AppPayloadAuth.PhoneNumber & { agree: string }>>({
+const SMSFormData = reactive<NullableRecord<IRequestPayload.Auth.Phone.Verify & { agree: string }>>({
   phoneNumber: null,
   verifyCode: null,
   agree: null,

@@ -1,3 +1,4 @@
+import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 
@@ -9,7 +10,7 @@ const authPhone = {
 /**
  * @description auth with text message
  */
-export function authWithPhoneNumberAPI(data: AppPayloadAuth.PhoneNumber) {
+export function authWithPhoneNumberAPI(data: IRequestPayload.Auth.Phone.Verify) {
   return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: authPhone.AUTH_PHONE,
     data,
@@ -19,7 +20,7 @@ export function authWithPhoneNumberAPI(data: AppPayloadAuth.PhoneNumber) {
 /**
  * @description send verify code text message
  */
-export function sendAuthTextMsgAPI(data: Pick<AppPayloadAuth.PhoneNumber, 'phoneNumber'>) {
+export function sendAuthTextMsgAPI(data: IRequestPayload.Auth.Phone.Send) {
   return AppAxios.post<boolean>({
     url: authPhone.AUTH_EMAIL_TEXT_MESSAGE,
     data,

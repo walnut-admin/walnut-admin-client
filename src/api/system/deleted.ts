@@ -1,4 +1,5 @@
 import type { IModels } from '../models'
+import type { IRequestPayload } from '../request'
 import { AppAxios } from '@/utils/axios'
 import { BaseAPI } from '../base'
 
@@ -7,14 +8,10 @@ export const deletedAPI = new BaseAPI<IModels.SystemDeleted>({
   section: 'deleted',
 })
 
-namespace NSAppSystemDeletedAPI {
-  export type RecoverReq = Pick<IModels.Base, '_id'> & Pick<IModels.SystemDeleted, 'deletedId'>
-}
-
 /**
  * @description recover for manage
  */
-export function recoverAPI(data: NSAppSystemDeletedAPI.RecoverReq) {
+export function recoverAPI(data: IRequestPayload.System.Deleted.Recover) {
   return AppAxios.post<boolean>(
     {
       url: '/system/deleted/recover',

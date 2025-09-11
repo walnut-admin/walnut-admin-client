@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import type { IServerInfo } from '@/api/app/monitor/server'
-
+import type { IResponseData } from '@/api/response'
 import type { ICompUIDescriptionsItem } from '@/components/UI/Descriptions'
 import { getNetworkInfoAPI } from '@/api/app/monitor/server'
 
@@ -11,7 +10,7 @@ defineOptions({
 
 const { t } = useAppI18n()
 
-const info = ref<IServerInfo.Network>()
+const info = ref<IResponseData.App.Monitor.Network>()
 const loading = ref(false)
 const empty = ref(false)
 

@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
 import type { NullableRecord } from 'easy-fns-ts'
+import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { getNeedCapAPI } from '@/api/app/capjs'
@@ -20,7 +21,7 @@ const compStoreCapJS = useStoreCompCapJS()
 
 const { loading } = useAuthContext()
 
-const emailFormData = reactive<NullableRecord<AppPayloadAuth.EmailAddress & { agree: string }>>({
+const emailFormData = reactive<NullableRecord<IRequestPayload.Auth.Email.Verify & { agree: string }>>({
   emailAddress: null,
   verifyCode: null,
   agree: null,

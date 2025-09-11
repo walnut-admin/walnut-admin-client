@@ -3,6 +3,7 @@ import type { MessageReactive, NotificationPlacement, NotificationReactive } fro
 import type { CSSProperties } from 'vue'
 import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
+import type { IRequestPayload } from '@/api/request'
 import type { ValueOfAppConstDevice, ValueOfAppConstLocale } from '@/const'
 
 export namespace IStoreApp {
@@ -116,8 +117,20 @@ export namespace IStoreApp {
    * App setting retrieved from backend state
    */
   export interface SettingBackend {
-    auth: Partial<AppPublicSettings.AuthSettings>
-    frontend: Partial<AppPublicSettings.FrontendSettings>
+    auth: Partial<{
+      account: number
+      email: number
+      phone: number
+      qrcode: number
+      gitee: number
+      github: number
+    }>
+    frontend: Partial<{
+      fullScreen: number
+      search: number
+      dark: number
+      locale: number
+    }>
   }
 
   /**
@@ -242,7 +255,7 @@ export namespace IStoreUser {
    */
   export interface Auth {
     accessToken?: Ref<string | null>
-    remember?: Ref<Partial<Omit<AppPayloadAuth.Password, 'rememberMe'>> | null>
+    remember?: Ref<Partial<Omit<IRequestPayload.Auth.Password, 'rememberMe'>> | null>
   }
 
   /**
