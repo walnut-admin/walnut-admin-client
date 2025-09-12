@@ -12,7 +12,7 @@ const appSetting = useAppStoreSetting()
     v-model:collapsed="appStoreMenu.collapse"
     bordered
     collapse-mode="width"
-    class="z-2002 h-screen"
+    class="z-2000 h-screen"
     :width="appSetting.menu.width"
     :collapsed-width="appSetting.menu.collapsedWidth"
     :show-trigger="appSetting.getMenuCollapseBuiltInStatus"
