@@ -1,8 +1,21 @@
 import { aesGcmDecrypt, aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
+import { SingletonPromise } from '@/utils/queue'
 import { fromUrlSafeBase64, toUrlSafeBase64 } from '@/utils/shared'
+
+const urlMaskingAesKeyQueue = new SingletonPromise<void>()
+
+export function SingletonInitUrlMaskingAesKey() {
+  const appStoreKey = useAppStoreKey()
+
+  return urlMaskingAesKeyQueue.run(async () => {
+    return await appStoreKey.initUrlMaskingAesKey()
+  })
+}
 
 export async function encryptRouterUrl(value: string) {
   const appStoreKey = useAppStoreKey()
+
+  await SingletonInitUrlMaskingAesKey()
 
   const cipher = await aesGcmEncrypt(appStoreKey.getUrlMaskingAesKey, value)
 

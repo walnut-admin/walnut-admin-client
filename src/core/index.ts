@@ -12,11 +12,6 @@ export async function AppCoreFn1() {
   const appStoreMenu = useAppStoreMenu()
   const appStoreTab = useAppStoreTab()
   const userStorePermission = useAppStoreUserPermission()
-  const appStoreKey = useAppStoreKey()
-
-  // init url masking aes key from backend API
-  // later will used for `addRoute` patch
-  await appStoreKey.initUrlMaskingAesKey()
 
   const { addRoute, getRoutes, hasRoute } = AppRouter
 
