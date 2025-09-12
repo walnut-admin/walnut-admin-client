@@ -2,11 +2,10 @@ import type { Router } from 'vue-router'
 import { removeCurrentPageRequests } from '@/utils/axios/adapters/cancel'
 
 const appStoreTab = useAppStoreTab()
+const appStoreCachedViews = useAppStoreCachedViews()
 
 export function createAfterEachGuard(router: Router) {
   router.afterEach((to, from) => {
-    const appStoreCachedViews = useAppStoreCachedViews()
-
     // if the route exists in tabs
     // and when going to the route, it carrys query
     // add the query to the tab for user experience

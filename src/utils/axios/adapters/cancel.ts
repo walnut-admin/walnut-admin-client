@@ -42,7 +42,7 @@ export function removeLatestRequest() {
   const lastestItem = Array.from(AxiosCancelPoolRef.value).pop()
 
   if (lastestItem) {
-    lastestItem[1].ac.abort()
+    lastestItem[1].ac.abort('Remove latest request')
     AxiosCancelPoolRef.value.delete(lastestItem[0])
   }
 }
@@ -54,7 +54,7 @@ export function removeAllCancel() {
   for (let i = 0; i < arr.length; i++) {
     const id = arr[i][0]
     const element = arr[i][1]
-    element.ac.abort()
+    element.ac.abort('Remove all cancel requests')
     AxiosCancelPoolRef.value.delete(id)
   }
 }
@@ -66,7 +66,7 @@ export function removeCurrentPageRequests(path: string) {
   for (let i = 0; i < arr.length; i++) {
     const id = arr[i][0]
     const element = arr[i][1]
-    element.ac.abort()
+    element.ac.abort('Remove current page requests')
     AxiosCancelPoolRef.value.delete(id)
   }
 }
@@ -95,7 +95,7 @@ export function cancelAdapter(adapter: AxiosAdapter): AxiosAdapter {
     catch (error) {
       // request failed, remove from the cancel pool
       removeFromCancelPool(requestId)
-      throw error
+      return Promise.reject(error)
     }
   }
 }
