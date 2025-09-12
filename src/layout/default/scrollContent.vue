@@ -70,6 +70,7 @@ defineExpose({ onScrollToTop })
           :id="`${String($route.name)}-content`"
           class="relative h-full w-full"
           :style="{
+            width: appSetting.getCalcContentWidth,
             padding: $route.meta.ternal === 'internal' ? 0 : `${appSetting.app.contentPadding}px`,
             height: $route.meta.ternal === 'internal' ? appSetting.getCalcContentHeight : 'initial',
           }"
