@@ -5,7 +5,6 @@ import type {
 import type { WTable } from '../types'
 import type { IAxios } from '@/utils/axios/types'
 import { getBoolean } from '@/utils/shared'
-import { isBaseI18nKey } from '../../../shared'
 
 export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling']
 
@@ -54,12 +53,14 @@ export function generateSortParams<T>(sort: DataTableSortState | DataTableSortSt
 export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>>>, item: WTable.Column<T>, helpMsg = false): string {
   const { t } = useAppI18n()
 
+  const appStoreLocale = useAppStoreLocale()
+
   // dict column title
   if (item.extendType === 'dict' && item.useDictNameAsTitle)
     return t(`dict.name.${item.dictType}`)
 
   // title is set has the highest priority
-  if (typeof item._rawTitle === 'string' && isBaseI18nKey(item._rawTitle)) {
+  if (typeof item._rawTitle === 'string' && appStoreLocale.isBaseI18nKey(item._rawTitle)) {
     return t(`app.base.${item._rawTitle}`)
   }
 
@@ -72,7 +73,7 @@ export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>
   const path = item.key
 
   return isLocale && path
-    ? isBaseI18nKey(path as string)
+    ? appStoreLocale.isBaseI18nKey(path as string)
       ? t(`app.base.${path}`)
       : t(isHelpMsg(`table.${key}.${path}`))
     : typeof item.title === 'string' ? t(item.title) : t(item._rawTitle!)

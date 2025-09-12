@@ -13,7 +13,7 @@ const code1Raw = import.meta.glob(
 )
 
 const code2Raw = import.meta.glob(
-  '@/components/App/appStoreLocalePicker/useappStoreLocale.ts',
+  '@/hooks/app/useAppIntro.ts',
   {
     query: 'raw',
     eager: true,

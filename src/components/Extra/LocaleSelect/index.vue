@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import type { ICompExtraLocaleSelectProps } from '.'
-import { AppI18nGetI18nMsg } from '@/api/system/locale'
 
 defineOptions({
   name: 'WCompExtraLocaleSelect',
@@ -42,9 +41,7 @@ async function onRefresh() {
   try {
     const appStoreLocale = useAppStoreLocale()
 
-    const res = await AppI18nGetI18nMsg(appStoreLocale.getLocale, 0)
-
-    AppI18n().global.setLocaleMessage(appStoreLocale.getLocale, res)
+    await appStoreLocale.onLoadMessageNoCahe(appStoreLocale.getLocale)
   }
   finally {
     loading.value = false

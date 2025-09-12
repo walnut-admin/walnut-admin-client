@@ -1,4 +1,4 @@
-import type { Nullable, Recordable, TreeNodeItem } from 'easy-fns-ts'
+import type { Nullable, OptionDataItem, Recordable, TreeNodeItem } from 'easy-fns-ts'
 import type { MessageReactive, NotificationPlacement, NotificationReactive } from 'naive-ui'
 import type { CSSProperties } from 'vue'
 import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
@@ -59,6 +59,8 @@ export namespace IStoreApp {
    */
   export interface Locale {
     locale: Ref<Nullable<ValueOfAppConstLocale>>
+    baseI18nKeyList: string[]
+    langList: OptionDataItem[]
   }
 
   /**

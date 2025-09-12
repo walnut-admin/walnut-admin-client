@@ -12,7 +12,7 @@ export const langAPI = new BaseAPI<IModels.SystemLang>({
  * @description get language lists from back end, used for language change
  * This should only called once in appStoreLocalePicker component
  */
-export async function AppI18nGetLangLists() {
+export async function getLangListAPI() {
   const lists = await AppAxios.get<IResponseData.System.Lang.Public>({
     url: '/system/lang/list/public',
   })

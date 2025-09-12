@@ -4,8 +4,9 @@ import type { WForm } from '../types'
 import { get } from 'lodash-es'
 import { getBoolean } from '@/utils/shared'
 import { wbtoa } from '@/utils/window/base64'
-import { isBaseI18nKey } from '../../../shared'
 import { componentMap } from '../components/FormItem/componentMap'
+
+const appStoreLocale = useAppStoreLocale()
 
 type SchemaItem<T> = WForm.Schema.Item<T>
 type FormProps<T> = WForm.Props<T>
@@ -87,9 +88,9 @@ export const formItemUtils = {
     }
 
     // in default app locale messages keys
-    if (path && isBaseI18nKey(path as string))
+    if (path && appStoreLocale.isBaseI18nKey(path as string))
       return t(`app.base.${path}`)
-    if (label && isBaseI18nKey(label))
+    if (label && appStoreLocale.isBaseI18nKey(label))
       return t(`app.base.${label}`)
 
     // no need to translate

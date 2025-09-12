@@ -16,10 +16,10 @@ useAppReducedMotion()
 // get public setting first
 const appStoreBackendSettings = useAppStoreSettingBackend()
 appStoreBackendSettings.onInitPublicSettings().then(() => {
-  // if locale enable
-  if (appStoreBackendSettings.getLocaleEnabled) {
-    useappStoreLocale()
-  }
+  watchEffect(() => {
+    const appStoreLocale = useAppStoreLocale()
+    appStoreLocale.onLoadMessageCahe(appStoreLocale.getLocale)
+  })
 })
 </script>
 

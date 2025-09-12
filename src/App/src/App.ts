@@ -10,13 +10,13 @@ import { setupSentry } from './scripts/sentry'
  * @description Entry to set up Vue App
  */
 export async function setupApp(app: App) {
-  await setupI18n(app)
+  setupStore(app)
+
+  setupI18n(app)
 
   const router = setupRouter(app)
 
   setupSentry(app, router)
-
-  setupStore(app)
 
   if (isDev())
     app.config.performance = true
