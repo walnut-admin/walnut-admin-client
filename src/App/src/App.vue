@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useAppLock } from '@/components/App/AppLock/useAppLock'
-
 import GlobalComponents from './compoent/global.vue'
 import ThemeProvider from './naive/AppTheme.vue'
 import MsgProvider from './naive/MsgProvider.vue'
@@ -10,13 +8,8 @@ import UIProvider from './naive/UIProvider.vue'
 useAppTitle()
 // regulat resize
 useAppResize()
-
-// TODO should move to default layout app lock settings
-useAppLock()
-
 // custom user monitor based on sendBeacon
 useAppUserMonitor()
-
 // reduced motion
 useAppReducedMotion()
 

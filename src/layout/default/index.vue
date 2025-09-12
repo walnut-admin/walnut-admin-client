@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useAppLock } from '@/components/App/AppLock/useAppLock'
 import TheAppGlobalComponents from './Features/global.vue'
 import TheAppWatermark from './Features/watermark.vue'
 import { useStarOnGithub } from './hooks/useStarOnGithub'
@@ -28,6 +29,7 @@ const appSetting = useAppStoreSetting()
 
 // P2 layout level hook
 useAppIntro()
+useAppLock()
 useAppContentFull()
 useAppTextSelection()
 useAppColorMode()
