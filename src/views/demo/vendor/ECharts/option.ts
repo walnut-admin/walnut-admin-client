@@ -23,7 +23,12 @@ export const option1: EChartsOption = {
     left: '3%',
     right: '4%',
     bottom: '3%',
-    containLabel: true,
+    outerBounds: {
+      bottom: '12%',
+      top: '0%',
+      left: '0%',
+      right: '0%',
+    },
   },
   xAxis: [
     {
@@ -110,7 +115,12 @@ export const option2: EChartsOption = {
     left: '3%',
     right: '4%',
     bottom: '3%',
-    containLabel: true,
+    outerBounds: {
+      bottom: '12%',
+      top: '0%',
+      left: '0%',
+      right: '0%',
+    },
   },
   xAxis: {
     type: 'value',
