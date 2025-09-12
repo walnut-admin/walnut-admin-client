@@ -35,17 +35,20 @@ defineExpose({ onScrollToTop })
       content-class="grid grid-rows-1"
     >
       <div
-        class="sticky left-0 top-0 z-99 transition-transform duration-300 ease-in-out -translate-y-[100%]"
+        class="fixed left-0 top-0 z-99 w-full transition-transform duration-300 ease-in-out -translate-y-[100%]"
         :class="[{ 'translate-y-0': headerShow }]"
-        :style="{ width: appSetting.getCalcContentWidth }"
+        :style="{ 'padding-left': `${appSetting.getMenuWidth}px` }"
       >
         <TheHeader ref="headerRef" />
       </div>
 
       <div
-        class="sticky left-0 top-0 z-98 transition-transform duration-500 ease-in-out -translate-y-[100%]"
+        class="fixed left-0 top-0 z-98 w-full transition-transform duration-500 ease-in-out -translate-y-[100%]"
         :class="[{ 'translate-y-0': tabsShow }]"
-        :style="{ top: appSetting.header.status && (headerShow && tabsShow || headerShow && appSetting.getTabsFixed) ? `${appSetting.header.height}px` : '', width: appSetting.getCalcContentWidth }"
+        :style="{
+          'top': appSetting.header.status && (headerShow && tabsShow || headerShow && appSetting.getTabsFixed) ? `${appSetting.header.height}px` : '',
+          'padding-left': `${appSetting.getMenuWidth}px`,
+        }"
       >
         <TheTabs ref="tabsRef" />
       </div>
@@ -54,8 +57,10 @@ defineExpose({ onScrollToTop })
         :id="`${String($route.name)}-content`"
         class="relative"
         :style="{
-          minHeight: appSetting.getCalcContentHeight,
-          padding: $route.meta.ternal === 'internal' ? 0 : `${appSetting.app.contentPadding}px`,
+          'width': appSetting.getCalcContentWidth,
+          'minHeight': `calc(100vh - ${appSetting.getFooterHeight}px)`,
+          'padding': $route.meta.ternal === 'internal' ? 0 : `${appSetting.app.contentPadding}px`,
+          'padding-top': $route.meta.ternal === 'internal' ? `${appSetting.getHeaderHeight + appSetting.getTabsHeight}px` : `${appSetting.getHeaderHeight + appSetting.getTabsHeight + appSetting.app.contentPadding}px`,
         }"
       >
         <TheContent />
