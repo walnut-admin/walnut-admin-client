@@ -10,7 +10,7 @@
   - [x] 已经缓存了的页面不要loadingbar
   - [x] lock security 有问题
   - [ ] 示例模块，设备模块，删除模块，认证模块
-  - [ ] 强退在线用户(修改密码/重置密码都会提出当前在线的用户)
+  - [x] 强退在线用户(修改密码/重置密码都会提出当前在线的用户)
   - [x] ~~~vue3-mindmap，能帮忙捋捋思路~~~
   - [ ] 菜单内嵌query，以及手动跳转的query的留存
   - [x] 用户表加一个字段，角色是分开模式还是合并模式，都可以自定义，同时如果是分开模式，右上角配合选择切换权限
@@ -21,12 +21,15 @@
   - [ ] 找回密码
   - [x] api 函数重命名 结尾都以API结束 好区分是请求函数
   - [x] ~~merge request的axios adapter完成了，字典数据接口需要重新梳理一下，可以不用initDict在form/table/desc组件里了~~
-  - [ ] checker貌似导致了HMR不好使（可能也是多个plugin使用导致的，还需要排查）
-  - [ ] auto import 不能滥用，项目大了之后，会显得很乱
-  - [ ] server cert 加密请求参数?
+  - [x] checker貌似导致了HMR不好使（可能也是多个plugin使用导致的，还需要排查） => vite.config.ts define环境变量就好了
+  - [x] auto import 不能滥用，项目大了之后，会显得很乱
+  - [x] server cert 加密请求参数?
   - [x] url/params 的参数 不要做配置 直接superjson + cryptojs
   - [x] store 重构了是重构了 但是还是有很多地方风格没有统一 需要挨个整理一下
   - [ ] 设备不支持 那个页面应该统一化 因为可能还有其他类型的不支持
+  - [ ] font-size/font
+  - [x] 升级vite7
+  - [ ] lock逻辑 都统一规划到lock store中 后续接入接口也方便
 
 - 重要不紧急
 
@@ -37,7 +40,7 @@
   - [x] axios config demo
   - [ ] 页面中的错误模拟 demo
   - [ ] pdf/word/excel/print.js plugin
-  - [ ] error monitor (sentry?)
+  - [x] error monitor (sentry?)
   - [x] untyper
   - [ ] cdn 也是配合其他插件貌似会有问题
   - [x] 混淆 vite-plugin-bundle-obfuscator 基础混淆，高级混淆配合其他plugin打包后会有问题
@@ -58,8 +61,9 @@
   - [x] vue-tsc 错误全部消除（至少是真的全部消除过一次了
   - [ ] layout 扩展
   - [ ] 主题扩展
-  - [x] 手机号组件，邮箱填充组件，身份证组件
-  - [ ] https://github.com/theajack/disable-devtool
+  - [x] 手机号组件，邮箱填充组件
+  - [ ] 身份证组件
+  - [x] https://github.com/theajack/disable-devtool
   - [ ] https://github.com/rrweb-io/rrweb
   - [ ] https://github.com/hrynko/vue-pdf-embed
   - [x] cap https://github.com/tiagorangel1/cap
