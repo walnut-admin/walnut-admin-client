@@ -52,6 +52,7 @@ export function setupStorageMigrations() {
 
   // Skip if current version is not greater than the last migrated version
   if (!compare(version, lastMigrationVersion, '>')) {
+    // turbo-console-disable-next-line
     console.log(`[storage-migration] Already migrated to ${lastMigrationVersion}, skipping`)
     return
   }

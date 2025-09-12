@@ -1,6 +1,6 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import type { IStoreApp } from '@/store/types'
-import { merge } from 'lodash-es'
+import { cloneDeep, merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { StoreKeys, tabBlackListName } from '../../constant'
 import { store } from '../../pinia'
@@ -43,21 +43,24 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
     /**
      * @description set single tab state through index in tabs
      */
-    setTabByIndex(index: number, payload: Partial<IStoreApp.Tab.Item>, type: 'merge' | 'splice' = 'merge') {
-      if (type === 'merge')
-        this.tabs[index] = merge(this.tabs[index], payload)
+    setTabByIndex(index: number, payload: Partial<IStoreApp.Tab.Item>) {
+      if (index < 0 || index >= this.tabs.length)
+        return
 
-      if (type === 'splice')
-        this.tabs.splice(index, 1, payload as IStoreApp.Tab.Item)
+      const newTab = cloneDeep(this.tabs[index])
+
+      merge(newTab, payload)
+
+      this.tabs.splice(index, 1, newTab)
     },
 
     /**
      * @description set single tab state through name in tabs
      */
-    setTabByName(name: string, payload: Partial<IStoreApp.Tab.Item>, type: 'merge' | 'splice' = 'merge') {
+    setTabByName(name: string, payload: Partial<IStoreApp.Tab.Item>) {
       const index = this.tabs.findIndex(i => i.name === name)
       if (index !== -1)
-        this.setTabByIndex(index, payload, type)
+        this.setTabByIndex(index, payload)
     },
 
     /**

@@ -116,7 +116,7 @@ async function onUpdateValue(key: string, item: MenuOption & { meta?: MenuMeta }
   // should do so, otherwise once the route has query, user cannot get rid of it
   const targetTab = appStoreTab.tabs.find(i => i.name === key)
   if (targetTab)
-    appStoreTab.setTabByName(key, omit(targetTab, 'query'), 'splice')
+    appStoreTab.setTabByName(key, omit(targetTab, 'query'))
 
   await useAppRouterPush({ name: key })
 }
