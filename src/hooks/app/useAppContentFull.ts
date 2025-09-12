@@ -1,9 +1,9 @@
 export function useAppContentFull() {
-  const { currentRoute } = useAppRouter()
   const appSetting = useAppStoreSetting()
+  const full = useRouterQuery('full')
 
   watchEffect(() => {
-    if (currentRoute.value.query.full)
+    if (full.value)
       appSetting.toggleLayout(false)
   })
 }
