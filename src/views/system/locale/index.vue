@@ -89,8 +89,17 @@ const [
             // @ts-expect-error it worked
             options: langList,
             clearable: true,
+            onUpdateValue() {
+              onApiList()
+            },
             onClear() {
-              langId.value = undefined
+              if (langId.value) {
+                langId.value = undefined
+              }
+              else {
+                onSetDefaultQueryFormData({ langId: null })
+                onApiList()
+              }
             },
           },
         },
@@ -110,6 +119,9 @@ const [
                 label: i,
               }),
             ),
+            onUpdateValue() {
+              onApiList()
+            },
           },
         },
 
@@ -242,7 +254,7 @@ const [
 })
 
 watch(langId, (v) => {
-  onSetDefaultQueryFormData({ langId: v || null })
+  onSetDefaultQueryFormData({ langId: v ?? null })
   onApiList()
 })
 
