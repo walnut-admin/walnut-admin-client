@@ -174,6 +174,17 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<IModels.AppMo
       },
 
       {
+        key: 'lastActiveAt',
+        title: 'lastActiveAt',
+        width: 200,
+        sorter: {
+          multiple: 1,
+          compare: 'default',
+        },
+        defaultSortOrder: 'descend',
+      },
+
+      {
         key: 'populated_user.userName',
         title: 'userName',
         width: 100,
