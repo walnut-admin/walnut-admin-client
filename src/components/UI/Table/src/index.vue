@@ -79,6 +79,7 @@ const {
   onApiDelete,
   onApiDeleteMany,
   checkedRowKeys,
+  onSetDefaultQueryFormData,
 } = useTableAPI<T>(tableRef, tablePropsCtx, tableColumns, listParams)
 
 const tableMethods = useTableMethods(tableRef)
@@ -110,6 +111,7 @@ emits('hook', {
   onApiDelete,
   onApiDeleteMany,
   onGetApiListParams: () => listParams.apiListParams,
+  onSetDefaultQueryFormData,
 })
 
 // min/max height

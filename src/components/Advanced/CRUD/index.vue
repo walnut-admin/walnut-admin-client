@@ -75,6 +75,7 @@ const [
     onApiDelete,
     onApiDeleteMany,
     onGetApiListParams,
+    onSetDefaultQueryFormData,
   },
 ] = useTable<T>(getTableProps)
 
@@ -171,6 +172,7 @@ emit('hook', {
 
   onApiList,
   onGetApiListParams: () => onGetApiListParams(),
+  onSetDefaultQueryFormData,
 })
 
 const appSetting = useAppStoreSetting()

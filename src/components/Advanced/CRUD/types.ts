@@ -1,4 +1,4 @@
-import type { StringOrNumber } from 'easy-fns-ts'
+import type { NullableRecord, StringOrNumber } from 'easy-fns-ts'
 import type { BaseAPIType } from '@/api/base'
 import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
@@ -69,6 +69,7 @@ export declare namespace WCrud {
       onGetActionType: () => Ref<IActionType>
       onApiList: () => Promise<void>
       onGetApiListParams: () => Ref<IAxios.BaseListParams<T>>
+      onSetDefaultQueryFormData: (newQueryFormData: NullableRecord<T>) => void
     }
   }
 

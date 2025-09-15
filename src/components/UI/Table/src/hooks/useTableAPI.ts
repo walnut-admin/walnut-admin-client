@@ -1,4 +1,4 @@
-import type { StringOrNumber } from 'easy-fns-ts'
+import type { NullableRecord, StringOrNumber } from 'easy-fns-ts'
 
 import type { SorterMultiple } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
@@ -130,6 +130,17 @@ export function useTableAPI<T>(
     done()
   }
 
+  // set default query form data
+  // this will merge the newQueryFormData to current query form data
+  // and commit this change as a default version
+  const onSetDefaultQueryFormData = (newQueryFormData: NullableRecord<T>) => {
+    // set default value to query
+    apiListParams.value.query = Object.assign(apiListParams.value.query!, newQueryFormData)
+
+    // commit change, make this version a default version
+    commitParams()
+  }
+
   // api list init
   const onApiListInit = async () => {
     if (!isFunction(props.value.apiProps?.listApi))
@@ -143,13 +154,7 @@ export function useTableAPI<T>(
       !isUndefined(props.value.queryFormProps)
       && !isUndefined(props.value.queryFormProps?.schemas)
     ) {
-      // set default value to query
-      apiListParams.value.query = Object.assign(apiListParams.value.query!, extractDefaultFormDataFromSchemas(
-        props.value.queryFormProps!.schemas!,
-      ))
-
-      // commit change, make this version a default version
-      commitParams()
+      onSetDefaultQueryFormData(extractDefaultFormDataFromSchemas(props.value.queryFormProps!.schemas!))
     }
 
     // handle params.sort default
@@ -231,5 +236,6 @@ export function useTableAPI<T>(
     onApiDelete,
     onApiDeleteMany,
     checkedRowKeys,
+    onSetDefaultQueryFormData,
   }
 }

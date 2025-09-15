@@ -1,4 +1,4 @@
-import type { Recordable, StringOrNumber } from 'easy-fns-ts'
+import type { NullableRecord, Recordable, StringOrNumber } from 'easy-fns-ts'
 
 import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
 import type { HTMLAttributes, VNodeChild } from 'vue'
@@ -66,6 +66,10 @@ export declare namespace WTable {
        */
       onGetApiListParams: () => Ref<IAxios.BaseListParams<T>>
 
+      /**
+       * @description set default query form data
+       */
+      onSetDefaultQueryFormData: (newQueryFormData: NullableRecord<T>) => void
     }
 
     interface WTableInst<T> extends Partial<NDataTableInst>, ExtendInst<T> { }

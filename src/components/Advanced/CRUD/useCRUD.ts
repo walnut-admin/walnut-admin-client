@@ -1,4 +1,4 @@
-import type { StringOrNumber } from 'easy-fns-ts'
+import type { NullableRecord, StringOrNumber } from 'easy-fns-ts'
 import type { WCrud } from './types'
 import type { IModels } from '@/api/models'
 import { isInSetup } from '@/utils/shared'
@@ -28,6 +28,7 @@ export function useCRUD<T extends IModels.Base>(props: WCrud.Hooks.UseCRUD.Props
     onGetActionType: () => wCrudRef.value!.onGetActionType(),
     onApiList: async () => await wCrudRef.value!.onApiList(),
     onGetApiListParams: () => wCrudRef.value!.onGetApiListParams(),
+    onSetDefaultQueryFormData: (newQueryFormData: NullableRecord<T>) => wCrudRef.value!.onSetDefaultQueryFormData(newQueryFormData),
   }
 
   return [register, methods]
