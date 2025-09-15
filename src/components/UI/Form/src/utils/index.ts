@@ -190,8 +190,8 @@ export function generateBaseRules<T>(t: ReturnType<typeof AppI18n>['global']['t'
 }
 
 export function extractDefaultFormDataFromSchemas<T>(schemas: SchemaItem<T>[]) {
-  if (!schemas)
-    return {}
+  if (!schemas || !schemas.length)
+    return {} as T
 
   return Object.fromEntries(
     unref(schemas)
@@ -200,7 +200,7 @@ export function extractDefaultFormDataFromSchemas<T>(schemas: SchemaItem<T>[]) {
         i.formProp!.path as string,
         i?.componentProp?.defaultValue ?? null,
       ]),
-  )
+  ) as T
 }
 
 export const extendedFormPropKeys: (keyof FormProps<Recordable>)[] = [
