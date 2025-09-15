@@ -26,6 +26,8 @@ export async function decryptRouterUrl(value: string) {
   try {
     const appStoreKey = useAppStoreKey()
 
+    await SingletonInitUrlMaskingAesKey()
+
     const cipherBytes = fromUrlSafeBase64(value)
 
     const plaintext = await aesGcmDecrypt(appStoreKey.getUrlMaskingAesKey, cipherBytes)
