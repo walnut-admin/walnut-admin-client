@@ -1,21 +1,25 @@
 <script lang="tsx" setup>
+import type { OptionDataItem } from 'easy-fns-ts'
 import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
 import { localeAPI } from '@/api/system/locale'
-import WBussinessLangSelect from '@/components/Business/LangSelect'
-import { useLangList } from './useLangList'
 
 defineOptions({
   name: 'Locale',
 })
 
-const { langList } = useLangList()
+const appStoreLocale = useAppStoreLocale()
 const localeKey = useRouterQuery('localeKey')
 const langId = useRouterQuery('langId')
 
 // locale unique key
 const key = 'locale'
 const keyField = '_id'
+
+const langList = ref<OptionDataItem[]>([])
+onBeforeMount(async () => {
+  langList.value = await appStoreLocale.onGetLangList()
+})
 
 const [
   register,
@@ -26,6 +30,7 @@ const [
     onDeleteManyConfirm,
     onGetFormData,
     onApiList,
+    onSetDefaultQueryFormData,
   },
 ] = useCRUD<IModels.SystemLocale>({
   baseAPI: localeAPI,
@@ -75,13 +80,18 @@ const [
       // query form schemas
       schemas: [
         {
-          type: 'Base:Render',
+          type: 'Base:Select',
           formProp: {
             path: 'langId',
           },
           componentProp: {
             defaultValue: langId,
-            render: () => (<WBussinessLangSelect v-model={[langId.value, 'value']}></WBussinessLangSelect>),
+            // @ts-expect-error it worked
+            options: langList,
+            clearable: true,
+            onClear() {
+              langId.value = undefined
+            },
           },
         },
 
@@ -229,6 +239,11 @@ const [
       })),
     ]),
   },
+})
+
+watch(langId, (v) => {
+  onSetDefaultQueryFormData({ langId: v || null })
+  onApiList()
 })
 
 onMounted(() => {
