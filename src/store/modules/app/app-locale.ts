@@ -1,7 +1,7 @@
 import type { OptionDataItem, Recordable } from 'easy-fns-ts'
 import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
-import { getLangListAPI } from '@/api/system/lang'
+import { getLangListPublicAPI, langAPI } from '@/api/system/lang'
 import { getI18nMsgAPI } from '@/api/system/locale'
 import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
@@ -56,11 +56,19 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
       return AppI18n().global.messages.value[locale] as Recordable
     },
 
-    async onGetLangList() {
+    async onGetLangListPublic() {
       if (this.getLangList.length)
         return
-      const res = await getLangListAPI()
+      const res = await getLangListPublicAPI()
       this.setLangList(res)
+    },
+
+    async onGetLangList() {
+      const res = await langAPI.list()
+      return res.data.map(i => ({
+        label: i.description!,
+        value: i._id!,
+      }))
     },
 
     onSetLocaleMessages(locale: ValueOfAppConstLocale, backendMsg: Record<string, string>) {

@@ -8,7 +8,7 @@ defineOptions({
 const appStoreLocale = useAppStoreLocale()
 
 onBeforeMount(() => {
-  appStoreLocale.onGetLangList()
+  appStoreLocale.onGetLangListPublic()
 })
 </script>
 
