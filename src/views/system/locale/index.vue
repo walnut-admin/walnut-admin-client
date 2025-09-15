@@ -89,8 +89,8 @@ const [
             // @ts-expect-error it worked
             options: langList,
             clearable: true,
-            onUpdateValue() {
-              onApiList()
+            onUpdateValue(v: string) {
+              v && onApiList()
             },
             onClear() {
               if (langId.value) {
