@@ -8,6 +8,8 @@ import { App, setupApp, setupAppScripts } from './App'
 import { installAppPlugins } from './plugins'
 // unocss
 import 'virtual:uno.css'
+// iconify
+import 'virtual:icon/bundle'
 // LINK https://github.com/unocss/unocss/issues/2127
 import '@unocss/reset/tailwind-compat.css'
 // animate

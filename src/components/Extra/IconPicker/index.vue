@@ -1,14 +1,10 @@
 <script lang="ts" setup>
 import type { InputInst } from 'naive-ui'
 import type { ICompExtraIconPickerProps } from '.'
-
 import { useFormItem } from 'naive-ui/es/_mixins'
-
+import iconList from 'virtual:icon/list'
+import iconSet from 'virtual:icon/set'
 import { mockListApi } from '@/utils/shared'
-// @ts-expect-error build generated files
-import allIcons from '/build/_generated/icon-list.ts'
-// @ts-expect-error build generated files
-import { IconBundleConfig } from '/build/icon/src/config.ts'
 
 defineOptions({
   name: 'WCompExtraIconPicker',
@@ -35,10 +31,10 @@ const loading = ref(false)
 const currentTab = ref(ALL)
 const currentIcon = ref<string>()
 
-const getTabLists = computed(() => [ALL, ...IconBundleConfig.list])
+const getTabLists = computed(() => [ALL, ...iconSet])
 
 const getIconListsWithTab = computed<string[]>(() =>
-  (allIcons as string[]).filter(i =>
+  (iconList as string[]).filter(i =>
     currentTab.value === ALL ? true : i.startsWith(currentTab.value),
   ),
 )
@@ -145,9 +141,9 @@ function onFeedback() {
   currentIcon.value = value.value
 
   // set currentTab
-  currentTab.value = IconBundleConfig.list.find((i: string) =>
+  currentTab.value = iconSet.find((i: string) =>
     value.value?.startsWith(i),
-  )
+  )!
 
   // set current page
   const iconIndex = getIconListsWithTab.value.findIndex(

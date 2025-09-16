@@ -26,11 +26,11 @@
     "demo": "https://www.walnut-admin.com"
   },
   "scripts": {
-    "predev": "esno build/generate/index.ts && npm run icon:dev",
+    "predev": "esno build/generate/index.ts",
     "dev": "vite",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx simple-git-hooks",
-    "prebuild": "esno build/generate/index.ts && npm run icon:prod",
+    "prebuild": "esno build/generate/index.ts",
     "build": "vite build",
     "build:stage": "npm run prebuild && vite build --mode staging",
     "preview": "vite preview --mode production",
@@ -47,8 +47,6 @@
     "check:nm": "node-modules-inspector",
     "deploy:stage": "deploy-cli-service deploy --mode staging",
     "deploy:prod": "deploy-cli-service deploy --mode production",
-    "icon:dev": "esno build/icon dev",
-    "icon:prod": "esno build/icon prod",
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
@@ -147,6 +145,7 @@
     "sharp-ico": "0.1.5",
     "simple-git-hooks": "2.13.1",
     "taze": "19.6.0",
+    "tinyglobby": "0.2.15",
     "tinymce": "8.0.2",
     "ts-json-schema-generator": "2.4.0",
     "typescript": "5.9.2",
