@@ -13,6 +13,7 @@ import { createDevtoolsPlugin } from './devtool'
 import { createDisableDevtoolPlugin } from './disable-devtool'
 import { createGoogleAnalyticsPlugin } from './google-analytics'
 import { createHttpsPlugin } from './https'
+import { createIconifyPlugin } from './iconify'
 import { createImageOptimizerPlugin } from './image-optimizer'
 import { createInfoPlugin } from './info'
 // import { createLegacyPlugin } from './legacy'
@@ -62,6 +63,8 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     // https://github.com/fi3ework/vite-plugin-checker
     createCheckerPlugin(),
 
+    // custom plugin
+    createIconifyPlugin(),
   ]
 
   // https://analytics.google.com

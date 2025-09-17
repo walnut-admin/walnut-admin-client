@@ -1,10 +1,10 @@
 import type { ComponentResolver } from 'unplugin-vue-components/types'
-import fg from 'fast-glob'
+import { globSync } from 'tinyglobby'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 
 function WalnutAdminComponentResolver(): ComponentResolver {
-  const allComponents = fg.sync('src/components/**/**/index.ts', { dot: true })
+  const allComponents = globSync('src/components/**/**/index.ts', { dot: true })
   const componentMap = Object.fromEntries(allComponents.filter(i => !i.includes('utils')).map(i => [i.split('/').slice(-2, -1)[0], i.replace('src', '@')]))
 
   return {

@@ -131,7 +131,6 @@
     "eslint": "9.35.0",
     "eslint-plugin-vue": "10.4.0",
     "esno": "4.8.0",
-    "fast-glob": "3.3.3",
     "is-ci": "4.1.0",
     "javascript-obfuscator": "4.1.1",
     "lint-staged": "16.1.6",
