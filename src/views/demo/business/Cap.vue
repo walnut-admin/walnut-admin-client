@@ -14,17 +14,21 @@ async function onNormalMode() {
 
 async function onInvisible() {
   const token = await compStoreCapJS.refreshCapJSToken()
+  if (!token) {
+    useAppMsgError('refresh cap js token failed')
+    return
+  }
   useAppMsgSuccess(token)
 }
 </script>
 
 <template>
   <WDemoCard title="Cap">
-    <n-button class="mb-2" @click="onNormalMode">
+    <n-button class="mb-2" :loading="compStoreCapJS.loading" @click="onNormalMode">
       Cap Validate
     </n-button>
     <br>
-    <n-button @click="onInvisible">
+    <n-button :loading="compStoreCapJS.loading" @click="onInvisible">
       Cap Invisible Validate
     </n-button>
   </WDemoCard>

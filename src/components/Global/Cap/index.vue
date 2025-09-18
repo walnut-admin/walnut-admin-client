@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-import { authCapApiEndpoint } from '@/api/app/capjs'
+import { securityCapApiEndpoint } from '@/api/security/cap'
 
 defineOptions({
   name: 'WCompGlobalCap',
   inheritAttrs: false,
 })
+
+const closable = ref(false)
 
 const compStoreCapJS = useStoreCompCapJS()
 
@@ -17,18 +19,22 @@ function onCapSolve(e: { detail: { token: string } }) {
     clearTimeout(id)
   }, 1000)
 }
+
+function onCapError() {
+  closable.value = true
+}
 </script>
 
 <template>
   <WModal
-    v-model:show="compStoreCapJS.getShow"
-    :close-on-esc="false"
-    :closable="false"
-    :mask-closable="false"
+    v-model:show="compStoreCapJS.show"
+    :close-on-esc="closable"
+    :closable="closable"
+    :mask-closable="closable"
     :default-button="false"
     :fullscreen="false"
     :title="$t('app.base.cap')"
-    width="330px"
+    width="auto"
   >
     <n-element>
       <div
@@ -44,13 +50,14 @@ function onCapSolve(e: { detail: { token: string } }) {
     --cap-spinner-background-color: var(--n-text-color)"
       >
         <cap-widget
-          id="walnut-admin-cap"
-          :data-cap-api-endpoint="authCapApiEndpoint"
+          :id="compStoreCapJS.getElementId"
+          :data-cap-api-endpoint="securityCapApiEndpoint"
           :data-cap-i18n-verifying-label="$t('comp.cap.verifying')"
           :data-cap-i18n-initial-state="$t('comp.cap.initial')"
           :data-cap-i18n-solved-label="$t('comp.cap.solved')"
           :data-cap-i18n-error-label="$t('comp.cap.error')"
           @solve="onCapSolve"
+          @error="onCapError"
         />
       </div>
     </n-element>

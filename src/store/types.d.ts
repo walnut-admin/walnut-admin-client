@@ -228,6 +228,8 @@ export namespace IStoreComp {
    * comp capjs token state
    */
   export interface CapJS {
+    elementId: string
+    loading: boolean
     inst: Nullable<ICapInst>
     show: boolean
     onSuccess: Nullable<(token: string) => void>

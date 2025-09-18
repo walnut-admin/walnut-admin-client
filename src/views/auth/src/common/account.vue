@@ -2,7 +2,7 @@
 import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
-import { getNeedCapAPI } from '@/api/app/capjs'
+import { getNeedCapAPI } from '@/api/security/cap'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({

@@ -2,10 +2,10 @@ import { AppAxios } from '@/utils/axios'
 
 const { httpUrl } = useAppEnvProxy()
 
-export const authCapApiEndpoint = `${httpUrl}/auth/cap/`
+export const securityCapApiEndpoint = `${httpUrl}/security/cap/`
 
-const authCap = {
-  NEED: '/auth/cap/need',
+const securityCap = {
+  NEED: '/security/cap/need',
 } as const
 
 /**
@@ -13,7 +13,7 @@ const authCap = {
  */
 export function getNeedCapAPI(field: 'userName' | 'emailAddress' | 'phoneNumber', value: string) {
   return AppAxios.get<boolean>({
-    url: authCap.NEED,
+    url: securityCap.NEED,
     params: { field, value },
   })
 }

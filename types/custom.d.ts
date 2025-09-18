@@ -15,7 +15,7 @@ declare global {
   type EChartsOption = import('echarts').EChartsOption
 
   interface ICapInst {
-    new({ apiEndpoint: string }, el?: HTMLElement): { solve: () => Promise<{ token: string }> }
+    new({ apiEndpoint: string }, el?: HTMLElement): { solve: () => Promise<{ success: boolean, token: string }> }
   }
 
   type DeepKeyOf<T> = T extends object
