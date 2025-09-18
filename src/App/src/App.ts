@@ -12,7 +12,7 @@ import { setupSentry } from './scripts/sentry'
 export async function setupApp(app: App) {
   setupStore(app)
 
-  setupI18n(app)
+  await setupI18n(app)
 
   const router = setupRouter(app)
 
