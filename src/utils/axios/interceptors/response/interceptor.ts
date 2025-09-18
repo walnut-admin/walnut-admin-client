@@ -39,6 +39,12 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     return Promise.resolve(data)
   }
 
+  // too many requests
+  if (code === BussinessCodeConst.TOO_MANY_REQUESTS) {
+    useAppMsgError(msg)
+    return Promise.reject(new Error('Too Many Requests'))
+  }
+
   // cap js token refresh (front end only and invisible mode)
   // https://capjs.js.org/guide/invisible.html
   if (code === BussinessCodeConst.CAPJS_TOKEN_EXPIRED) {

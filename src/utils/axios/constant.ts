@@ -7,6 +7,8 @@ export const BussinessCodeConst = {
   CAPJS_TOKEN_EXPIRED: 40111,
   SIGNATURE_EXPIRED: 40113,
 
+  TOO_MANY_REQUESTS: 42900,
+
   DEVICE_NOT_ALLOWED: 40605,
 } as const
 
