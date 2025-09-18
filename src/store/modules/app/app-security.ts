@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 import type { IStoreApp } from '@/store/types'
 import CryptoJS from 'crypto-js'
+import { isUndefined, omitBy } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { rsaPublicKeyAPI } from '@/api/security/rsa'
 import { signAesKeyAPI, signInitialAPI } from '@/api/security/sign'
@@ -113,7 +114,10 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
         .join('&')
 
       // need to manually put the query string params after url
-      const paramsStr = config.params ? `?${AxiosQsParamsSerializer(config.params)}` : ''
+      const cleanParams = omitBy(config.params, isUndefined)
+      const paramsStr = Object.keys(cleanParams).length
+        ? `?${AxiosQsParamsSerializer(cleanParams)}`
+        : ''
       const urlWithParams = `${config.url}${paramsStr}`
 
       // build the raw string for signing
