@@ -16,7 +16,7 @@ useAppReducedMotion()
 // get public setting first
 const appStoreBackendSettings = useAppStoreSettingBackend()
 
-onBeforeMount(appStoreBackendSettings.onInitPublicSettings())
+onBeforeMount(appStoreBackendSettings.onInitPublicSettings)
 </script>
 
 <template>

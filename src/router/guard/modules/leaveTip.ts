@@ -31,7 +31,7 @@ export function createLeaveTipGuard(router: Router) {
       if (!confirmed)
         return { ...from, replace: true }
 
-      window.$loadingBar.start()
+      window.$loadingBar?.start()
       removeEvent()
     }
   })

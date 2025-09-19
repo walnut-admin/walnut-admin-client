@@ -43,7 +43,7 @@ export function useAppRouterPush(info: RouteLocationRaw) {
       useAppMessage().warning(AppI18n().global.t('app.menu.error'))
 
       // finish the loadingbar
-      window.$loadingBar.finish()
+      window.$loadingBar?.finish()
     })
   }
   catch (error) {

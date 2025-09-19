@@ -4,7 +4,7 @@ import type { CSSProperties } from 'vue'
 import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
-import type { ValueOfAppConstDevice, ValueOfAppConstLocale } from '@/const'
+import type { ValueOfAppConstDevice, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
 
 export namespace IStoreApp {
   /**
@@ -270,6 +270,209 @@ export namespace IStoreUser {
   }
 
   /**
+   * User preference state
+   */
+  export interface Preference {
+    app: {
+      /**
+       * @description dark or light
+       * @default false
+       */
+      isDark: boolean
+
+      /**
+       * @description app locale
+       * @default en_US
+       */
+      locale: ValueOfAppConstLocale
+
+      /**
+       * @description for those who cannot see animation viewing the internet
+       * @default false
+       */
+      reducedMotion: boolean
+
+      /**
+       * @description just different css tricks to fit the app in view
+       * @default default
+       */
+      colorMode: ValueOfAppConstColorMode
+
+      /**
+       * @description App Layout
+       * @default left-menu
+       */
+      layout: ValueOfAppConstLayoutMode
+    }
+
+    themes: {
+      light: {
+        /**
+         * @description Primary color for light theme
+         * @default #409eff
+         */
+        primaryColor: string
+
+        /**
+         * @description Info color for light theme
+         * @default #1890ff
+         */
+        infoColor: string
+
+        /**
+         * @description Success color for light theme
+         * @default #52c41a
+         */
+        successColor: string
+
+        /**
+         * @description Warning color for light theme
+         * @default #faad14
+         */
+        warningColor: string
+
+        /**
+         * @description Error color for light theme
+         * @default #f5222d
+         */
+        errorColor: string
+
+        /**
+         * @description Body color for light theme
+         * @default #f8f8f8
+         */
+        bodyColor: string
+
+        /**
+         * @description Inverted color for light theme
+         * @default #2C3E50
+         */
+        invertedColor: string
+      }
+
+      dark: {
+        /**
+         * @description Primary color for dark theme
+         * @default #7cb305
+         */
+        primaryColor: string
+
+        /**
+         * @description Info color for dark theme
+         * @default #0284c7
+         */
+        infoColor: string
+
+        /**
+         * @description Success color for dark theme
+         * @default #10b981
+         */
+        successColor: string
+
+        /**
+         * @description Warning color for dark theme
+         * @default #f59e0b
+         */
+        warningColor: string
+
+        /**
+         * @description Error color for dark theme
+         * @default #ef4444
+         */
+        errorColor: string
+
+        /**
+         * @description Body color for dark theme
+         * @default #202020
+         */
+        bodyColor: string
+
+        /**
+         * @description Inverted color for dark theme
+         * @default #2C3E50
+         */
+        invertedColor: string
+      }
+    }
+
+    header: {
+      /**
+       * @description Invert header colors
+       * @default false
+       */
+      inverted: boolean
+    }
+
+    tabs: {
+      /**
+       * @description Invert tab colors
+       * @default false
+       */
+      inverted: boolean
+
+      /**
+       * @description Show icon in tabs
+       * @default true
+       */
+      showIcon: boolean
+
+      /**
+       * @description Tab style mode
+       * @default card
+       */
+      styleMode: ValueOfAppConstTabStyleMode
+
+      /**
+       * @description Tab close behavior mode
+       * @default all
+       */
+      closeMode: ValueOfAppConstTabCloseMode
+
+      /**
+       * @description Tab affix behavior mode
+       * @default click
+       */
+      affixMode: ValueOfAppConstTabAffixMode
+    }
+
+    breadcrumb: {
+      /**
+       * @description Show icon in breadcrumb
+       * @default false
+       */
+      showIcon: boolean
+
+      /**
+       * @description Show dropdown in breadcrumb items
+       * @default true
+       */
+      showDropdown: boolean
+    }
+
+    menu: {
+      /**
+       * @description Invert menu colors
+       * @default false
+       */
+      inverted: boolean
+
+      /**
+       * @description Menu collapse behavior mode
+       * @default click
+       */
+      collapseMode: ValueOfAppConstCollapseMode
+    }
+
+    footer: {
+      /**
+       * @description Invert footer colors
+       * @default false
+       */
+      inverted: boolean
+    }
+  }
+
+  /**
    * User profile state
    */
   export interface Profile {
@@ -282,4 +485,317 @@ export namespace IStoreUser {
   export interface Scroll {
     scrollEntries: Ref<[string, { top: number, left?: number }][] | null>
   }
+}
+
+export namespace IStoreSetting {
+  /**
+   * Pure front-end developer environment configuration
+   * Contains development debugging, implementation details, configurations that may affect application stability
+   */
+  export interface Dev {
+    app: {
+    /**
+     * @description Keep Alive component, vue features
+     * @default true
+     */
+      keepAlive: boolean
+
+      /**
+       * @description content or wrapper, scrollbar may have part covered in wrapper mode
+       * @default wrapper
+       */
+      scrollMode: ValueOfAppConstScrollMode
+
+      /**
+       * @description Content padding px
+       * @default 4
+       */
+      contentPadding: number
+    }
+
+    logo: {
+    /**
+     * @description DOM element id
+     * @default walnut-admin-logo
+     */
+      id: string
+
+      /**
+       * @description Development debugging visibility control
+       * @default true
+       */
+      status: boolean
+
+      /**
+       * @description True => fixed positioning, false => normal flow
+       * @default true
+       */
+      fixed: boolean
+
+      /**
+       * @description Transition animation name
+       * @default slideLeft
+       */
+      transition: ValueOfAppConstTransitionName
+    }
+
+    header: {
+    /**
+     * @description DOM element id
+     * @default walnut-admin-header
+     */
+      id: string
+
+      /**
+       * @description Development debugging visibility control
+       * @default true
+       */
+      status: boolean
+
+      /**
+       * @description Whether header is fixed
+       * @default true
+       */
+      fixed: boolean
+
+      /**
+       * @description Transition animation name
+       * @default slideUp
+       */
+      transition: ValueOfAppConstTransitionName
+
+      /**
+       * @description Header height
+       * @default 48
+       */
+      height: number
+
+      /**
+       * @description Show header when scrolling up (when not fixed)
+       * @default false
+       */
+      scrollUpShow: boolean
+
+      /**
+       * @description Keep header visible on hover (when scrollUpShow is true)
+       * @default false
+       */
+      liveOnHover: boolean
+    }
+
+    tabs: {
+    /**
+     * @description DOM element id
+     * @default walnut-admin-tabs
+     */
+      id: string
+
+      /**
+       * @description Development debugging visibility control
+       * @default true
+       */
+      status: boolean
+
+      /**
+       * @description True => fixed positioning, false => normal flow
+       * @default true
+       */
+      fixed: boolean
+
+      /**
+       * @description Tab height
+       * @default 36
+       */
+      height: number
+
+      /**
+       * @description Tab item width
+       * @default 120
+       */
+      itemWidth: number
+
+      /**
+       * @description Transition animation name
+       * @default slideUp
+       */
+      transition: ValueOfAppConstTransitionName
+
+      /**
+       * @description Whether to persist tab state
+       * @default true
+       * @deprecated wait for next version
+       */
+      persistent: boolean
+
+      /**
+       * @description Tab item transition animation
+       * @default fadeDown
+       */
+      itemTransition: ValueOfAppConstTransitionName
+
+      /**
+       * @description Show tabs when scrolling up (when not fixed)
+       * @default false
+       */
+      scrollUpShow: boolean
+
+      /**
+       * @description Keep tabs visible on hover (when scrollUpShow is true)
+       * @default false
+       */
+      liveOnHover: boolean
+
+      /**
+       * @description Tab aside utils visibility
+       * @default true
+       */
+      showUtils: boolean
+
+      /**
+       * @description Tab aside utils display mode
+       * @default overflow
+       */
+      utilsMode: ValueOfAppConstTabUtilsShowMode
+
+      /**
+       * @description Tab context menu visibility
+       * @default true
+       */
+      contextMenu: boolean
+
+      /**
+       * @description Tab sortable
+       * @default true
+       */
+      sortable: boolean
+    }
+
+    breadcrumb: {
+    /**
+     * @description DOM element id
+     * @default walnut-admin-breadcrumb
+     */
+      id: string
+
+      /**
+       * @description Development debugging visibility control
+       * @default true
+       */
+      status: boolean
+
+      /**
+       * @description Transition animation name
+       * @default fadeDown
+       */
+      transition: ValueOfAppConstTransitionName
+
+      /**
+       * @description Breadcrumb custom separator
+       * @default >
+       */
+      separator: string
+    }
+
+    menu: {
+      /**
+       * @description DOM element id
+       * @default walnut-admin-menu
+       */
+      id: string
+
+      /**
+       * @description Development debugging visibility control
+       * @default true
+       */
+      status: boolean
+
+      /**
+       * @description Transition animation name
+       * @default slideLeft
+       */
+      transition: ValueOfAppConstTransitionName
+
+      /**
+       * @description Menu item indentation pixels
+       * @default 16
+       */
+      indent: number
+
+      /**
+       * @description When app layout is `left-menu`, menu width
+       * @default 240
+       */
+      width: number
+
+      /**
+       * @description Menu icon size
+       * @default 24
+       */
+      iconSize: number
+
+      /**
+       * @description Show collapse button
+       * @default true
+       */
+      collapseStatus: boolean
+
+      /**
+       * @description Menu collapsed icon size
+       * @default 20
+       */
+      collapsedIconSize: number
+
+      /**
+       * @description When app layout is `left-menu`, menu collapsed width
+       * @default 64
+       */
+      collapsedWidth: number
+
+      /**
+       * @description Enable accordion mode for menu
+       * @default true
+       */
+      accordion: boolean
+    }
+
+    footer: {
+    /**
+     * @description DOM element id
+     * @default walnut-admin-footer
+     */
+      id: string
+
+      /**
+       * @description Development debugging visibility control
+       * @default true
+       */
+      status: boolean
+
+      /**
+       * @description True => fixed positioning, false => normal flow
+       * @default true
+       */
+      fixed: boolean
+
+      /**
+       * @description Transition animation name
+       * @default slideDown
+       */
+      transition: ValueOfAppConstTransitionName
+
+      /**
+       * @description Footer height
+       * @default 28
+       */
+      height: number
+
+      /**
+       * @description Custom footer content
+       * @default Copyright © 2020-present Walnut Admin. All Rights Reserved.
+       */
+      content: string
+    }
+  }
+
+  export interface Scope {}
 }
