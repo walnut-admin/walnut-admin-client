@@ -38,7 +38,7 @@
   - [ ] 000 /* @vue-ignore */ ugly
   - [ ] 111 tsx explict import
   - [x] axios config demo
-  - [ ] 页面中的错误模拟 demo
+  - [x] 页面中的错误模拟 demo
   - [ ] pdf/word/excel/print.js plugin
   - [x] error monitor (sentry?)
   - [x] untyper
@@ -85,7 +85,7 @@
   - [x] tab样式重做
   - [x] 劫持F5事件
   - [ ] 搜索组件
-  - [ ] 99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)
+  - [x] ~~~99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)~~~
 
 - 不知道如何解决的问题
 
