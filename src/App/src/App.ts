@@ -4,6 +4,7 @@ import { setupI18n } from '@/locales'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'
 import { isDev } from '@/utils/constant/vue'
+import { setupAppScripts } from './scripts'
 import { setupSentry } from './scripts/sentry'
 
 /**
@@ -11,6 +12,8 @@ import { setupSentry } from './scripts/sentry'
  */
 export async function setupApp(app: App) {
   setupStore(app)
+
+  await setupAppScripts()
 
   await setupI18n(app)
 

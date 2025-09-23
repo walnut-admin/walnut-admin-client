@@ -29,6 +29,8 @@ export const AppConstPersistKey = {
   // geo ip info, fetch from EXTERNAL_LINKS.GEOIP
   GEO_IP_INFO: 'GEO_IP_INFO',
 
+  DEVICE_ID: 'DEVICE_ID',
+
   // count down
   COUNTDOWN: 'COUNTDOWN_MAP',
 } as const

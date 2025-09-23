@@ -1,6 +1,7 @@
 import type { IStoreApp } from '@/store/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
+import { initialDeviceAPI } from '@/api/system/device'
 import { isDev } from '@/utils/constant/vue'
 import { getCookie } from '@/utils/persistent/Cookie'
 import { useAppStorageSync } from '@/utils/persistent/storage/sync'
@@ -9,10 +10,16 @@ import { store } from '../../pinia'
 
 const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
   state: (): IStoreApp.GeoIP => ({
-    geoInfo: useAppStorageSync<Partial<IStoreApp.GeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { expire: 24 * 60 * 60 * 1000 }),
+    // 30 days
+    deviceId: useAppStorageSync<string>(AppConstPersistKey.DEVICE_ID, '', { expire: 30 * 24 * 60 * 60 * 1000 }),
+    // 7 days for geo ip cache
+    geoInfo: useAppStorageSync<Partial<IStoreApp.GeoIPInfo>>(AppConstPersistKey.GEO_IP_INFO, {}, { expire: 7 * 24 * 60 * 60 * 1000 }),
   }),
 
   getters: {
+    getDeviceId(state) {
+      return state.deviceId
+    },
     getGeoInfo(state) {
       return state.geoInfo!
     },
@@ -28,6 +35,14 @@ const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
   },
 
   actions: {
+    async setupDeviceId() {
+      if (this.getDeviceId)
+        return
+
+      const res = await initialDeviceAPI()
+      this.deviceId = res.deviceId
+    },
+
     async setupGeoIP() {
       // Development environment with existing cache: return directly
       if (isDev() && this.getIp)

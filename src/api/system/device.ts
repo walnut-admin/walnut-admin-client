@@ -5,9 +5,6 @@ import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
-const appStoreFingerprint = useAppStoreFingerprint()
-const appStoreGeoIP = useAppStoreGeoIP()
-
 export const deviceAPI = new BaseAPI<IModels.SystemDictType>({
   model: 'system',
   section: 'device',
@@ -17,6 +14,9 @@ export const deviceAPI = new BaseAPI<IModels.SystemDictType>({
  * @description initial device
  */
 export async function initialDeviceAPI() {
+  const appStoreFingerprint = useAppStoreFingerprint()
+  const appStoreGeoIP = useAppStoreGeoIP()
+
   return AppAxios.post<IResponseData.System.Device.Initial>({
     url: '/system/device/initial',
     data: {

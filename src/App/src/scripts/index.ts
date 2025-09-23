@@ -1,18 +1,15 @@
 import { setupGoogleAnalytics } from './analytics'
-import { setupDevice } from './device'
-
-const appStoreSecurity = useAppStoreSecurity()
-const appStoreFingerprint = useAppStoreFingerprint()
-const appStoreGeoIP = useAppStoreGeoIP()
 
 export async function setupAppScripts() {
   await setupGoogleAnalytics()
 
+  const appStoreFingerprint = useAppStoreFingerprint()
   await appStoreFingerprint.setupFingerprint()
 
+  const appStoreGeoIP = useAppStoreGeoIP()
   await appStoreGeoIP.setupGeoIP()
+  await appStoreGeoIP.setupDeviceId()
 
-  await setupDevice()
-
+  const appStoreSecurity = useAppStoreSecurity()
   await appStoreSecurity.setupSign()
 }

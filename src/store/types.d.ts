@@ -43,6 +43,7 @@ export namespace IStoreApp {
    * App geo ip state
    */
   export interface GeoIP {
+    deviceId: Ref<string>
     geoInfo: Ref<Nullable<Partial<GeoIPInfo>>>
   }
 

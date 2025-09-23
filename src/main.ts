@@ -4,7 +4,7 @@ import { setupStorageMigrations } from '@/utils/persistent/migrate'
 // TODO build error, did not figure out which plugin conflict
 // import '~console/theme-detect'
 
-import { App, setupApp, setupAppScripts } from './App'
+import { App, setupApp } from './App'
 import { installAppPlugins } from './plugins'
 // unocss
 import 'virtual:uno.css'
@@ -20,8 +20,6 @@ import './assets/styles/main.scss'
 ;
 
 (async () => {
-  await setupAppScripts()
-
   const app = createApp(App)
 
   setupStorageMigrations()
