@@ -77,8 +77,9 @@ export namespace IStoreApp {
    * App lock state
    */
   export interface Lock {
-    isLock: Ref<Nullable<boolean>>
-    lockRoute: Ref<Nullable<LockRoute>>
+    loading: boolean
+    locked: boolean
+    lockRoute: LockRoute
   }
 
   /**

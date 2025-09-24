@@ -5,7 +5,6 @@ import { AppCoreFn1 } from '@/core'
 export function createBeforeEachGuard(router: Router) {
   router.beforeEach(async (to, _from) => {
     const userStoreAuth = useAppStoreUserAuth()
-    const userStoreProfile = useAppStoreUserProfile()
     const appStoreMenu = useAppStoreMenu()
 
     // Paths in `routeWhiteListPath` will enter directly
@@ -27,6 +26,7 @@ export function createBeforeEachGuard(router: Router) {
     if (!userStoreAuth.accessToken)
       return { path: AppAuthPath, replace: true }
 
+    const userStoreProfile = useAppStoreUserProfile()
     // Get user info
     if (isEmpty(userStoreProfile.profile)) {
       // fetch profile
@@ -35,8 +35,9 @@ export function createBeforeEachGuard(router: Router) {
       return to.fullPath
     }
 
-    // Get permission
-    if (isEmpty((appStoreMenu.menus))) {
+    const appStoreLock = useAppStoreLock()
+    // not locked => Get permission
+    if (!appStoreLock.getLocked && isEmpty((appStoreMenu.menus))) {
       // At this step, user has login but didn't got dynamic routes generated
       // Below we call app core fn1 to handle logic
       await AppCoreFn1()

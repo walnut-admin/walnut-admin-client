@@ -94,7 +94,8 @@ export namespace IResponseData {
 
     export interface Profile {
       user: IModels.SystemUser
-      roleNames: string[]
+      locked: boolean
+      lockRoute: IStoreApp.LockRoute
     }
 
     export interface Keys {
@@ -145,6 +146,11 @@ export namespace IResponseData {
         treeWithoutTypeElement: TreeNodeItem<IModels.SystemMenu>[]
         menuActiveNamesOptions: Pick<IModels.SystemMenu, 'title' | 'name'>[]
       }
+    }
+
+    export namespace User {
+      export type Lock = boolean
+      export type Unlock = boolean
     }
   }
 }

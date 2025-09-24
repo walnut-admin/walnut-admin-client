@@ -102,7 +102,7 @@ export function useAppLock() {
         })
       }
       else {
-        appStoreLock.setIsLock(false)
+        appStoreLock.setLocked(false)
         appStoreLock.setLockRoute({})
         removeRoute(AppLockName)
         stopMode()

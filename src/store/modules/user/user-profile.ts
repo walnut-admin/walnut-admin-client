@@ -49,6 +49,12 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     async getProfile() {
       const res = await getUserProfileAPI()
       this.setProfile(res?.user)
+
+      const appStoreLock = useAppStoreLock()
+      // set locked
+      appStoreLock.setLocked(res.locked)
+      // set locked route
+      appStoreLock.setLockRoute(res.lockRoute)
     },
 
     setAvatar(newAvatar: string) {

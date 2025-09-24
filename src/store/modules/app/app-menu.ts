@@ -56,7 +56,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
      * @description go to index menu
      */
     async goIndex() {
-      await useAppRouterPush({ name: this.indexMenuName })
+      await useAppRouterPush({ name: this.indexMenuName, replace: true })
     },
   },
 })

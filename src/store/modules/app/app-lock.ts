@@ -1,65 +1,86 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import type { IStoreApp } from '@/store/types'
-import { clone, isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
+import { lockAPI, unlockAPI } from '@/api/system/user_lock'
+import { AppCoreFn1 } from '@/core'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   state: (): IStoreApp.Lock => ({
-    isLock: useAppStorageSync(AppConstPersistKey.IS_LOCK, false),
-    lockRoute: useAppStorageSync(AppConstPersistKey.LOCK_ROUTE, {}),
+    loading: false,
+    locked: false,
+    lockRoute: {},
   }),
 
   getters: {
-    getLockStatus: state => state.isLock,
+    getLoading: state => state.loading,
+    getLocked: state => state.locked,
     getLockRoute: state => state.lockRoute,
   },
 
   actions: {
-    setIsLock(payload: boolean) {
-      this.isLock = payload
+    setLocked(payload: boolean) {
+      this.locked = payload
     },
 
     setLockRoute(payload: IStoreApp.LockRoute) {
       this.lockRoute = payload
     },
 
+    /**
+     * @description lock
+     */
     async lock(route: Ref<RouteLocationNormalizedLoaded>) {
       const appSetting = useAppStoreSetting()
 
       if (!appSetting.getLockStatus)
         return
 
-      this.setIsLock(true)
+      this.loading = true
 
-      this.setLockRoute({
-        name: route.value.name as string,
-        query: route.value.query,
-        params: route.value.params,
-      })
+      try {
+        await lockAPI({
+          name: route.value.name as string,
+          query: route.value.query,
+          params: route.value.params,
+        })
 
-      await useAppRouterPush({ name: AppLockName })
+        await useAppRouterPush({ name: AppLockName })
+      }
+      finally {
+        this.loading = false
+      }
     },
 
+    /**
+     * @description unlock
+     */
     async unLock() {
       const appSetting = useAppStoreSetting()
 
       if (!appSetting.getLockStatus)
         return
 
-      const appStoreMenu = useAppStoreMenu()
+      this.loading = true
 
-      this.setIsLock(false)
+      try {
+        await unlockAPI()
 
-      const lockRoute = clone(this.getLockRoute)
-      this.setLockRoute({})
+        const userStoreProfile = useAppStoreUserProfile()
+        await userStoreProfile.getProfile()
+        await AppCoreFn1()
 
-      if (isEmpty(lockRoute))
+        await useAppRouterPush(this.getLockRoute)
+      }
+      catch (error) {
+        console.error('unLock error', error)
+        const appStoreMenu = useAppStoreMenu()
         await appStoreMenu.goIndex()
-      else
-        await useAppRouterPush(lockRoute)
+      }
+      finally {
+        this.loading = false
+      }
     },
   },
 })
