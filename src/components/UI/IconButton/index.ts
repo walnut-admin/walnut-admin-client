@@ -7,7 +7,7 @@ export { default } from './index.vue'
 
 export interface ICompUIIconButtonProps extends AllowedComponentProps {
   iconProps?: ICompUIIconProps
-  buttonProps?: ICompUIButtonProps
+  buttonProps?: ICompUIButtonProps & AllowedComponentProps
   tooltip?: boolean
   tooltipMsg?: string | string[]
   tooltipProps?: TooltipProps
