@@ -7,7 +7,7 @@ defineOptions({
   name: 'WCompUIIcon',
 })
 
-const props = withDefaults(defineProps<ICompUIIconProps>(), { inline: true })
+const props = withDefaults(defineProps<ICompUIIconProps>(), { inline: true, height: 20 })
 
 // Variable to store function to cancel loading
 const loader = ref<IconifyIconLoaderAbort>()
