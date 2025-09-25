@@ -4,7 +4,6 @@ import UnlockButton from './components/UnlockButton.vue'
 
 const { level, charging } = useSharedBattery()
 const now = useNow()
-
 const getPercentLevel = computed(() => level.value * 100)
 </script>
 

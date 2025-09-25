@@ -11,6 +11,9 @@ import TheAside from './TheAside'
 const appStoreMenu = useAppStoreMenu()
 const appSetting = useAppStoreSetting()
 
+// lock socket on
+const appStoreLock = useAppStoreLock()
+appStoreLock.lockFromSocket()
 // TODO layout
 // watchEffect(() => {
 //   if (setting.app.layout === AppConstLayoutMode.LEFT_MENU) {
@@ -34,7 +37,6 @@ useAppContentFull()
 useAppTextSelection()
 useAppColorMode()
 useAppHijackF5()
-setupSocket()
 useStarOnGithub()
 
 const mainRef = useTemplateRef('mainRef')

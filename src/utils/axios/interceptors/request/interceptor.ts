@@ -16,7 +16,7 @@ export async function requestInterceptors(config: AxiosRequestConfig) {
   }
 
   // custom headers
-  config.headers['x-language'] = appStoreLocale.locale
+  config.headers['x-language'] = appStoreLocale.getLocale
 
   // fingerprint
   // assign the x-fingerprint header

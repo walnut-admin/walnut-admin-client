@@ -7,6 +7,8 @@ defineOptions({
 })
 
 const appStoreAdapter = useAppStoreAdapter()
+const appStoreLock = useAppStoreLock()
+appStoreLock.unlockFromSocket()
 </script>
 
 <template>

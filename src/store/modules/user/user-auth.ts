@@ -56,6 +56,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description refresh AT and permission after switch role
      */
     async ExcuteAfterSwitchRole() {
+      // destroy socket
+      destroySocket()
+
       const accessToken = await this.GetNewATWithRT()
 
       // remove root route will remove all it's children
@@ -171,7 +174,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       appStoreLock.$reset()
 
       // disconnect socket
-      socketService.destroy()
+      destroySocket()
 
       // send beacon
       sendUserMonitorBeacon({ userId: null, auth: false })

@@ -12,6 +12,10 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
   }),
 
   getters: {
+    getUserId(state) {
+      return state.profile._id
+    },
+
     getDisplayName(): string {
       if (this.profile.nickName)
         return upperFirst(this.profile.nickName)
@@ -55,6 +59,9 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
       appStoreLock.setLocked(res.locked)
       // set locked route
       appStoreLock.setLockRoute(res.lockRoute)
+
+      // setup socket
+      setupSocket()
     },
 
     setAvatar(newAvatar: string) {

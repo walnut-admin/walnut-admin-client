@@ -29,6 +29,32 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     },
 
     /**
+     * @description logic after lock
+     */
+    async logicAfterLock() {
+      await useAppRouterPush({ name: AppLockName })
+    },
+
+    /**
+     * @description lock from socket
+     */
+    async lockFromSocket() {
+      const appStoreFingerprint = useAppStoreFingerprint()
+
+      tryOnMounted(() => {
+        getSocket().on(`lock:lock`, (payload: { fingerprint: string, userId: string }) => {
+          if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
+            this.logicAfterLock()
+          }
+        })
+      })
+
+      tryOnUnmounted(() => {
+        getSocket().off(`lock:lock`)
+      })
+    },
+
+    /**
      * @description lock
      */
     async lock(route: Ref<RouteLocationNormalizedLoaded>) {
@@ -46,11 +72,40 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
           params: route.value.params,
         })
 
-        await useAppRouterPush({ name: AppLockName })
+        await this.logicAfterLock()
       }
       finally {
         this.loading = false
       }
+    },
+
+    /**
+     * @description logic after unlock
+     */
+    async logicAfterUnlock() {
+      const userStoreProfile = useAppStoreUserProfile()
+      await userStoreProfile.getProfile()
+      await AppCoreFn1()
+      await useAppRouterPush(this.getLockRoute)
+    },
+
+    /**
+     * @description unlock from socket
+     */
+    async unlockFromSocket() {
+      const appStoreFingerprint = useAppStoreFingerprint()
+
+      tryOnMounted(() => {
+        getSocket().on(`lock:unlock`, (payload: { fingerprint: string, userId: string }) => {
+          if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
+            this.logicAfterUnlock()
+          }
+        })
+      })
+
+      tryOnUnmounted(() => {
+        getSocket().off(`lock:unlock`)
+      })
     },
 
     /**
@@ -66,12 +121,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
 
       try {
         await unlockAPI()
-
-        const userStoreProfile = useAppStoreUserProfile()
-        await userStoreProfile.getProfile()
-        await AppCoreFn1()
-
-        await useAppRouterPush(this.getLockRoute)
+        await this.logicAfterUnlock()
       }
       catch (error) {
         console.error('unLock error', error)
