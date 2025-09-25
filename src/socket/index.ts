@@ -9,10 +9,7 @@ const path = useProxy ? ws[1] : ws[3]
 
 let socket: Socket | null = null
 
-export function getSocket(): Socket {
-  if (!socket) {
-    throw new Error('Socket not initialized. Call initSocket() first.')
-  }
+export function getSocket(): Socket | null {
   return socket
 }
 
@@ -44,7 +41,7 @@ export function setupSocket() {
     console.error('[Socket] Error:', err)
   })
 
-  socket.on(AppSocketEvents.FORCE_QUIT(), async (payload: { visitor: string, strategy: string }) => {
+  socket.on('force:quit', async (payload: { strategy: string }) => {
     const strategyMap: Recordable = {
       FORCE_IMMEDIATE_SIGNOUT: async () => {
         await useAppStoreUserAuth().Signout()
