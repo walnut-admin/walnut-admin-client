@@ -42,7 +42,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       const appStoreFingerprint = useAppStoreFingerprint()
 
       tryOnMounted(() => {
-        getSocket()?.on(`lock:lock`, (payload: { fingerprint: string, userId: string }) => {
+        getSocket()?.on(AppSocketEvents.LOCK, (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
             this.logicAfterLock()
           }
@@ -50,7 +50,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       })
 
       tryOnUnmounted(() => {
-        getSocket()?.off(`lock:lock`)
+        getSocket()?.off(AppSocketEvents.LOCK)
       })
     },
 
@@ -96,7 +96,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       const appStoreFingerprint = useAppStoreFingerprint()
 
       tryOnMounted(() => {
-        getSocket()?.on(`lock:unlock`, (payload: { fingerprint: string, userId: string }) => {
+        getSocket()?.on(AppSocketEvents.UNLOCK, (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
             this.logicAfterUnlock()
           }
@@ -104,7 +104,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       })
 
       tryOnUnmounted(() => {
-        getSocket()?.off(`lock:unlock`)
+        getSocket()?.off(AppSocketEvents.UNLOCK)
       })
     },
 

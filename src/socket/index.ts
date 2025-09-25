@@ -41,10 +41,10 @@ export function setupSocket() {
     console.error('[Socket] Error:', err)
   })
 
-  socket.on('force:quit', async (payload: { strategy: string }) => {
+  socket.on(AppSocketEvents.FORCE_QUIT, async (payload: { strategy: string }) => {
     const strategyMap: Recordable = {
       FORCE_IMMEDIATE_SIGNOUT: async () => {
-        await useAppStoreUserAuth().Signout()
+        await userStoreAuth.Signout()
       },
       FORCE_COUNTDOWN_MODAL: () => {
         useStoreCompForceQuit().onOpenForceQuitModal()
