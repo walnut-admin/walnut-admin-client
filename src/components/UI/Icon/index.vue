@@ -59,7 +59,7 @@ onUnmounted(() => {
     :height="getSize"
     class="inline-block"
   />
-  <Icon v-else v-bind="props" />
+  <Icon v-else v-bind="props" :height="getSize" :width="getSize" />
 </template>
 
 <style scoped>
