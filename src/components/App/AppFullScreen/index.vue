@@ -21,8 +21,8 @@ withDefaults(defineProps<WAppFullScreenProps>(), {
         <WIcon
           :icon="
             isFullscreen
-              ? 'ant-design:fullscreen-exit-outlined'
-              : 'ant-design:fullscreen-outlined'
+              ? 'mdi:fullscreen-exit'
+              : 'mdi:fullscreen'
           "
           :width="size"
           @click="clickEvent"

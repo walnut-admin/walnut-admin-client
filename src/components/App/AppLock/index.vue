@@ -12,7 +12,5 @@ async function onLock() {
 </script>
 
 <template>
-  <div>
-    <WIcon icon="ant-design:lock-outlined" height="24" :disabled="appStoreLock.getLoading" @click="onLock" />
-  </div>
+  <WIcon icon="mdi:lock-outline" height="24" :disabled="appStoreLock.getLoading" @click="onLock" />
 </template>

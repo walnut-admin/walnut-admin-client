@@ -5,7 +5,5 @@ defineOptions({
 </script>
 
 <template>
-  <div>
-    <WIcon :icon="isDark ? 'carbon:moon' : 'carbon:sun'" width="24" @click="toggleDark" />
-  </div>
+  <WIcon icon="mdi:theme-light-dark" width="24" @click="toggleDark" />
 </template>

@@ -11,7 +11,5 @@ function onClick() {
 </script>
 
 <template>
-  <div @click="onClick">
-    <WIcon icon="ant-design:search-outlined" height="24" />
-  </div>
+  <WIcon icon="mdi:feature-search-outline" height="24" @click="onClick" />
 </template>
