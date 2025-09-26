@@ -13,9 +13,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div>
-    <n-popselect v-model:value="appStoreLocale.locale" :options="appStoreLocale.getLangList as SelectMixedOption[]">
-      <WIcon icon="carbon:language" width="24" />
-    </n-popselect>
-  </div>
+  <n-popselect :value="appStoreLocale.locale" :options="appStoreLocale.getLangList as SelectMixedOption[]" @update:value="appStoreLocale.onLoadMessageNoCahe">
+    <WIcon icon="carbon:language" width="24" />
+  </n-popselect>
 </template>
