@@ -74,7 +74,8 @@ function onShowAside() {
 
           <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" id="walnut-dark" />
 
-          <WDevSettings />
+          <!-- TODO -->
+          <!-- <WDevSettings /> -->
 
           <HeaderDropdown />
         </div>

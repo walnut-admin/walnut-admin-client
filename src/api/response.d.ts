@@ -92,10 +92,11 @@ export namespace IResponseData {
       internalIframeList: { name: string, url: string, cache: boolean }[]
     }
 
+    export type ProfileLockPreference = IModels.SystemUserLockPreference & Pick<IModels.SystemUserDevice, 'locked'>
+
     export interface Profile {
       user: IModels.SystemUser
-      locked: boolean
-      lockRoute: IStoreApp.LockRoute
+      lockPreference: ProfileLockPreference
     }
 
     export interface Keys {

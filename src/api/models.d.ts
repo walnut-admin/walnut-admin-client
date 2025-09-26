@@ -1,5 +1,5 @@
-import type { PromiseFn } from 'easy-fns-ts'
-import type { ValueOfAppConstMenuType } from '@/const'
+import type { PromiseFn, Recordable } from 'easy-fns-ts'
+import type { ValueOfAppConstLockMode, ValueOfAppConstMenuType } from '@/const'
 
 export namespace IModels {
   export interface Base {
@@ -65,6 +65,20 @@ export namespace IModels {
     currentRole?: string
 
     populated_rolesList?: SystemRole[]
+  }
+
+  // system user lock preference
+  export interface SystemUserLockPreference extends Base {
+    lockCrossDevice: boolean
+    lockRoute: Recordable
+    lockMode: ValueOfAppConstLockMode
+    lockIdleSec: number
+    lockSecuritySec: number
+  }
+
+  // system user device
+  export interface SystemUserDevice extends Base {
+    locked: boolean
   }
 
   // system device

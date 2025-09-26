@@ -4,6 +4,7 @@ import type { CSSProperties } from 'vue'
 import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
+import type { IResponseData } from '@/api/response'
 import type { ValueOfAppConstDevice, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
 
 export namespace IStoreApp {
@@ -76,10 +77,8 @@ export namespace IStoreApp {
   /**
    * App lock state
    */
-  export interface Lock {
+  export interface Lock extends IResponseData.Auth.ProfileLockPreference {
     loading: boolean
-    locked: boolean
-    lockRoute: LockRoute
   }
 
   /**

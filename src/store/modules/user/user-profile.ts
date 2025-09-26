@@ -51,14 +51,12 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     },
 
     async getProfile() {
-      const res = await getUserProfileAPI()
-      this.setProfile(res?.user)
+      const { user, lockPreference } = await getUserProfileAPI()
+      this.setProfile(user)
 
       const appStoreLock = useAppStoreLock()
-      // set locked
-      appStoreLock.setLocked(res.locked)
-      // set locked route
-      appStoreLock.setLockRoute(res.lockRoute)
+      // set locked preference`
+      appStoreLock.setLockPreference(lockPreference)
 
       // setup socket
       setupSocket()
