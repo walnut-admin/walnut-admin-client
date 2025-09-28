@@ -16,7 +16,7 @@ const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
 
 const appStoreTab = useAppStoreTab()
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 
 const {
   x,
@@ -78,7 +78,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType
     await useRedirect()
 
   if (key === 'Screen Full') {
-    appSetting.toggleLayout(false)
+    appStoreSettingDev.toggleLayout(false)
   }
 
   if (key === 'Fix') {
@@ -95,7 +95,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType
     try {
       const target = document.getElementById(currentRoute.value.name as string)
 
-      const padding = appSetting.app.contentPadding
+      const padding = appStoreSettingDev.getContentPadding
 
       const dataUrl = await toJpeg(target!, {
         width: target?.scrollWidth as number + padding * 2,
@@ -108,7 +108,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType
         },
       })
 
-      await downloadByBase64(dataUrl, `${currentRoute.value.name as string}-${appSetting.app.scrollMode}`)
+      await downloadByBase64(dataUrl, `${currentRoute.value.name as string}-${appStoreSettingDev.app.scrollMode}`)
     }
     catch (error) {
       console.log(error)
@@ -240,7 +240,6 @@ const options = computed<DropdownOption[]>(() => [
 
 <template>
   <n-dropdown
-    v-if="appSetting.tabs.contextMenu"
     placement="bottom-start"
     trigger="manual"
     size="small"

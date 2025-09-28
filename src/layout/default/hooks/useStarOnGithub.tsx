@@ -6,7 +6,7 @@ import { openExternalLink } from '@/utils/window/open'
 
 export async function useStarOnGithub() {
   const { t } = useAppI18n()
-  const appSetting = useAppStoreSetting()
+  const appStoreSettingDev = useAppStoreSettingDev()
   const naiveStore = useAppStoreNaive()
 
   function onClick() {
@@ -28,7 +28,7 @@ export async function useStarOnGithub() {
     duration: 30000,
     description: t('app.github.desc'),
     containerStyle: {
-      marginTop: `${appSetting.header.height}px`,
+      marginTop: `${appStoreSettingDev.getHeaderHeight}px`,
     },
     content: () => {
       return (

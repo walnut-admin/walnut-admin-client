@@ -4,7 +4,8 @@ import AsideLogo from './logo.vue'
 import AsideMenu from './menu.vue'
 
 const appStoreMenu = useAppStoreMenu()
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 </script>
 
 <template>
@@ -13,10 +14,10 @@ const appSetting = useAppStoreSetting()
     bordered
     collapse-mode="width"
     class="z-2000 h-screen"
-    :width="appSetting.menu.width"
-    :collapsed-width="appSetting.menu.collapsedWidth"
-    :show-trigger="appSetting.getMenuCollapseBuiltInStatus"
-    :inverted="appSetting.getMenuInverted"
+    :width="appStoreSettingDev.getMenuWidth"
+    :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth"
+    :show-trigger="appStoreSettingDev.getMenuCollapseBuiltInStatus"
+    :inverted="userStorePreference.getMenuInverted"
     :native-scrollbar="false"
   >
     <div class="select-none overflow-hidden">
@@ -25,7 +26,7 @@ const appSetting = useAppStoreSetting()
       <AsideMenu />
 
       <MenuCollpaseButton
-        v-if="appSetting.getMenuCollapseButtonStatus"
+        v-if="appStoreSettingDev.getMenuCollapseButtonStatus"
       />
     </div>
   </n-layout-sider>

@@ -1,9 +1,9 @@
 export function useAppReducedMotion() {
-  const appSetting = useAppStoreSetting()
+  const userStorePreference = useAppStoreUserPreference()
   const isReducedMotion = useSharedPreferredReducedMotion()
 
   watch(
-    () => appSetting.app.reducedMotion,
+    () => userStorePreference.getReducedMotion,
     (v) => {
       document.documentElement.setAttribute('reduced-motion', `${v}`)
     },
@@ -13,6 +13,6 @@ export function useAppReducedMotion() {
   )
 
   watchEffect(() => {
-    appSetting.app.reducedMotion = isReducedMotion.value
+    userStorePreference.app.reducedMotion = isReducedMotion.value
   })
 }

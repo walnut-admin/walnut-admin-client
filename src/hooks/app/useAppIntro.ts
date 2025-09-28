@@ -1,17 +1,17 @@
 export function useAppIntro(delay = 1500) {
   const { t } = useAppI18n()
-  const appSetting = useAppStoreSetting()
+  const appStoreSettingDev = useAppStoreSettingDev()
 
   const { onDrive } = useDriver('app-intro', [
     {
-      element: `#${appSetting.menu.id}`,
+      element: `#${appStoreSettingDev.getMenuId}`,
       popover: {
         title: t('app.intro.sider'),
         description: t('app.intro.sider.detail'),
       },
     },
     {
-      element: `#${appSetting.breadcrumb.id}`,
+      element: `#${appStoreSettingDev.getBreadcrumbId}`,
       popover: {
 
         title: t('app.intro.breadcrumb'),
@@ -58,9 +58,8 @@ export function useAppIntro(delay = 1500) {
       },
     },
     {
-      element: `#${appSetting.tabs.id}`,
+      element: `#${appStoreSettingDev.getTabsId}`,
       popover: {
-
         title: t('app.intro.tab'),
         description: t('app.intro.tab.detail'),
       },

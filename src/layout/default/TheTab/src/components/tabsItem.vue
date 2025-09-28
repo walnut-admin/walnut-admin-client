@@ -11,8 +11,9 @@ const { item } = defineProps<{ item: IStoreApp.Tab.Item, index: number }>()
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
 
-const appSetting = useAppStoreSetting()
 const appStoreAdapter = useAppStoreAdapter()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 
 const tabsItem = useTemplateRef('tabsItem')
 const isHovered = useElementHover(tabsItem)
@@ -29,7 +30,7 @@ const getShowAffixedPinIcon = computed(
   () =>
     !appStoreAdapter.isMobile
     && item.meta.affix
-    && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN,
+    && userStorePreference.getTabsAffixMode === AppConstTabAffixMode.PIN,
 )
 
 // only show when tab not affixed and showIcon is true
@@ -37,9 +38,9 @@ const getShowAffixedPinIcon = computed(
 // only show when tab is affixed and affix mode is icon
 const getShowIcon = computed(
   () =>
-    (!item.meta.affix && appSetting.tabs.showIcon)
+    (!item.meta.affix && userStorePreference.getTabsShowIcon)
     || (item.meta.affix
-      && appSetting.tabs.affixMode === AppConstTabAffixMode.ICON),
+      && userStorePreference.getTabsAffixMode === AppConstTabAffixMode.ICON),
 )
 
 // only show when not mobile
@@ -53,7 +54,7 @@ const getShowDot = computed(
   () =>
     !appStoreAdapter.isMobile
     && !item.meta.affix
-    && !appSetting.tabs.showIcon
+    && !userStorePreference.getTabsShowIcon
     && currentRoute.value.name === item.name,
 )
 
@@ -63,8 +64,8 @@ const getShowDot = computed(
 const getShowCloseIcon = computed(
   () =>
     !item.meta.affix
-    && (appSetting.tabs.closeMode === AppConstTabCloseMode.ALWAYS
-      || (appSetting.tabs.closeMode === AppConstTabCloseMode.HOVER
+    && (userStorePreference.getTabsCloseMode === AppConstTabCloseMode.ALWAYS
+      || (userStorePreference.getTabsCloseMode === AppConstTabCloseMode.HOVER
         && getHovered.value)),
 )
 
@@ -75,7 +76,7 @@ const getShowTite = computed(
   () =>
     !item.meta.affix
     || (item.meta.affix
-      && appSetting.tabs.affixMode === AppConstTabAffixMode.PIN),
+      && userStorePreference.getTabsAffixMode === AppConstTabAffixMode.PIN),
 )
 
 // scroll title and real title
@@ -94,7 +95,7 @@ const getIcon = computed(() => {
   <div
     ref="tabsItem"
     :style="{
-      width: getShowTite ? `${appSetting.tabs.itemWidth}px` : 'max-content',
+      width: getShowTite ? `${appStoreSettingDev.tabs.itemWidth}px` : 'max-content',
     }"
     class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 gap-x-2 px-2 py-1"
     :class="[

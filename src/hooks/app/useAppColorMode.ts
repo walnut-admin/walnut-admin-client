@@ -1,9 +1,9 @@
 export function useAppColorMode() {
-  const appSetting = useAppStoreSetting()
+  const userStorePreference = useAppStoreUserPreference()
   const appColorMode = useSharedColorMode()
 
   watch(
-    () => appSetting.app.colorMode,
+    () => userStorePreference.getColorMode,
     (v) => {
       appColorMode.value = v
     },

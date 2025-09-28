@@ -115,10 +115,10 @@ emits('hook', {
 })
 
 // min/max height
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 const formCardRef = useTemplateRef<HTMLDivElement>('formCardRef')
 const { height } = useElementSize(formCardRef)
-const getTableHeight = computed(() => `calc(${appSetting.getCalcContentHeightWithPadding} - ${height.value}px - 185px)`)
+const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentHeightWithPadding} - ${height.value}px - 185px)`)
 </script>
 
 <template>

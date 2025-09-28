@@ -9,8 +9,9 @@ defineOptions({
 
 const [DefineIframe, ReuseIframe] = createReusableTemplate<{ item: IStoreApp.Tab.Iframe }>()
 
-const appSetting = useAppStoreSetting()
+const appSettingScope = useAppStoreSettingScope()
 const appStoreTab = useAppStoreTab()
+const { currentRoute } = useAppRouter()
 
 const getIframeList = computed(() =>
   appStoreTab.iframeList.filter(e =>
@@ -23,10 +24,10 @@ const TransitionWrapper = defineComponent({
     item: { type: Object as PropType<IStoreApp.Tab.Iframe>, required: true },
   },
   setup(props) {
-    return () => appSetting.getTransition
+    return () => appSettingScope.getTransitionName(currentRoute.value)
       ? (
           <WTransition
-            transition-name={appSetting.getTransition}
+            transition-name={appSettingScope.getTransitionName(currentRoute.value)}
             mode="out-in"
             appear
           >

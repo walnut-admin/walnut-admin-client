@@ -175,11 +175,11 @@ emit('hook', {
   onSetDefaultQueryFormData,
 })
 
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 </script>
 
 <template>
-  <div :style="{ width: appSetting.getCalcContentWidthWithPadding }">
+  <div :style="{ width: appStoreSettingDev.getCalcContentWidthWithPadding }">
     <!-- @vue-generic {T} -->
     <WTable @hook="registerTable" />
 

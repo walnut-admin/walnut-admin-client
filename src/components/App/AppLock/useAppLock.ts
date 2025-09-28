@@ -7,7 +7,6 @@ export function useAppLock() {
 
   const { currentRoute, addRoute, removeRoute } = useAppRouter()
   const appStoreLock = useAppStoreLock()
-  const appSetting = useAppStoreSetting()
 
   function stopMode() {
     modeScope?.stop()
@@ -32,7 +31,7 @@ export function useAppLock() {
     modeScope = effectScope()
     modeScope.run(() => {
       watch(
-        () => appSetting.app.lockIdleSeconds,
+        () => appStoreLock.getLockIdleSec,
         (seconds) => {
           if (!seconds)
             return
@@ -55,7 +54,7 @@ export function useAppLock() {
   function setupSecurityMode() {
     modeScope = effectScope()
     modeScope.run(() => {
-      const { idle } = useIdle(15 * 1000)
+      const { idle } = useIdle(appStoreLock.getLockSecuritySec * 1000)
       const isVisible = useDocumentVisibility()
       const isPageLeave = usePageLeave()
 
@@ -70,7 +69,7 @@ export function useAppLock() {
       }, { debounce: 200 })
 
       watch(isVisible, async (v) => {
-        if (!v && appSetting.app.lockMode === AppConstLockMode.SECURITY)
+        if (!v && appStoreLock.getLockMode === AppConstLockMode.SECURITY)
           await tryLock()
       })
     })
@@ -91,14 +90,14 @@ export function useAppLock() {
   }
 
   watch(
-    () => appSetting.getLockStatus,
+    () => appStoreLock.getEnable,
     (enabled) => {
       if (enabled) {
         lockScope = effectScope()
         lockScope.run(() => {
           addRoute(AppLockRoute)
 
-          watch(() => appSetting.app.lockMode, setupLockMode, { immediate: true })
+          watch(() => appStoreLock.getLockMode, setupLockMode, { immediate: true })
         })
       }
       else {

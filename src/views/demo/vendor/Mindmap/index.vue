@@ -7,7 +7,7 @@ defineOptions({
   name: 'MindmapDemo',
 })
 
-const appStoreSettings = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 
 const options: Omit<Options, 'el'> = {
   editable: true,
@@ -273,6 +273,6 @@ const data: MindElixirData = {
 
 <template>
   <div>
-    <WMindmap :data="data" :options="options" :style="{ width: appStoreSettings.getCalcContentWidthWithPadding, height: appStoreSettings.getCalcContentHeightWithPadding }" />
+    <WMindmap :data="data" :options="options" :style="{ width: appStoreSettingDev.getCalcContentWidthWithPadding, height: appStoreSettingDev.getCalcContentHeightWithPadding }" />
   </div>
 </template>

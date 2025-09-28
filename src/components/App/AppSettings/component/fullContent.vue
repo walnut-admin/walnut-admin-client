@@ -3,16 +3,16 @@ defineOptions({
   name: 'WAppSettingsExitFullContent',
 })
 
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 
 useEventListener('keydown', async (e) => {
   if (e.key === 'Escape') {
-    appSetting.toggleLayout(true)
+    appStoreSettingDev.toggleLayout(true)
   }
 })
 
 function onExitFullContent() {
-  appSetting.toggleLayout(true)
+  appStoreSettingDev.toggleLayout(true)
 }
 </script>
 

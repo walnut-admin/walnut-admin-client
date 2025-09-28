@@ -1,6 +1,6 @@
 import { getMergedTheme } from '@/App/src/naive/src/theme'
 
-const appSetting = useAppStoreSetting()
+const userStorePreference = useAppStoreUserPreference()
 const isReducedMotion = useSharedPreferredReducedMotion()
 
 export const modalColor = computed(
@@ -8,5 +8,5 @@ export const modalColor = computed(
 )
 
 export const getCanAnimate = computed(
-  () => isReducedMotion.value && appSetting.app.reducedMotion as boolean,
+  () => isReducedMotion.value && userStorePreference.getReducedMotion as boolean,
 )

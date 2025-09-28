@@ -31,9 +31,9 @@ const useAppStoreTabInside = defineStore(StoreKeys.APP_TAB, {
 
     // get tab name list that should not appear
     getTabBlackListName() {
-      const appSetting = useAppStoreSetting()
+      const appStoreLock = useAppStoreLock()
 
-      return appSetting.getLockStatus
+      return appStoreLock.getEnable
         ? tabBlackListName.concat(AppLockName)
         : AppLockName
     },

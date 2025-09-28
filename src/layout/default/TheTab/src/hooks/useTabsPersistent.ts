@@ -6,10 +6,10 @@ export function useTabsPersistent() {
   let scope: EffectScope
 
   const appStoreTab = useAppStoreTab()
-  const appSetting = useAppStoreSetting()
+  const appStoreSettingDev = useAppStoreSettingDev()
 
   watch(
-    () => appSetting.tabs.persistent,
+    () => appStoreSettingDev.getTabsPersistent,
     (v) => {
       if (v) {
         scope = effectScope()

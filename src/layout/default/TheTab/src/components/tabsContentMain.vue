@@ -5,7 +5,8 @@ import { getTabsContext } from '../hooks/useTabsContext'
 import TabsItem from './tabsItem.vue'
 
 const appStoreTab = useAppStoreTab()
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 
 const sortableRef = useTemplateRef<HTMLDivElement>('sortableRef')
 
@@ -21,7 +22,7 @@ const { start, stop } = useSortable(sortableRef, appStoreTab.tabs, {
 })
 
 watchEffect(() => {
-  if (appSetting.tabs.sortable)
+  if (appStoreSettingDev.getTabsSortable)
     start()
 
   else
@@ -30,9 +31,9 @@ watchEffect(() => {
 
 const AppConstTabStyleModeInside = AppConstTabStyleMode
 
-const isCardType = computed(() => appSetting.tabs.styleMode === AppConstTabStyleModeInside.CARD)
-const isFlexType = computed(() => appSetting.tabs.styleMode === AppConstTabStyleModeInside.FLEX)
-const isRoundType = computed(() => appSetting.tabs.styleMode === AppConstTabStyleModeInside.ROUND)
+const isCardType = computed(() => userStorePreference.getTabsStyleMode === AppConstTabStyleModeInside.CARD)
+const isFlexType = computed(() => userStorePreference.getTabsStyleMode === AppConstTabStyleModeInside.FLEX)
+const isRoundType = computed(() => userStorePreference.getTabsStyleMode === AppConstTabStyleModeInside.ROUND)
 
 const {
   scrollRef,
@@ -73,7 +74,7 @@ function onMouseUp(e: MouseEvent, name: string) {
     ref="scrollRef"
     x-scrollable
     :x-step="50"
-    :height="`${appSetting.tabs.height}px`"
+    :height="`${appStoreSettingDev.getTabsHeight}px`"
     :scrollbar="false"
     :width="getTabsWidth"
     @scroll="onCloseCtxMenu"
@@ -88,7 +89,7 @@ function onMouseUp(e: MouseEvent, name: string) {
         },
       ]"
     >
-      <WTransition appear :transition-name="appSetting.tabs.itemTransition" group>
+      <WTransition appear :transition-name="appStoreSettingDev.getTabsItemTransition" group>
         <div
           v-for="(item, index) in appStoreTab.tabs"
           :key="item.name"
@@ -97,14 +98,14 @@ function onMouseUp(e: MouseEvent, name: string) {
             $route.name === item.name && 'text-primary',
 
             /* card */
-            isCardType && !appSetting.app.reducedMotion && 'hvr-sweep-to-right',
+            isCardType && !userStorePreference.getReducedMotion && 'hvr-sweep-to-right',
             isCardType
               && $route.name === item.name
               && 'bg-primary !text-bodyColor',
 
             /* flex */
             isFlexType
-              && !appSetting.app.reducedMotion
+              && !userStorePreference.getReducedMotion
               && 'hvr-underline-from-left',
             isFlexType
               && $route.name === item.name
@@ -113,7 +114,7 @@ function onMouseUp(e: MouseEvent, name: string) {
             /* round */
             isRoundType
               && `${
-                !appSetting.app.reducedMotion ? 'hvr-round-corners' : ''
+                !userStorePreference.getReducedMotion ? 'hvr-round-corners' : ''
               } rounded border-0.5 border-solid border-primaryHover`,
             isRoundType && $route.name === item.name && 'rounded-2xl',
 

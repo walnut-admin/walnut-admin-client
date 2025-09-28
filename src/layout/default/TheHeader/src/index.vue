@@ -3,10 +3,12 @@ import HeaderBreadCrumb from './breadcrumb.vue'
 import HeaderCollapse from './collapse.vue'
 import HeaderDropdown from './dropdown.vue'
 
-const appSetting = useAppStoreSetting()
 const appStoreAdapter = useAppStoreAdapter()
 const appStoreMenu = useAppStoreMenu()
 const appStoreBackendSettings = useAppStoreSettingBackend()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
+const appStoreLock = useAppStoreLock()
 
 const { title: AppTitle } = useAppEnvTitle()
 
@@ -18,15 +20,15 @@ function onShowAside() {
 </script>
 
 <template>
-  <WTransition appear :transition-name="appSetting.getHeaderTransition">
+  <WTransition appear :transition-name="appStoreSettingDev.getHeaderTransition">
     <n-layout-header
-      v-if="appSetting.getHeaderShow"
-      :id="appSetting.getHeaderId"
+      v-if="appStoreSettingDev.getHeaderShow"
+      :id="appStoreSettingDev.getHeaderId"
       bordered
-      :inverted="appSetting.getHeaderInverted"
+      :inverted="userStorePreference.getHeaderInverted"
       :style="{
         zIndex: 999,
-        height: `${appSetting.header.height}px`,
+        height: `${appStoreSettingDev.getHeaderHeight}px`,
       }"
     >
       <div
@@ -38,7 +40,7 @@ function onShowAside() {
             v-if="appStoreAdapter.isMobile"
             src="/logo.png"
             :alt="`${AppTitle} Logo`"
-            class="m-1 h-9 w-9"
+            class="h-9"
             @click="onShowAside"
           >
 
@@ -57,25 +59,22 @@ function onShowAside() {
           ]"
         >
           <WAppFullScreen
-            v-if="appStoreBackendSettings.getFullScreenEnabled && !appStoreAdapter.isMobile && appSetting.header.fullscreen"
-            id="walnut-fullscreen"
+            v-if="appStoreBackendSettings.getFullScreenEnabled && !appStoreAdapter.isMobile "
+            id="walnut-admin-fullscreen"
             :is-fullscreen="isFullscreen"
             :click-event="toggle"
           />
 
-          <WAppLock v-if="appSetting.getLockStatus" id="walnut-lock" />
+          <WAppLock v-if="appStoreLock.getEnable" id="walnut-admin-lock" />
 
           <WAppSearch
-            v-if="appStoreBackendSettings.getSearchEnabled && appSetting.header.search"
-            id="walnut-search"
+            v-if="appStoreBackendSettings.getSearchEnabled"
+            id="walnut-admin-search"
           />
 
-          <WAppLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" id="walnut-locale" />
+          <WAppLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" id="walnut-admin-locale" />
 
-          <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" id="walnut-dark" />
-
-          <!-- TODO -->
-          <!-- <WDevSettings /> -->
+          <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" id="walnut-admin-dark" />
 
           <HeaderDropdown />
         </div>

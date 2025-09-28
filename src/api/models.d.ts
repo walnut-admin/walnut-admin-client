@@ -1,5 +1,6 @@
 import type { PromiseFn, Recordable } from 'easy-fns-ts'
-import type { ValueOfAppConstLockMode, ValueOfAppConstMenuType } from '@/const'
+import type { WatermarkProps } from 'naive-ui'
+import type { ValueOfAppConstLockMode, ValueOfAppConstMenuType, ValueOfAppConstTransitionName } from '@/const'
 
 export namespace IModels {
   export interface Base {
@@ -25,6 +26,9 @@ export namespace IModels {
     activeIcon?: string
     position?: boolean
     leaveTip?: boolean
+    hijackRefresh?: boolean
+    transitionName?: ValueOfAppConstTransitionName
+    watermark?: WatermarkProps
   }
 
   // system menu

@@ -70,14 +70,6 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return state.app.lockStatus
     },
 
-    getScrollModeIsContent(state) {
-      return state.app.scrollMode === AppConstScrollMode.CONTENT
-    },
-
-    getScrollModeIsWrapper(state) {
-      return state.app.scrollMode === AppConstScrollMode.WRAPPER
-    },
-
     // Logo
     getLogoId(state) {
       return state.logo.id

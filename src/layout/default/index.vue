@@ -9,7 +9,8 @@ import TheScrollWrapper from './scrollWrapper.vue'
 import TheAside from './TheAside'
 
 const appStoreMenu = useAppStoreMenu()
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const appSettingScope = useAppStoreSettingScope()
 
 // lock socket on
 const appStoreLock = useAppStoreLock()
@@ -42,12 +43,12 @@ useStarOnGithub()
 
 <template>
   <n-layout has-sider>
-    <TheAside v-if="appSetting.getMenuAdapterStatus" />
+    <TheAside v-if="appStoreSettingDev.getMenuAdapterStatus" />
 
     <n-drawer
       v-else
       v-model:show="appStoreMenu.getShowAside"
-      :width="`${appSetting.menu.width}px`"
+      :width="`${appStoreSettingDev.getMenuWidth}px`"
       placement="left"
       :native-scrollbar="false"
     >
@@ -56,7 +57,7 @@ useStarOnGithub()
 
     <div
       class="h-screen"
-      :style="{ width: `calc(100vw - ${appSetting.getMenuWidth}px)` }"
+      :style="{ width: `calc(100vw - ${appStoreSettingDev.getMenuWidth}px)` }"
     >
       <n-layout-content
         bordered
@@ -64,12 +65,12 @@ useStarOnGithub()
         :content-style="{ height: '100%' }"
         class="relative h-full w-full"
       >
-        <TheScrollContent v-if="appSetting.getScrollModeIsContent" />
-        <TheScrollWrapper v-else-if="appSetting.getScrollModeIsWrapper" />
+        <TheScrollContent v-if="appStoreSettingDev.getScrollModeIsContent" />
+        <TheScrollWrapper v-else-if="appStoreSettingDev.getScrollModeIsWrapper" />
       </n-layout-content>
 
       <WAppSettings />
-      <TheAppWatermark />
+      <TheAppWatermark v-if="appSettingScope.getWatermarkStatus" />
       <TheAppGlobalComponents />
     </div>
   </n-layout>

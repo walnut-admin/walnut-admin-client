@@ -13,7 +13,8 @@ import { useTabsPersistent } from './hooks/useTabsPersistent'
 
 import { useTabsUtils } from './hooks/useTabsUtils'
 
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 const appStoreAdapter = useAppStoreAdapter()
 
 const { scrollRef, isOverflow, onScrollToCurrentTab, onUpdateOverflow }
@@ -22,16 +23,16 @@ const { scrollRef, isOverflow, onScrollToCurrentTab, onUpdateOverflow }
 const getShowUtils = computed(
   () =>
     !appStoreAdapter.isMobile
-    && appSetting.tabs.showUtils
-    && (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.ALWAYS
-      || (appSetting.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
+    && appStoreSettingDev.tabs.showUtils
+    && (appStoreSettingDev.tabs.utilsMode === AppConstTabUtilsShowMode.ALWAYS
+      || (appStoreSettingDev.tabs.utilsMode === AppConstTabUtilsShowMode.OVERFLOW
         && isOverflow.value)),
 )
 
 const getTabsWidth = computed(() =>
   appStoreAdapter.isMobile
     ? '100vw'
-    : `calc(100vw - ${appSetting.getMenuWidth}px - ${getShowUtils.value ? '120px' : ''})`,
+    : `calc(100vw - ${appStoreSettingDev.getMenuWidth}px - ${getShowUtils.value ? '120px' : ''})`,
 )
 
 const {
@@ -79,13 +80,13 @@ setTabsContext({
 </script>
 
 <template>
-  <WTransition appear :transition-name="appSetting.getTabsTrasition">
+  <WTransition appear :transition-name="appStoreSettingDev.getTabsTransition">
     <n-layout-header
-      v-if="appSetting.getTabsShow"
-      :id="appSetting.getTabsId"
+      v-if="appStoreSettingDev.getTabsShow"
+      :id="appStoreSettingDev.getTabsId"
       bordered
-      :inverted="appSetting.getTabsInverted"
-      :style="{ zIndex: 999, height: `${appSetting.tabs.height}px` }"
+      :inverted="userStorePreference.getTabsInverted"
+      :style="{ zIndex: 999, height: `${appStoreSettingDev.getTabsHeight}px` }"
     >
       <div class="h-full hstack justify-between">
         <!-- left utils -->
@@ -102,7 +103,7 @@ setTabsContext({
         </WTransition>
 
         <!-- tabs contextmenu -->
-        <TabsContextMenu />
+        <TabsContextMenu v-if="appStoreSettingDev.getTabsContextMenu" />
 
         <!-- dev tools -->
         <TabsDevTools />

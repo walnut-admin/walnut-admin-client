@@ -4,7 +4,7 @@ defineOptions({
   defaultView: false,
 })
 
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 
 const values = ref({
   areaValue1: null,
@@ -36,7 +36,7 @@ const values = ref({
 </script>
 
 <template>
-  <WDemoCard title="Area Cascader with endpoint support" :style="{ width: appSetting.getCalcContentWidthWithPadding }">
+  <WDemoCard title="Area Cascader with endpoint support" :style="{ width: appStoreSettingDev.getCalcContentWidthWithPadding }">
     <WJSON :value="values" />
 
     <n-divider />

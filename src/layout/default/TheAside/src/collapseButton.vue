@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const appStoreMenu = useAppStoreMenu()
-const appStoreSettings = useAppStoreSetting()
+const userStorePreference = useAppStoreUserPreference()
 
 function onToogleCollapse() {
   appStoreMenu.setCollapse(!appStoreMenu.getCollapse)
@@ -14,7 +14,7 @@ function onToogleCollapse() {
     size="large"
     class="bg-base-color absolute bottom-0 w-full py-1"
     :style="{
-      backgroundColor: appStoreSettings.menu.inverted
+      backgroundColor: userStorePreference.getMenuInverted
         ? 'var(--inverted-color)'
         : 'transparent',
     }"

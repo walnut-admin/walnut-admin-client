@@ -6,7 +6,7 @@ defineOptions({
   name: 'AppSettings',
 })
 
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 
 const contentFull = useRouterQuery('full')
 </script>
@@ -26,8 +26,12 @@ const contentFull = useRouterQuery('full')
     />
 
     <template #menu>
-      <n-float-button v-if="appSetting.getIsLayoutHidden && !contentFull">
+      <n-float-button v-if="appStoreSettingDev.getIsLayoutHidden && !contentFull">
         <AppSettingExitFullContent />
+      </n-float-button>
+
+      <n-float-button>
+        <WDevSettings />
       </n-float-button>
 
       <n-float-button>

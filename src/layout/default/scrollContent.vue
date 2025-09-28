@@ -12,26 +12,26 @@ defineOptions({
   name: 'TheScrollContent',
 })
 
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 
 const { scrollWrapper, top, bottom, directionTop, y } = useScrollWrapper()
 
-const { targetRef: headerRef, targetShow: headerShow } = useFixedTopScroll('headerRef', toRefs(appSetting.header), { top, y, directionTop })
-const { targetRef: tabsRef, targetShow: tabsShow } = useFixedTopScroll('tabsRef', toRefs(appSetting.tabs), { top, y, directionTop })
+const { targetRef: headerRef, targetShow: headerShow } = useFixedTopScroll('headerRef', toRefs(appStoreSettingDev.header), { top, y, directionTop })
+const { targetRef: tabsRef, targetShow: tabsShow } = useFixedTopScroll('tabsRef', toRefs(appStoreSettingDev.tabs), { top, y, directionTop })
 
 watchEffect(() => {
-  headerShow.value = appSetting.getHeaderShow
-    ? top.value || appSetting.getHeaderFixed
+  headerShow.value = appStoreSettingDev.getHeaderShow
+    ? top.value || appStoreSettingDev.getHeaderFixed
     : false
 })
 
 watchEffect(() => {
-  tabsShow.value = appSetting.getTabsShow
-    ? top.value || appSetting.getTabsFixed
+  tabsShow.value = appStoreSettingDev.getTabsShow
+    ? top.value || appStoreSettingDev.getTabsFixed
     : false
 })
 
-const getFooterShow = computed(() => bottom.value || appSetting.getFooterFixed)
+const getFooterShow = computed(() => bottom.value || appStoreSettingDev.getFooterFixed)
 
 // shit code but fix the problem
 watch(() => getFooterShow.value, async (v) => {
@@ -60,17 +60,17 @@ watch(() => getFooterShow.value, async (v) => {
         :id="String($route.name)"
         x-scrollable
         :style="{
-          width: appSetting.getCalcContentWidth,
-          height: `calc(100vh - ${headerShow ? appSetting.header.height : 0}px - ${tabsShow ? appSetting.tabs.height : 0}px - ${getFooterShow ? appSetting.footer.height : 0}px)`,
+          width: appStoreSettingDev.getCalcContentWidth,
+          height: appStoreSettingDev.getCalcContentHeight,
         }"
       >
         <div
           :id="`${String($route.name)}-content`"
           class="relative h-full w-full"
           :style="{
-            width: appSetting.getCalcContentWidth,
-            padding: $route.meta.ternal === 'internal' ? 0 : `${appSetting.app.contentPadding}px`,
-            height: $route.meta.ternal === 'internal' ? appSetting.getCalcContentHeight : 'initial',
+            width: appStoreSettingDev.getCalcContentWidth,
+            padding: $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}px`,
+            height: $route.meta.ternal === 'internal' ? appStoreSettingDev.getCalcContentHeight : 'initial',
           }"
         >
           <TheContent />

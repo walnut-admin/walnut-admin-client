@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 </script>
 
 <template>
-  <WTransition appear :transition-name="appSetting.getFooterTransition">
+  <WTransition appear :transition-name="appStoreSettingDev.getFooterTransition">
     <n-layout-footer
-      v-if="appSetting.getFooterShow"
-      :id="appSetting.getFooterId"
+      v-if="appStoreSettingDev.getFooterShow"
+      :id="appStoreSettingDev.getFooterId"
       bordered
-      :inverted="appSetting.getFooterInverted"
+      :inverted="userStorePreference.getFooterInverted"
       :style="{
         zIndex: 999,
-        height: `${appSetting.footer.height}px`,
+        height: `${appStoreSettingDev.getFooterHeight}px`,
       }"
     >
       <div class="h-full flex items-center justify-center whitespace-nowrap">
-        {{ appSetting.footer.content }}
+        {{ appStoreSettingDev.getFooterContent }}
       </div>
     </n-layout-footer>
   </WTransition>

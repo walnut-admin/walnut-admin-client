@@ -2,16 +2,15 @@ import type { App } from 'vue'
 import type { I18n, Locale } from 'vue-i18n'
 import { createI18n } from 'vue-i18n'
 
-const appStoreLocale = useAppStoreLocale()
-
 const i18n = createI18n({
   legacy: false,
-  locale: appStoreLocale.getLocale,
+  locale: {} as Locale,
   messages: {},
 })
 
 export async function setupI18n(app: App) {
   app.use(i18n)
+  const appStoreLocale = useAppStoreLocale()
   await appStoreLocale.onLoadMessageCahe(appStoreLocale.getLocale)
 }
 

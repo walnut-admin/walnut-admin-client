@@ -18,7 +18,8 @@ interface MenuMeta {
 const appStoreMenu = useAppStoreMenu()
 const appStoreTab = useAppStoreTab()
 const appStoreAdapter = useAppStoreAdapter()
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
@@ -73,7 +74,7 @@ watch(
     if (!paths)
       return
 
-    if (appSetting.menu.accordion) {
+    if (appStoreSettingDev.getMenuAccordion) {
       expandedKeys.value = (paths as IModels.SystemMenu[]).map(i => i.name!)
     }
     else {
@@ -129,31 +130,31 @@ function onNodeProps(option: MenuOption) {
 </script>
 
 <template>
-  <WTransition ap-ppear :transition-name="appSetting.getMenuTransition">
+  <WTransition ap-ppear :transition-name="appStoreSettingDev.getMenuTransition">
     <WScrollbar
-      v-if="appSetting.getMenuShow"
+      v-if="appStoreSettingDev.getMenuShow"
       height="100%"
       class="transition-all"
       :class="[{
-        'pb-8': appSetting.getMenuCollapseButtonStatus,
-        'absolute': appSetting.getLogoFixed,
+        'pb-8': appStoreSettingDev.getMenuCollapseButtonStatus,
+        'absolute': appStoreSettingDev.getLogoFixed,
       }]"
       :style="{
         paddingTop:
-          `${appSetting.getLogoShow && appSetting.getLogoFixed
-            ? appSetting.header.height
+          `${appStoreSettingDev.getLogoShow && appStoreSettingDev.getLogoFixed
+            ? appStoreSettingDev.header.height
             : 0}px`,
       }"
     >
       <n-menu
-        :id="appSetting.getMenuId"
+        :id="appStoreSettingDev.getMenuId"
         v-model:expanded-keys="expandedKeys"
-        :inverted="appSetting.getMenuInverted"
-        :collapsed-width="appSetting.menu.collapsedWidth"
-        :accordion="appSetting.menu.accordion"
-        :collapsed-icon-size="appSetting.menu.collapsedIconSize"
-        :icon-size="appSetting.menu.iconSize"
-        :indent="appSetting.menu.indent"
+        :inverted="userStorePreference.getMenuInverted"
+        :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth"
+        :accordion="appStoreSettingDev.getMenuAccordion"
+        :collapsed-icon-size="appStoreSettingDev.getMenuCollapsedIconSize"
+        :icon-size="appStoreSettingDev.getMenuIconSize"
+        :indent="appStoreSettingDev.getMenuIndent"
         :options="getMenuOptions"
         :collapsed="appStoreMenu.getCollapse"
         :value="getCurrentMenuName"

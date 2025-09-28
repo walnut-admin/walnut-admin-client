@@ -12,7 +12,8 @@ import { getTheme } from '@/App/src/naive/src/theme'
 import WIcon from '@/components/UI/Icon'
 
 const appStoreMenu = useAppStoreMenu()
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 
 const { t } = useAppI18n()
 const { currentRoute } = useAppRouter()
@@ -53,7 +54,7 @@ function getDropdownOptions(arr?: TreeNodeItem<IModels.SystemMenu>[]): DropdownO
       ({
         key: i.name,
         label: t(i.title as string),
-        icon: appSetting.breadcrumb.showIcon
+        icon: userStorePreference.getBreadcrumbShowIcon
           ? () => <WIcon icon={currentRoute.value.name === i.name ? i.meta?.activeIcon ?? i.icon! : i.icon!} height="20"></WIcon>
           : null,
         children: getDropdownOptions(i.children),
@@ -69,26 +70,26 @@ async function onDropdownSelect(key: string) {
 <template>
   <DefineBase v-slot="{ item }">
     <div class="flex flex-row flex-nowrap items-center">
-      <WIcon v-if="appSetting.breadcrumb.showIcon" :icon="item.meta?.activeIcon ?? item.icon!" height="20" class="mr-1" />
+      <WIcon v-if="userStorePreference.getBreadcrumbShowIcon" :icon="item.meta?.activeIcon ?? item.icon!" height="20" class="mr-1" />
 
       {{ $t(item.title!) }}
     </div>
   </DefineBase>
 
-  <WTransition appear :transition-name="appSetting.getBreadcrumbTransition">
+  <WTransition appear :transition-name="appStoreSettingDev.getBreadcrumbTransition">
     <n-config-provider
-      :theme="(!isDark && appSetting.header.inverted)
+      :theme="(!isDark && userStorePreference.getHeaderInverted)
         || isDark
         ? darkTheme
         : null"
     >
       <n-breadcrumb
-        v-if="appSetting.getBreadcrumbShow"
-        :id="appSetting.getBreadcrumbId" :separator="appSetting.breadcrumb.separator"
+        v-if="appStoreSettingDev.getBreadcrumbShow"
+        :id="appStoreSettingDev.getBreadcrumbId" :separator="appStoreSettingDev.getBreadcrumbSeparator"
       >
         <n-breadcrumb-item v-for="item in getChildren" :key="item._id">
           <n-config-provider
-            v-if="appSetting.breadcrumb.showDropdown"
+            v-if="userStorePreference.getBreadcrumbShowDropdown"
             :theme="getTheme"
           >
             <n-dropdown show-arrow :options="getDropdownOptions(item.children)" @select="onDropdownSelect">
@@ -96,7 +97,7 @@ async function onDropdownSelect(key: string) {
             </n-dropdown>
           </n-config-provider>
 
-          <WTransition v-else appear :transition-name="appSetting.getBreadcrumbTransition" :duration="500">
+          <WTransition v-else appear :transition-name="appStoreSettingDev.getBreadcrumbTransition" :duration="500">
             <ReuseBase :item="item" />
           </WTransition>
         </n-breadcrumb-item>

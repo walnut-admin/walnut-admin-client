@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const appSetting = useAppStoreSetting()
+const appStoreSettingDev = useAppStoreSettingDev()
 const appStoreMenu = useAppStoreMenu()
 const appStoreAdapter = useAppStoreAdapter()
 
@@ -17,7 +17,7 @@ function onClick() {
 <template>
   <WTransition appear transition-name="slide-up">
     <WIcon
-      v-if="appSetting.getMenuCollapseIconStatus"
+      v-if="appStoreSettingDev.getMenuCollapseIconStatus"
       :icon="
         appStoreMenu.getCollapse
           ? 'ant-design:menu-fold-outlined'

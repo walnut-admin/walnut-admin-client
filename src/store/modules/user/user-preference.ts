@@ -55,7 +55,72 @@ const useAppStoreUserPreferenceInside = defineStore(StoreKeys.USER_PREFERENCE, {
     },
   }),
 
-  getters: {},
+  getters: {
+    // app
+    getLocale(state) {
+      return state.app.locale
+    },
+    getIsDark(state): boolean {
+      return state.app.isDark
+    },
+    getReducedMotion(state): boolean {
+      return state.app.reducedMotion
+    },
+    getColorMode(state) {
+      return state.app.colorMode
+    },
+    getLayout(state) {
+      return state.app.layout
+    },
+
+    // themes
+    getDarkTheme(state) {
+      return state.themes.dark
+    },
+    getLightTheme(state) {
+      return state.themes.light
+    },
+
+    // header
+    getHeaderInverted(state): boolean {
+      return state.header.inverted
+    },
+
+    // tabs
+    getTabsInverted(state): boolean {
+      return state.tabs.inverted
+    },
+    getTabsShowIcon(state): boolean {
+      return state.tabs.showIcon
+    },
+    getTabsStyleMode(state) {
+      return state.tabs.styleMode
+    },
+    getTabsCloseMode(state) {
+      return state.tabs.closeMode
+    },
+    getTabsAffixMode(state) {
+      return state.tabs.affixMode
+    },
+    // breadcrumb
+    getBreadcrumbShowIcon(state): boolean {
+      return state.breadcrumb.showIcon
+    },
+    getBreadcrumbShowDropdown(state): boolean {
+      return state.breadcrumb.showDropdown
+    },
+    // menu
+    getMenuInverted(state): boolean {
+      return state.menu.inverted
+    },
+    getMenuCollapseMode(state) {
+      return state.menu.collapseMode
+    },
+    // footer
+    getFooterInverted(state): boolean {
+      return state.footer.inverted
+    },
+  },
 
   actions: {},
 })

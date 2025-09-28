@@ -10,6 +10,7 @@ import { store } from '../../pinia'
 
 const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   state: (): IStoreApp.Lock => ({
+    enable: true,
     loading: false,
     locked: false,
     lockRoute: {},
@@ -20,11 +21,11 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   }),
 
   getters: {
+    getEnable: state => state.enable,
     getLoading: state => state.loading,
     getLockCrossDevice: state => state.lockCrossDevice,
     getLocked: state => state.locked,
     getLockRoute: state => state.lockRoute,
-    // TODO below 3 config not implement yet
     getLockMode: state => state.lockMode,
     getLockIdleSec: state => state.lockIdleSec,
     getLockSecuritySec: state => state.lockSecuritySec,
@@ -75,6 +76,9 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      * @description lock from socket
      */
     async lockFromSocket() {
+      if (!this.getEnable) {
+        return
+      }
       const appStoreFingerprint = useAppStoreFingerprint()
 
       tryOnMounted(() => {
@@ -96,10 +100,9 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      * @description lock
      */
     async lock(route: Ref<RouteLocationNormalizedLoaded>) {
-      const appSetting = useAppStoreSetting()
-
-      if (!appSetting.getLockStatus)
+      if (!this.getEnable) {
         return
+      }
 
       this.loading = true
 
@@ -131,6 +134,10 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      * @description unlock from socket
      */
     async unlockFromSocket() {
+      if (!this.getEnable) {
+        return
+      }
+
       const appStoreFingerprint = useAppStoreFingerprint()
 
       tryOnMounted(() => {
@@ -152,10 +159,9 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      * @description unlock
      */
     async unLock() {
-      const appSetting = useAppStoreSetting()
-
-      if (!appSetting.getLockStatus)
+      if (!this.getEnable) {
         return
+      }
 
       this.loading = true
 

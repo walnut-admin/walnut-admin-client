@@ -16,7 +16,7 @@ const chartId = ref(`echarts-${genString(8)}`)
 const chartInst = shallowRef<echarts.ECharts>()
 
 const appStoreLocale = useAppStoreLocale()
-const appStoreSettings = useAppStoreSetting()
+const userStorePreference = useAppStoreUserPreference()
 
 const getSkinName = computed(() => (isDark.value ? 'dark' : undefined))
 
@@ -54,10 +54,10 @@ function onInit() {
     isDark.value
       ? Object.assign(props.option, {
           backgroundColor: 'transparent',
-          animation: !appStoreSettings.app.reducedMotion,
+          animation: !userStorePreference.getReducedMotion,
         })
       : Object.assign(props.option, {
-          animation: !appStoreSettings.app.reducedMotion,
+          animation: !userStorePreference.getReducedMotion,
         }),
   )
 }

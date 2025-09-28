@@ -1,11 +1,11 @@
 import type { Nullable, OptionDataItem, Recordable, TreeNodeItem } from 'easy-fns-ts'
-import type { MessageReactive, NotificationPlacement, NotificationReactive } from 'naive-ui'
+import type { MessageReactive, NotificationPlacement, NotificationReactive, WatermarkProps } from 'naive-ui'
 import type { CSSProperties } from 'vue'
 import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
 import type { IResponseData } from '@/api/response'
-import type { ValueOfAppConstDevice, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
+import type { ValueOfAppConstBasicMode, ValueOfAppConstDevice, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
 
 export namespace IStoreApp {
   /**
@@ -79,6 +79,7 @@ export namespace IStoreApp {
    */
   export interface Lock extends IResponseData.Auth.ProfileLockPreference {
     loading: boolean
+    enable: boolean
   }
 
   /**
@@ -798,5 +799,41 @@ export namespace IStoreSetting {
     }
   }
 
-  export interface Scope {}
+  export interface Scope {
+    hijackRefresh: {
+      /**
+       * @description Whether to hijack the refresh action and use redirect to refresh the current route
+       * @default true
+       */
+      status: boolean
+
+      hijack: boolean
+
+      mode: ValueOfAppConstBasicMode
+    }
+
+    watermark: {
+      /**
+       * @description Whether to show watermark on use or not
+       * @default true
+       */
+      status: boolean
+
+      mode: ValueOfAppConstBasicMode
+
+      config: WatermarkProps
+    }
+
+    transition: {
+      /**
+       * @description Whether to show transition animation or not
+       * @default true
+       */
+      status: boolean
+
+      mode: ValueOfAppConstBasicMode
+
+      name: ValueOfAppConstTransitionName
+    }
+  }
 }
