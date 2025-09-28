@@ -16,7 +16,6 @@
     "hijackRefresh": false,
     "colorMode": "default",
     "reducedMotion": false,
-    "backToTopMode": "builtin",
     "scrollMode": "wrapper"
   },
   "themes": {

@@ -232,20 +232,6 @@ const [register] = useForm<typeof appRelatives>({
     {
       type: 'Base:Select',
       formProp: {
-        path: 'backToTopMode',
-      },
-      componentProp: {
-        clearable: true,
-        options: Object.values(AppConstBackToTopMode).map(i => ({
-          value: i,
-          label: i,
-        })),
-      },
-    },
-
-    {
-      type: 'Base:Select',
-      formProp: {
         path: 'scrollMode',
       },
       componentProp: {

@@ -14,7 +14,7 @@ defineOptions({
 
 const appSetting = useAppStoreSetting()
 
-const { scrollWrapper, top, bottom, directionTop, y, onScrollToTop } = useScrollWrapper()
+const { scrollWrapper, top, bottom, directionTop, y } = useScrollWrapper()
 
 const { targetRef: headerRef, targetShow: headerShow } = useFixedTopScroll('headerRef', toRefs(appSetting.header), { top, y, directionTop })
 const { targetRef: tabsRef, targetShow: tabsShow } = useFixedTopScroll('tabsRef', toRefs(appSetting.tabs), { top, y, directionTop })
@@ -43,8 +43,6 @@ watch(() => getFooterShow.value, async (v) => {
     })
   }
 }, { immediate: true })
-
-defineExpose({ onScrollToTop })
 </script>
 
 <template>

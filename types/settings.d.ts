@@ -1,5 +1,4 @@
 import type {
-  ValueOfAppConstBackToTopMode,
   ValueOfAppConstBasicMode,
   ValueOfAppConstCollapseMode,
   ValueOfAppConstColorMode,
@@ -143,13 +142,6 @@ interface AppSettingsForApp {
    * @default false
    */
   reducedMotion: boolean
-
-  /**
-   * DX config
-   * standalone or built in float setting buttons
-   * @default builtin
-   */
-  backToTopMode: ValueOfAppConstBackToTopMode
 
   /**
    * DX config

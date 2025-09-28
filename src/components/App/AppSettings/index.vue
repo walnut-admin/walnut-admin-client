@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import AppSettingBackToTop from './component/backToTop.vue'
 import AppSettingsForm from './component/form/index.vue'
 import AppSettingExitFullContent from './component/fullContent.vue'
 
@@ -7,15 +6,9 @@ defineOptions({
   name: 'AppSettings',
 })
 
-const emits = defineEmits<{ backToTop: [] }>()
-
 const appSetting = useAppStoreSetting()
 
 const contentFull = useRouterQuery('full')
-
-function onBackToTop() {
-  emits('backToTop')
-}
 </script>
 
 <template>
@@ -39,10 +32,6 @@ function onBackToTop() {
 
       <n-float-button>
         <AppSettingsForm />
-      </n-float-button>
-
-      <n-float-button v-if="!appSetting.getBackToTopIsStandalone">
-        <AppSettingBackToTop @back-to-top="onBackToTop" />
       </n-float-button>
     </template>
   </n-float-button>

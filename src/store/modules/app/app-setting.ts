@@ -70,10 +70,6 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
       return state.app.lockStatus
     },
 
-    getBackToTopIsStandalone(state) {
-      return state.app.backToTopMode === AppConstBackToTopMode.STANDALONE
-    },
-
     getScrollModeIsContent(state) {
       return state.app.scrollMode === AppConstScrollMode.CONTENT
     },

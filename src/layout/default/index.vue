@@ -38,11 +38,6 @@ useAppTextSelection()
 useAppColorMode()
 useAppHijackF5()
 useStarOnGithub()
-
-const mainRef = useTemplateRef('mainRef')
-function onBackToTop() {
-  mainRef.value?.onScrollToTop()
-}
 </script>
 
 <template>
@@ -69,11 +64,11 @@ function onBackToTop() {
         :content-style="{ height: '100%' }"
         class="relative h-full w-full"
       >
-        <TheScrollContent v-if="appSetting.getScrollModeIsContent" ref="mainRef" />
-        <TheScrollWrapper v-else-if="appSetting.getScrollModeIsWrapper" ref="mainRef" />
+        <TheScrollContent v-if="appSetting.getScrollModeIsContent" />
+        <TheScrollWrapper v-else-if="appSetting.getScrollModeIsWrapper" />
       </n-layout-content>
 
-      <WAppSettings @back-to-top="onBackToTop" />
+      <WAppSettings />
       <TheAppWatermark />
       <TheAppGlobalComponents />
     </div>
