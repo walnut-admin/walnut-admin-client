@@ -1,22 +1,30 @@
 import type { WatermarkProps } from 'naive-ui'
-import type { RouteLocationNormalized } from 'vue-router'
+import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import type { ValueOfAppConstTransitionName } from '@/const'
 import type { IStoreSetting } from '@/store/types'
 import { defineStore } from 'pinia'
+import { getPrivateSettingsAPI } from '@/api/app/setting'
+import { patchRouter } from '@/router/utils/patch'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
   state: (): IStoreSetting.Scope => ({
+    initialized: false,
+    maskUrl: {
+      status: true,
+      mode: AppConstBasicMode.GLOBAL,
+      value: true,
+    },
     hijackRefresh: {
       status: true,
       mode: AppConstBasicMode.GLOBAL,
-      hijack: true,
+      value: true,
     },
     watermark: {
       status: true,
       mode: AppConstBasicMode.GLOBAL,
-      config: {
+      value: {
         content: 'Walnut Admin',
         cross: true,
         fullscreen: true,
@@ -33,19 +41,31 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
     transition: {
       status: true,
       mode: AppConstBasicMode.GLOBAL,
-      name: AppConstTransitionName.FADE,
+      value: AppConstTransitionName.FADE,
     },
   }),
 
   getters: {
+    getMaskUrlStatus: state => state.maskUrl.status,
+    getMaskUrlValue: (state) => {
+      return (route: RouteRecordRaw | RouteLocationNormalized): boolean | undefined => {
+        if (state.maskUrl.mode === AppConstBasicMode.GLOBAL)
+          return state.maskUrl.value
+
+        if (state.maskUrl.mode === AppConstBasicMode.SCOPE) {
+          return route?.meta?.maskUrl ?? state.maskUrl.value
+        }
+      }
+    },
+
     getHijackRefreshStatus: state => state.hijackRefresh.status,
     getHijackRefresh: (state) => {
       return (route: RouteLocationNormalized): boolean | undefined => {
         if (state.hijackRefresh.mode === AppConstBasicMode.GLOBAL)
-          return true
+          return state.hijackRefresh.value
 
         if (state.hijackRefresh.mode === AppConstBasicMode.SCOPE) {
-          return route.meta?.hijackRefresh ?? false
+          return route?.meta?.hijackRefresh ?? state.hijackRefresh.value
         }
       }
     },
@@ -54,10 +74,10 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
     getWatermarkConfig: (state) => {
       return (route: RouteLocationNormalized): WatermarkProps | undefined => {
         if (state.watermark.mode === AppConstBasicMode.GLOBAL)
-          return state.watermark.config
+          return state.watermark.value
 
         if (state.watermark.mode === AppConstBasicMode.SCOPE) {
-          return route.meta?.watermark ?? state.watermark.config
+          return route?.meta?.watermark ?? state.watermark.value
         }
       }
     },
@@ -66,16 +86,26 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
     getTransitionName: (state) => {
       return (route: RouteLocationNormalized): ValueOfAppConstTransitionName | undefined => {
         if (state.watermark.mode === AppConstBasicMode.GLOBAL)
-          return state.transition.name
+          return state.transition.value
 
         if (state.transition.mode === AppConstBasicMode.SCOPE) {
-          return route.meta?.transitionName ?? state.transition.name
+          return route?.meta?.transition ?? state.transition.value
         }
       }
     },
   },
 
-  actions: {},
+  actions: {
+    async onInitPrivateSettings() {
+      if (this.initialized)
+        return
+
+      this.initialized = true
+      const res = await getPrivateSettingsAPI()
+      this.$patch(res)
+      patchRouter(AppRouter)
+    },
+  },
 })
 
 const useAppStoreSettingScopeOutside = () => useAppStoreSettingScopeInside(store)

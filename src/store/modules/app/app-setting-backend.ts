@@ -53,6 +53,7 @@ const useAppStoreSettingBackendInside = defineStore(
     },
 
     actions: {
+      // TODO refactor
       async onInitPublicSettings() {
         if (!isEmpty(this.auth) || !isEmpty(this.frontend)) {
           return

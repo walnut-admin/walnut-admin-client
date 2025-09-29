@@ -27,32 +27,33 @@ function maskDynamicPath(plain: string) {
     : `/${encryptedPath.join('')}`
 }
 
-const appSetting = useAppStoreSetting()
-
 export function patchRouter(router: Router) {
-  if (!appSetting.app.urlMasking) {
-    return
-  }
-
   // Save the original methods
   const rawAddRoute = router.addRoute.bind(router)
+
+  const appSettingScope = useAppStoreSettingScope()
 
   // Intercept addRoute
   router.addRoute = function (...args: any[]) {
     let [parentName, route] = args as [NonNullable<RouteRecordNameGeneric>, RouteRecordRaw]
+
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(route)) {
+      return rawAddRoute(parentName, route)
+    }
+
     // Support two calling forms
     if (args.length === 1) {
       route = args[0]
     }
     // Encrypt path
     if (route.path) {
-      route.path = maskDynamicPath(route.path)
+      route.path = appSettingScope.getMaskUrlValue(route) ? maskDynamicPath(route.path) : route.path
     }
     // Recursively process children
     if (route.children) {
       route.children.forEach(async (child) => {
         if (child.path)
-          child.path = maskDynamicPath(route.path)
+          child.path = appSettingScope.getMaskUrlValue(route) ? maskDynamicPath(child.path) : child.path
       })
     }
     return rawAddRoute(parentName, route)

@@ -26,8 +26,11 @@ export namespace IModels {
     activeIcon?: string
     position?: boolean
     leaveTip?: boolean
+
+    // scope meta
+    maskUrl?: boolean
+    transition?: ValueOfAppConstTransitionName
     hijackRefresh?: boolean
-    transitionName?: ValueOfAppConstTransitionName
     watermark?: WatermarkProps
   }
 

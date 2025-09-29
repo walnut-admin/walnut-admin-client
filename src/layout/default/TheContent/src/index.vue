@@ -14,7 +14,7 @@ const getKeepAliveInclude = computed(() => {
   <Suspense>
     <template #default>
       <router-view v-slot="{ Component, route }">
-        <WTransition v-if="appSettingScope.getTransitionName(route)" :transition-name="appSettingScope.getTransitionName(route)" mode="out-in" appear>
+        <WTransition v-if="appSettingScope.getTransitionStatus" :transition-name="appSettingScope.getTransitionName(route)" mode="out-in" appear>
           <keep-alive
             v-if="appStoreSettingDev.getKeepAlive"
             :include="getKeepAliveInclude"

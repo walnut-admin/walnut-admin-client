@@ -18,10 +18,11 @@ async function urlQueryDecrypt(v: string) {
 }
 
 export function createRouteQueryEncryptGuard(router: Router) {
-  const appSetting = useAppStoreSetting()
+  const appSettingScope = useAppStoreSettingScope()
 
   router.beforeEach(async (to, _from) => {
-    if (!appSetting.app.urlMasking)
+    // functional status || check maskUrl real value
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
       return true
 
     // 1. Split query parameters
@@ -55,7 +56,11 @@ export function createRouteQueryEncryptGuard(router: Router) {
   })
 
   router.beforeResolve(async (to) => {
-    if (appSetting.app.urlMasking && to.query._e) {
+    // functional status || check maskUrl real value
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
+      return true
+
+    if (to.query._e) {
       const query = await urlQueryDecrypt(to.query._e as string)
       if (query) {
         const queryObj = JSON.parse(query)

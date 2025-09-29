@@ -17,14 +17,13 @@ async function urlParamDecrypt(v: string) {
 }
 
 export function createRouteParamEncryptGuard(router: Router) {
-  const appSetting = useAppStoreSetting()
+  const appSettingScope = useAppStoreSettingScope()
 
   // beforeEach
   router.beforeEach(async (to, _from) => {
-    // normal params
-    if (!appSetting.app.urlMasking) {
+    // functional status || check maskUrl real value
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
       return true
-    }
 
     // no name => refresh page
     // to.name redirect
@@ -47,10 +46,9 @@ export function createRouteParamEncryptGuard(router: Router) {
 
   // beforeResolve
   router.beforeResolve(async (to) => {
-    // normal params
-    if (!appSetting.app.urlMasking) {
+    // functional status || check maskUrl real value
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
       return true
-    }
 
     // to.name redirect
     if (to.name === AppRedirectName)

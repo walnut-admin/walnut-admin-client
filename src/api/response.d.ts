@@ -1,7 +1,7 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 import type { RouteRecordRaw } from 'vue-router'
 import type { IModels } from './models'
-import type { IStoreApp } from '@/store/types'
+import type { IStoreApp, IStoreSetting } from '@/store/types'
 
 export namespace IResponseData {
   export interface BackendDeps {
@@ -74,7 +74,9 @@ export namespace IResponseData {
       }
     }
 
-    export type Setting = IStoreApp.SettingBackend
+    export type SettingPublic = IStoreApp.SettingBackend
+
+    export type SettingPrivate = IStoreSetting.Scope
   }
 
   export namespace Auth {

@@ -800,6 +800,20 @@ export namespace IStoreSetting {
   }
 
   export interface Scope {
+    initialized: boolean
+
+    maskUrl: {
+      /**
+       * @description Whether to mask the URL or not
+       * @default true
+       */
+      status: boolean
+
+      mode: ValueOfAppConstBasicMode
+
+      value: boolean
+    }
+
     hijackRefresh: {
       /**
        * @description Whether to hijack the refresh action and use redirect to refresh the current route
@@ -807,9 +821,9 @@ export namespace IStoreSetting {
        */
       status: boolean
 
-      hijack: boolean
-
       mode: ValueOfAppConstBasicMode
+
+      value: boolean
     }
 
     watermark: {
@@ -821,7 +835,7 @@ export namespace IStoreSetting {
 
       mode: ValueOfAppConstBasicMode
 
-      config: WatermarkProps
+      value: WatermarkProps
     }
 
     transition: {
@@ -833,7 +847,7 @@ export namespace IStoreSetting {
 
       mode: ValueOfAppConstBasicMode
 
-      name: ValueOfAppConstTransitionName
+      value: ValueOfAppConstTransitionName
     }
   }
 }

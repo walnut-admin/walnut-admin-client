@@ -3,27 +3,34 @@ import { urlQueryEncrypt } from '@/router/guard/modules/encrypt/querys'
 export function useRouterQuery(path: string, defaultValue?: string) {
   const route = useAppRoute()
   const router = useAppRouter()
-  const appSetting = useAppStoreSetting()
+  const appSettingScope = useAppStoreSettingScope()
 
   /**
    * Get plaintext query value
    */
   const getResolvedValue = () => {
-    let val: string | undefined
-    if (appSetting.app.urlMasking) {
-      val = (route.meta?._resolvedQuerys ?? {})[path]
-    }
-    else {
-      val = (route.query[path] ?? route.params[path]) as string | undefined
-    }
-    return val ?? defaultValue
+    // functional status || check maskUrl real value
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(route))
+      return route.query[path]
+
+    return (route.meta?._resolvedQuerys ?? {})[path] ?? defaultValue
   }
 
   /**
    * Set plaintext query value
    */
   const setResolvedValue = async (val?: string) => {
-    if (appSetting.app.urlMasking) {
+    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(route)) {
+      // In normal mode, directly write plaintext query
+      router.replace({
+        ...router.currentRoute.value,
+        query: {
+          ...router.currentRoute.value.query,
+          [path]: val,
+        },
+      })
+    }
+    else {
       // 1. Get currently decrypted query
       const resolved = { ...(route.meta?._resolvedQuerys ?? {}) }
 
@@ -43,16 +50,6 @@ export function useRouterQuery(path: string, defaultValue?: string) {
         ...router.currentRoute.value,
         query: {
           _e: encryptedQuery,
-        },
-      })
-    }
-    else {
-      // In normal mode, directly write plaintext query
-      router.replace({
-        ...router.currentRoute.value,
-        query: {
-          ...router.currentRoute.value.query,
-          [path]: val,
         },
       })
     }

@@ -6,6 +6,7 @@ export function createBeforeEachGuard(router: Router) {
   router.beforeEach(async (to, _from) => {
     const userStoreAuth = useAppStoreUserAuth()
     const appStoreMenu = useAppStoreMenu()
+    const appSettingScope = useAppStoreSettingScope()
 
     // Paths in `routeWhiteListPath` will enter directly
     if (routeWhiteListPath.includes(to.path)) {
@@ -34,6 +35,9 @@ export function createBeforeEachGuard(router: Router) {
       // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards
       return to.fullPath
     }
+
+    // Get private settings right after profile fetch
+    await appSettingScope.onInitPrivateSettings()
 
     const appStoreLock = useAppStoreLock()
     // not locked => Get permission
