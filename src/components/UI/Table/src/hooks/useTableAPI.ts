@@ -211,7 +211,7 @@ export function useTableAPI<T>(
     }
   }
 
-  onMounted(async () => {
+  useKeepAliveEffect(async () => {
     // Step 1
     // handle initial query form data
     await onApiListInit()
