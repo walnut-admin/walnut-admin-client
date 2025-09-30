@@ -1,5 +1,4 @@
 import type { IStoreApp } from '@/store/types'
-import { isEmpty } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { getPublicSettingsAPI } from '@/api/app/setting'
 import { StoreKeys } from '../../constant'
@@ -15,54 +14,47 @@ const useAppStoreSettingBackendInside = defineStore(
 
     getters: {
       getAccountEnabled(state) {
-        return +state.auth.account! === 1
+        return state.auth.account
       },
 
       getEmailEnabled(state) {
-        return +state.auth.email! === 1
+        return state.auth.email
       },
 
       getPhoneEnabled(state) {
-        return +state.auth.phone! === 1
+        return state.auth.phone
       },
 
       getQrcodeEnabled(state) {
-        return +state.auth.qrcode! === 1
+        return state.auth.qrcode
       },
 
       getGiteeEnabled(state) {
-        return +state.auth.gitee! === 1
+        return state.auth.gitee
       },
 
       getGitHubEnabled(state) {
-        return +state.auth.github! === 1
+        return state.auth.github
       },
 
       getFullScreenEnabled(state) {
-        return +state.frontend.fullScreen! === 1
+        return state.frontend.fullScreen
       },
       getSearchEnabled(state) {
-        return +state.frontend.search! === 1
+        return state.frontend.search
       },
       getDarkEnabled(state) {
-        return +state.frontend.dark! === 1
+        return state.frontend.dark
       },
       getLocaleEnabled(state) {
-        return +state.frontend.locale! === 1
+        return state.frontend.locale
       },
     },
 
     actions: {
-      // TODO refactor
       async onInitPublicSettings() {
-        if (!isEmpty(this.auth) || !isEmpty(this.frontend)) {
-          return
-        }
-
         const res = await getPublicSettingsAPI()
-
-        this.auth = res.auth
-        this.frontend = res.frontend
+        this.$patch(res)
       },
     },
   },

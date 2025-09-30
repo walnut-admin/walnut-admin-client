@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import AppSettingsForm from './component/form/index.vue'
 import AppSettingExitFullContent from './component/fullContent.vue'
 
 defineOptions({
@@ -32,10 +31,6 @@ const contentFull = useRouterQuery('full')
 
       <n-float-button>
         <WDevSettings />
-      </n-float-button>
-
-      <n-float-button>
-        <AppSettingsForm />
       </n-float-button>
     </template>
   </n-float-button>

@@ -139,6 +139,13 @@ const [register] = useForm<typeof menuRelatives>({
         disabled: computed(() => !menuRelatives.status || !appStoreMenu.getCollapse),
       },
     },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'accordion',
+      },
+    },
   ],
 })
 </script>

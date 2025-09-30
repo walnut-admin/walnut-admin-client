@@ -122,18 +122,18 @@ export namespace IStoreApp {
    */
   export interface SettingBackend {
     auth: Partial<{
-      account: number
-      email: number
-      phone: number
-      qrcode: number
-      gitee: number
-      github: number
+      account: boolean
+      email: boolean
+      phone: boolean
+      qrcode: boolean
+      gitee: boolean
+      github: boolean
     }>
     frontend: Partial<{
-      fullScreen: number
-      search: number
-      dark: number
-      locale: number
+      fullScreen: boolean
+      search: boolean
+      dark: boolean
+      locale: boolean
     }>
   }
 
