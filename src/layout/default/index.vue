@@ -36,7 +36,6 @@ useAppIntro()
 useAppLock()
 useAppContentFull()
 useAppTextSelection()
-useAppColorMode()
 useAppHijackF5()
 useStarOnGithub()
 </script>

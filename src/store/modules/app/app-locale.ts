@@ -77,7 +77,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
       return nextTick()
     },
 
-    async onLoadMessageNoCahe(locale: ValueOfAppConstLocale) {
+    async onLoadMessageNoCache(locale: ValueOfAppConstLocale) {
       if (this.isLocaleLoaded(locale)) {
         return this.onSetLocaleMessages(locale, this.onGetLocaleMessageFromI18n(locale))
       }
@@ -87,7 +87,7 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
       return this.onSetLocaleMessages(locale, backendMsg)
     },
 
-    async onLoadMessageCahe(locale: ValueOfAppConstLocale) {
+    async onLoadMessageCache(locale: ValueOfAppConstLocale) {
       if (this.isLocaleLoaded(locale)) {
         return this.onSetLocaleMessages(locale, this.onGetLocaleMessageFromI18n(locale))
       }

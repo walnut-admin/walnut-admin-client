@@ -13,7 +13,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <n-popselect :value="appStoreLocale.locale" :options="appStoreLocale.getLangList as SelectMixedOption[]" @update:value="appStoreLocale.onLoadMessageNoCahe">
+  <n-popselect :value="appStoreLocale.locale" :options="appStoreLocale.getLangList as SelectMixedOption[]" @update:value="appStoreLocale.onLoadMessageNoCache">
     <WIcon icon="carbon:language" width="24" />
   </n-popselect>
 </template>

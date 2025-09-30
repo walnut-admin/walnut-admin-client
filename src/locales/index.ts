@@ -11,7 +11,7 @@ const i18n = createI18n({
 export async function setupI18n(app: App) {
   app.use(i18n)
   const appStoreLocale = useAppStoreLocale()
-  await appStoreLocale.onLoadMessageCahe(appStoreLocale.getLocale)
+  await appStoreLocale.onLoadMessageCache(appStoreLocale.getLocale)
 }
 
 export const AppI18n = (): I18n<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>, Locale, false> => i18n

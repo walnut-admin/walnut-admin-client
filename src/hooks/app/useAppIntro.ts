@@ -53,7 +53,7 @@ export function useAppIntro(delay = 1500) {
     {
       element: '#walnut-dark',
       popover: {
-        title: t('app.intro.dark'),
+        title: t('app.base.dark'),
         description: t('app.intro.dark.detail'),
       },
     },

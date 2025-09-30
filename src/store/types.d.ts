@@ -5,7 +5,7 @@ import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
 import type { IResponseData } from '@/api/response'
-import type { ValueOfAppConstBasicMode, ValueOfAppConstDevice, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
+import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppConstDevice, ValueOfAppConstLayoutMode, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
 
 export namespace IStoreApp {
   /**
@@ -274,204 +274,228 @@ export namespace IStoreUser {
   /**
    * User preference state
    */
-  export interface Preference {
-    app: {
-      /**
-       * @description dark or light
-       * @default false
-       */
-      isDark: boolean
-
-      /**
-       * @description app locale
-       * @default en_US
-       */
+  export namespace Preference {
+    export interface Basic {
       locale: ValueOfAppConstLocale
-
-      /**
-       * @description for those who cannot see animation viewing the internet
-       * @default false
-       */
+    }
+    export interface Accessibility {
+      fontSize: number
       reducedMotion: boolean
-
-      /**
-       * @description just different css tricks to fit the app in view
-       * @default default
-       */
       colorMode: ValueOfAppConstColorMode
-
-      /**
-       * @description App Layout
-       * @default left-menu
-       */
-      layout: ValueOfAppConstLayoutMode
     }
+    export interface Theme {
+      dark: boolean
+    }
+    export interface Layout {
+      layoutMode: ValueOfAppConstLayoutMode
+      layout: {
+        header: {
+          /**
+           * @description Invert header colors
+           * @default false
+           */
+          inverted: boolean
+        }
 
-    themes: {
-      light: {
-        /**
-         * @description Primary color for light theme
-         * @default #409eff
-         */
-        primaryColor: string
+        tabs: {
+          /**
+           * @description Invert tab colors
+           * @default false
+           */
+          inverted: boolean
 
-        /**
-         * @description Info color for light theme
-         * @default #1890ff
-         */
-        infoColor: string
+          /**
+           * @description Show icon in tabs
+           * @default true
+           */
+          showIcon: boolean
 
-        /**
-         * @description Success color for light theme
-         * @default #52c41a
-         */
-        successColor: string
+          /**
+           * @description Tab style mode
+           * @default card
+           */
+          styleMode: ValueOfAppConstTabStyleMode
 
-        /**
-         * @description Warning color for light theme
-         * @default #faad14
-         */
-        warningColor: string
+          /**
+           * @description Tab close behavior mode
+           * @default all
+           */
+          closeMode: ValueOfAppConstTabCloseMode
 
-        /**
-         * @description Error color for light theme
-         * @default #f5222d
-         */
-        errorColor: string
+          /**
+           * @description Tab affix behavior mode
+           * @default click
+           */
+          affixMode: ValueOfAppConstTabAffixMode
+        }
 
-        /**
-         * @description Body color for light theme
-         * @default #f8f8f8
-         */
-        bodyColor: string
+        breadcrumb: {
+          /**
+           * @description Show icon in breadcrumb
+           * @default false
+           */
+          showIcon: boolean
 
-        /**
-         * @description Inverted color for light theme
-         * @default #2C3E50
-         */
-        invertedColor: string
-      }
+          /**
+           * @description Show dropdown in breadcrumb items
+           * @default true
+           */
+          showDropdown: boolean
+        }
 
-      dark: {
-        /**
-         * @description Primary color for dark theme
-         * @default #7cb305
-         */
-        primaryColor: string
+        menu: {
+          /**
+           * @description Invert menu colors
+           * @default false
+           */
+          inverted: boolean
 
-        /**
-         * @description Info color for dark theme
-         * @default #0284c7
-         */
-        infoColor: string
+          /**
+           * @description Menu collapse behavior mode
+           * @default click
+           */
+          collapseMode: ValueOfAppConstCollapseMode
+        }
 
-        /**
-         * @description Success color for dark theme
-         * @default #10b981
-         */
-        successColor: string
-
-        /**
-         * @description Warning color for dark theme
-         * @default #f59e0b
-         */
-        warningColor: string
-
-        /**
-         * @description Error color for dark theme
-         * @default #ef4444
-         */
-        errorColor: string
-
-        /**
-         * @description Body color for dark theme
-         * @default #202020
-         */
-        bodyColor: string
-
-        /**
-         * @description Inverted color for dark theme
-         * @default #2C3E50
-         */
-        invertedColor: string
+        footer: {
+          /**
+           * @description Invert footer colors
+           * @default false
+           */
+          inverted: boolean
+        }
       }
     }
 
-    header: {
-      /**
-       * @description Invert header colors
-       * @default false
-       */
-      inverted: boolean
+    export interface State {
+      basic: Basic
+      accessibility: Accessibility
+      theme: Theme
+      layout: Layout
     }
 
-    tabs: {
-      /**
-       * @description Invert tab colors
-       * @default false
-       */
-      inverted: boolean
+    // app: {
+    //   /**
+    //    * @description dark or light
+    //    * @default false
+    //    */
+    //   isDark: boolean
 
-      /**
-       * @description Show icon in tabs
-       * @default true
-       */
-      showIcon: boolean
+    //   /**
+    //    * @description app locale
+    //    * @default en_US
+    //    */
+    //   locale: ValueOfAppConstLocale
 
-      /**
-       * @description Tab style mode
-       * @default card
-       */
-      styleMode: ValueOfAppConstTabStyleMode
+    //   /**
+    //    * @description for those who cannot see animation viewing the internet
+    //    * @default false
+    //    */
+    //   reducedMotion: boolean
 
-      /**
-       * @description Tab close behavior mode
-       * @default all
-       */
-      closeMode: ValueOfAppConstTabCloseMode
+    //   /**
+    //    * @description just different css tricks to fit the app in view
+    //    * @default default
+    //    */
+    //   colorMode: ValueOfAppConstColorMode
 
-      /**
-       * @description Tab affix behavior mode
-       * @default click
-       */
-      affixMode: ValueOfAppConstTabAffixMode
-    }
+    //   /**
+    //    * @description App Layout
+    //    * @default left-menu
+    //    */
+    //   layout: ValueOfAppConstLayoutMode
+    // }
 
-    breadcrumb: {
-      /**
-       * @description Show icon in breadcrumb
-       * @default false
-       */
-      showIcon: boolean
+    // themes: {
+    //   light: {
+    //     /**
+    //      * @description Primary color for light theme
+    //      * @default #409eff
+    //      */
+    //     primaryColor: string
 
-      /**
-       * @description Show dropdown in breadcrumb items
-       * @default true
-       */
-      showDropdown: boolean
-    }
+    //     /**
+    //      * @description Info color for light theme
+    //      * @default #1890ff
+    //      */
+    //     infoColor: string
 
-    menu: {
-      /**
-       * @description Invert menu colors
-       * @default false
-       */
-      inverted: boolean
+    //     /**
+    //      * @description Success color for light theme
+    //      * @default #52c41a
+    //      */
+    //     successColor: string
 
-      /**
-       * @description Menu collapse behavior mode
-       * @default click
-       */
-      collapseMode: ValueOfAppConstCollapseMode
-    }
+    //     /**
+    //      * @description Warning color for light theme
+    //      * @default #faad14
+    //      */
+    //     warningColor: string
 
-    footer: {
-      /**
-       * @description Invert footer colors
-       * @default false
-       */
-      inverted: boolean
-    }
+    //     /**
+    //      * @description Error color for light theme
+    //      * @default #f5222d
+    //      */
+    //     errorColor: string
+
+    //     /**
+    //      * @description Body color for light theme
+    //      * @default #f8f8f8
+    //      */
+    //     bodyColor: string
+
+    //     /**
+    //      * @description Inverted color for light theme
+    //      * @default #2C3E50
+    //      */
+    //     invertedColor: string
+    //   }
+
+    //   dark: {
+    //     /**
+    //      * @description Primary color for dark theme
+    //      * @default #7cb305
+    //      */
+    //     primaryColor: string
+
+    //     /**
+    //      * @description Info color for dark theme
+    //      * @default #0284c7
+    //      */
+    //     infoColor: string
+
+    //     /**
+    //      * @description Success color for dark theme
+    //      * @default #10b981
+    //      */
+    //     successColor: string
+
+    //     /**
+    //      * @description Warning color for dark theme
+    //      * @default #f59e0b
+    //      */
+    //     warningColor: string
+
+    //     /**
+    //      * @description Error color for dark theme
+    //      * @default #ef4444
+    //      */
+    //     errorColor: string
+
+    //     /**
+    //      * @description Body color for dark theme
+    //      * @default #202020
+    //      */
+    //     bodyColor: string
+
+    //     /**
+    //      * @description Inverted color for dark theme
+    //      * @default #2C3E50
+    //      */
+    //     invertedColor: string
+    //   }
+    // }
+
   }
 
   /**

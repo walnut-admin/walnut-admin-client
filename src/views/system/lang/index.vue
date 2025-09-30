@@ -162,6 +162,9 @@ const [
     baseRules: true,
     labelWidth: 80,
     xGap: 0,
+    dialogProps: {
+      title: 'app.base.language',
+    },
     // create/update form schemas
     schemas: [
       {

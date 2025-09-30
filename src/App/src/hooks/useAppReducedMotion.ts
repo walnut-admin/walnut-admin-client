@@ -13,6 +13,6 @@ export function useAppReducedMotion() {
   )
 
   watchEffect(() => {
-    userStorePreference.app.reducedMotion = isReducedMotion.value
+    userStorePreference.accessibility.reducedMotion = isReducedMotion.value
   })
 }

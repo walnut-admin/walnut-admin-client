@@ -1,17 +1,12 @@
 <script lang="ts" setup>
 import GlobalComponents from './compoent/global.vue'
+import { useAppHooks } from './hooks'
 import ThemeProvider from './naive/AppTheme.vue'
 import MsgProvider from './naive/MsgProvider.vue'
 import UIProvider from './naive/UIProvider.vue'
 
-// regular title
-useAppTitle()
-// regulat resize
-useAppResize()
-// custom user monitor based on sendBeacon
-useAppUserMonitor()
-// reduced motion
-useAppReducedMotion()
+// app hooks
+useAppHooks()
 
 // get public setting first
 const appStoreBackendSettings = useAppStoreSettingBackend()

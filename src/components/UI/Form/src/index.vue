@@ -136,7 +136,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
     <WFormExtendDesc v-if="getProps.descriptionProps" />
     <n-form v-else ref="formRef" v-bind="getFormProps" :rules="getFormRules">
       <div
-        class="relative grid"
+        class="relative grid w-full"
         :style="{
           gridTemplateColumns: `repeat(${getProps.cols}, minmax(0, 1fr))`,
           rowGap: `${getProps.yGap}px`,

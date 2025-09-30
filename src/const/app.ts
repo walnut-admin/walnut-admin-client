@@ -8,6 +8,14 @@ export const AppConstDevice = {
 export type ValueOfAppConstDevice
   = typeof AppConstDevice[keyof typeof AppConstDevice]
 
+export const AppConstFontSize = {
+  EN_US: 'en_US',
+  ZH_CN: 'zh_CN',
+} as const
+
+export type ValueOfAppConstFontSize
+  = typeof AppConstFontSize[keyof typeof AppConstFontSize]
+
 export const AppConstLocale = {
   EN_US: 'en_US',
   ZH_CN: 'zh_CN',

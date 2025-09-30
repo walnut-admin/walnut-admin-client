@@ -41,7 +41,7 @@ async function onRefresh() {
   try {
     const appStoreLocale = useAppStoreLocale()
 
-    await appStoreLocale.onLoadMessageNoCahe(appStoreLocale.getLocale)
+    await appStoreLocale.onLoadMessageNoCache(appStoreLocale.getLocale)
   }
   finally {
     loading.value = false

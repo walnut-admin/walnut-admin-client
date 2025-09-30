@@ -101,9 +101,11 @@ function onGetTitle(title: string) {
 
   const actionType = unref(formProps.value?.dialogProps?.actionType)
 
-  return uniqueKey && actionType
-    ? `${t(`app.base.${actionType}`)} ${t(`table.${uniqueKey}.advancedTitle`)}`
-    : title
+  return title
+    ? `${t(`app.base.${actionType}`)}${t(title)}`
+    : uniqueKey && actionType
+      ? `${t(`app.base.${actionType}`)}${t(`table.${uniqueKey}.advancedTitle`)}`
+      : title
 }
 
 const getTitle = computed(() => onGetTitle(formProps.value.dialogProps?.title as string))

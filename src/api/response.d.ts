@@ -1,7 +1,7 @@
 import type { TreeNodeItem } from 'easy-fns-ts'
 import type { RouteRecordRaw } from 'vue-router'
 import type { IModels } from './models'
-import type { IStoreApp, IStoreSetting } from '@/store/types'
+import type { IStoreApp, IStoreSetting, IStoreUser } from '@/store/types'
 
 export namespace IResponseData {
   export interface BackendDeps {
@@ -98,6 +98,7 @@ export namespace IResponseData {
 
     export interface Profile {
       user: IModels.SystemUser
+      preference: IStoreUser.Preference.State
       lockPreference: ProfileLockPreference
     }
 

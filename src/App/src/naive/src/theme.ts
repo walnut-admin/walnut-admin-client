@@ -45,6 +45,7 @@ export const getThemeOverridesCommon = computed(
 export const getThemeOverrides = computed(
   (): GlobalThemeOverrides => ({
     common: {
+      fontSize: `${userStorePreference.getFontSize}px`,
       ...getThemeOverridesCommon.value,
     },
 
