@@ -4,3 +4,9 @@ defineOptions({
   defaultView: false,
 })
 </script>
+
+<template>
+  <div>
+    security
+  </div>
+</template>

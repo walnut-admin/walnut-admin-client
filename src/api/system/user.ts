@@ -8,6 +8,16 @@ export const userAPI = new BaseAPI<IModels.SystemUser>({
 })
 
 /**
+ * @description update profile
+ */
+export function updateProfileAPI(data: IModels.SystemUser) {
+  return AppAxios.put<boolean>({
+    url: `/system/user/me/profile`,
+    data,
+  })
+}
+
+/**
  * @description reset password
  */
 export function resetPassowrdAPI(data: { userId: string }) {

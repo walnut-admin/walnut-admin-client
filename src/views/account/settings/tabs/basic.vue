@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
 import type { WAvatarUploadInst } from '@/components/Business/AvatarUpload'
-import { pick } from 'lodash-es'
-import { userAPI } from '@/api/system/user'
+import { omit, pick } from 'lodash-es'
+import { updateProfileAPI } from '@/api/system/user'
 import WAvatar from '../components/avatar.vue'
 
 defineOptions({
@@ -13,14 +13,12 @@ defineOptions({
 const { t } = useAppI18n()
 const userStoreProfile = useAppStoreUserProfile()
 
-const avatarUploadRef = ref<WAvatarUploadInst>()
+const avatarUploadRef = useTemplateRef<WAvatarUploadInst>('avatarUploadRef')
 const formData = ref<IModels.SystemUser>({
   ...pick(userStoreProfile.profile, [
     '_id',
     'userName',
     'nickName',
-    'phoneNumber',
-    'emailAddress',
     'description',
     'gender',
     'avatar',
@@ -28,10 +26,13 @@ const formData = ref<IModels.SystemUser>({
 })
 
 const loading = ref(false)
-const tempSrcUrl = ref<string>()
 
 function onAvatarChange(temp: string) {
-  tempSrcUrl.value = temp
+  formData.value.avatar = temp
+}
+
+function onUploadSuccess(newAvatar: string) {
+  formData.value.avatar = newAvatar
 }
 
 const [register] = useForm<typeof formData.value>({
@@ -53,22 +54,6 @@ const [register] = useForm<typeof formData.value>({
       type: 'Base:Input',
       formProp: {
         path: 'nickName',
-      },
-      componentProp: {},
-    },
-    {
-      type: 'Base:Input',
-      formProp: {
-        path: 'phoneNumber',
-        rule: false,
-      },
-      componentProp: {},
-    },
-    {
-      type: 'Base:Input',
-      formProp: {
-        path: 'emailAddress',
-        rule: false,
       },
       componentProp: {},
     },
@@ -117,9 +102,8 @@ const [register] = useForm<typeof formData.value>({
               return
 
             // set the new avatar url
-            formData.value.avatar = tempSrcUrl.value
 
-            await userAPI.update(formData.value)
+            await updateProfileAPI(omit(formData.value, ['_id']))
             useAppMsgSuccess()
             await userStoreProfile.getProfile()
           }
@@ -136,20 +120,18 @@ const [register] = useForm<typeof formData.value>({
 <template>
   <n-grid x-gap="12" :cols="2">
     <n-gi>
-      <w-form :model="formData" @hook="register" />
+      <WForm :model="formData" @hook="register" />
     </n-gi>
 
     <n-gi>
       <div class="vstack items-center justify-center">
-        <WAvatar
-          v-if="$route.name === 'AccountSetting'"
-          :value="tempSrcUrl ?? formData.avatar" :size="240"
-        />
+        <WAvatar :value=" formData.avatar" :size="240" />
 
-        <w-avatar-upload
+        <WAvatarUpload
           ref="avatarUploadRef"
           class="mt-4"
           @change="onAvatarChange"
+          @success="onUploadSuccess"
         />
       </div>
     </n-gi>

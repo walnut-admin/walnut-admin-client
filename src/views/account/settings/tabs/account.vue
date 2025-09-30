@@ -4,3 +4,9 @@ defineOptions({
   defaultView: false,
 })
 </script>
+
+<template>
+  <div>
+    account
+  </div>
+</template>

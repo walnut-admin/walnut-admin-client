@@ -69,9 +69,11 @@ defineExpose({
   onOSSUpload,
 })
 
-onMounted(async () => {
+watchEffect(async () => {
   // to fix cors error, transform url to base64
-  avatarUrl.value = await imgUrlToBase64(userStoreProfile.getAvatar)
+  if (userStoreProfile.getAvatar) {
+    avatarUrl.value = await imgUrlToBase64(userStoreProfile.getAvatar)
+  }
 })
 </script>
 
