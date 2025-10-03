@@ -91,7 +91,7 @@ onDeactivated(() => {
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <div class="h-4 w-4 flex items-center justify-center" @click="onOpenPopover">
+          <div class="h-4.5 w-4.5 flex items-center justify-center" @click="onOpenPopover">
             <n-progress
               v-if="flag"
               type="circle"
