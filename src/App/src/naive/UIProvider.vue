@@ -19,7 +19,6 @@ const appStoreNaive = useAppStoreNaive()
     :theme-overrides="getThemeOverrides"
     :locale="getLocale"
     :date-locale="getDateLocale"
-    inline-theme-disabled
     cls-prefix="w"
   >
     <n-loading-bar-provider>
