@@ -26,11 +26,11 @@ function onPositiveClick() {
 
 <template>
   <DefineIconButton>
-    <div class="flex items-center">
-      <WButton v-bind="buttonProps" text :debounce="0">
+    <WButton v-bind="buttonProps" text :debounce="0">
+      <template #icon>
         <WIcon v-bind="iconProps!" />
-      </WButton>
-    </div>
+      </template>
+    </WButton>
   </DefineIconButton>
 
   <DefineConfirm>
