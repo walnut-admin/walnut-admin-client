@@ -27,7 +27,7 @@ async function onGoIndex() {
       }"
       @click="onGoIndex"
     >
-      <div class="h-full w-full hstack items-center justify-between">
+      <div class="h-full w-full hstack items-center justify-around">
         <img src="/logo.png" :alt="`${AppTitle} Logo`" class="h-9">
 
         <WTransition transition-name="zoom-down">

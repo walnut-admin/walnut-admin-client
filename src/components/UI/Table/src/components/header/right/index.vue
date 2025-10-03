@@ -13,13 +13,15 @@ const { getProps: tableProps } = tablePropsCtx
 
 <template>
   <div class="hstack items-center gap-x-2 children:cursor-pointer">
-    <WIconButton
-      v-if="!tableProps.polling"
-      :icon-props="{ icon: 'ant-design:reload-outlined' }"
-      :button-props="{ disabled: tableProps.loading, onClick: onApiList }"
-      tooltip
-      :tooltip-msg="$t('app.base.refresh')"
-    />
+    <div>
+      <WIconButton
+        v-if="!tableProps.polling"
+        :icon-props="{ icon: 'ant-design:reload-outlined' }"
+        :button-props="{ disabled: tableProps.loading, onClick: onApiList }"
+        tooltip
+        :tooltip-msg="$t('app.base.refresh')"
+      />
+    </div>
 
     <!-- @vue-generic {T} -->
     <TableHeaderRightPolling v-if="tableProps.polling && tableProps.polling > 5000" />

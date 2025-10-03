@@ -91,17 +91,6 @@ onDeactivated(() => {
     <template #trigger>
       <n-popover v-model:show="popoverShow" placement="bottom" trigger="manual" @clickoutside="popoverShow = false">
         <template #trigger>
-          <!-- <div>
-            <WIconButton
-              :icon-props="{
-                icon: 'ant-design:sync-outlined',
-                class: { 'animate-spin': isActive },
-                style: { ['animation-duration']: `${getPollingInterval}ms` },
-              }"
-              :button-props="{ text: true, onClick: onOpenPopover }"
-            />
-          </div> -->
-
           <div class="h-4 w-4 flex items-center justify-center" @click="onOpenPopover">
             <n-progress
               v-if="flag"

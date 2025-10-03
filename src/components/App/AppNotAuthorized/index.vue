@@ -10,7 +10,7 @@ defineProps<IAppNotAuthorizedProps>()
 
 <template>
   <div
-    class="flex items-center justify-center border border-gray-500/50"
+    class="flex items-center justify-center"
     :style="{ height: presetHeight, width: presetWidth }"
   >
     <n-result
