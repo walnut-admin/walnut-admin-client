@@ -134,6 +134,10 @@ const useAppStoreUserPreferenceInside = defineStore(StoreKeys.USER_PREFERENCE, {
     setPreference(payload: IStoreUser.Preference.State) {
       this.$patch(payload)
     },
+
+    setLayout(payload: IStoreUser.Preference.Layout) {
+      this.layout = payload
+    },
   },
 })
 

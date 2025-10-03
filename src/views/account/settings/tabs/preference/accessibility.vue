@@ -9,12 +9,15 @@ defineOptions({
 
 const userStoreProfile = useAppStoreUserProfile()
 const userStorePreference = useAppStoreUserPreference()
+const appStoreAdapter = useAppStoreAdapter()
 const { t } = useAppI18n()
 
 const loading = ref(false)
 
 const [register] = useForm<IStoreUser.Preference.Accessibility>({
   inline: true,
+  labelPlacement: appStoreAdapter.isMobile ? 'top' : 'left',
+  labelAlign: appStoreAdapter.isMobile ? 'left' : 'right',
   labelWidth: 100,
 
   disabled: computed(() => loading.value),
@@ -63,6 +66,7 @@ const [register] = useForm<IStoreUser.Preference.Accessibility>({
         type: 'primary',
         loading: computed(() => loading.value),
         disabled: computed(() => loading.value),
+        debounce: 500,
         onClick: async () => {
           loading.value = true
 
@@ -82,7 +86,7 @@ const [register] = useForm<IStoreUser.Preference.Accessibility>({
 </script>
 
 <template>
-  <div class="w-3/5">
+  <div class="w-2/5 max-lg:w-full">
     <WForm :model="userStorePreference.accessibility" @hook="register" />
   </div>
 </template>

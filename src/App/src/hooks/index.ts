@@ -1,5 +1,6 @@
 import { useAppColorMode } from './useAppColorMode'
 import { useAppDark } from './useAppDark'
+import { useAppFontSize } from './useAppFontSize'
 import { useAppLocale } from './useAppLocale'
 import { useAppReducedMotion } from './useAppReducedMotion'
 
@@ -17,6 +18,8 @@ export function useAppHooks() {
   useAppReducedMotion()
   // app dark mode, relative to user preference
   useAppDark()
+  // app font size, relative to user preference
+  useAppFontSize()
 
   // custom user monitor based on sendBeacon
   useAppUserMonitor()

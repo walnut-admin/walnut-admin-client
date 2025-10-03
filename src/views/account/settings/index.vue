@@ -7,12 +7,14 @@ import AccountSettingTabSecurity from './tabs/security.vue'
 defineOptions({
   name: 'AccountSetting',
 })
+
+const activeTab = useRouterQuery('tab', 'info')
 </script>
 
 <template>
   <n-card :title="$t('sys.menu.account.setting')">
-    <n-tabs type="card" animated>
-      <n-tab-pane name="info" display-directive="show:lazy" :tab="$t('app.user.center.basic')">
+    <n-tabs v-model:value="activeTab" type="card" animated>
+      <n-tab-pane name="info" display-directive="show:lazy" :tab="$t('app.base.basic')">
         <AccountSettingTabBasic />
       </n-tab-pane>
 

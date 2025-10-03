@@ -30,3 +30,13 @@ export function updateThemePreferenceAPI(payload: IStoreUser.Preference.Theme) {
     },
   )
 }
+
+// update layout
+export function updateLayoutPreferenceAPI(payload: IStoreUser.Preference.Layout) {
+  return AppAxios.patch<boolean>(
+    {
+      url: '/system/user/preference/layout',
+      data: payload,
+    },
+  )
+}
