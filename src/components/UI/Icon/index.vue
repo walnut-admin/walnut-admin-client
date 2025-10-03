@@ -7,7 +7,7 @@ defineOptions({
   name: 'WCompUIIcon',
 })
 
-const props = withDefaults(defineProps<ICompUIIconProps>(), { inline: true, height: 20 })
+const props = withDefaults(defineProps<ICompUIIconProps>(), { inline: true })
 
 // Variable to store function to cancel loading
 const loader = ref<IconifyIconLoaderAbort>()
@@ -16,7 +16,7 @@ const loader = ref<IconifyIconLoaderAbort>()
 const loaded = ref<boolean>()
 
 const getSize = computed(() =>
-  Number.parseInt(props.width as string || props.height as string || '16'),
+  Number.parseInt(props.width as string || props.height as string) || `1.2rem`,
 )
 
 // Function to check if icon data is available
