@@ -11,6 +11,25 @@ const appStoreLocale = useAppStoreLocale()
 type SchemaItem<T> = WForm.Schema.Item<T>
 type FormProps<T> = WForm.Props<T>
 
+function buildLocaleKey(type: WForm.LocaleType, base: string) {
+  switch (type) {
+    case 'origin': return base
+    case 'helpMsg': return `${base}.helpMsg`
+    case 'placeholder': return `${base}.PH`
+    case 'rule': return `${base}.rule`
+  }
+}
+
+function getRawValue<T>(item: SchemaItem<T>, type: WForm.LocaleType) {
+  const { formProp, componentProp } = item
+  switch (type) {
+    case 'origin': return formProp?.label
+    case 'helpMsg': return formProp?.labelHelpMessage
+    case 'placeholder': return componentProp?.placeholder
+    case 'rule': return undefined
+  }
+}
+
 /**
  * @description get scope or global prop
  */
@@ -49,78 +68,61 @@ export const formItemUtils = {
   },
 
   /**
-   * @description get translated string relatived with form
-   * TODO i think this need to redesign
+   * @description get translated string based on item & index
    */
-  getTranslatedString<T>(t: Fn, item: SchemaItem<T>, props: FormProps<T>, type: WForm.LocaleType = 'origin') {
-    const itemFormProp = item.formProp!
+  getTranslatedString<T>(
+    t: Fn,
+    item: SchemaItem<T>,
+    props: FormProps<T>,
+    type: WForm.LocaleType = 'origin',
+  ) {
+    const itemFormProp = item.formProp ?? {}
+    const key = props.localeUniqueKey
 
-    // used for dict form item
-    if (itemFormProp?.label === true)
+    const label = itemFormProp.label
+    const path = itemFormProp.path
+    const locale = itemFormProp.locale
+    const labelHelpMessage = itemFormProp.labelHelpMessage
+    const localeWithTable = itemFormProp.localeWithTable
+
+    // dict name as label, so no need to translate
+    if (label === true)
       return
-
-    // used for desc form item
+    // description do not show, so no need to translate
     if (!getBoolean(item?.descriptionProp?.show))
       return
 
-    // locale unique key
-    const key = props.localeUniqueKey
-
-    const needLocale = key && getBoolean(itemFormProp?.locale)
-
-    const path = itemFormProp?.path
-    const label = itemFormProp?.label
-
-    const format = (key: string) => {
-      if (type === 'origin')
-        return key
-      if (type === 'helpMsg')
-        return `${key}.helpMsg`
-      if (type === 'placeholder')
-        return `${key}.PH`
-      if (type === 'rule')
-        return `${key}.rule`
-    }
-
-    // system menu => title field
-    if (path && itemFormProp?.labelHelpMessage && type === 'helpMsg') {
-      return t(`form.${format(`${key}.${path}`)}`)
-    }
-
-    // in default app locale messages keys
-    if (path && appStoreLocale.isBaseI18nKey(path as string))
+    // base key priority first
+    if (path && appStoreLocale.isBaseI18nKey(path)) {
       return t(`app.base.${path}`)
-    if (label && appStoreLocale.isBaseI18nKey(label))
+    }
+    if (typeof label === 'string' && appStoreLocale.isBaseI18nKey(label)) {
       return t(`app.base.${label}`)
-
-    // no need to translate
-    if (!needLocale && label) {
-      return label
     }
 
-    // no locale nor no path
-    // just return target field
+    // helpMsg special case
+    if (path && type === 'helpMsg' && labelHelpMessage) {
+      if (!getBoolean(locale))
+        return labelHelpMessage
+    }
+
+    // step1: judge whether need locale（parent + child）
+    const needLocale = key && getBoolean(locale)
+
+    // step2: no locale or no key/path → fallback original value
     if (!needLocale || !path) {
-      if (type === 'origin')
-        return label
-      if (type === 'helpMsg')
-        return itemFormProp?.labelHelpMessage
-      if (type === 'placeholder')
-        return item.componentProp?.placeholder
-      return
+      return getRawValue(item, type)
     }
 
+    // step3: judge whether need table prefix（parent + child）
     const isLocaleWithTable
-      = getBoolean(itemFormProp?.localeWithTable)
-        && getBoolean(props.localeWithTable)
+      = getBoolean(localeWithTable) && getBoolean(props.localeWithTable)
 
-    // locale with table, means locale key startsWith `table` insteadof `form`
-    if (isLocaleWithTable)
-      return t(`table.${format(`${key}.${path}`)}`)
+    const prefix = isLocaleWithTable ? 'table' : 'form'
+    const fullKey = buildLocaleKey(type, `${key}.${path}`)
 
-    return t(`form.${format(`${key}.${path}`)}`)
+    return t(`${prefix}.${fullKey}`)
   },
-
 }
 
 /**
