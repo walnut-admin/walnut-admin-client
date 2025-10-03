@@ -36,7 +36,8 @@ const getOptions = computed(() => {
     :input-props="{
       autocomplete: 'disabled',
     }"
-    clearable blur-after-select
+    clearable
+    blur-after-select
     :options="getOptions"
     :placeholder="$t('comp.emailInput.ph')"
   />

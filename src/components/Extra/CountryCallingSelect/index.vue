@@ -130,7 +130,7 @@ function onFilter(pattern: string, option: ICompExtraCountryCallingSelectOption)
 
 <template>
   <!-- @vue-expect-error -->
-  <n-select
+  <WSelect
     v-model:value="value"
     :loading="loading"
     :disabled="loading || disabled"

@@ -58,7 +58,6 @@ onDeactivated(() => {
     v-model:show="show"
     v-model:value="value!"
     :options="options"
-
     :render-label="onRenderLabel"
     clearable filterable tooltip
     :tooltip-props="{

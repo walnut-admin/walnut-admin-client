@@ -19,7 +19,7 @@ const getCurrentComponent = computed(() => demoOptions.find(i => i.value === cur
 
 <template>
   <div>
-    <n-select v-model:value="currentComponentDemo" :options="demoOptions" class="w-96" filterable />
+    <WSelect v-model:value="currentComponentDemo" :options="demoOptions" class="w-96" filterable />
 
     <div class="mt-4">
       <component :is="getCurrentComponent" />

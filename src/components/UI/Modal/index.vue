@@ -83,7 +83,6 @@ async function onUpdateShow(v: boolean) {
     <template v-if="fullscreen" #header-extra>
       <WAppFullScreen
         class="mr-2 cursor-pointer leading-1"
-        size="18"
         :is-fullscreen="isFullscreen"
         :click-event="onFullScreen"
       />

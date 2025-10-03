@@ -166,7 +166,7 @@ tryOnScopeDispose(() => {
     <n-input readonly :value="addressValue" @click="onOpen" />
 
     <WModal v-model:show="modalVisible" :title="$t('comp.location.title')" width="80%" height="80%" display-directive="show">
-      <n-select
+      <WSelect
         v-model:value="modelValue"
         :options="searchOptions"
         filterable
