@@ -62,6 +62,10 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
       const appStorePreference = useAppStoreUserPreference()
       appStorePreference.setPreference(preference)
 
+      // get private settings
+      const appSettingScope = useAppStoreSettingScope()
+      await appSettingScope.onInitPrivateSettings()
+
       // setup socket
       setupSocket()
     },
