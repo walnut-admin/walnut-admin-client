@@ -9,7 +9,7 @@ const appStoreTab = useAppStoreTab()
 
 const count = ref(0)
 
-const otherName = 'FeatureAnimationName'
+const otherName = 'FeatureTransition'
 
 const getOtherTabButtonDisabled = computed(
   () => !appStoreTab.tabs.some(i => i.name === otherName),

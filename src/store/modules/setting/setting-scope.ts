@@ -53,7 +53,7 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
           return state.maskUrl.value
 
         if (state.maskUrl.mode === AppConstBasicMode.SCOPE) {
-          return route?.meta?.maskUrl ?? state.maskUrl.value
+          return route?.meta?.maskUrl ?? false
         }
       }
     },
@@ -65,7 +65,7 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
           return state.hijackRefresh.value
 
         if (state.hijackRefresh.mode === AppConstBasicMode.SCOPE) {
-          return route?.meta?.hijackRefresh ?? state.hijackRefresh.value
+          return route?.meta?.hijackRefresh ?? false
         }
       }
     },
@@ -77,7 +77,7 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
           return state.watermark.value
 
         if (state.watermark.mode === AppConstBasicMode.SCOPE) {
-          return route?.meta?.watermark ?? state.watermark.value
+          return route?.meta?.watermark ?? {}
         }
       }
     },
@@ -85,7 +85,7 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
     getTransitionStatus: state => state.transition.status,
     getTransitionName: (state) => {
       return (route: RouteLocationNormalized): ValueOfAppConstTransitionName | undefined => {
-        if (state.watermark.mode === AppConstBasicMode.GLOBAL)
+        if (state.transition.mode === AppConstBasicMode.GLOBAL)
           return state.transition.value
 
         if (state.transition.mode === AppConstBasicMode.SCOPE) {

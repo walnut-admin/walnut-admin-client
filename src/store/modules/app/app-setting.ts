@@ -35,25 +35,6 @@ const useAppStoreSettingInside = defineStore(StoreKeys.APP_SETTING, {
 
   getters: {
     // app
-    getTransition(state): ValueOfAppConstTransitionName | null {
-      const { currentRoute } = useAppRouter()
-
-      const setting = state.app
-
-      if (setting.transitionStatus) {
-        if (setting.transitionMode === AppConstBasicMode.GLOBAL) {
-          return setting.transitionName
-        }
-        else {
-          return (
-            currentRoute.value.meta?.animationName
-            || AppConstTransitionName.FADE
-          ) as ValueOfAppConstTransitionName
-        }
-      }
-
-      return null
-    },
 
     getShowGlobalWatermark(state) {
       return (
