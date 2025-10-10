@@ -1,20 +1,32 @@
-## [1.7.0] - 2025-09-25
+## [1.8.0] - 2025-10-10
 
 ### Features
-- [Both] `lock/unlock` api support, new: cross device lock/unlock support, lock guard support,
+- [Both] `perference` settings
+- [Both] `new app setting support`: `maskUrl` / `hijackRefresh` / `watermark` / `transition`
+- [Back] `lock feature` 100% implement with api support
+- [Back] new `TransactionInterceptor`, use `node:async_hooks` & `afterCommit` to achieve logic after transaction commit
+- [Front] `useKeepAliveEffect` for `mounted` & `actived` component
+- [Front] scope settings implement
+- [Front] theme settings implement
 
 ### Changed
-- [Back] `socket` re-design, support auth middleware to handle http logic and auth logic
-- [Back] `JwtAccessGuard` move to app level guard, if need jwt free endpoint, need to add `@WalnutAdminGuardJwtFree()` decorator
-- [Both] `deviceId` 30 days support, geoInfo 7 days support
-- [Back] `force-quit` change to room usage
+- [Back] remove `locked` field in `device` collection
+- [Back] enhance on create dynamic virtual class
+- [Back] `getWalnutAdminCookie` implements
+- [Front] form translate core function
 
 ### Fixed
-- [Back] `cache` list error
-- [Front] `locale` error in auth page
+- [Back] app level guard excute order
+- [Back] lang public missing lock free
+- [Back] `deleted` dto error
+- [Back] `app key` rotate cron job
+- [Front] locale change error
+- [Front] auth page style error
+- [Front] avatar upload logic error
+- [Front] cropper style error
 
 ### Deprecated
 -
 
 ### Removed
--
+- [Front] `backToTopMode`
