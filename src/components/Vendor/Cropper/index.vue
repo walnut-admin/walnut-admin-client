@@ -164,14 +164,16 @@ const buttons = [
 
 defineExpose({
   onGetCropperBlob: () => blobRef.value ?? absImageRef.value?.onGetBlob(),
+  onRefresh: onReset,
 })
 </script>
 
 <template>
   <!-- eslint-disable vue/component-name-in-template-casing -->
-  <n-grid :x-gap="20" :cols="24">
-    <n-gi :span="16">
-      <cropper-canvas background :disabled="disabled" style="width: 100%; height: 400px">
+  <div class="h-full w-full flex items-start justify-center gap-4 p-4">
+    <!-- main -->
+    <div class="h-[60vh] max-h-[700px] max-w-[900px] w-[60vw] flex flex-shrink-0 items-center justify-center bg-black">
+      <cropper-canvas background :disabled="disabled" class="h-full w-full">
         <cropper-image
           v-if="src"
           ref="cropperImageRef"
@@ -183,12 +185,9 @@ defineExpose({
           :translatable="src"
           cross-origin="anonymous"
         />
-
         <cropper-shade hidden />
-
         <cropper-handle action="select" plain />
         <cropper-handle action="move" plain />
-
         <cropper-selection
           :id="selectionId"
           ref="cropperSelectionRef"
@@ -202,7 +201,6 @@ defineExpose({
         >
           <cropper-grid role="grid" bordered covered />
           <cropper-crosshair centered />
-
           <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)" />
           <cropper-handle action="n-resize" />
           <cropper-handle action="e-resize" />
@@ -214,29 +212,39 @@ defineExpose({
           <cropper-handle action="sw-resize" />
         </cropper-selection>
       </cropper-canvas>
-    </n-gi>
+    </div>
 
-    <n-gi :span="8" class="vstack">
-      <WScrollbar height="360px">
-        <n-space vertical size="large">
-          <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 200px" />
+    <!-- right -->
+    <div class="max-w-[400px] w-[25vw] flex flex-shrink-0 flex-col gap-4">
+      <!-- main thumbnail -->
+      <cropper-viewer
+        class="h-[25vh] max-h-[200px] w-full border border-bodyColor"
+        :selection="`#${selectionId}`"
+      />
 
-          <n-grid :x-gap="10" :cols="24">
-            <n-gi :span="12">
-              <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 80px" />
-            </n-gi>
+      <!-- grid thumbnail -->
+      <div class="grid grid-cols-24 gap-x-2.5">
+        <div class="col-span-12">
+          <cropper-viewer
+            class="h-[80px] w-full border border-bodyColor"
+            :selection="`#${selectionId}`"
+          />
+        </div>
+        <div class="col-span-8">
+          <cropper-viewer
+            class="h-[60px] w-full border border-bodyColor"
+            :selection="`#${selectionId}`"
+          />
+        </div>
+        <div class="col-span-4">
+          <cropper-viewer
+            class="h-[40px] w-full border border-light-50"
+            :selection="`#${selectionId}`"
+          />
+        </div>
+      </div>
 
-            <n-gi :span="8">
-              <cropper-viewer class="border-1 border-bodyColor" :selection="`#${selectionId}`" style="height: 60px" />
-            </n-gi>
-
-            <n-gi :span="4">
-              <cropper-viewer class="border-1 border-light-50" :selection="`#${selectionId}`" style="height: 40px" />
-            </n-gi>
-          </n-grid>
-        </n-space>
-      </WScrollbar>
-
+      <!-- button area -->
       <n-space>
         <WAbsImage ref="absImageRef" @change="onUploadChange">
           <WIconButton
@@ -256,6 +264,6 @@ defineExpose({
           :tooltip-msg="item.helpMessage"
         />
       </n-space>
-    </n-gi>
-  </n-grid>
+    </div>
+  </div>
 </template>
