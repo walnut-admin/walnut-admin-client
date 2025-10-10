@@ -26,14 +26,7 @@ const formData = ref<IModels.SystemUser>({
 })
 
 const loading = ref(false)
-
-function onAvatarChange(temp: string) {
-  formData.value.avatar = temp
-}
-
-function onUploadSuccess(newAvatar: string) {
-  formData.value.avatar = newAvatar
-}
+const tempAvatar = ref()
 
 const [register] = useForm<typeof formData.value>({
   localeUniqueKey: 'userInfo',
@@ -89,6 +82,7 @@ const [register] = useForm<typeof formData.value>({
         type: 'primary',
         loading: computed(() => loading.value),
         disabled: computed(() => loading.value),
+        debounce: 500,
         onClick: async () => {
           loading.value = true
 
@@ -125,13 +119,13 @@ const [register] = useForm<typeof formData.value>({
 
     <n-gi>
       <div class="vstack items-center justify-center">
-        <WAvatar :value=" formData.avatar" :size="240" />
+        <WAvatar :value="tempAvatar || formData.avatar" :size="240" />
 
         <WAvatarUpload
           ref="avatarUploadRef"
           class="mt-4"
-          @change="onAvatarChange"
-          @success="onUploadSuccess"
+          @change="(url) => tempAvatar = url"
+          @success="(url) => formData.avatar = url"
         />
       </div>
     </n-gi>

@@ -16,14 +16,17 @@ const userId = userStoreProfile.profile._id!
 
 const show = ref(false)
 const loading = ref(false)
+const changed = ref(false)
 const cropperUrl = ref<string>()
-const avatarUrl = ref<string>()
+const srcUrl = ref<string>()
 
 const cropperRef = useTemplateRef<WCropperInst>('cropperRef')
 
 function onYes() {
-  if (cropperUrl.value)
+  if (cropperUrl.value) {
+    changed.value = true
     emits('change', cropperUrl.value)
+  }
 
   show.value = false
 }
@@ -33,8 +36,15 @@ function onNo() {
 }
 
 async function onOSSUpload() {
-  if (!cropperUrl.value)
-    return false
+  // no init user avatar yet
+  if (!srcUrl.value) {
+    return true
+  }
+
+  // no changed at all
+  if (!changed.value) {
+    return true
+  }
 
   loading.value = true
 
@@ -62,6 +72,17 @@ async function onOSSUpload() {
   }
   finally {
     loading.value = false
+    changed.value = false
+  }
+}
+
+function onOpenCropper() {
+  show.value = true
+}
+
+function onFullScreen(isFullscreen: boolean) {
+  if (isFullscreen) {
+    cropperRef.value?.onRefresh()
   }
 }
 
@@ -72,14 +93,14 @@ defineExpose({
 watchEffect(async () => {
   // to fix cors error, transform url to base64
   if (userStoreProfile.getAvatar) {
-    avatarUrl.value = await imgUrlToBase64(userStoreProfile.getAvatar)
+    srcUrl.value = await imgUrlToBase64(userStoreProfile.getAvatar)
   }
 })
 </script>
 
 <template>
   <div>
-    <n-button @click="show = true">
+    <n-button @click="onOpenCropper">
       {{ t('comp:avatar-upload:button') }}
     </n-button>
 
@@ -92,11 +113,12 @@ watchEffect(async () => {
       display-directive="show"
       @yes="onYes"
       @no="onNo"
+      @fullscreen="onFullScreen"
     >
       <WCropper
         ref="cropperRef"
         v-model:value="cropperUrl"
-        v-model:src="avatarUrl"
+        v-model:src="srcUrl"
         alt="Avatar"
       />
     </WModal>

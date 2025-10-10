@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<ICompUIModalProps>(), {
   segmented: true,
 })
 
-const emits = defineEmits<{ yes: [], no: [] }>()
+const emits = defineEmits<{ yes: [], no: [], fullscreen: [boolean] }>()
 
 const show = defineModel<boolean>('show', { required: true, default: false })
 
@@ -28,6 +28,8 @@ function onFullScreen() {
   isFullscreen.value = !isFullscreen.value
 
   toggleClass(dragDom, 'modal-fullscreen', isFullscreen.value)
+
+  emits('fullscreen', isFullscreen.value)
 }
 
 function onNo() {
