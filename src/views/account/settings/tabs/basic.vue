@@ -28,7 +28,15 @@ const formData = ref<IModels.SystemUser>({
 const loading = ref(false)
 const tempAvatar = ref()
 
-const [register] = useForm<typeof formData.value>({
+function onAvatarChange(url: string) {
+  tempAvatar.value = url
+}
+
+function onAvatarSuccess(url: string) {
+  formData.value.avatar = url
+}
+
+const [register, { validate }] = useForm<typeof formData.value>({
   localeUniqueKey: 'userInfo',
   baseRules: true,
   labelWidth: 120,
@@ -84,18 +92,16 @@ const [register] = useForm<typeof formData.value>({
         disabled: computed(() => loading.value),
         debounce: 500,
         onClick: async () => {
+          const valid = await validate()
+          if (!valid)
+            return
+
           loading.value = true
 
           try {
-            // TODO upload refactor
-            // upload avatar and get real avatar url
-            const isAvatarUploadSuccess
-              = await avatarUploadRef.value?.onOSSUpload()
-
+            const isAvatarUploadSuccess = await avatarUploadRef.value?.onOSSUpload()
             if (!isAvatarUploadSuccess)
               return
-
-            // set the new avatar url
 
             await updateProfileAPI(omit(formData.value, ['_id']))
             useAppMsgSuccess()
@@ -124,8 +130,8 @@ const [register] = useForm<typeof formData.value>({
         <WAvatarUpload
           ref="avatarUploadRef"
           class="mt-4"
-          @change="(url) => tempAvatar = url"
-          @success="(url) => formData.avatar = url"
+          @change="onAvatarChange"
+          @success="onAvatarSuccess"
         />
       </div>
     </n-gi>
