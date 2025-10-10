@@ -12,14 +12,12 @@ export function useAppHijackF5() {
       if (v) {
         scope = effectScope()
         scope.run(() => {
-          if (appSettingScope.getHijackRefresh(currentRoute.value)) {
-            useEventListener('keydown', async (e) => {
-              if (e.key === 'F5') {
-                e.preventDefault()
-                toggleLocalRefreshFlag()
-              }
-            })
-          }
+          useEventListener('keydown', async (e) => {
+            if (appSettingScope.getHijackRefresh(currentRoute.value) && e.key === 'F5') {
+              e.preventDefault()
+              toggleLocalRefreshFlag()
+            }
+          })
         })
       }
       else {
