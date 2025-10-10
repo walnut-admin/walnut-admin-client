@@ -7,6 +7,7 @@ import type { WForm } from '@/components/UI/Form'
 import { findPath } from 'easy-fns-ts'
 // TODO 111
 import WRadio from '@/components/UI/Radio'
+import { isProd } from '@/utils/constant/vue'
 import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
 export function useMenuFormSchema(
@@ -14,6 +15,7 @@ export function useMenuFormSchema(
   formData: Ref<IAppSystemMenuForm>,
   treeData: ComputedRef<TreeNodeItem<IModels.SystemMenu>[] | undefined>,
   menuActiveNamesOptions: Ref<Pick<IModels.SystemMenu, 'title' | 'name'>[]>,
+  t: (key: string) => string,
 ) {
   // get view options and name options
   const { viewOptions, nameOptions } = getViewsOptions()
@@ -172,6 +174,7 @@ export function useMenuFormSchema(
         options: viewOptions,
         filterable: true,
         tooltip: true,
+        disabled: isProd(),
         onUpdateValue: (val: string) => {
           // Get the name property automatically from vue `name` property
           const target = viewOptions.find(item => item.value === val)
@@ -201,6 +204,7 @@ export function useMenuFormSchema(
         // key start with `sys.menu.` are all menu title
         prefix: 'sys.menu.',
         presetKey: 'sys.menu.',
+        extra: ['app.base.transition', 'app.base.watermark', 'app.base.maskUrl', 'app.base.hijackRefresh'],
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type !== AppConstMenuType.ELEMENT,
@@ -341,20 +345,6 @@ export function useMenuFormSchema(
     },
 
     {
-      type: 'Extra:TransitionSelect',
-      formProp: {
-        path: 'meta.animationName',
-        rule: false,
-      },
-      componentProp: {
-        clearable: true,
-      },
-      visibleProp: {
-        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
-      },
-    },
-
-    {
       type: 'Extra:IconPicker',
       formProp: {
         path: 'meta.activeIcon',
@@ -395,6 +385,63 @@ export function useMenuFormSchema(
       formProp: {
         path: 'meta.leaveTip',
         rule: false,
+      },
+      visibleProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
+      },
+    },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'meta.maskUrl',
+        rule: false,
+        locale: false,
+        label: computed(() => t('app.base.maskUrl')),
+        labelHelpMessage: computed(() => t('app.base.maskUrl.helpMsg')),
+      },
+      visibleProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
+      },
+    },
+
+    {
+      type: 'Base:Switch',
+      formProp: {
+        path: 'meta.hijackRefresh',
+        rule: false,
+        locale: false,
+        label: computed(() => t('app.base.hijackRefresh')),
+        labelHelpMessage: computed(() => t('app.base.hijackRefresh.helpMsg')),
+      },
+      visibleProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
+      },
+    },
+
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'meta.watermark',
+        rule: false,
+        locale: false,
+        label: computed(() => t('app.base.watermark')),
+      },
+      componentProp: {
+        type: 'textarea',
+      },
+      visibleProp: {
+        vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
+      },
+    },
+
+    {
+      type: 'Extra:TransitionSelect',
+      formProp: {
+        path: 'meta.transition',
+        rule: false,
+        locale: false,
+        label: computed(() => t('app.base.transition')),
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,

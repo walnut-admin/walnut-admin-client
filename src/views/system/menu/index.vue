@@ -48,7 +48,12 @@ const { stateRef: formData, resetState: resetFormData, commit } = useState<IAppS
   'meta.menuActiveSameTab': false,
   'meta.activeIcon': null,
   'meta.badge': null,
-  'meta.animationName': null,
+  'meta.position': false,
+  'meta.leaveTip': false,
+  'meta.maskUrl': false,
+  'meta.hijackRefresh': false,
+  'meta.watermark': null,
+  'meta.transition': 'fade',
 })
 
 commit()
@@ -123,6 +128,7 @@ const schemas = useMenuFormSchema(
   formData,
   getTreeSelect,
   menuActiveNamesOptions,
+  t,
 )
 
 // form
