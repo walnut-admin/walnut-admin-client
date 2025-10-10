@@ -5,4 +5,5 @@ export interface ICompExtraLocaleSelectProps {
   presetKey?: string
   creatable?: boolean
   refreshable?: boolean
+  extra?: string[]
 }
