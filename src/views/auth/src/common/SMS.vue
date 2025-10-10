@@ -155,13 +155,17 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
       formProp: {
         path: 'agree',
         rule: false,
+        showFeedback: false,
       },
       componentProp: {
         render({ formData }) {
           return (
             <div
-              class="bigger-click cursor-pointer"
-              onClick={() => (SMSFormData.agree = SMSFormData.agree ? '' : 'agree')}
+              class="bigger-click cursor-pointer -mt-4"
+              onClick={(e: MouseEvent) => {
+                e.preventDefault()
+                formData.agree = formData.agree ? '' : 'agree'
+              }}
             >
               <NRadio
                 value="agree"
@@ -225,7 +229,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         ),
         loading,
         disabled: computed(
-          () => (SMSFormData.agree as unknown as boolean) && loading.value,
+          () => !!SMSFormData.agree && loading.value,
         ),
         style: {
           width: '100%',
@@ -233,7 +237,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           fontWeight: '900',
         },
         class:
-            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 -mt-2',
+            'm-auto uppercase rounded-full !bg-gradient-to-r !from-cyan-500 !to-blue-500',
         onClick: onSubmit,
       },
       transitionProp: {

@@ -148,13 +148,17 @@ const [register, { validate }] = useForm<typeof emailFormData>({
       formProp: {
         path: 'agree',
         rule: false,
+        showFeedback: false,
       },
       componentProp: {
         render({ formData }) {
           return (
             <div
-              class="bigger-click cursor-pointer"
-              onClick={() => (formData.agree = formData.agree ? '' : 'agree')}
+              class="bigger-click cursor-pointer -mt-4"
+              onClick={(e: MouseEvent) => {
+                e.preventDefault()
+                formData.agree = formData.agree ? '' : 'agree'
+              }}
             >
               <NRadio
                 value="agree"
@@ -225,7 +229,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
           fontWeight: '900',
         },
         class:
-            'm-auto uppercase rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 -mt-2',
+            'm-auto uppercase rounded-full !bg-gradient-to-r !from-cyan-500 !to-blue-500',
         onClick: onSubmit,
       },
       transitionProp: {

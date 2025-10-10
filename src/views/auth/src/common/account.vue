@@ -105,7 +105,7 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <div class="mb-2 w-full hstack justify-between">
+          <div class="w-full hstack justify-between -mt-2">
             <NCheckbox v-model={[formData.rememberMe, 'checked']}>
               {t('form.app.auth.remember')}
             </NCheckbox>
@@ -141,7 +141,7 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
         loading,
         disabled: loading,
         class:
-          'w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mt-3',
+          'w-full rounded-full !bg-gradient-to-r !from-cyan-500 !to-blue-500',
         onClick: onSubmit,
       },
       transitionProp: {

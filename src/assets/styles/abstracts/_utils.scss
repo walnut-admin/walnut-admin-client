@@ -6,6 +6,8 @@
 }
 
 .bigger-click {
+  position: relative;
+
   &::after {
     content: '';
     position: absolute;
@@ -13,7 +15,12 @@
     right: -10px;
     bottom: -10px;
     left: -10px;
-    z-index: 10;
+    z-index: 0;
     border-radius: 0.75rem;
+  }
+
+  &>* {
+    position: relative;
+    z-index: 10;
   }
 }
