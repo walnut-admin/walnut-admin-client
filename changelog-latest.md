@@ -1,32 +1,22 @@
-## [1.8.0] - 2025-10-10
+## [1.8.1] - 2025-10-15
 
 ### Features
-- [Both] `perference` settings
-- [Both] `new app setting support`: `maskUrl` / `hijackRefresh` / `watermark` / `transition`
-- [Back] `lock feature` 100% implement with api support
-- [Back] new `TransactionInterceptor`, use `node:async_hooks` & `afterCommit` to achieve logic after transaction commit
-- [Front] `useKeepAliveEffect` for `mounted` & `actived` component
-- [Front] scope settings implement
-- [Front] theme settings implement
+- [Both] `app settings` cache refresh support
+- [Both] `menu` new meta support
 
 ### Changed
-- [Back] remove `locked` field in `device` collection
-- [Back] enhance on create dynamic virtual class
-- [Back] `getWalnutAdminCookie` implements
-- [Front] form translate core function
+- [Front] style optimize
 
 ### Fixed
-- [Back] app level guard excute order
-- [Back] lang public missing lock free
-- [Back] `deleted` dto error
-- [Back] `app key` rotate cron job
-- [Front] locale change error
-- [Front] auth page style error
-- [Front] avatar upload logic error
-- [Front] cropper style error
+- [Back] `app key` rotate error
+- [Back] `app settings` missing default
+- [Front] profile update missing validate
+- [Front] private settings excute time point error
+- [Front] hijack F5 logic error
+-
 
 ### Deprecated
 -
 
 ### Removed
-- [Front] `backToTopMode`
+-

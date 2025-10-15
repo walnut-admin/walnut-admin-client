@@ -3,7 +3,7 @@
 - 重要紧急
 
   - [ ] dev setting / features / user settings 急需分离，现在都耦合在appsettings里了
-  - [ ] menu字段：usedDicts/usedLocales/watermark/watermarkconfig/queryEnhanced/queryEnhancedMode/paramsEnhanced/paramsEnhancedMode/full/query，menu表把乱七八糟的字段都塞进meta里，不要平铺字段
+  - [x] menu字段：usedDicts/usedLocales/watermark/watermarkconfig/queryEnhanced/queryEnhancedMode/paramsEnhanced/paramsEnhancedMode/full/query，menu表把乱七八糟的字段都塞进meta里，不要平铺字段
   - [x] 弹出类的form做表单内容改变关闭提示
   - [x] form支持嵌套字段
   - [x] 移除所有eslint/ts error
@@ -27,9 +27,12 @@
   - [x] url/params 的参数 不要做配置 直接superjson + cryptojs
   - [x] store 重构了是重构了 但是还是有很多地方风格没有统一 需要挨个整理一下
   - [ ] 设备不支持 那个页面应该统一化 因为可能还有其他类型的不支持
-  - [ ] font-size/font
+  - [x] font-size => naive-ui有些内部组件不支持px的override（主要是涉及到虚拟滚动/select/menu等等
   - [x] 升级vite7
-  - [ ] lock逻辑 都统一规划到lock store中 后续接入接口也方便
+  - [x] lock逻辑 都统一规划到lock store中 后续接入接口也方便
+  - [ ] px => rem => 应该是base-font change的最佳方案？项目中px全部剔除掉
+  - [ ] features 页面统一风格
+  - [ ] JSON表单项
 
 - 重要不紧急
 
