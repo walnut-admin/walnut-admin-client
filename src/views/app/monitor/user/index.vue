@@ -138,20 +138,20 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<IModels.AppMo
 
       {
         key: 'visitorId',
-        minWidth: 160,
-        ellipsis: {
-          tooltip: true,
-        },
+        minWidth: 350,
       },
 
       {
         key: 'populated_device.ipHistory',
         width: 160,
         title: 'ip',
+        ellipsis: {
+          tooltip: true,
+        },
       },
       {
         key: 'populated_device.locationInfo.country',
-        width: 100,
+        width: 120,
         title: 'country',
       },
 
