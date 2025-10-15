@@ -6,6 +6,7 @@ import { BaseAPI } from '../base'
 const appSetting = {
   PUBLIC: '/app/setting/public',
   PRIVATE: '/app/setting/private',
+  REFRESH_CACHE: '/app/setting/cache/refresh',
 } as const
 
 export const appSettingAPI = new BaseAPI<IModels.AppSettings>({
@@ -28,5 +29,14 @@ export function getPublicSettingsAPI() {
 export function getPrivateSettingsAPI() {
   return AppAxios.get<IResponseData.App.SettingPrivate>({
     url: appSetting.PRIVATE,
+  })
+}
+
+/**
+ * @description refresh app settings cache
+ */
+export function refreshAppSettingsCacheAPI() {
+  return AppAxios.post<boolean>({
+    url: appSetting.REFRESH_CACHE,
   })
 }

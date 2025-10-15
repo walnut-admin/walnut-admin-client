@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
-import { appSettingAPI } from '@/api/app/setting'
+import { appSettingAPI, refreshAppSettingsCacheAPI } from '@/api/app/setting'
 
 defineOptions({
   name: 'AppSetting',
@@ -10,6 +10,8 @@ defineOptions({
 const localeKey = 'appSetting'
 const authKey = 'app:setting'
 const keyField = '_id'
+
+const { t } = useAppI18n()
 
 const [
   register,
@@ -30,6 +32,20 @@ const [
         onPresetClick() {
           onOpenCreateForm()
         },
+      },
+    ],
+
+    headerLeftExtraActions: [
+      {
+        type: 'warning',
+        textProp: computed(() => t('app.base.cache.refresh')),
+        icon: 'mdi:refresh',
+        onClick: async () => {
+          await refreshAppSettingsCacheAPI()
+          useAppMsgSuccess()
+        },
+        debounce: 300,
+        auth: `${authKey}:cache:refresh`,
       },
     ],
 
