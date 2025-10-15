@@ -118,7 +118,7 @@ emits('hook', {
 const appStoreSettingDev = useAppStoreSettingDev()
 const formCardRef = useTemplateRef<HTMLDivElement>('formCardRef')
 const { height } = useElementSize(formCardRef)
-const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentHeightWithPadding} - ${height.value}px - 185px)`)
+const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentHeightWithPadding} - ${height.value}px - 210px)`)
 </script>
 
 <template>
