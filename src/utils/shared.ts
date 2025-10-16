@@ -104,10 +104,19 @@ export async function getGPUArchitecture() {
   }
 }
 
-export function objectToPaths<T>(obj: T) {
-  const result: Recordable = {}
+export function objectToPaths<T>(
+  obj: T,
+  ignoreKeys: string[] = [],
+) {
+  const result: Record<string, any> = {}
 
   function process(value: any, path: string) {
+    const lastKey = path.split('.').pop() || path
+    if (ignoreKeys.includes(path) || ignoreKeys.includes(lastKey)) {
+      result[path] = value
+      return
+    }
+
     if (isPlainObject(value)) {
       forEach(value, (v, k) => {
         process(v, path ? `${path}.${k}` : k)
