@@ -10,11 +10,11 @@ import { findPath, formatTree, treeToArr } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 // TODO 111
 import WTransition from '@/components/Extra/Transition'
-
 import { useDropdown } from '@/components/UI/Dropdown'
 import WIcon from '@/components/UI/Icon'
-
 import WIconButton from '@/components/UI/IconButton'
+
+// TODO expandedKeys feedback support
 
 defineOptions({
   name: 'WCompUITree',
@@ -360,6 +360,10 @@ async function onFeedback() {
       // expanded keys
       const targetNodeSingleTree = findPath(getTreeData.value, n => n[getKeyField.value] === value.value) as [] ?? []
       expandedKeys.value = targetNodeSingleTree.map(i => i[getKeyField.value])
+
+      await nextTick()
+
+      expandedKeys.value = undefined
     }
   }
 }
@@ -411,8 +415,6 @@ defineExpose({
       <n-tree
         ref="nTreeRef"
         v-bind="getProps.treeProps"
-        v-model:expanded-keys="expandedKeys"
-        :default-expanded-keys="expandedKeys"
         :style="{ height: getProps.maxHeight }"
         :selected-keys="selectedKeys"
         :checked-keys="checkedKeys"
