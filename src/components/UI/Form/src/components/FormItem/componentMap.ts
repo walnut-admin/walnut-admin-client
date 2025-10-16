@@ -135,5 +135,11 @@ componentMap.set(
     () => import('../../../../../Vendor/Tinymce/index'),
   ),
 )
+componentMap.set(
+  'JSONEditor',
+  createAsyncComponent(
+    () => import('../../../../../Vendor/JSONEditor/index'),
+  ),
+)
 
 export { componentMap }

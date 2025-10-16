@@ -50,6 +50,7 @@ import type { ICompExtraPasswordProps } from '@/components/Extra/Password'
 import type { ICompExtraPhoneNumberInputProps } from '@/components/Extra/PhoneNumberInput'
 import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { ICompExtraVerifyCodeProps } from '@/components/Extra/VerifyCode'
+import type { ICompVendorJSONEditorProps } from '@/components/Vendor/JSONEditor'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
 import type { IHooksUseProps } from '@/hooks/core/useProps'
 
@@ -202,12 +203,12 @@ export declare namespace WForm {
      * @example `form.${uniqueKey}.${path}` used for label locale
      * @example `form.${uniqueKey}.${path}.helpMsg` built in for label help message
      * So in this rule, all we need to do is provide a `localeUniqueKey` and config the messages in `Locale Manage`
-     * No need to privide a label property in `schema item formProp`, the built in logic will handle the label properly.
+     * No need to provide a label property in `schema item formProp`, the built in logic will handle the label properly.
      */
     localeUniqueKey?: string
 
     /**
-     * @description Used for form related to a localed table
+     * @description Used for form related to a locale table
      */
     localeWithTable?: boolean
 
@@ -313,6 +314,7 @@ export declare namespace WForm {
       }
 
       'Vendor:Tinymce': ICompVendorTinymceProps
+      'Vendor:JSONEditor': ICompVendorJSONEditorProps
     }
 
     type SchemaItemFormProps<T> = Omit<FormItemProps, 'rule' | 'label' | 'path'> & {
@@ -349,13 +351,13 @@ export declare namespace WForm {
       labelHelpMessage?: string | string[] | boolean
 
       /**
-       * @description Used for localed form item which do not need to locale with the whole form
+       * @description Used for locale form item which do not need to locale with the whole form
        * TRUE when localeUniqueKey has value, specify FALSE when no need to locale the label or labelHelpMessage.
        */
       locale?: boolean
 
       /**
-       * @description Used for form related to a localed table
+       * @description Used for form related to a locale table
        */
       localeWithTable?: boolean
 
@@ -381,7 +383,7 @@ export declare namespace WForm {
       componentProp?: ComponentPropPool<D>[T]
         & DomProps & {
         /**
-         * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we maually add it to support ts better
+         * @description Even though most naive-ui component already has `defaultValue` prop, some custom components do not have one, so we manually add it to support ts better
          */
           defaultValue?: DefaultValue
 
@@ -409,7 +411,7 @@ export declare namespace WForm {
 
       /**
        * @description v-if/v-show control
-       * Also scoped `visibleMode` supported, override the same galobal prop on form
+       * Also scoped `visibleMode` supported, override the same global prop on form
        */
       visibleProp?: {
         /**
@@ -441,6 +443,7 @@ export declare namespace WForm {
       type RoleSelectSchema<D> = DynamicSchemaItemProps<'Extend:RoleSelect', D>
 
       type TinymceSchema<D> = DynamicSchemaItemProps<'Vendor:Tinymce', D>
+      type JSONEditorSchema<D> = DynamicSchemaItemProps<'Vendor:JSONEditor', D>
 
       // base
       type RenderSchema<D> = DynamicSchemaItemProps<'Base:Render', D>
@@ -495,6 +498,7 @@ export declare namespace WForm {
 
         | SchemaItem.RoleSelectSchema<D>
         | SchemaItem.TinymceSchema<D>
+        | SchemaItem.JSONEditorSchema<D>
 
       // base
         | SchemaItem.RenderSchema<D>
