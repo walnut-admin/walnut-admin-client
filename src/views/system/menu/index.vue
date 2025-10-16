@@ -171,9 +171,6 @@ const [register, { validate, restoreValidation }] = useForm<IAppSystemMenuForm>(
                 await menuAPI[actionType.value](pathsToObject<typeof formData.value, IModels.SystemMenu>(formData.value))
                 useAppMsgSuccess()
                 await onInit()
-                resetFormData()
-                actionType.value = 'create'
-                targetTreeItem.value = ''
               }
               finally {
                 loading.value = false
@@ -187,8 +184,6 @@ const [register, { validate, restoreValidation }] = useForm<IAppSystemMenuForm>(
             disabled: loading,
             onClick: async () => {
               await restoreValidation()
-              targetTreeItem.value = ''
-              resetFormData()
             },
           },
         ],
@@ -223,7 +218,7 @@ async function onUpdateTreeValue(v?: StringOrNumber | StringOrNumber[]) {
       >
         <template #default>
           <!-- @vue-generic {IModels.SystemMenu} -->
-          <WTree :value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
+          <WTree v-model:value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
         </template>
       </n-card>
     </n-gi>

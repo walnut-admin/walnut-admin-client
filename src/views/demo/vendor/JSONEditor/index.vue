@@ -33,6 +33,16 @@ const jsonValue = ref({
 
         <WJSONEditor v-model:value="jsonValue" read-only />
       </n-list-item>
+
+      <n-list-item>
+        <WTitle prefix="bar" class="mb-2">
+          Button
+        </WTitle>
+
+        <WJSON :value="jsonValue" class="mb-2" />
+
+        <WJSONEditor v-model:value="jsonValue" button modal-title="JSON Editor" />
+      </n-list-item>
     </n-list>
   </WDemoCard>
 </template>

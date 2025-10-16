@@ -431,6 +431,8 @@ export function useMenuFormSchema(
         statusBar: false,
         navigationBar: false,
         mainMenuBar: false,
+        button: true,
+        modalTitle: computed(() => t('app.base.watermark')),
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,
