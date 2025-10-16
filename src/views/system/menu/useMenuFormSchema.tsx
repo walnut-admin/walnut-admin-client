@@ -420,7 +420,7 @@ export function useMenuFormSchema(
     },
 
     {
-      type: 'Base:Input',
+      type: 'Vendor:JSONEditor',
       formProp: {
         path: 'meta.watermark',
         rule: false,
@@ -428,7 +428,9 @@ export function useMenuFormSchema(
         label: computed(() => t('app.base.watermark')),
       },
       componentProp: {
-        type: 'textarea',
+        statusBar: false,
+        navigationBar: false,
+        mainMenuBar: false,
       },
       visibleProp: {
         vIf: ({ formData }) => formData.type === AppConstMenuType.MENU,

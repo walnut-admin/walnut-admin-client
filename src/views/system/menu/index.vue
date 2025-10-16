@@ -52,7 +52,7 @@ const { stateRef: formData, resetState: resetFormData, commit } = useState<IAppS
   'meta.leaveTip': false,
   'meta.maskUrl': false,
   'meta.hijackRefresh': false,
-  'meta.watermark': null,
+  'meta.watermark': {},
   'meta.transition': 'fade',
 })
 
@@ -171,8 +171,9 @@ const [register, { validate, restoreValidation }] = useForm<IAppSystemMenuForm>(
                 await menuAPI[actionType.value](pathsToObject<typeof formData.value, IModels.SystemMenu>(formData.value))
                 useAppMsgSuccess()
                 await onInit()
-                targetTreeItem.value = ''
                 resetFormData()
+                actionType.value = 'create'
+                targetTreeItem.value = ''
               }
               finally {
                 loading.value = false
@@ -204,7 +205,7 @@ async function onUpdateTreeValue(v?: StringOrNumber | StringOrNumber[]) {
   else {
     const res = await menuAPI.read(v as string)
     actionType.value = 'update'
-    formData.value = objectToPaths(res)
+    formData.value = objectToPaths(res, ['watermark'])
   }
 
   restoreValidation()
@@ -222,7 +223,7 @@ async function onUpdateTreeValue(v?: StringOrNumber | StringOrNumber[]) {
       >
         <template #default>
           <!-- @vue-generic {IModels.SystemMenu} -->
-          <WTree v-model:value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
+          <WTree :value="targetTreeItem" @hook="registerTree" @update:value="onUpdateTreeValue" />
         </template>
       </n-card>
     </n-gi>
