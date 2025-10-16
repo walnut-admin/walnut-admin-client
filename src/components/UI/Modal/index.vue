@@ -14,8 +14,9 @@ const props = withDefaults(defineProps<ICompUIModalProps>(), {
   defaultButton: true,
   segmented: true,
 })
-
 const emits = defineEmits<{ yes: [], no: [], fullscreen: [boolean] }>()
+
+const attrs = useAttrs()
 
 const show = defineModel<boolean>('show', { required: true, default: false })
 
@@ -100,7 +101,7 @@ async function onUpdateShow(v: boolean) {
 
     <template #action>
       <n-space v-if="defaultButton" size="small" class="float-right">
-        <n-button size="small" :disabled="loading" @click="onUpdateShow(false)">
+        <n-button v-if="attrs.closable" size="small" :disabled="loading" @click="onUpdateShow(false)">
           {{ $t('app.base.no') }}
         </n-button>
 
