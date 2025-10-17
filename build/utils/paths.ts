@@ -4,7 +4,7 @@ export const typesCheckLogPath = 'report/tsc.log'
 export const generatedPathsFilePath = 'build/_generated/paths.ts'
 
 // app settings json schema file path
-export const AppSettingsJSONSchemaFilePath = '.vscode/appSettings.schema.json'
+export const AppSettingsDevJSONSchemaFilePath = '.vscode/settings-dev.schema.json'
 
 // app setting interface file path
-export const AppSettingsInterfaceFilePath = 'types/settings.d.ts'
+export const AppSettingsDevInterfaceFilePath = 'src/store/types.d.ts'

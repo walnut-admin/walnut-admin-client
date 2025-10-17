@@ -1,0 +1,522 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/IStoreSetting.Dev",
+  "definitions": {
+    "IStoreSetting.Dev": {
+      "type": "object",
+      "properties": {
+        "themes": {
+          "type": "object",
+          "properties": {
+            "light": {
+              "type": "object",
+              "properties": {
+                "primaryColor": {
+                  "type": "string",
+                  "description": "Primary color for light theme"
+                },
+                "infoColor": {
+                  "type": "string",
+                  "description": "Info color for light theme"
+                },
+                "successColor": {
+                  "type": "string",
+                  "description": "Success color for light theme",
+                  "default": "#52c41a"
+                },
+                "warningColor": {
+                  "type": "string",
+                  "description": "Warning color for light theme"
+                },
+                "errorColor": {
+                  "type": "string",
+                  "description": "Error color for light theme"
+                },
+                "bodyColor": {
+                  "type": "string",
+                  "description": "Body color for light theme"
+                },
+                "invertedColor": {
+                  "type": "string",
+                  "description": "Inverted color for light theme"
+                }
+              },
+              "required": [
+                "primaryColor",
+                "infoColor",
+                "successColor",
+                "warningColor",
+                "errorColor",
+                "bodyColor",
+                "invertedColor"
+              ],
+              "additionalProperties": false
+            },
+            "dark": {
+              "type": "object",
+              "properties": {
+                "primaryColor": {
+                  "type": "string",
+                  "description": "Primary color for dark theme"
+                },
+                "infoColor": {
+                  "type": "string",
+                  "description": "Info color for dark theme"
+                },
+                "successColor": {
+                  "type": "string",
+                  "description": "Success color for dark theme"
+                },
+                "warningColor": {
+                  "type": "string",
+                  "description": "Warning color for dark theme"
+                },
+                "errorColor": {
+                  "type": "string",
+                  "description": "Error color for dark theme"
+                },
+                "bodyColor": {
+                  "type": "string",
+                  "description": "Body color for dark theme"
+                },
+                "invertedColor": {
+                  "type": "string",
+                  "description": "Inverted color for dark theme"
+                }
+              },
+              "required": [
+                "primaryColor",
+                "infoColor",
+                "successColor",
+                "warningColor",
+                "errorColor",
+                "bodyColor",
+                "invertedColor"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "light",
+            "dark"
+          ],
+          "additionalProperties": false
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "keepAlive": {
+              "type": "boolean",
+              "description": "Keep Alive component, vue features",
+              "default": true
+            },
+            "scrollMode": {
+              "$ref": "#/definitions/ValueOfAppConstScrollMode",
+              "description": "content or wrapper, scrollbar may have part covered in wrapper mode",
+              "default": "wrapper"
+            },
+            "contentPadding": {
+              "type": "number",
+              "description": "Content padding px",
+              "default": 4
+            }
+          },
+          "required": [
+            "keepAlive",
+            "scrollMode",
+            "contentPadding"
+          ],
+          "additionalProperties": false
+        },
+        "logo": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "DOM element id",
+              "default": "walnut-admin-logo"
+            },
+            "status": {
+              "type": "boolean",
+              "description": "Development debugging visibility control",
+              "default": true
+            },
+            "fixed": {
+              "type": "boolean",
+              "description": "True => fixed positioning, false => normal flow",
+              "default": true
+            },
+            "transition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Transition animation name",
+              "default": "slideLeft"
+            }
+          },
+          "required": [
+            "id",
+            "status",
+            "fixed",
+            "transition"
+          ],
+          "additionalProperties": false
+        },
+        "header": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "DOM element id",
+              "default": "walnut-admin-header"
+            },
+            "status": {
+              "type": "boolean",
+              "description": "Development debugging visibility control",
+              "default": true
+            },
+            "fixed": {
+              "type": "boolean",
+              "description": "Whether header is fixed",
+              "default": true
+            },
+            "transition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Transition animation name",
+              "default": "slideUp"
+            },
+            "height": {
+              "type": "number",
+              "description": "Header height",
+              "default": 48
+            },
+            "scrollUpShow": {
+              "type": "boolean",
+              "description": "Show header when scrolling up (when not fixed)",
+              "default": false
+            },
+            "liveOnHover": {
+              "type": "boolean",
+              "description": "Keep header visible on hover (when scrollUpShow is true)",
+              "default": false
+            }
+          },
+          "required": [
+            "id",
+            "status",
+            "fixed",
+            "transition",
+            "height",
+            "scrollUpShow",
+            "liveOnHover"
+          ],
+          "additionalProperties": false
+        },
+        "tabs": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "DOM element id",
+              "default": "walnut-admin-tabs"
+            },
+            "status": {
+              "type": "boolean",
+              "description": "Development debugging visibility control",
+              "default": true
+            },
+            "fixed": {
+              "type": "boolean",
+              "description": "True => fixed positioning, false => normal flow",
+              "default": true
+            },
+            "height": {
+              "type": "number",
+              "description": "Tab height",
+              "default": 36
+            },
+            "itemWidth": {
+              "type": "number",
+              "description": "Tab item width",
+              "default": 120
+            },
+            "transition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Transition animation name",
+              "default": "slideUp"
+            },
+            "persistent": {
+              "type": "boolean",
+              "description": "Whether to persist tab state",
+              "default": true,
+              "deprecated": "wait for next version"
+            },
+            "itemTransition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Tab item transition animation",
+              "default": "fadeDown"
+            },
+            "scrollUpShow": {
+              "type": "boolean",
+              "description": "Show tabs when scrolling up (when not fixed)",
+              "default": false
+            },
+            "liveOnHover": {
+              "type": "boolean",
+              "description": "Keep tabs visible on hover (when scrollUpShow is true)",
+              "default": false
+            },
+            "showUtils": {
+              "type": "boolean",
+              "description": "Tab aside utils visibility",
+              "default": true
+            },
+            "utilsMode": {
+              "$ref": "#/definitions/ValueOfAppConstTabUtilsShowMode",
+              "description": "Tab aside utils display mode",
+              "default": "overflow"
+            },
+            "contextMenu": {
+              "type": "boolean",
+              "description": "Tab context menu visibility",
+              "default": true
+            },
+            "sortable": {
+              "type": "boolean",
+              "description": "Tab sortable",
+              "default": true
+            }
+          },
+          "required": [
+            "id",
+            "status",
+            "fixed",
+            "height",
+            "itemWidth",
+            "transition",
+            "persistent",
+            "itemTransition",
+            "scrollUpShow",
+            "liveOnHover",
+            "showUtils",
+            "utilsMode",
+            "contextMenu",
+            "sortable"
+          ],
+          "additionalProperties": false
+        },
+        "breadcrumb": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "DOM element id",
+              "default": "walnut-admin-breadcrumb"
+            },
+            "status": {
+              "type": "boolean",
+              "description": "Development debugging visibility control",
+              "default": true
+            },
+            "transition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Transition animation name",
+              "default": "fadeDown"
+            },
+            "separator": {
+              "type": "string",
+              "description": "Breadcrumb custom separator",
+              "default": ">"
+            }
+          },
+          "required": [
+            "id",
+            "status",
+            "transition",
+            "separator"
+          ],
+          "additionalProperties": false
+        },
+        "menu": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "DOM element id",
+              "default": "walnut-admin-menu"
+            },
+            "status": {
+              "type": "boolean",
+              "description": "Development debugging visibility control",
+              "default": true
+            },
+            "transition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Transition animation name",
+              "default": "slideLeft"
+            },
+            "indent": {
+              "type": "number",
+              "description": "Menu item indentation pixels",
+              "default": 16
+            },
+            "width": {
+              "type": "number",
+              "description": "When app layout is `left-menu`, menu width",
+              "default": 240
+            },
+            "iconSize": {
+              "type": "number",
+              "description": "Menu icon size",
+              "default": 24
+            },
+            "collapseStatus": {
+              "type": "boolean",
+              "description": "Show collapse button",
+              "default": true
+            },
+            "collapsedIconSize": {
+              "type": "number",
+              "description": "Menu collapsed icon size",
+              "default": 20
+            },
+            "collapsedWidth": {
+              "type": "number",
+              "description": "When app layout is `left-menu`, menu collapsed width",
+              "default": 64
+            },
+            "accordion": {
+              "type": "boolean",
+              "description": "Enable accordion mode for menu",
+              "default": true
+            }
+          },
+          "required": [
+            "id",
+            "status",
+            "transition",
+            "indent",
+            "width",
+            "iconSize",
+            "collapseStatus",
+            "collapsedIconSize",
+            "collapsedWidth",
+            "accordion"
+          ],
+          "additionalProperties": false
+        },
+        "footer": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "DOM element id",
+              "default": "walnut-admin-footer"
+            },
+            "status": {
+              "type": "boolean",
+              "description": "Development debugging visibility control",
+              "default": true
+            },
+            "fixed": {
+              "type": "boolean",
+              "description": "True => fixed positioning, false => normal flow",
+              "default": true
+            },
+            "transition": {
+              "$ref": "#/definitions/ValueOfAppConstTransitionName",
+              "description": "Transition animation name",
+              "default": "slideDown"
+            },
+            "height": {
+              "type": "number",
+              "description": "Footer height",
+              "default": 28
+            },
+            "content": {
+              "type": "string",
+              "description": "Custom footer content",
+              "default": "Copyright © 2020-present Walnut Admin. All Rights Reserved."
+            }
+          },
+          "required": [
+            "id",
+            "status",
+            "fixed",
+            "transition",
+            "height",
+            "content"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "themes",
+        "app",
+        "logo",
+        "header",
+        "tabs",
+        "breadcrumb",
+        "menu",
+        "footer"
+      ],
+      "additionalProperties": false,
+      "description": "Pure front-end developer environment configuration Contains development debugging, implementation details, configurations that may affect application stability"
+    },
+    "ValueOfAppConstScrollMode": {
+      "type": "string",
+      "enum": [
+        "content",
+        "wrapper"
+      ]
+    },
+    "ValueOfAppConstTransitionName": {
+      "type": "string",
+      "enum": [
+        "fade",
+        "fade-down",
+        "fade-down-big",
+        "fade-left",
+        "fade-left-big",
+        "fade-right",
+        "fade-right-big",
+        "fade-up",
+        "fade-up-big",
+        "fade-topLeft",
+        "fade-topRight",
+        "fade-bottomLeft",
+        "fade-bottomRight",
+        "zoom",
+        "zoom-down",
+        "zoom-left",
+        "zoom-right",
+        "zoom-up",
+        "bounce",
+        "bounce-down",
+        "bounce-left",
+        "bounce-right",
+        "bounce-up",
+        "rotate",
+        "rotate-downLeft",
+        "rotate-downRight",
+        "rotate-upLeft",
+        "rotate-upRight",
+        "slide-down",
+        "slide-left",
+        "slide-right",
+        "slide-up",
+        "back-down",
+        "back-left",
+        "back-right",
+        "back-up",
+        "flip-x",
+        "flip-y"
+      ]
+    },
+    "ValueOfAppConstTabUtilsShowMode": {
+      "type": "string",
+      "enum": [
+        "always",
+        "overflow"
+      ]
+    }
+  }
+}

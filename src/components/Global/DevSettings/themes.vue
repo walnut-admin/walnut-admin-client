@@ -1,10 +1,14 @@
 <script lang="tsx" setup>
-import { modalColor } from '../../shared'
+import AppSettingsDevColors from './colors'
+import { modalColor } from './shared'
 
-import AppSettingsColors from '../colors'
+defineOptions({
+  name: 'WCompGlobalDevSettingsThemes',
+})
 
-const appSetting = useAppStoreSetting()
-const themeRelatives = appSetting.themes
+const appStoreSettingDev = useAppStoreSettingDev()
+
+const themeRelatives = appStoreSettingDev.themes
 
 const lightThemeRelatives = ref(themeRelatives.light)
 const darkThemeRelatives = ref(themeRelatives.dark)
@@ -47,7 +51,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors v-model={[formData.primaryColor, 'value']}></AppSettingsColors>
+          <AppSettingsDevColors v-model={[formData.primaryColor, 'value']}></AppSettingsDevColors>
         ),
       },
     },
@@ -67,7 +71,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors v-model={[formData.infoColor, 'value']}></AppSettingsColors>
+          <AppSettingsDevColors v-model={[formData.infoColor, 'value']}></AppSettingsDevColors>
         ),
       },
     },
@@ -87,7 +91,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors v-model={[formData.successColor, 'value']}></AppSettingsColors>
+          <AppSettingsDevColors v-model={[formData.successColor, 'value']}></AppSettingsDevColors>
         ),
       },
     },
@@ -107,7 +111,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors v-model={[formData.warningColor, 'value']}></AppSettingsColors>
+          <AppSettingsDevColors v-model={[formData.warningColor, 'value']}></AppSettingsDevColors>
         ),
       },
     },
@@ -127,7 +131,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors v-model={[formData.errorColor, 'value']}></AppSettingsColors>
+          <AppSettingsDevColors v-model={[formData.errorColor, 'value']}></AppSettingsDevColors>
         ),
       },
     },
@@ -147,7 +151,7 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors v-model={[formData.bodyColor, 'value']}></AppSettingsColors>
+          <AppSettingsDevColors v-model={[formData.bodyColor, 'value']}></AppSettingsDevColors>
         ),
       },
     },
@@ -168,11 +172,11 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       },
       componentProp: {
         render: ({ formData }) => (
-          <AppSettingsColors
+          <AppSettingsDevColors
             v-model={[formData.invertedColor, 'value']}
             disabled={isDark.value}
           >
-          </AppSettingsColors>
+          </AppSettingsDevColors>
         ),
       },
     },

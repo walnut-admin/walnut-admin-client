@@ -16,7 +16,7 @@ const contentFull = useRouterQuery('full')
     bottom="120"
     right="60"
     menu-trigger="hover"
-    style="z-index:9999"
+    class="z-1999"
   >
     <WIcon
       id="walnut-settings"

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getCanAnimate, modalColor } from '@/components/App/AppSettings/shared'
+import { getCanAnimate, modalColor } from './shared'
 
 defineOptions({
   name: 'WCompGlobalDevSettingsHeader',

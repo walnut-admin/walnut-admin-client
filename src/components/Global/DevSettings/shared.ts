@@ -8,5 +8,5 @@ export const modalColor = computed(
 )
 
 export const getCanAnimate = computed(
-  () => isReducedMotion.value && userStorePreference.getReducedMotion as boolean,
+  () => isReducedMotion.value || userStorePreference.getReducedMotion as boolean,
 )

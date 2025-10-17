@@ -373,129 +373,6 @@ export namespace IStoreUser {
       theme: Theme
       layout: Layout
     }
-
-    // app: {
-    //   /**
-    //    * @description dark or light
-    //    * @default false
-    //    */
-    //   isDark: boolean
-
-    //   /**
-    //    * @description app locale
-    //    * @default en_US
-    //    */
-    //   locale: ValueOfAppConstLocale
-
-    //   /**
-    //    * @description for those who cannot see animation viewing the internet
-    //    * @default false
-    //    */
-    //   reducedMotion: boolean
-
-    //   /**
-    //    * @description just different css tricks to fit the app in view
-    //    * @default default
-    //    */
-    //   colorMode: ValueOfAppConstColorMode
-
-    //   /**
-    //    * @description App Layout
-    //    * @default left-menu
-    //    */
-    //   layout: ValueOfAppConstLayoutMode
-    // }
-
-    // themes: {
-    //   light: {
-    //     /**
-    //      * @description Primary color for light theme
-    //      * @default #409eff
-    //      */
-    //     primaryColor: string
-
-    //     /**
-    //      * @description Info color for light theme
-    //      * @default #1890ff
-    //      */
-    //     infoColor: string
-
-    //     /**
-    //      * @description Success color for light theme
-    //      * @default #52c41a
-    //      */
-    //     successColor: string
-
-    //     /**
-    //      * @description Warning color for light theme
-    //      * @default #faad14
-    //      */
-    //     warningColor: string
-
-    //     /**
-    //      * @description Error color for light theme
-    //      * @default #f5222d
-    //      */
-    //     errorColor: string
-
-    //     /**
-    //      * @description Body color for light theme
-    //      * @default #f8f8f8
-    //      */
-    //     bodyColor: string
-
-    //     /**
-    //      * @description Inverted color for light theme
-    //      * @default #2C3E50
-    //      */
-    //     invertedColor: string
-    //   }
-
-    //   dark: {
-    //     /**
-    //      * @description Primary color for dark theme
-    //      * @default #7cb305
-    //      */
-    //     primaryColor: string
-
-    //     /**
-    //      * @description Info color for dark theme
-    //      * @default #0284c7
-    //      */
-    //     infoColor: string
-
-    //     /**
-    //      * @description Success color for dark theme
-    //      * @default #10b981
-    //      */
-    //     successColor: string
-
-    //     /**
-    //      * @description Warning color for dark theme
-    //      * @default #f59e0b
-    //      */
-    //     warningColor: string
-
-    //     /**
-    //      * @description Error color for dark theme
-    //      * @default #ef4444
-    //      */
-    //     errorColor: string
-
-    //     /**
-    //      * @description Body color for dark theme
-    //      * @default #202020
-    //      */
-    //     bodyColor: string
-
-    //     /**
-    //      * @description Inverted color for dark theme
-    //      * @default #2C3E50
-    //      */
-    //     invertedColor: string
-    //   }
-    // }
-
   }
 
   /**
@@ -519,6 +396,83 @@ export namespace IStoreSetting {
    * Contains development debugging, implementation details, configurations that may affect application stability
    */
   export interface Dev {
+    themes: {
+      light: {
+        /**
+         * @description Primary color for light theme
+         */
+        primaryColor: string
+
+        /**
+         * @description Info color for light theme
+         */
+        infoColor: string
+
+        /**
+         * @description Success color for light theme
+         * @default #52c41a
+         */
+        successColor: string
+
+        /**
+         * @description Warning color for light theme
+         */
+        warningColor: string
+
+        /**
+         * @description Error color for light theme
+         */
+        errorColor: string
+
+        /**
+         * @description Body color for light theme
+         */
+        bodyColor: string
+
+        /**
+         * @description Inverted color for light theme
+         */
+        invertedColor: string
+      }
+
+      dark: {
+        /**
+         * @description Primary color for dark theme
+         */
+        primaryColor: string
+
+        /**
+         * @description Info color for dark theme
+         */
+        infoColor: string
+
+        /**
+         * @description Success color for dark theme
+         */
+        successColor: string
+
+        /**
+         * @description Warning color for dark theme
+         */
+        warningColor: string
+
+        /**
+         * @description Error color for dark theme
+         */
+        errorColor: string
+
+        /**
+         * @description Body color for dark theme
+         */
+        bodyColor: string
+
+        /**
+         * @description Inverted color for dark theme
+         */
+        invertedColor: string
+      }
+    }
+
     app: {
     /**
      * @description Keep Alive component, vue features

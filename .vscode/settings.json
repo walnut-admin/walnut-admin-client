@@ -87,9 +87,9 @@
   "json.schemas": [
     {
       "fileMatch": [
-        "src/settings.json"
+        "src/settings-dev.json"
       ],
-      "url": ".vscode/appSettings.schema.json"
+      "url": ".vscode/settings-dev.schema.json"
     }
   ],
   "[dockercompose]": {

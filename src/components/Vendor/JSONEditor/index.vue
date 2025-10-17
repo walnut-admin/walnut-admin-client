@@ -24,7 +24,7 @@ watch(() => isDark.value, async (v) => {
 
 <template>
   <DefineJSONEditor>
-    <!-- @vue-expect-error fuck mode -->
+    <!-- @vue-expect-error mode -->
     <JsonEditorVue
       v-model="value"
       mode="tree"

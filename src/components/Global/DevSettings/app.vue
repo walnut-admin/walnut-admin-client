@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { modalColor } from '@/components/App/AppSettings/shared'
+import { modalColor } from './shared'
 
 defineOptions({
   name: 'WCompGlobalDevSettingsApp',

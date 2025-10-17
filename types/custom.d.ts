@@ -8,9 +8,6 @@ declare global {
     [K in keyof T]: (evt: K, ...args: T[K]) => void;
   }>>
 
-  // App Relatives
-  type AppSettings = import('./settings').AppSettings
-
   // echarts option
   type EChartsOption = import('echarts').EChartsOption
 

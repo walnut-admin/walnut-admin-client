@@ -6,6 +6,7 @@ import HeaderForm from './header.vue'
 import LogoForm from './logo.vue'
 import MenuForm from './menu.vue'
 import TabForm from './tab.vue'
+import ThemesForm from './themes.vue'
 
 defineOptions({
   name: 'WCompGlobalDevSettings',
@@ -23,6 +24,7 @@ const { copy, copied } = useClipboard({
   source: computed(() =>
     JSON.stringify(
       {
+        themes: appStoreSettingDev.themes,
         app: appStoreSettingDev.app,
         logo: appStoreSettingDev.logo,
         header: appStoreSettingDev.header,
@@ -61,6 +63,7 @@ function onReset() {
       @yes="() => (show = false)"
       @no="() => (show = false)"
     >
+      <ThemesForm />
       <AppForm />
       <LogoForm />
       <HeaderForm />
@@ -73,20 +76,20 @@ function onReset() {
         <div class="w-full">
           <n-button
             type="primary"
-            class="w-full"
+            class="w-full text-wrap"
             icon-placement="right"
             :disabled="copied"
             @click="copy()"
           >
             {{
               copied
-                ? $t('form.app.settings.app.copy.helpMsg')
-                : $t('form.app.settings.app.copy')
+                ? $t('app.settings.copy.helpMsg')
+                : $t('app.settings.copy')
             }}
           </n-button>
 
           <n-button type="error" class="mt-2 w-full" @click="onReset">
-            {{ $t('form.app.settings.app.reset') }}
+            {{ $t('app.settings.reset') }}
           </n-button>
         </div>
       </template>
