@@ -5,5 +5,5 @@ defineOptions({
 </script>
 
 <template>
-  <WIcon icon="mdi:theme-light-dark" width="24" @click="toggleDark" />
+  <WIcon icon="mdi:theme-light-dark" width="28" @click="toggleDark" />
 </template>

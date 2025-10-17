@@ -69,7 +69,7 @@ watch(() => getFooterShow.value, async (v) => {
           class="relative h-full w-full"
           :style="{
             width: appStoreSettingDev.getCalcContentWidth,
-            padding: $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}px`,
+            padding: $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}rem`,
             height: $route.meta.ternal === 'internal' ? appStoreSettingDev.getCalcContentHeight : 'initial',
           }"
         >

@@ -54,7 +54,7 @@ const [
       localeWithTable: true,
       span: 6,
       showFeedback: false,
-      labelWidth: 80,
+      labelWidth: 100,
       // query form schemas
       schemas: [
         {
@@ -160,7 +160,7 @@ const [
     localeWithTable: true,
     dialogPreset: 'modal',
     baseRules: true,
-    labelWidth: 80,
+    labelWidth: 100,
     xGap: 0,
     dialogProps: {
       title: 'app.base.language',

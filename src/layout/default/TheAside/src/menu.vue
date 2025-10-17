@@ -130,7 +130,7 @@ function onNodeProps(option: MenuOption) {
 </script>
 
 <template>
-  <WTransition ap-ppear :transition-name="appStoreSettingDev.getMenuTransition">
+  <WTransition appear :transition-name="appStoreSettingDev.getMenuTransition">
     <WScrollbar
       v-if="appStoreSettingDev.getMenuShow"
       height="100%"
@@ -143,18 +143,18 @@ function onNodeProps(option: MenuOption) {
         paddingTop:
           `${appStoreSettingDev.getLogoShow && appStoreSettingDev.getLogoFixed
             ? appStoreSettingDev.header.height
-            : 0}px`,
+            : 0}rem`,
       }"
     >
       <n-menu
         :id="appStoreSettingDev.getMenuId"
         v-model:expanded-keys="expandedKeys"
         :inverted="userStorePreference.getMenuInverted"
-        :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth"
+        :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth * userStorePreference.getFontSize"
         :accordion="appStoreSettingDev.getMenuAccordion"
-        :collapsed-icon-size="appStoreSettingDev.getMenuCollapsedIconSize"
-        :icon-size="appStoreSettingDev.getMenuIconSize"
-        :indent="appStoreSettingDev.getMenuIndent"
+        :collapsed-icon-size="appStoreSettingDev.getMenuCollapsedIconSize * userStorePreference.getFontSize"
+        :icon-size="appStoreSettingDev.getMenuIconSize * userStorePreference.getFontSize"
+        :indent="appStoreSettingDev.getMenuIndent * userStorePreference.getFontSize"
         :options="getMenuOptions"
         :collapsed="appStoreMenu.getCollapse"
         :value="getCurrentMenuName"

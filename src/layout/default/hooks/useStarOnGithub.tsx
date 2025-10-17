@@ -28,7 +28,7 @@ export async function useStarOnGithub() {
     duration: 30000,
     description: t('app.github.desc'),
     containerStyle: {
-      marginTop: `${appStoreSettingDev.getHeaderHeight}px`,
+      marginTop: `${appStoreSettingDev.getHeaderHeight}rem`,
     },
     content: () => {
       return (

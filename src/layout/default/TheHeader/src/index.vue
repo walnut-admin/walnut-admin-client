@@ -28,7 +28,7 @@ function onShowAside() {
       :inverted="userStorePreference.getHeaderInverted"
       :style="{
         zIndex: 999,
-        height: `${appStoreSettingDev.getHeaderHeight}px`,
+        height: `${appStoreSettingDev.getHeaderHeight}rem`,
       }"
     >
       <div
@@ -59,7 +59,7 @@ function onShowAside() {
           ]"
         >
           <WAppFullScreen
-            v-if="appStoreBackendSettings.getFullScreenEnabled && !appStoreAdapter.isMobile "
+            v-if="appStoreBackendSettings.getFullScreenEnabled && !appStoreAdapter.isMobile"
             id="walnut-admin-fullscreen"
             :is-fullscreen="isFullscreen"
             :click-event="toggle"

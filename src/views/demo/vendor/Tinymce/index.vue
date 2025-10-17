@@ -14,7 +14,7 @@ const _formData = ref({
 })
 
 // const [register] = useForm<typeof formData.value>({
-//   labelWidth: 100,
+//   labelWidth: 120,
 //   schemas: [
 //     {
 //       type: 'Base:Input',

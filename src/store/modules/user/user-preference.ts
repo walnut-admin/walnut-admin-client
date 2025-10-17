@@ -47,7 +47,7 @@ const useAppStoreUserPreferenceInside = defineStore(StoreKeys.USER_PREFERENCE, {
   getters: {
     // app
     getFontSize(state) {
-      return state.accessibility.fontSize
+      return state.accessibility.fontSize || 14
     },
     getLocale(state) {
       return state.basic.locale

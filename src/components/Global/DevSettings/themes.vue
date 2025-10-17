@@ -48,6 +48,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'primaryColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (
@@ -68,6 +71,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'infoColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (
@@ -88,6 +94,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'successColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (
@@ -108,6 +117,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'warningColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (
@@ -128,6 +140,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'errorColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (
@@ -148,6 +163,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'bodyColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (
@@ -169,6 +187,9 @@ const [register] = useForm<typeof lightThemeRelatives.value>({
       type: 'Base:Render',
       formProp: {
         path: 'invertedColor',
+        labelStyle: {
+          display: 'none',
+        },
       },
       componentProp: {
         render: ({ formData }) => (

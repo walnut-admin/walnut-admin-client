@@ -17,7 +17,7 @@ const { stateRef: updatePasswordFormData, resetState: resetPasswordFormData } = 
 const [registerUpdatePassword, { onOpen }] = useForm<typeof updatePasswordFormData.value>({
   dialogPreset: 'modal',
   baseRules: true,
-  labelWidth: 100,
+  labelWidth: 120,
   xGap: 0,
 
   dialogProps: {
@@ -110,7 +110,7 @@ const [
       localeWithTable: true,
       span: 6,
       showFeedback: false,
-      labelWidth: 100,
+      labelWidth: 120,
       schemas: [
         {
           type: 'Base:Input',

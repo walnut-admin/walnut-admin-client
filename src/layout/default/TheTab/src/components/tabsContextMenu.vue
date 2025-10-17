@@ -104,7 +104,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType
         canvasHeight: target?.scrollHeight as number + padding * 2,
         backgroundColor: getThemeOverridesCommon.value.bodyColor,
         style: {
-          margin: `${padding}px`,
+          margin: `${padding}rem`,
         },
       })
 

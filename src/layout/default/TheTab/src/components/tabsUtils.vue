@@ -15,7 +15,7 @@ defineProps<{ lists: AppTabUtilListItem[] }>()
         <template #trigger>
           <WIcon
             height="20"
-            class="m-1 my-auto cursor-pointer ring-2"
+            class="m-1 my-auto cursor-pointer rounded-lg transition-all duration-200 hover:scale-105 hover:bg-primary/10 hover:ring-1 hover:ring-primary/50"
             :icon="item.icon"
             @click="item.event"
           />

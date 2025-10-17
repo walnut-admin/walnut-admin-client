@@ -18,7 +18,7 @@ const configData = ref({
 
 const [register1] = useForm<typeof configData.value>({
   span: 12,
-  labelWidth: 100,
+  labelWidth: 120,
   schemas: [
     {
       type: 'Base:Input',

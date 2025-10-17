@@ -16,13 +16,13 @@ async function onGoIndex() {
       :id="appStoreSettingDev.getLogoId"
       class="cursor-pointer whitespace-nowrap px-6 transition-all" :class="[
         {
-          '!pl-4 !px-0': appStoreMenu.getCollapse,
+          '!px-0': appStoreMenu.getCollapse,
           '!fixed': appStoreSettingDev.getLogoFixed,
         },
       ]"
       :style="{
-        height: `${appStoreSettingDev.header.height}px`,
-        width: `${appStoreSettingDev.getMenuWidth}px`,
+        height: `${appStoreSettingDev.header.height}rem`,
+        width: `${appStoreSettingDev.getMenuWidth}rem`,
         zIndex: 999,
       }"
       @click="onGoIndex"

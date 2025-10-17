@@ -36,6 +36,8 @@ const props = withDefaults(defineProps<WForm.Props<T> & { class?: string }>(), {
 
 const emits = defineEmits<WForm.Emits<T>>()
 
+const userStorePreference = useAppStoreUserPreference()
+
 const WFormItemExtendDivider = createAsyncComponent(() => import('./components/Extend/Divider'))
 const WFormItemExtendQuery = createAsyncComponent(() => import('./components/Extend/Query'))
 const WFormExtendDesc = createAsyncComponent(() => import('./components/Extend/Desc'))
@@ -66,6 +68,10 @@ const getFormRules = computed((): FormRules =>
   getProps.value.baseRules
     ? generateBaseRules<T>(t, formSchemas as Ref<WForm.Schema.Item<T>[]>, getProps)
     : getProps.value.rules!)
+
+const getLabelWidth = computed(() => {
+  return getProps.value.labelWidth && typeof getProps.value.labelWidth === 'number' ? `${getProps.value.labelWidth / userStorePreference.getFontSize}rem` : getProps.value.labelWidth
+})
 
 // set context
 setFormContext<T>({
@@ -134,7 +140,7 @@ function getGridItemStyle(item: WForm.Schema.Item<T>, mode?: 'query' | 'divider'
 <template>
   <DefineForm>
     <WFormExtendDesc v-if="getProps.descriptionProps" />
-    <n-form v-else ref="formRef" v-bind="getFormProps" :rules="getFormRules">
+    <n-form v-else ref="formRef" v-bind="getFormProps" :rules="getFormRules" :label-width="getLabelWidth">
       <div
         class="relative grid w-full"
         :style="{

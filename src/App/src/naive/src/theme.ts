@@ -82,6 +82,12 @@ export const getThemeOverrides = computed(
       iconSizeSmall: '1.2857rem', // 18px ÷ 14 ≈ 1.2857rem
       iconSizeMedium: '1.2857rem', // 18px ÷ 14 ≈ 1.2857rem
       iconSizeLarge: '1.4286rem', // 20px ÷ 14 ≈ 1.4286rem
+      heightMini: '1.1429rem', // 16px ÷ 14 ≈ 1.1429rem
+      heightTiny: '1.5714rem', // 22px ÷ 14 ≈ 1.5714rem
+      heightSmall: '2rem', // 28px ÷ 14 = 2rem
+      heightMedium: '2.4286rem', // 34px ÷ 14 ≈ 2.4286rem
+      heightLarge: '2.8571rem', // 40px ÷ 14 ≈ 2.8571rem
+      heightHuge: '3.2857rem', // 46px ÷ 14 ≈ 3.2857rem
     },
 
     Input: {
@@ -246,6 +252,10 @@ export const getThemeOverrides = computed(
     TreeSelect: {
       nodeHeight: '2.1429rem', // 30px ÷ 14 ≈ 2.1429rem
       nodeWrapperPadding: '0.2143rem 0', // 3px ÷ 14 ≈ 0.2143rem
+    },
+
+    Drawer: {
+      bodyPadding: '1.1429rem 1.7143rem', // 16px ÷ 14 = 1.1429rem, 24px ÷ 14 = 1.7143rem
     },
   }),
 )

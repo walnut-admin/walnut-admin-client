@@ -243,28 +243,28 @@ const useAppStoreSettingDevInside = defineStore(StoreKeys.SETTING_DEV, {
      * @description get calc main content height
      */
     getCalcContentHeight(): string {
-      return `calc(100vh - ${this.getHeaderHeight}px - ${this.getTabsHeight}px - ${this.getFooterHeight}px)`
+      return `calc(100vh - ${this.getHeaderHeight}rem - ${this.getTabsHeight}rem - ${this.getFooterHeight}rem)`
     },
 
     /**
      * @description get calc main content height with padding
      */
     getCalcContentHeightWithPadding(): string {
-      return `calc(100vh - ${this.getHeaderHeight}px - ${this.getTabsHeight}px - ${this.getFooterHeight}px - ${this.getContentPadding * 2}px)`
+      return `calc(100vh - ${this.getHeaderHeight}rem - ${this.getTabsHeight}rem - ${this.getFooterHeight}rem - ${this.getContentPadding * 2}rem)`
     },
 
     /**
      * @description get calc main content width
      */
     getCalcContentWidth() {
-      return `calc(100vw - ${this.getMenuWidth}px)`
+      return `calc(100vw - ${this.getMenuWidth}rem)`
     },
 
     /**
      * @description get calc main content width with padding
      */
     getCalcContentWidthWithPadding(): string {
-      return `calc(100vw - ${this.getMenuWidth}px - ${this.getContentPadding * 2}px)`
+      return `calc(100vw - ${this.getMenuWidth}rem - ${this.getContentPadding * 2}rem)`
     },
   },
 

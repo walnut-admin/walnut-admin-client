@@ -12,10 +12,10 @@ const userStorePreference = useAppStoreUserPreference()
       :inverted="userStorePreference.getFooterInverted"
       :style="{
         zIndex: 999,
-        height: `${appStoreSettingDev.getFooterHeight}px`,
+        height: `${appStoreSettingDev.getFooterHeight}rem`,
       }"
     >
-      <div class="h-full flex items-center justify-center whitespace-nowrap">
+      <div class="h-full flex items-center justify-center whitespace-nowrap text-sm">
         {{ appStoreSettingDev.getFooterContent }}
       </div>
     </n-layout-footer>

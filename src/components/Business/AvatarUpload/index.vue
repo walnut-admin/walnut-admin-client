@@ -107,7 +107,7 @@ watchEffect(async () => {
     <WModal
       v-model:show="show"
       :title="t('comp:avatar-upload:title')"
-      width="60vw"
+      width="auto"
       :auto-focus="false"
       :loading="loading"
       display-directive="show"

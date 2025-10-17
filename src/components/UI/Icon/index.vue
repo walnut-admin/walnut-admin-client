@@ -8,6 +8,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<ICompUIIconProps>(), { inline: true })
+const userStorePreference = useAppStoreUserPreference()
 
 // Variable to store function to cancel loading
 const loader = ref<IconifyIconLoaderAbort>()
@@ -15,9 +16,19 @@ const loader = ref<IconifyIconLoaderAbort>()
 // Icon status
 const loaded = ref<boolean>()
 
-const getSize = computed(() =>
-  Number.parseInt(props.width as string || props.height as string) || `1.2rem`,
-)
+const getSize = computed(() => {
+  // use width first, then height, default 24
+  const raw = props.width ?? props.height ?? 24
+
+  //  transform string to number
+  const px
+    = typeof raw === 'number'
+      ? raw
+      : Number.parseFloat(String(raw).replace(/[^0-9.]/g, '')) || 24
+
+  // transform to rem（core logic: divide by current font size）
+  return `${px / userStorePreference.getFontSize}rem`
+})
 
 // Function to check if icon data is available
 function check(icon: string) {

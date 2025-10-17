@@ -81,12 +81,10 @@ async function onSelect(val: string) {
     @select="onSelect"
   >
     <div class="hstack items-center justify-center">
-      <div style="height: 32px; width: 32px">
-        <WAvatar
-          v-if="$route.name !== 'AccountSetting'"
-          :size="32"
-        />
-      </div>
+      <WAvatar
+        v-if="$route.name !== 'AccountSetting'"
+        :size="2"
+      />
 
       <div class="my-auto pl-1 text-base font-semibold">
         {{ userStoreProfile.getDisplayName }}

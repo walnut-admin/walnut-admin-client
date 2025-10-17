@@ -47,7 +47,7 @@ useStarOnGithub()
     <n-drawer
       v-else
       v-model:show="appStoreMenu.getShowAside"
-      :width="`${appStoreSettingDev.getMenuWidth}px`"
+      :width="`${appStoreSettingDev.getMenuWidth}rem`"
       placement="left"
       :native-scrollbar="false"
     >
@@ -56,7 +56,7 @@ useStarOnGithub()
 
     <div
       class="h-screen"
-      :style="{ width: `calc(100vw - ${appStoreSettingDev.getMenuWidth}px)` }"
+      :style="{ width: `calc(100vw - ${appStoreSettingDev.getMenuWidth}rem)` }"
     >
       <n-layout-content
         bordered

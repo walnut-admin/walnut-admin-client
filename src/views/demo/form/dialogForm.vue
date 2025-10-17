@@ -25,7 +25,7 @@ const formData = ref<Recordable>({})
 
 const [register1] = useForm<typeof configData.value>({
   span: 8,
-  labelWidth: 100,
+  labelWidth: 120,
   schemas: [
     {
       type: 'Base:Radio',
@@ -152,7 +152,7 @@ const [register2, { onOpen }] = useForm<typeof formData.value>({
       close()
     },
   },
-  labelWidth: 80,
+  labelWidth: 100,
   schemas: Array.from({ length: 4 }, (v, k) => {
     return {
       type: 'Base:Input',

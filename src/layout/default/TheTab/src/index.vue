@@ -32,7 +32,7 @@ const getShowUtils = computed(
 const getTabsWidth = computed(() =>
   appStoreAdapter.isMobile
     ? '100vw'
-    : `calc(100vw - ${appStoreSettingDev.getMenuWidth}px - ${getShowUtils.value ? '120px' : ''})`,
+    : `calc(100vw - ${appStoreSettingDev.getMenuWidth}rem - ${getShowUtils.value ? '120px' : ''})`,
 )
 
 const {
@@ -86,7 +86,7 @@ setTabsContext({
       :id="appStoreSettingDev.getTabsId"
       bordered
       :inverted="userStorePreference.getTabsInverted"
-      :style="{ zIndex: 999, height: `${appStoreSettingDev.getTabsHeight}px` }"
+      :style="{ zIndex: 999, height: `${appStoreSettingDev.getTabsHeight}rem` }"
     >
       <div class="h-full hstack justify-between">
         <!-- left utils -->

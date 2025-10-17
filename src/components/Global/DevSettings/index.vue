@@ -56,7 +56,7 @@ function onReset() {
 
     <WDrawer
       v-model:show="show"
-      :width="350"
+      width="24rem"
       display-directive="show"
       :title="$t('app.settings.title')"
       :default-button="false"

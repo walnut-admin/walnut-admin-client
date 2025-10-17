@@ -37,7 +37,7 @@ const objectFormData = ref<Recordable>({
 const getPath = computed(() => objectToPaths(objectFormData.value))
 
 const [registerObject] = useForm<typeof objectFormData.value>({
-  labelWidth: 80,
+  labelWidth: 100,
   schemas: [
     ...Array.from({ length: 2 }, (v, k) => {
       return {
@@ -93,7 +93,7 @@ const pathFormData = ref<Recordable>({
 const getObject = computed(() => pathsToObject(pathFormData.value))
 
 const [registerPath] = useForm<typeof pathFormData.value>({
-  labelWidth: 80,
+  labelWidth: 100,
   schemas: [
     ...Array.from({ length: 2 }, (v, k) => {
       return {

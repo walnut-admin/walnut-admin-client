@@ -14,8 +14,8 @@ const userStorePreference = useAppStoreUserPreference()
     bordered
     collapse-mode="width"
     class="z-2000 h-screen"
-    :width="appStoreSettingDev.getMenuWidth"
-    :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth"
+    :width="appStoreSettingDev.getMenuWidth * userStorePreference.getFontSize"
+    :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth * userStorePreference.getFontSize"
     :show-trigger="appStoreSettingDev.getMenuCollapseBuiltInStatus"
     :inverted="userStorePreference.getMenuInverted"
     :native-scrollbar="false"

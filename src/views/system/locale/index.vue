@@ -221,7 +221,7 @@ const [
     localeWithTable: true,
     dialogPreset: 'modal',
     baseRules: true,
-    labelWidth: 100,
+    labelWidth: 120,
     xGap: 0,
     // @ts-expect-error create/update form schemas
     schemas: computed<WForm.Schema.Item<IModels.SystemLocale>[]>(() => [

@@ -35,7 +35,7 @@ watchEffect(() => {
       <div
         class="fixed left-0 top-0 z-99 w-full transition-transform duration-300 ease-in-out -translate-y-[100%]"
         :class="[{ 'translate-y-0': headerShow }]"
-        :style="{ 'padding-left': `${appStoreSettingDev.getMenuWidth}px` }"
+        :style="{ 'padding-left': `${appStoreSettingDev.getMenuWidth}rem` }"
       >
         <TheHeader ref="headerRef" />
       </div>
@@ -44,8 +44,8 @@ watchEffect(() => {
         class="fixed left-0 top-0 z-98 w-full transition-transform duration-500 ease-in-out -translate-y-[100%]"
         :class="[{ 'translate-y-0': tabsShow }]"
         :style="{
-          'top': appStoreSettingDev.getHeaderShow && (headerShow && tabsShow || headerShow && appStoreSettingDev.getTabsFixed) ? `${appStoreSettingDev.getHeaderHeight}px` : '',
-          'padding-left': `${appStoreSettingDev.getMenuWidth}px`,
+          'top': appStoreSettingDev.getHeaderShow && (headerShow && tabsShow || headerShow && appStoreSettingDev.getTabsFixed) ? `${appStoreSettingDev.getHeaderHeight}rem` : '',
+          'padding-left': `${appStoreSettingDev.getMenuWidth}rem`,
         }"
       >
         <TheTabs ref="tabsRef" />
@@ -56,9 +56,9 @@ watchEffect(() => {
         class="relative"
         :style="{
           'width': appStoreSettingDev.getCalcContentWidth,
-          'minHeight': `calc(100vh - ${appStoreSettingDev.getFooterHeight}px)`,
-          'padding': $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}px`,
-          'padding-top': $route.meta.ternal === 'internal' ? `${appStoreSettingDev.getHeaderHeight + appStoreSettingDev.getTabsHeight}px` : `${appStoreSettingDev.getHeaderHeight + appStoreSettingDev.getTabsHeight + appStoreSettingDev.getContentPadding}px`,
+          'minHeight': `calc(100vh - ${appStoreSettingDev.getFooterHeight}rem)`,
+          'padding': $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}rem`,
+          'padding-top': $route.meta.ternal === 'internal' ? `${appStoreSettingDev.getHeaderHeight + appStoreSettingDev.getTabsHeight}rem` : `${appStoreSettingDev.getHeaderHeight + appStoreSettingDev.getTabsHeight + appStoreSettingDev.getContentPadding}rem`,
         }"
       >
         <TheContent />

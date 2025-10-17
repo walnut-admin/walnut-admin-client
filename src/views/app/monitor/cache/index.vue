@@ -62,7 +62,7 @@ const [
       localeWithTable: true,
       span: 6,
       showFeedback: false,
-      labelWidth: 80,
+      labelWidth: 100,
       schemas: [
         {
           type: 'Base:Input',

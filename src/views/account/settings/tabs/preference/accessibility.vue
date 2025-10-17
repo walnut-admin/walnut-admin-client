@@ -18,7 +18,7 @@ const [register] = useForm<IStoreUser.Preference.Accessibility>({
   inline: true,
   labelPlacement: appStoreAdapter.isMobile ? 'top' : 'left',
   labelAlign: appStoreAdapter.isMobile ? 'left' : 'right',
-  labelWidth: 100,
+  labelWidth: 120,
 
   disabled: computed(() => loading.value),
   schemas: [

@@ -59,7 +59,7 @@ const [
       localeWithTable: true,
       span: 6,
       showFeedback: false,
-      labelWidth: 100,
+      labelWidth: 120,
       // query form schemas
       schemas: [
         {

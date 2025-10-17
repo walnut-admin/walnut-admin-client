@@ -125,7 +125,7 @@ const [register, { validate }] = useForm<typeof formData.value>({
 
     <n-gi>
       <div class="vstack items-center justify-center">
-        <WAvatar :value="tempAvatar || formData.avatar" :size="240" />
+        <WAvatar :value="tempAvatar || formData.avatar" :size="16" />
 
         <WAvatarUpload
           ref="avatarUploadRef"

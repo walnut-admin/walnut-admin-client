@@ -11,5 +11,5 @@ function onClick() {
 </script>
 
 <template>
-  <WIcon icon="mdi:feature-search-outline" height="24" @click="onClick" />
+  <WIcon icon="mdi:feature-search-outline" height="28" @click="onClick" />
 </template>

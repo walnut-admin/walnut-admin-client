@@ -18,7 +18,7 @@ const configFormData = ref({
   transition2: 'fade-left-big' as ValueOfAppConstTransitionName,
   disabled: false,
   labelHelpMessage: true,
-  labelWidth: 80,
+  labelWidth: 100,
   span: 8,
   xGap: 20,
   yGap: 0,

@@ -95,7 +95,7 @@ const getIcon = computed(() => {
   <div
     ref="tabsItem"
     :style="{
-      width: getShowTite ? `${appStoreSettingDev.tabs.itemWidth}px` : 'max-content',
+      width: getShowTite ? `${appStoreSettingDev.tabs.itemWidth}rem` : 'max-content',
     }"
     class="relative grid grid-cols-12 h-full cursor-pointer select-none items-center gap-1 gap-x-2 px-2 py-1"
     :class="[

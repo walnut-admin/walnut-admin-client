@@ -5,6 +5,8 @@ import { isUndefined } from 'lodash-es'
 import { useFormDict } from './useFormDict'
 
 export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemIdCtx: ICompUIFormHooksItemId<T>) {
+  const userStorePreference = useAppStoreUserPreference()
+
   const formSchemas = ref<WForm.Schema.Item<T>[]>([])
 
   const { formIdMap, getFormItemId, setFormItemId } = formItemIdCtx
@@ -16,6 +18,10 @@ export function useFormSchemas<T>(props: ComputedRef<WForm.Props<T>>, formItemId
 
       return {
         ...i,
+        formProp: {
+          ...i.formProp,
+          labelWidth: i.formProp?.labelWidth && typeof i.formProp.labelWidth === 'number' ? `${i.formProp.labelWidth / userStorePreference.getFontSize}rem` : i.formProp?.labelWidth,
+        },
         _internalShow: getFormItemId(i, idx),
       }
     }) as WForm.Schema.Item<T>[]

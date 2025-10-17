@@ -15,7 +15,7 @@ const { stateRef: formData, resetState: resetFormData } = useState({
 
 const [register, { validate, restoreValidation }] = useForm<typeof formData.value>({
   span: 8,
-  labelWidth: 100,
+  labelWidth: 120,
   schemas: [
     {
       type: 'Base:Input',

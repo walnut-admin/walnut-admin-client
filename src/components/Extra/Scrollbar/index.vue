@@ -72,12 +72,13 @@ function onInitScrollbar() {
   if (!scrollbar) {
     const target = wrapperRef.value?.querySelector(
       `.w-scrollbar-rail--${
-        xScrollable ? 'horizontal' : 'vertical'
+        xScrollable ? 'vertical' : 'horizontal'
       }`,
     ) as HTMLElement
 
-    if (target)
+    if (target) {
       target.style.display = 'none'
+    }
   }
 }
 

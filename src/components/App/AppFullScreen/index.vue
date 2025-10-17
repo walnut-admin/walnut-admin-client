@@ -6,7 +6,7 @@ defineOptions({
 })
 
 withDefaults(defineProps<WAppFullScreenProps>(), {
-  size: '24',
+  size: '28',
 })
 </script>
 

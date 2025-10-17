@@ -5,7 +5,7 @@ defineOptions({
 })
 
 withDefaults(defineProps<{ value?: string, size?: number }>(), {
-  size: 24,
+  size: 4,
 })
 
 const userStoreProfile = useAppStoreUserProfile()
@@ -13,7 +13,7 @@ const userStoreProfile = useAppStoreUserProfile()
 
 <template>
   <n-avatar
-    :style="{ height: `${size}px`, width: `${size}px` }"
+    :style="{ height: `${size}rem`, width: `${size}rem` }"
     :src="value ?? userStoreProfile.getAvatar"
     circle
     alt="avatar"

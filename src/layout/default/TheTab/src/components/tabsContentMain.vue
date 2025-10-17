@@ -74,7 +74,7 @@ function onMouseUp(e: MouseEvent, name: string) {
     ref="scrollRef"
     x-scrollable
     :x-step="50"
-    :height="`${appStoreSettingDev.getTabsHeight}px`"
+    :height="`${appStoreSettingDev.getTabsHeight}rem`"
     :scrollbar="false"
     :width="getTabsWidth"
     @scroll="onCloseCtxMenu"

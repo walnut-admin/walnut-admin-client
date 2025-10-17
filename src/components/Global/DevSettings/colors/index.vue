@@ -19,13 +19,15 @@ function onClick(color: string) {
 </script>
 
 <template>
-  <div class="hstack space-x-3">
+  <div class="grid grid-cols-9 w-full gap-2">
     <span
-      v-for="(item, index) in getColors" :key="index"
-      class="h-5 w-5 flex items-center justify-center border-1 border-primary rounded"
+      v-for="(item, index) in getColors"
+      :key="index"
+      class="aspect-square flex items-center justify-center border-1 border-primary rounded transition-transform duration-200"
       :class="[
-        { 'cursor-pointer': !disabled },
-        { 'cursor-not-allowed opacity-50': disabled },
+        disabled
+          ? 'cursor-not-allowed opacity-50'
+          : 'cursor-pointer hover:scale-105',
       ]"
       :style="{ background: item }"
       :title="item"

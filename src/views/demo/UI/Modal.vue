@@ -21,7 +21,7 @@ const configFormData = ref({
 })
 
 const [register] = useForm<typeof configFormData.value>({
-  labelWidth: 100,
+  labelWidth: 120,
   yGap: 10,
   showFeedback: false,
   schemas: [

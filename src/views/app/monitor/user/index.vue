@@ -37,7 +37,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<IModels.AppMo
       localeUniqueKey: localeKey,
       localeWithTable: true,
       span: 6,
-      labelWidth: 80,
+      labelWidth: 100,
       schemas: [
         {
           type: 'Base:Input',

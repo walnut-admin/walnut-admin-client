@@ -26,7 +26,7 @@ const [register] = useForm<typeof formModel.value>({
   inline: true,
   labelPlacement: appStoreAdapter.isMobile ? 'top' : 'left',
   labelAlign: appStoreAdapter.isMobile ? 'left' : 'right',
-  labelWidth: 100,
+  labelWidth: 120,
   span: 24,
   xGap: 10,
 

@@ -64,11 +64,11 @@ const [register] = useForm<typeof footerRelatives>({
         path: 'height',
       },
       componentProp: {
-        step: 1,
+        step: 0.1,
         min: 0,
-        suffix: 'px',
+        suffix: 'rem',
         showButton: false,
-        precision: 0,
+        precision: 2,
       },
     },
 

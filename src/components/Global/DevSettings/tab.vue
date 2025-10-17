@@ -64,11 +64,11 @@ const [register] = useForm<typeof tabRelatives>({
         path: 'height',
       },
       componentProp: {
-        step: 1,
+        step: 0.1,
         min: 0,
-        suffix: 'px',
+        suffix: 'rem',
         showButton: false,
-        precision: 0,
+        precision: 2,
       },
     },
 
@@ -78,11 +78,11 @@ const [register] = useForm<typeof tabRelatives>({
         path: 'itemWidth',
       },
       componentProp: {
-        step: 1,
+        step: 0.1,
         min: 0,
-        suffix: 'px',
+        suffix: 'rem',
         showButton: false,
-        precision: 0,
+        precision: 2,
       },
     },
 
