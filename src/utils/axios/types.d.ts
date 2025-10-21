@@ -54,14 +54,14 @@ declare module 'axios' {
     _mergeRequest?: boolean
 
     /**
-     * request from which page, used for cancel requests in one page
+     * cancel this request when route change
      */
-    _request_from_route_path?: string
+    _cancelOnRouteChange?: boolean
 
     /**
      * request id, nanoid
      */
-    _request_id?: string
+    _requestId?: string
 
     /**
      * auto decrypt response specific field data

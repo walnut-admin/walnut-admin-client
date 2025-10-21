@@ -1,5 +1,4 @@
 import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
-import { nanoid } from 'nanoid'
 import { buildSortedURL } from '../utils'
 
 /**
@@ -73,18 +72,15 @@ export function removeCurrentPageRequests(path: string) {
 
 export function cancelAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
-    const requestId = nanoid(16)
+    if (!config._cancelOnRouteChange)
+      return await adapter(config)
 
-    // generate request id
-    config._request_id = requestId
+    const requestId = config._requestId!
 
     // create AbortController and add to cancel pool
     const controller = new AbortController()
     config.signal = controller.signal // 设置 AbortSignal
     addToCancelPool(config, requestId, location.pathname, controller)
-
-    // set pathname to current request to identify which page is current request sent
-    config._request_from_route_path = location.pathname
 
     try {
       const res = await adapter(config)

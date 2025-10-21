@@ -26,4 +26,6 @@ export const originalConfig: AxiosRequestConfig = {
 
   // adapter
   adapter: composeAdapters(),
+
+  _cancelOnRouteChange: true,
 }

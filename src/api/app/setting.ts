@@ -20,6 +20,7 @@ export const appSettingAPI = new BaseAPI<IModels.AppSettings>({
 export function getPublicSettingsAPI() {
   return AppAxios.get<IResponseData.App.SettingPublic>({
     url: appSetting.PUBLIC,
+    _cancelOnRouteChange: false,
   })
 }
 
