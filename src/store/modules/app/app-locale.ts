@@ -78,10 +78,6 @@ const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
     },
 
     async onLoadMessageNoCache(locale: ValueOfAppConstLocale) {
-      if (this.isLocaleLoaded(locale)) {
-        return this.onSetLocaleMessages(locale, this.onGetLocaleMessageFromI18n(locale))
-      }
-
       const backendMsg = await getI18nMsgAPI(locale, 0)
       this.setBaseI18nKeyList(Object.keys(backendMsg).filter(i => i.startsWith('app.base')))
       return this.onSetLocaleMessages(locale, backendMsg)
