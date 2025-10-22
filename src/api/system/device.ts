@@ -5,7 +5,7 @@ import { AppAxios } from '@/utils/axios'
 import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
-export const deviceAPI = new BaseAPI<IModels.SystemDictType>({
+export const deviceAPI = new BaseAPI<IModels.SystemDevice>({
   model: 'system',
   section: 'device',
 })

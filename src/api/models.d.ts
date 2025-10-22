@@ -122,9 +122,8 @@ export namespace IModels {
     }
     locationInfo?: {
       country?: string
-      province?: string
+      region?: string
       city?: string
-      area?: string
     }
   }
 
