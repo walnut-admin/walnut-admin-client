@@ -151,6 +151,10 @@ defineExpose({ onOpen, onClose })
       @no="onNo"
     >
       <slot />
+
+      <template v-if="formProps.dialogProps?.footerButtons" #footer>
+        <WButtonGroup :groups="formProps.dialogProps?.footerButtons" />
+      </template>
     </WDrawer>
   </div>
 </template>

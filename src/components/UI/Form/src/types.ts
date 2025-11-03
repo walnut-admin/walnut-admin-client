@@ -196,6 +196,8 @@ export declare namespace WForm {
          * @description confirm before dialog closed
          */
         closeConfirm?: boolean
+
+        footerButtons?: ICompUIButtonProps[]
       }
 
     /**
