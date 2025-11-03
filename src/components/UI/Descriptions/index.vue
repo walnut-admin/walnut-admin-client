@@ -34,7 +34,7 @@ function onClickText(item: ICompUIDescriptionsItem) {
 function onFormat(item: ICompUIDescriptionsItem) {
   return (typeof item.formatter === 'function'
     ? item.formatter(item.value, getData.value)
-    : item.value) || t('app.base.none')
+    : item.value) ?? t('app.base.none')
 }
 
 const showDict = ref(false)
