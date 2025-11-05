@@ -27,6 +27,7 @@ export interface ICompUIDescItemExtend<T, P> extends DescriptionItemProps {
   key?: string
   show?: boolean
   value: BaseDataType
+  copy?: boolean
   formatter?: (val: BaseDataType, record?: T) => string
   typeProps?: P
 }

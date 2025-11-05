@@ -1,4 +1,4 @@
-<script lang="tsx" setup  generic="T">
+<script lang="ts" setup  generic="T">
 import type { BaseDataType } from 'easy-fns-ts'
 import type { ICompUIDescriptionProps, ICompUIDescriptionsItem, ICompUIDescTypeDict, ICompUIDescTypeLink } from '.'
 import { omit } from 'lodash-es'
@@ -32,6 +32,11 @@ function onClickText(item: ICompUIDescriptionsItem) {
 }
 
 function onFormat(item: ICompUIDescriptionsItem) {
+  if (item.type === 'dict') {
+    const target = getDictTarget(item.typeProps?.dictType as string, item.value)
+    return target?.label ? t(target?.label) : ''
+  }
+
   return (typeof item.formatter === 'function'
     ? item.formatter(item.value, getData.value)
     : item.value) ?? t('app.base.none')
@@ -46,6 +51,14 @@ onBeforeMount(async () => {
     showDict.value = true
   }
 })
+
+const hoverMap = reactive(new Map<number, boolean>())
+function onHover(index: number, value: boolean) {
+  hoverMap.set(index, value)
+}
+function isHovering(index: number) {
+  return hoverMap.get(index)
+}
 </script>
 
 <template>
@@ -56,7 +69,13 @@ onBeforeMount(async () => {
       </template>
 
       <template #default>
-        <div :class="item.contentClass" :style="item.contentStyle">
+        <div
+          class="relative"
+          :class="item.contentClass"
+          :style="item.contentStyle"
+          @mouseenter="onHover(index, true)"
+          @mouseleave="onHover(index, false)"
+        >
           <n-tag
             v-if="item.type === 'tag'"
             v-bind="item.typeProps"
@@ -88,6 +107,14 @@ onBeforeMount(async () => {
           <div v-else class="whitespace-pre-wrap break-all">
             {{ onFormat(item) }}
           </div>
+
+          <WTransition v-if="item.copy" appear transition-name="fade-right">
+            <WCopy
+              v-show="isHovering(index)"
+              :source="`${onFormat(item)}`"
+              class="absolute right-2 top-0"
+            />
+          </WTransition>
         </div>
       </template>
     </n-descriptions-item>
