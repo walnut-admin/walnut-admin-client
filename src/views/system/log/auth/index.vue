@@ -98,8 +98,6 @@ const [register, {
             type: 'daterange',
             clearable: true,
             format: 'yyyy-MM-dd',
-            // TODO make this work in v-model
-            // value-format use v-model:formatted-value
             valueFormat: 'yyyy-MM-dd',
             onUpdateFormattedValue(v: string) {
               const queryFormData = onGetApiListParams()
