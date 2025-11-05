@@ -30,7 +30,6 @@ const [
   register,
   {
     onReadAndOpenUpdateForm,
-    onDeleteManyConfirm,
     onApiList,
     onGetApiListParams,
     onGetFormData,
@@ -45,19 +44,9 @@ const [
     bordered: true,
     singleLine: false,
 
-    headerLeftBuiltInActions: [
-      {
-        _builtInType: 'delete',
-        onPresetClick() {
-          onDeleteManyConfirm()
-        },
-      },
-    ],
-
     auths: {
       list: `system:${authKey}:list`,
       read: `system:${authKey}:read`,
-      deleteMany: `system:${authKey}:deleteMany`,
     },
 
     queryFormProps: {
@@ -65,7 +54,7 @@ const [
       localeWithTable: true,
       span: 6,
       showFeedback: false,
-      labelWidth: 100,
+      labelWidth: 80,
       yGap: 10,
       // query form schemas
       schemas: [
@@ -140,12 +129,6 @@ const [
 
     // table columns
     columns: [
-      {
-        key: 'selection',
-        type: 'selection',
-        fixed: 'left',
-      },
-
       {
         key: 'index',
         extendType: 'index',
