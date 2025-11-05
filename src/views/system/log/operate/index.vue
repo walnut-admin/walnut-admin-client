@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
-import { getLogOperateSnapshotAPI, logOperateAPI } from '@/api/system/log'
+import { getLogOperateDeviceAPI, getLogOperateSnapshotAPI, logOperateAPI } from '@/api/system/log'
 import { logOperateFormSchema } from './schema'
 
 defineOptions({
@@ -11,6 +11,7 @@ const { t } = useAppI18n()
 
 const auths = {
   getSnapshot: 'system:log:operate:getSnapshot',
+  getDevice: 'system:log:operate:getDevice',
 }
 
 // locale unique key
@@ -20,11 +21,57 @@ const authKey = 'log:operate'
 const keyField = '_id'
 
 const showMerge = ref(false)
-const modalLoading = ref(false)
+const mergeLoading = ref(false)
 const mergeData = ref<{
   snapshotBefore?: string
   snapshotAfter?: string
 }>({})
+
+const deviceData = ref<IModels.SystemDevice>({})
+
+const [registerDevice, { onOpen }] = useForm<IModels.SystemDevice>({
+  dialogPreset: 'modal',
+  baseRules: false,
+  labelWidth: 120,
+  xGap: 0,
+
+  descriptionProps: {
+    bordered: true,
+    column: 2,
+    colon: true,
+  },
+
+  dialogProps: {
+    defaultButton: false,
+    width: '40%',
+    closable: true,
+    autoFocus: false,
+    fullscreen: false,
+    title: computed(() => t('app.base.device') + t('app.base.detail')),
+  },
+
+  schemas: [
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'deviceId',
+      },
+      descriptionProp: {
+        copy: true,
+      },
+    },
+
+    {
+      type: 'Base:Input',
+      formProp: {
+        path: 'deviceName',
+      },
+      descriptionProp: {
+        copy: true,
+      },
+    },
+  ],
+})
 
 const [
   register,
@@ -244,16 +291,34 @@ const [
 
       footerButtons: [
         {
+          textProp: computed(() => t('sys.log.operate.getDevice')),
+          auth: auths.getDevice,
+          type: 'primary',
+          debounce: 300,
+          async onClick() {
+            try {
+              const formData = onGetFormData()
+              const device = await getLogOperateDeviceAPI(formData.value._id!)
+              deviceData.value = device
+              onOpen()
+            }
+            catch (e) {
+              console.error(e)
+            }
+          },
+        },
+        {
           textProp: computed(() => t('sys.log.operate.getSnapshot')),
           auth: auths.getSnapshot,
+          type: 'info',
           debounce: 300,
-          loading: computed(() => modalLoading.value),
+          loading: computed(() => mergeLoading.value),
           disabled: computed((): boolean => {
             const formData = onGetFormData()
             return formData.value.actionType !== 'UPDATE'
           }),
           async onClick() {
-            modalLoading.value = true
+            mergeLoading.value = true
             try {
               const formData = onGetFormData()
               const snapshot = await getLogOperateSnapshotAPI(formData.value._id!)
@@ -261,7 +326,7 @@ const [
               showMerge.value = true
             }
             finally {
-              modalLoading.value = false
+              mergeLoading.value = false
             }
           },
         },
@@ -286,10 +351,15 @@ const [
         :default-button="false"
         :title="$t('app.base.compare')"
         display-directive="show"
-        :loading="modalLoading"
+        :loading="mergeLoading"
       >
         <WCodeMirrorMerge :after="mergeData.snapshotAfter" :before="mergeData.snapshotBefore" />
       </WModal>
+    </WAppAuthorize>
+
+    <WAppAuthorize :value="auths.getDevice">
+      <!-- @vue-generic {IModels.SystemDevice} -->
+      <WForm :model="deviceData" @hook="registerDevice" />
     </WAppAuthorize>
   </div>
 </template>

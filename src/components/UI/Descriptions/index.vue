@@ -112,7 +112,7 @@ function isHovering(index: number) {
             <WCopy
               v-show="isHovering(index)"
               :source="`${onFormat(item)}`"
-              class="absolute right-2 top-0"
+              class="absolute bottom-0 right-2"
             />
           </WTransition>
         </div>

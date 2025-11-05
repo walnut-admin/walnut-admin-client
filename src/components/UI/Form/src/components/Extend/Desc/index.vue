@@ -22,6 +22,7 @@ const getDescItems = computed(() => {
       show: i.descriptionProp?.show,
       value: get(formProps.value.model!, i.formProp?.path as string),
       formatter: i.descriptionProp?.formatter,
+      copy: i.descriptionProp?.copy,
 
       type: i.descriptionProp?.type,
       typeProps: i.descriptionProp?.typeProps,

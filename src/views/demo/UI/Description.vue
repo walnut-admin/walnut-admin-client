@@ -14,6 +14,7 @@ const descs: ICompUIDescriptionsItem[] = [
       type: 'primary',
       round: true,
     },
+    copy: true,
     label: 'Tag Label 1',
     value: 'tag value 1',
   },
@@ -37,6 +38,7 @@ const descs: ICompUIDescriptionsItem[] = [
       link: 'https://www.bing.com',
       strong: true,
     },
+    copy: true,
     label: 'Link Label 1',
     value: 'click to bing.com',
   },
@@ -48,6 +50,7 @@ const descs: ICompUIDescriptionsItem[] = [
       link: 'https://www.bing.com',
       strong: true,
     },
+    copy: true,
     label: 'Link Label 2',
     value: 'click to bing.com',
   },
@@ -87,6 +90,7 @@ const descs: ICompUIDescriptionsItem[] = [
     typeProps: {
       dictType: 'gbt_sex',
     },
+    copy: true,
     label: 'Dict label 1',
     value: '1',
   },
@@ -98,6 +102,7 @@ const descs: ICompUIDescriptionsItem[] = [
     },
     label: 'Dict label 2',
     value: true,
+    copy: true,
     labelClass: 'text-red',
     contentClass: 'my-2',
   },
@@ -106,12 +111,14 @@ const descs: ICompUIDescriptionsItem[] = [
     key: '8',
     label: 'Normal Label 1',
     value: 'normal value 1',
+    copy: true,
   },
 
   {
     key: '9',
     label: 'Normal Label 2',
     value: 'normal value 2',
+    copy: true,
     formatter(val, record) {
       return `${record['0']} / ${val}.2222`
     },
