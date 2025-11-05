@@ -1,17 +1,30 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
-import { logOperateAPI } from '@/api/system/log'
+import { getLogOperateSnapshotAPI, logOperateAPI } from '@/api/system/log'
 import { logOperateFormSchema } from './schema'
 
 defineOptions({
   name: 'LogOperate',
 })
 
+const { t } = useAppI18n()
+
+const auths = {
+  getSnapshot: 'system:log:operate:getSnapshot',
+}
+
 // locale unique key
 const localeKey = 'log.operate'
 // auth key
 const authKey = 'log:operate'
 const keyField = '_id'
+
+const showMerge = ref(false)
+const modalLoading = ref(false)
+const mergeData = ref<{
+  snapshotBefore?: string
+  snapshotAfter?: string
+}>({})
 
 const [
   register,
@@ -20,6 +33,7 @@ const [
     onDeleteManyConfirm,
     onApiList,
     onGetApiListParams,
+    onGetFormData,
   },
 ] = useCRUD<IModels.SystemLogOperate>({
   baseAPI: logOperateAPI,
@@ -246,6 +260,31 @@ const [
       width: '40%',
       closable: true,
       autoFocus: false,
+
+      footerButtons: [
+        {
+          textProp: computed(() => t('sys.log.operate.getSnapshot')),
+          auth: auths.getSnapshot,
+          debounce: 300,
+          loading: computed(() => modalLoading.value),
+          disabled: computed((): boolean => {
+            const formData = onGetFormData()
+            return formData.value.actionType !== 'UPDATE'
+          }),
+          async onClick() {
+            modalLoading.value = true
+            try {
+              const formData = onGetFormData()
+              const snapshot = await getLogOperateSnapshotAPI(formData.value._id!)
+              mergeData.value = snapshot
+              showMerge.value = true
+            }
+            finally {
+              modalLoading.value = false
+            }
+          },
+        },
+      ],
     },
 
     schemas: logOperateFormSchema,
@@ -257,5 +296,19 @@ const [
   <div>
     <!-- @vue-generic {IModels.SystemLogOperate} -->
     <WCRUD @hook="register" />
+
+    <WAppAuthorize :value="auths.getSnapshot">
+      <WModal
+        v-model:show="showMerge"
+        width="80%"
+        :fullscreen="false"
+        :default-button="false"
+        :title="$t('app.base.compare')"
+        display-directive="show"
+        :loading="modalLoading"
+      >
+        <WCodeMirrorMerge :after="mergeData.snapshotAfter" :before="mergeData.snapshotBefore" />
+      </WModal>
+    </WAppAuthorize>
   </div>
 </template>
