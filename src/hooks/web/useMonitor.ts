@@ -23,6 +23,7 @@ export function sendUserMonitorBeacon(data: Partial<IModels.AppMonitorUser>) {
 
 export function useAppUserMonitor() {
   const isVisible = useSharedDocumentVisibility()
+  const userStoreAuth = useAppStoreUserAuth()
 
   // route
   watch(
@@ -30,11 +31,13 @@ export function useAppUserMonitor() {
     (v) => {
       sendUserMonitorBeacon({
         currentRouter: v.fullPath,
+        auth: !!userStoreAuth.accessToken,
+        focus: true,
+        left: false,
       })
     },
     {
       immediate: true,
-      deep: true,
     },
   )
 
@@ -46,9 +49,6 @@ export function useAppUserMonitor() {
         focus: v,
       })
     },
-    {
-      immediate: true,
-    },
   )
 
   // close page
@@ -56,16 +56,6 @@ export function useAppUserMonitor() {
     sendUserMonitorBeacon({
       left: true,
       focus: false,
-    })
-  })
-
-  tryOnMounted(() => {
-    const userStoreAuth = useAppStoreUserAuth()
-
-    sendUserMonitorBeacon({
-      auth: !!userStoreAuth.accessToken,
-      focus: true,
-      left: false,
     })
   })
 }
