@@ -19,6 +19,9 @@ export default defineConfig({
       info: 'var(--info-color)',
       infoHover: 'var(--info-color-hover)',
 
+      warning: 'var(--warning-color)',
+      warningHover: 'var(--warning-color-hover)',
+
       error: 'var(--error-color)',
       errorHover: 'var(--error-color-hover)',
 
