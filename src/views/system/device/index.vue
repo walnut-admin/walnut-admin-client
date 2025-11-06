@@ -508,7 +508,7 @@ useKeepAliveEffect(() => {
           bordered
           striped
           :single-line="false"
-          :row-key="row => row._id"
+          :row-key="(row: any) => row._id"
         />
       </WModal>
     </WAppAuthorize>
