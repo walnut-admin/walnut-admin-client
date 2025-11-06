@@ -153,7 +153,16 @@ defineExpose({ onOpen, onClose })
       <slot />
 
       <template v-if="formProps.dialogProps?.footerButtons" #footer>
-        <WButtonGroup :groups="formProps.dialogProps?.footerButtons" />
+        <WScrollbar
+          height="auto"
+          x-scrollable
+          :x-step="50"
+          width="auto"
+        >
+          <div class="flex flex-row flex-wrap justify-end gap-2">
+            <WButton v-for="item in formProps.dialogProps?.footerButtons" :key="item.textProp" v-bind="item" />
+          </div>
+        </WScrollbar>
       </template>
     </WDrawer>
   </div>

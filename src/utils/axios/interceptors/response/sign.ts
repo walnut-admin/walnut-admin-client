@@ -1,7 +1,7 @@
 import { SingletonPromise } from '@/utils/queue'
 
 const appStoreSecurity = useAppStoreSecurity()
-const signQueue = new SingletonPromise<string>()
+const signQueue = new SingletonPromise<string | null>()
 
 export function SingletonPromiseSign() {
   return signQueue.run(async () => {
