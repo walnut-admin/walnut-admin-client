@@ -13,45 +13,40 @@ export function useAppIntro(delay = 1500) {
     {
       element: `#${appStoreSettingDev.getBreadcrumbId}`,
       popover: {
-
         title: t('app.intro.breadcrumb'),
         description: t('app.intro.breadcrumb.detail'),
       },
     },
     {
-      element: '#walnut-fullscreen',
+      element: '#walnut-admin-fullscreen',
       popover: {
-
         title: t('app.intro.fullscreen'),
         description: t('app.intro.fullscreen.detail'),
       },
     },
     {
-      element: '#walnut-lock',
+      element: '#walnut-admin-lock',
       popover: {
-
         title: t('app.intro.lock'),
         description: t('app.intro.lock.detail'),
       },
     },
     {
-      element: '#walnut-search',
+      element: '#walnut-admin-search',
       popover: {
-
         title: t('app.intro.search'),
         description: t('app.intro.search.detail'),
       },
     },
     {
-      element: '#walnut-locale',
+      element: '#walnut-admin-locale',
       popover: {
-
         title: t('app.intro.locale'),
         description: t('app.intro.locale.detail'),
       },
     },
     {
-      element: '#walnut-dark',
+      element: '#walnut-admin-dark',
       popover: {
         title: t('app.base.dark'),
         description: t('app.intro.dark.detail'),
@@ -65,9 +60,8 @@ export function useAppIntro(delay = 1500) {
       },
     },
     {
-      element: '#walnut-settings',
+      element: '#walnut-admin-settings',
       popover: {
-
         title: t('app.intro.settings'),
         description: t('app.intro.settings.detail'),
       },

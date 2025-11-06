@@ -19,7 +19,7 @@ const contentFull = useRouterQuery('full')
     class="z-1999"
   >
     <WIcon
-      id="walnut-settings"
+      id="walnut-admin-settings"
       height="24"
       icon="ant-design:setting-outlined"
     />
