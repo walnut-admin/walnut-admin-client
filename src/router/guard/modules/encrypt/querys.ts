@@ -21,6 +21,10 @@ export function createRouteQueryEncryptGuard(router: Router) {
   const appSettingScope = useAppStoreSettingScope()
 
   router.beforeEach(async (to, _from) => {
+    if (routeWhiteListPath.includes(to.path)) {
+      return true
+    }
+
     // functional status || check maskUrl real value
     if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
       return true
@@ -29,7 +33,7 @@ export function createRouteQueryEncryptGuard(router: Router) {
     const whiteQuery: Record<string, any> = {}
     const normalQuery: Record<string, any> = {}
     Object.entries(to.query).forEach(([k, v]) => {
-      ;(queryWhiteList.includes(k) ? whiteQuery : normalQuery)[k] = v
+      ; (queryWhiteList.includes(k) ? whiteQuery : normalQuery)[k] = v
     })
 
     // 2. Encrypted package already exists (indicates redirect back), allow direct passage
@@ -56,6 +60,10 @@ export function createRouteQueryEncryptGuard(router: Router) {
   })
 
   router.beforeResolve(async (to) => {
+    if (routeWhiteListPath.includes(to.path)) {
+      return true
+    }
+
     // functional status || check maskUrl real value
     if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
       return true
