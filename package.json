@@ -1,7 +1,7 @@
 {
   "name": "walnut-admin-client",
   "type": "module",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "An admin template, using `vue3`,`ts`,`vite`,`naive-ui`. Continuously updating...",
   "author": {
     "name": "Zhaocl1997",
@@ -35,7 +35,6 @@
     "build:stage": "npm run prebuild && vite build --mode staging",
     "preview": "vite preview --mode production",
     "preview:stage": "vite preview --mode staging",
-    "release": "esno release.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix --concurrency=auto",
     "commit:msg": "commitlint --edit",
@@ -47,7 +46,9 @@
     "check:nm": "node-modules-inspector",
     "deploy:stage": "deploy-cli-service deploy --mode staging",
     "deploy:prod": "deploy-cli-service deploy --mode production",
-    "generate-pwa-assets": "pwa-assets-generator"
+    "generate-pwa-assets": "pwa-assets-generator",
+    "changelog": "esno scripts/release/changelog.ts",
+    "git:push": "esno scripts/release/git.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "6.18.7",
@@ -135,6 +136,7 @@
     "eslint": "9.35.0",
     "eslint-plugin-vue": "10.4.0",
     "esno": "4.8.0",
+    "git-cliff": "2.10.1",
     "is-ci": "4.1.0",
     "javascript-obfuscator": "4.1.1",
     "lint-staged": "16.1.6",

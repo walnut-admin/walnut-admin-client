@@ -1,0 +1,50 @@
+# ======================
+# 🧱 git-cliff 配置文件 (改进版)
+# ======================
+
+[changelog]
+# 安全式 header：当 timestamp 没有时不会报错
+header = """
+# [{{ version | default(value='Unreleased') }}]{% if timestamp %} - {{ timestamp | date(format='%Y-%m-%d') }}{% endif %}
+"""
+body = """
+## Frontend
+{% for group, commits in commits | group_by(attribute="group") %}
+### {{ group | upper_first }}
+{% for commit in commits %}
+- {{ commit.message | upper_first }}{% if commit.links | length > 0 %} — {% for l in commit.links %}[{{ l.text }}]({{ l.href }}){% if not loop.last %}, {% endif %}{% endfor %}{% endif %} ([{{ commit.id | truncate(length=7, end="") }}](https://github.com/walnut-admin/walnut-admin-client/commit/{{ commit.id }}))
+{% endfor %}
+{% endfor %}
+"""
+footer = ""
+
+[git]
+# tag 匹配规则
+tag_pattern = "v*"
+
+# 先保留你原有的 message preprocess（如果你确实在 commit message 里有 (#123) 这种格式的话它会替换成链接）
+commit_preprocessors = [ { pattern = "\\(#([0-9]+)\\)", replace = "([#${1}](https://github.com/walnut-admin/walnut-admin-client/pull/${1}))" } ]
+
+# 用 link_parsers 提取 issue/PR 编号并生成 commit.links（模板中已经渲染了 commit.links）
+link_parsers = [
+  # 捕获常见的 "#123" 形式
+  { pattern = "#(\\d+)", href = "https://github.com/walnut-admin/walnut-admin-client/issues/$1" },
+  # 捕获 "Merge pull request #123" 类型的合并 commit
+  { pattern = "Merge pull request #([0-9]+)", href = "https://github.com/walnut-admin/walnut-admin-client/pull/$1" },
+  # 如果你有 PR 格式为 "PR #123" 的情况也支持
+  { pattern = "PR #(\\d+)", href = "https://github.com/walnut-admin/walnut-admin-client/pull/$1" }
+]
+
+# commit 分组规则（根据 Conventional Commits）
+commit_parsers = [
+  { message = "^feat", group = "✨ Features" },
+  { message = "^fix", group = "🐛 Bug Fixes" },
+  { message = "^perf", group = "⚡ Performance" },
+  { message = "^refactor", group = "🔧 Refactor" },
+  { message = "^docs", group = "📝 Documentation" },
+  { message = "^test", group = "✅ Tests" },
+  { message = "^style", group = "🎨 Style" },
+  { message = "^chore", group = "🔩 Chores" },
+  { message = "^wip", group = "🚧 WIP" },
+  { message = ".*", group = "📦 Misc" }
+]
