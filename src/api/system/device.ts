@@ -10,6 +10,54 @@ export const deviceAPI = new BaseAPI<IModels.SystemDevice>({
   section: 'device',
 })
 
+export function getDeviceCurrentActiveUserAPI(id: string) {
+  return AppAxios.get<IResponseData.System.Device.CurrentActiveUser>(
+    {
+      url: `/system/device/${id}/current-active-user`,
+    },
+  )
+}
+
+export function getDeviceHistoryUsersAPI(id: string) {
+  return AppAxios.get<IResponseData.System.Device.HistoryUsers>(
+    {
+      url: `/system/device/${id}/history-users`,
+    },
+  )
+}
+
+export function lockDeviceAPI(id: string) {
+  return AppAxios.patch<boolean>(
+    {
+      url: `/system/device/${id}/lock`,
+    },
+  )
+}
+
+export function unlockDeviceAPI(id: string) {
+  return AppAxios.patch<boolean>(
+    {
+      url: `/system/device/${id}/unlock`,
+    },
+  )
+}
+
+export function banDeviceAPI(id: string) {
+  return AppAxios.patch<boolean>(
+    {
+      url: `/system/device/${id}/ban`,
+    },
+  )
+}
+
+export function unbanDeviceAPI(id: string) {
+  return AppAxios.patch<boolean>(
+    {
+      url: `/system/device/${id}/unban`,
+    },
+  )
+}
+
 /**
  * @description initial device
  */

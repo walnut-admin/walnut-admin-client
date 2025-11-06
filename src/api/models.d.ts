@@ -115,6 +115,7 @@ export namespace IModels {
     ipHistory?: string[]
     active?: boolean
     locked?: boolean
+    banned?: boolean
     riskScore?: number
     geoLocation?: {
       type: 'Point'
@@ -125,6 +126,9 @@ export namespace IModels {
       region?: string
       city?: string
     }
+
+    // query
+    location?: string
   }
 
   // system lang

@@ -132,6 +132,9 @@ export namespace IResponseData {
       export interface Initial {
         deviceId: string
       }
+
+      export type CurrentActiveUser = IModels.SystemUser
+      export type HistoryUsers = IModels.SystemUser[]
     }
 
     export namespace Dict {
@@ -155,6 +158,14 @@ export namespace IResponseData {
     export namespace User {
       export type Lock = boolean
       export type Unlock = boolean
+    }
+
+    export namespace LogOperate {
+      export interface Snapshot {
+        snapshotBefore: Recordable
+        snapshotAfter: Recordable
+      }
+      export type Device = IModels.SystemLogOperateDevice
     }
   }
 }
