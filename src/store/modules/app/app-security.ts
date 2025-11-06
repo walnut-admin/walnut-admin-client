@@ -10,6 +10,7 @@ import { generateNonce } from '@/utils/axios/utils'
 import { decryptWithPrivateKey, generateRSAKeyPair } from '@/utils/crypto/asymmetric/rsa-oaep'
 import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
 import { useAppStorageAsync } from '@/utils/persistent/storage/async'
+import { SingletonPromise } from '@/utils/queue'
 import { objectToPaths } from '@/utils/shared'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -18,6 +19,16 @@ import { store } from '../../pinia'
 const clientRsaPubKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PUBLIC_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
 // eslint-disable-next-line antfu/no-top-level-await
 const clientRsaPrivKeyStorage = await useAppStorageAsync(AppConstPersistKey.RSA_PRIVATE_KEY, '', { expire: 30 * 24 * 60 * 60 * 1000, storage: enhancedAesGcmLocalStorage(true) })
+
+const rsaPubKeyOutDatedQueue = new SingletonPromise<void>()
+
+function SingletonPromiseRsaPubKeyOutDated() {
+  return rsaPubKeyOutDatedQueue.run(async () => {
+    const appStoreSecurity = useAppStoreSecurity()
+    await appStoreSecurity.sendRsaPubKeyToServer(true)
+    await appStoreSecurity.getSignAesKey()
+  })
+}
 
 const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
   state: (): IStoreApp.Security => ({
@@ -63,6 +74,11 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
       return resPubKey
     },
 
+    async sendRsaPubKeyToServer(force: boolean) {
+      // call handshake API to save rsa pub key in backend redis
+      await signInitialAPI(this.getClientRsaPubKey, force)
+    },
+
     async setupSign() {
       if (!this.getClientPrivKey || !this.getClientRsaPubKey) {
         // setup RSA keypair
@@ -70,8 +86,7 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
         this.clientRsaPrivKey = keyPair?.privateKey as string
         this.clientRsaPubKey = keyPair?.publicKey as string
 
-        // call handshake API to save rsa pub key in backend redis
-        await signInitialAPI(this.getClientRsaPubKey)
+        await this.sendRsaPubKeyToServer(false)
       }
 
       if (!this.getSignAesSecretKey) {
@@ -84,6 +99,13 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
 
       // decrypt session key with private key
       const realAesKey = await decryptWithPrivateKey(this.getClientPrivKey, res.encryptedAes)
+
+      // if logic go here, is mostly like user has a new rsa pair key that does not match ths rsa pub key in backend redis
+      // we need to call initial rsa pub key again to update the rsa pub key in backend redis
+      if (!realAesKey) {
+        await SingletonPromiseRsaPubKeyOutDated()
+        return null
+      }
 
       this.signAesSecretKey = realAesKey!
 
@@ -129,6 +151,12 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
         `nonce=${nonce}`,
         `ua=${ua}`,
       ].join('|')
+
+      if (!this.getSignAesSecretKey) {
+        nextTick()
+      }
+
+      console.log(123, this.getSignAesSecretKey)
 
       return CryptoJS.HmacSHA256(raw, this.getSignAesSecretKey).toString()
     },

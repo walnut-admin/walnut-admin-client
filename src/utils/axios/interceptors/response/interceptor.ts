@@ -9,6 +9,7 @@ import { SingletonPromiseCapJSToken } from './capJSToken'
 import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
 import { SingletonPromiseRsaDecryptFailed } from './rsaDecrypt'
+import { SingletonPromiseRsaPubKeyNotFound } from './rsaPubKeyNotFound'
 import { SingletonPromiseSign } from './sign'
 
 const userStoreAuth = useAppStoreUserAuth()
@@ -67,7 +68,7 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   // refresh token is expired, so this user need to signout and re-signin
   if (code === BusinessCodeConst.REFRESH_TOKEN_EXPIRED) {
     await userStoreAuth.Signout(false)
-    return Promise.reject(new Error('Refersh Token Expired'))
+    return Promise.reject(new Error('Refresh Token Expired'))
   }
 
   // rsa decrypt failed
@@ -75,6 +76,12 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     // allow to excute encrypt logic in request interceptor again
     res.config._encrypted = false
     await SingletonPromiseRsaDecryptFailed(res)
+    return await AppAxios.request(res.config)
+  }
+
+  // rsa pub key not found
+  if (code === BusinessCodeConst.RSA_PUB_KEY_NOT_FOUND) {
+    await SingletonPromiseRsaPubKeyNotFound()
     return await AppAxios.request(res.config)
   }
 

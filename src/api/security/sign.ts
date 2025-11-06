@@ -4,11 +4,12 @@ import { AppAxios } from '@/utils/axios'
 /**
  * @description sign initial
  */
-export async function signInitialAPI(rsaPubKey: string) {
+export async function signInitialAPI(rsaPubKey: string, force = false) {
   return await AppAxios.post({
     url: '/security/sign/initial',
     data: {
       rsaPubKey,
+      force,
     },
   })
 }
