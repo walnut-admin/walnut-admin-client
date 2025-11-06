@@ -1,6 +1,6 @@
 import type { AxiosAdapter, AxiosPromise } from 'axios'
 import { LRUCache } from 'lru-cache'
-import { BussinessCodeConst } from '../constant'
+import { BusinessCodeConst } from '../constant'
 import { buildSortedURL } from '../utils'
 
 const { axiosCache: cacheSeconds } = useAppEnvSeconds()
@@ -23,7 +23,7 @@ export function cacheAdapter(adapter: AxiosAdapter): AxiosAdapter {
         responsePromise = (async () => {
           try {
             const response = await adapter(config)
-            if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS)
+            if (JSON.parse(response.data).code !== BusinessCodeConst.SUCCESS)
               cacheAdapterCache.delete(index)
 
             return response

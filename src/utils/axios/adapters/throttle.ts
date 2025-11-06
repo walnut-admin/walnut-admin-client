@@ -1,6 +1,6 @@
 import type { AxiosAdapter, AxiosPromise, InternalAxiosRequestConfig } from 'axios'
 import { LRUCache } from 'lru-cache'
-import { BussinessCodeConst } from '../constant'
+import { BusinessCodeConst } from '../constant'
 import { buildSortedURL } from '../utils'
 
 interface RecordedCache {
@@ -23,7 +23,7 @@ export function throttleAdapter(adapter: AxiosAdapter): AxiosAdapter {
         const responsePromise = (async () => {
           try {
             const response = await adapter(config)
-            if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS) {
+            if (JSON.parse(response.data).code !== BusinessCodeConst.SUCCESS) {
               throttleAdapterCache.delete(index)
             }
             else {

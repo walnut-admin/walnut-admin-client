@@ -1,4 +1,4 @@
-export const BussinessCodeConst = {
+export const BusinessCodeConst = {
   SUCCESS: 20000,
 
   RSA_DECRYPT_FAILED: 40011,
@@ -10,6 +10,8 @@ export const BussinessCodeConst = {
   TOO_MANY_REQUESTS: 42900,
 
   DEVICE_NOT_ALLOWED: 40605,
+  DEVICE_LOCKED: 40606,
+  DEVICE_BANNED: 40607,
 } as const
 
 // see more in backend nestjs project `reponseCode` const

@@ -1,5 +1,5 @@
 import type { AxiosAdapter, AxiosResponse } from 'axios'
-import { BussinessCodeConst } from '../constant'
+import { BusinessCodeConst } from '../constant'
 
 export function retryAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
@@ -13,7 +13,7 @@ export function retryAdapter(adapter: AxiosAdapter): AxiosAdapter {
         try {
           const response = await adapter(config)
 
-          if (JSON.parse(response.data).code !== BussinessCodeConst.SUCCESS) {
+          if (JSON.parse(response.data).code !== BusinessCodeConst.SUCCESS) {
             timeUp = _retryTimes === count
             if (timeUp)
               return response
