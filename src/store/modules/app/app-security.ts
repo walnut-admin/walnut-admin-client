@@ -152,12 +152,6 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
         `ua=${ua}`,
       ].join('|')
 
-      if (!this.getSignAesSecretKey) {
-        nextTick()
-      }
-
-      console.log(123, this.getSignAesSecretKey)
-
       return CryptoJS.HmacSHA256(raw, this.getSignAesSecretKey).toString()
     },
   },

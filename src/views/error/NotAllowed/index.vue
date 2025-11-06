@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'AppDeviceNotAllowed',
+  name: 'AppErrorNotAllowed',
 })
 
 const type = useRouterQuery('type')
 
 function onContactAdmin() {
   useAppMsgSuccess()
+}
+
+function onGoToAuth() {
+  useAppRouter().push({ name: AppAuthName })
 }
 </script>
 
@@ -18,9 +22,15 @@ function onContactAdmin() {
       :description="$t('app.base.notAllowedDetail', { type: $t(`app.base.${type}`) })"
     >
       <template #footer>
-        <n-button type="warning" @click="onContactAdmin">
-          {{ $t('app.base.contactAdmin') }}
-        </n-button>
+        <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
+          <n-button type="info" @click="onGoToAuth">
+            {{ $t('app.base.back') }}
+          </n-button>
+
+          <n-button type="warning" @click="onContactAdmin">
+            {{ $t('app.base.contactAdmin') }}
+          </n-button>
+        </div>
       </template>
     </n-result>
   </div>
