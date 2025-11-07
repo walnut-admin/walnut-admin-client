@@ -193,23 +193,41 @@ const [
         key: 'actionType',
         width: 140,
         extendType: 'dict',
-        dictType: 'sys_operate_type',
+        dictType: 'sys_action_type',
         sorter: {
           multiple: 2,
           compare: 'default',
         },
         filter: true,
+
+        // use dict name as column title
+        useDictNameAsTitle: true,
+      },
+
+      {
+        key: 'operation',
+        width: 140,
+        extendType: 'dict',
+        dictType: 'sys_operate_type',
+        sorter: {
+          multiple: 3,
+          compare: 'default',
+        },
+        filter: true,
+
+        // use dict name as column title
+        useDictNameAsTitle: true,
       },
 
       {
         key: 'method',
         width: 120,
         sorter: {
-          multiple: 3,
+          multiple: 4,
           compare: 'default',
         },
         filter: true,
-        filterOptions: ['GET', 'POST', 'PUT', 'DELETE'].map(i => ({
+        filterOptions: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].map(i => ({
           value: i,
           label: i,
         })),
@@ -219,7 +237,7 @@ const [
         key: 'userName',
         width: 120,
         sorter: {
-          multiple: 4,
+          multiple: 5,
           compare: 'default',
         },
       },
@@ -233,7 +251,7 @@ const [
         key: 'success',
         width: 120,
         sorter: {
-          multiple: 5,
+          multiple: 6,
           compare: 'default',
         },
         extendType: 'dict',
@@ -246,7 +264,7 @@ const [
         key: 'operatedAt',
         width: 200,
         sorter: {
-          multiple: 6,
+          multiple: 7,
           compare: 'default',
         },
         defaultSortOrder: 'descend',
