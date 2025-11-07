@@ -4,7 +4,7 @@ import { AppAxios } from '@/utils/axios'
 
 // lock
 export function lockAPI(lockRoute: IStoreApp.LockRoute) {
-  return AppAxios.post<IResponseData.System.User.Lock>(
+  return AppAxios.patch<IResponseData.System.User.Lock>(
     {
       url: '/system/user/lock',
       data: { lockRoute },
