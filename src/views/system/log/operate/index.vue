@@ -264,7 +264,7 @@ const [
         key: 'operatedAt',
         width: 200,
         sorter: {
-          multiple: 7,
+          multiple: 1,
           compare: 'default',
         },
         defaultSortOrder: 'descend',
