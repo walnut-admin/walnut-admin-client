@@ -4,7 +4,7 @@ import type { IModels } from '@/api/models'
 import { get, isArray, set } from 'lodash-es'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
-import { BusinessCodeConst, errorCodeList } from '../../constant'
+import { BusinessCodeConst, errorCodeList, notAllowedErrorCodeMap } from '../../constant'
 import { SingletonPromiseCapJSToken } from './capJSToken'
 import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
@@ -85,27 +85,11 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     return await AppAxios.request(res.config)
   }
 
-  // device not allowed
-  if (code === BusinessCodeConst.DEVICE_NOT_ALLOWED) {
-    // not actually working, but sometimes it can cancel some requests
-    // TODO other type
+  // not allowed
+  if (Object.values(notAllowedErrorCodeMap).map(Number).includes(code)) {
     removeCurrentPageRequests(AppRouter.currentRoute.value.path)
-    await AppRouter.replace({ name: AppNotAllowedName, force: true, query: { type: 'device' } })
-    return Promise.reject(new Error('Device Not Allowed'))
-  }
-
-  // device locked
-  if (code === BusinessCodeConst.DEVICE_LOCKED) {
-    removeCurrentPageRequests(AppRouter.currentRoute.value.path)
-    await AppRouter.replace({ name: AppNotAllowedName, force: true, query: { type: 'device.locked' } })
-    return Promise.reject(new Error('Device Locked'))
-  }
-
-  // device banned
-  if (code === BusinessCodeConst.DEVICE_BANNED) {
-    removeCurrentPageRequests(AppRouter.currentRoute.value.path)
-    await AppRouter.replace({ name: AppNotAllowedName, force: true, query: { type: 'device.banned' } })
-    return Promise.reject(new Error('Device Banned'))
+    await AppRouter.replace({ name: AppNotAllowedName, force: true, query: { type: notAllowedErrorCodeMap[code] } })
+    return Promise.reject(new Error('Not Allowed'))
   }
 
   // custom error code

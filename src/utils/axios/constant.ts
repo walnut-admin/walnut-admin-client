@@ -9,11 +9,18 @@ export const BusinessCodeConst = {
   SIGNATURE_EXPIRED: 40113,
 
   TOO_MANY_REQUESTS: 42900,
-
-  DEVICE_NOT_ALLOWED: 40605,
-  DEVICE_LOCKED: 40606,
-  DEVICE_BANNED: 40607,
 } as const
+
+export const notAllowedErrorCodeMap: Record<number, string> = {
+  40600: 'notAllowed',
+  40601: 'os',
+  40602: 'browser',
+  40603: 'ip',
+  40604: 'userAgent',
+  40605: 'device',
+  40606: 'deviceLocked',
+  40607: 'deviceBanned',
+}
 
 // see more in backend nestjs project `reponseCode` const
 export const errorCodeList = [
