@@ -9,8 +9,7 @@ export function useRouterQuery(path: string, defaultValue?: string) {
    * Get plaintext query value
    */
   const getResolvedValue = () => {
-    // functional status || check maskUrl real value
-    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(route))
+    if (appSettingScope.getRouterEnhanceWhiteListCondition(route))
       return route.query[path]
 
     return (route.meta?._resolvedQuerys ?? {})[path] ?? defaultValue
@@ -20,7 +19,7 @@ export function useRouterQuery(path: string, defaultValue?: string) {
    * Set plaintext query value
    */
   const setResolvedValue = async (val?: string) => {
-    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(route)) {
+    if (appSettingScope.getRouterEnhanceWhiteListCondition(route)) {
       // In normal mode, directly write plaintext query
       router.replace({
         ...router.currentRoute.value,

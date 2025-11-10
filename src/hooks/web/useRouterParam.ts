@@ -7,7 +7,7 @@ export function useRouterParam(path: string) {
 
   const routeParam = computed({
     get() {
-      if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(route))
+      if (appSettingScope.getRouterEnhanceWhiteListCondition(route))
         return route.params[path]
 
       return (route.meta?._resolvedParams ?? {})[path]

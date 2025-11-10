@@ -21,12 +21,7 @@ export function createRouteQueryEncryptGuard(router: Router) {
   const appSettingScope = useAppStoreSettingScope()
 
   router.beforeEach(async (to, _from) => {
-    if (routeWhiteListPath.includes(to.path)) {
-      return true
-    }
-
-    // functional status || check maskUrl real value
-    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
+    if (appSettingScope.getRouterEnhanceWhiteListCondition(to))
       return true
 
     // 1. Split query parameters
@@ -60,12 +55,7 @@ export function createRouteQueryEncryptGuard(router: Router) {
   })
 
   router.beforeResolve(async (to) => {
-    if (routeWhiteListPath.includes(to.path)) {
-      return true
-    }
-
-    // functional status || check maskUrl real value
-    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
+    if (appSettingScope.getRouterEnhanceWhiteListCondition(to))
       return true
 
     if (to.query._e) {

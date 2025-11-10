@@ -21,12 +21,7 @@ export function createRouteParamEncryptGuard(router: Router) {
 
   // beforeEach
   router.beforeEach(async (to, _from) => {
-    if (routeWhiteListPath.includes(to.path)) {
-      return true
-    }
-
-    // functional status || check maskUrl real value
-    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
+    if (appSettingScope.getRouterEnhanceWhiteListCondition(to))
       return true
 
     // no name => refresh page
@@ -50,12 +45,7 @@ export function createRouteParamEncryptGuard(router: Router) {
 
   // beforeResolve
   router.beforeResolve(async (to) => {
-    if (routeWhiteListPath.includes(to.path)) {
-      return true
-    }
-
-    // functional status || check maskUrl real value
-    if (!appSettingScope.getMaskUrlStatus || !appSettingScope.getMaskUrlValue(to))
+    if (appSettingScope.getRouterEnhanceWhiteListCondition(to))
       return true
 
     // to.name redirect
