@@ -26,11 +26,11 @@
   - [x] server cert 加密请求参数?
   - [x] url/params 的参数 不要做配置 直接superjson + cryptojs
   - [x] store 重构了是重构了 但是还是有很多地方风格没有统一 需要挨个整理一下
-  - [ ] 设备不支持 那个页面应该统一化 因为可能还有其他类型的不支持
+  - [x] 设备不支持 那个页面应该统一化 因为可能还有其他类型的不支持
   - [x] font-size => naive-ui有些内部组件不支持px的override（主要是涉及到虚拟滚动/select/menu等等
   - [x] 升级vite7
   - [x] lock逻辑 都统一规划到lock store中 后续接入接口也方便
-  - [ ] px => rem => 应该是base-font change的最佳方案？项目中px全部剔除掉
+  - [x] px => rem => 应该是base-font change的最佳方案？项目中px全部剔除掉
   - [ ] features 页面统一风格
   - [x] JSON表单项
 
