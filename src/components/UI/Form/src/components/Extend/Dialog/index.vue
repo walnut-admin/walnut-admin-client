@@ -99,6 +99,9 @@ function onNo() {
 function onGetTitle(title: string) {
   const uniqueKey = formProps.value.localeUniqueKey
 
+  if (!uniqueKey)
+    return title
+
   const actionType = unref(formProps.value?.dialogProps?.actionType)
 
   if (!actionType)

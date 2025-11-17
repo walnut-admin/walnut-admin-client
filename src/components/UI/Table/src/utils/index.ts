@@ -55,6 +55,10 @@ export function getTableTranslated<T>(props: ComputedRef<Partial<WTable.Props<T>
 
   const appStoreLocale = useAppStoreLocale()
 
+  // if locale is false, return raw title
+  if (item.locale === false)
+    return item.title as string
+
   // dict column title
   if (item.extendType === 'dict' && item.useDictNameAsTitle)
     return t(`dict.name.${item.dictType}`)
