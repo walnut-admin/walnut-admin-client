@@ -17,6 +17,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
   getters: {
     getCollapse: state => state.collapse,
     getShowAside: state => state.showAside,
+    getMenus: state => state.menus,
     getKeepAliveRouteNames: state => state.keepAliveRouteNames,
     getIndexMenuName: state => state.indexMenuName,
   },
