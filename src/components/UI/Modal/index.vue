@@ -22,6 +22,7 @@ const show = defineModel<boolean>('show', { required: true, default: false })
 
 const modalRef = useTemplateRef<any>('modalRef')
 const isFullscreen = ref(false)
+const slotRenderFlag = ref(true)
 
 function onFullScreen() {
   const dragDom = modalRef.value?.containerRef.querySelector('.w-modal')
@@ -31,6 +32,11 @@ function onFullScreen() {
   toggleClass(dragDom, 'modal-fullscreen', isFullscreen.value)
 
   emits('fullscreen', isFullscreen.value)
+
+  slotRenderFlag.value = false
+  nextTick(() => {
+    slotRenderFlag.value = true
+  })
 }
 
 function onNo() {
@@ -94,7 +100,7 @@ async function onUpdateShow(v: boolean) {
     <template #default>
       <WScrollbar :height="isFullscreen ? 'calc(100vh - 180px)' : height">
         <n-spin :show="loading">
-          <slot />
+          <slot v-if="slotRenderFlag" />
         </n-spin>
       </WScrollbar>
     </template>
