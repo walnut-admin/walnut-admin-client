@@ -226,6 +226,32 @@ export namespace IModels {
     remark?: string
   }
 
+  // app error
+  export interface AppError extends Base {
+    message?: string
+    stack?: string
+    statusCode?: number
+    path?: string
+    method?: string
+    headers?: Recordable
+    payload?: Recordable
+    errorType?: string
+    userId?: string
+    responseCode?: number
+    responseMsg?: string
+    ip?: string
+    deviceId?: string
+  }
+
+  // app logger
+  export interface AppLogger extends Base {
+    fileName?: string
+    filePath?: string
+    fileSize?: number
+    fileMTime?: Date
+    fileContent?: string[]
+  }
+
   // app monitor cache model
   export interface AppMonitorCache extends Base {
     key?: string
