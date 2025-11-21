@@ -114,8 +114,8 @@ importers:
         specifier: 11.2.1
         version: 11.2.1
       mind-elixir:
-        specifier: 5.1.1
-        version: 5.1.1
+        specifier: 5.3.6
+        version: 5.3.6
       naive-ui:
         specifier: 2.42.0
         version: 2.42.0(vue@3.5.21(typescript@5.9.2))
@@ -5576,8 +5576,8 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  mind-elixir@5.1.1:
-    resolution: {integrity: sha512-Ao5VCby3iqyd80ReErCbb5uZLL7Zs/Nh+GpmmtUCH4WnmRvmlrdz0l3KNha+iHFeTlkxG27MbN9iPyxkTWWrRA==}
+  mind-elixir@5.3.6:
+    resolution: {integrity: sha512-LU5HuRrtq/Fq/YkgZHUu4gb1Vg6tNQq0Ob7bQKNDTP3A8prcohHF5D7ca5blvqVkyf9+xUdBWsdFMNffMNPnkA==}
 
   minimatch@10.0.1:
     resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
@@ -13643,7 +13643,7 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  mind-elixir@5.1.1: {}
+  mind-elixir@5.3.6: {}
 
   minimatch@10.0.1:
     dependencies:

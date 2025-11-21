@@ -86,7 +86,7 @@
     "libphonenumber-js": "1.12.15",
     "lodash-es": "4.17.21",
     "lru-cache": "11.2.1",
-    "mind-elixir": "5.1.1",
+    "mind-elixir": "5.3.6",
     "naive-ui": "2.42.0",
     "nanoid": "5.1.5",
     "pinia": "3.0.3",

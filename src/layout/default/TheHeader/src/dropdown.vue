@@ -31,7 +31,7 @@ const dropdownOptions = computed<DropdownMixedOption[]>(() => [
   {
     key: '3',
     label: t('app.base.switchRole'),
-    icon: () => <WIcon icon="ant-design:github-outlined"></WIcon>,
+    icon: () => <WIcon icon="ant-design:user-switch-outlined"></WIcon>,
     show: userStoreProfile.getCurrentRoleModeIsSwitchable,
   },
 
