@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { TreeNodeItem } from 'easy-fns-ts'
+import type { InputInst } from 'naive-ui'
 import type { IModels } from '@/api/models'
 import type { ICompExtraScrollbarInst } from '@/components/Extra/Scrollbar'
 import Fuse from 'fuse.js'
@@ -18,6 +19,7 @@ const searchQuery = ref('')
 const activeIndex = ref(0)
 
 const scrollbarRef = useTemplateRef<ICompExtraScrollbarInst>('scrollbarRef')
+const inputRef = useTemplateRef<InputInst>('inputRef')
 
 const appStoreMenu = useAppStoreMenu()
 
@@ -72,37 +74,45 @@ async function onSelect(item: IModels.SystemMenu) {
 
 function onOpenSearch() {
   modalShow.value = true
+  nextTick(() => {
+    inputRef.value?.focus()
+  })
 }
 
 function onInputChange() {
   activeIndex.value = 0
 }
 
-useEventListener('keydown', useDebounceFn((e) => {
+useEventListener('keydown', (e) => {
   if (!modalShow.value || getFilteredResults.value.length === 0)
     return
 
-  e.preventDefault()
   const total = getFilteredResults.value.length
 
   if (e.key === 'ArrowDown') {
+    e.preventDefault()
+
     activeIndex.value
       = (activeIndex.value + 1) % total
 
     scrollbarRef.value?.scrollToIndex(activeIndex.value)
   }
   else if (e.key === 'ArrowUp') {
+    e.preventDefault()
+
     activeIndex.value
       = (activeIndex.value - 1 + total)
         % total
     scrollbarRef.value?.scrollToIndex(activeIndex.value)
   }
   else if (e.key === 'Enter') {
+    e.preventDefault()
+
     const selected = getFilteredResults.value[activeIndex.value]
     if (selected)
       onSelect(selected)
   }
-}, 100))
+})
 </script>
 
 <template>
@@ -123,10 +133,10 @@ useEventListener('keydown', useDebounceFn((e) => {
   >
     <template #header>
       <n-input
+        ref="inputRef"
         v-model:value="searchQuery"
         :placeholder="$t('app.base.search')"
         size="large"
-        autofocus
         clearable
         @change="onInputChange"
       >
