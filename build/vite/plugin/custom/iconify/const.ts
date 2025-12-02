@@ -1,9 +1,5 @@
 import type { IconifyPluginOptions } from './types'
 
-export const iconSVGJSONPath = 'build/_generated/svg.json'
-export const iconListPath = 'build/_generated/icon-list.ts'
-export const iconBundlePath = 'build/_generated/icon-bundle.ts'
-
 export const VIRTUAL_MODULE_ICON_LIST = 'virtual:icon/list'
 export const RESOLVED_VIRTUAL_MODULE_ICON_LIST = `\0${VIRTUAL_MODULE_ICON_LIST}`
 export const VIRTUAL_MODULE_ICON_SET = 'virtual:icon/set'
