@@ -1,10 +1,10 @@
-import type { CredentialResponse } from 'vue3-google-signin'
+import type { CredentialResponse, PromptMomentNotification } from 'vue3-google-signin'
 import { useOneTap } from 'vue3-google-signin'
 
 const userStoreAuth = useAppStoreUserAuth()
 
 export function useGoogleOneTap() {
-  useOneTap({
+  const { isReady } = useOneTap({
     onSuccess: async (response: CredentialResponse) => {
       await userStoreAuth.AuthWithGoogleFedCM({
         credential: response.credential!,
@@ -12,5 +12,16 @@ export function useGoogleOneTap() {
       })
     },
     onError: () => console.error('Error with One Tap Login'),
+    onPromptMomentNotification: (notification: PromptMomentNotification) => {
+      if (notification.isSkippedMoment()) {
+        userStoreAuth.setLoading(false)
+      }
+    },
+  })
+
+  watch(() => isReady.value, (newVal) => {
+    if (newVal) {
+      userStoreAuth.setLoading(true)
+    }
   })
 }
