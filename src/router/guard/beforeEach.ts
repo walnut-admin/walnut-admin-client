@@ -10,7 +10,7 @@ export function createBeforeEachGuard(router: Router) {
     // Paths in `routeWhiteListPath` will enter directly
     if (routeWhiteListPath.includes(to.path)) {
       // Login and push to auth page, will go index menu
-      if (userStoreAuth.accessToken && to.path === AppAuthPath)
+      if (userStoreAuth.getAccessToken && to.path === AppAuthPath)
         return { name: appStoreMenu.getIndexMenuName }
       return true
     }
@@ -23,7 +23,7 @@ export function createBeforeEachGuard(router: Router) {
       return true
 
     // No token, next to auth page and return
-    if (!userStoreAuth.accessToken)
+    if (!userStoreAuth.getAccessToken)
       return { path: AppAuthPath, replace: true }
 
     const userStoreProfile = useAppStoreUserProfile()

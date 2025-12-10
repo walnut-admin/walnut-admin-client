@@ -3,7 +3,6 @@ import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
 import { getNeedCapAPI } from '@/api/security/cap'
-import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
   name: 'SignInWithAccount',
@@ -15,8 +14,6 @@ const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
 const compStoreCapJS = useStoreCompCapJS()
 
-const { loading } = useAuthContext()
-
 const accountFormData = ref<IRequestPayload.Auth.Password>({
   userName: '',
   password: '',
@@ -24,7 +21,7 @@ const accountFormData = ref<IRequestPayload.Auth.Password>({
 })
 
 async function onSignIn() {
-  loading.value = true
+  userStoreAuth.setLoading(true)
 
   try {
     await userStoreAuth.AuthWithBasicPassword(accountFormData.value)
@@ -33,7 +30,7 @@ async function onSignIn() {
     appStoreNaive.destroyAllNotiInst()
   }
   finally {
-    loading.value = false
+    userStoreAuth.setLoading(false)
   }
 }
 
@@ -44,15 +41,21 @@ async function onSubmit() {
   if (!valid)
     return
 
-  const needCap = await getNeedCapAPI('userName', accountFormData.value.userName)
+  userStoreAuth.setLoading(true)
+  try {
+    const needCap = await getNeedCapAPI('userName', accountFormData.value.userName)
 
-  if (needCap) {
-    await compStoreCapJS.onOpenCapModal(async () => {
+    if (needCap) {
+      await compStoreCapJS.onOpenCapModal(async () => {
+        await onSignIn()
+      })
+    }
+    else {
       await onSignIn()
-    })
+    }
   }
-  else {
-    await onSignIn()
+  finally {
+    userStoreAuth.setLoading(false)
   }
 }
 
@@ -65,7 +68,7 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
   baseRules: true,
   showLabel: false,
   xGap: 0,
-  disabled: loading,
+  disabled: computed(() => userStoreAuth.getLoading!),
   schemas: [
     {
       type: 'Base:Input',
@@ -115,7 +118,7 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
               size="small"
               type="tertiary"
               onClick={onForgetPassword}
-              disabled={loading.value}
+              disabled={userStoreAuth.getLoading!}
             >
               {t('form.app.auth.forget')}
             </NButton>
@@ -138,8 +141,8 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
             {t('app.base.signin')}
           </span>
         ),
-        loading,
-        disabled: loading,
+        loading: computed(() => userStoreAuth.getLoading!),
+        disabled: computed(() => userStoreAuth.getLoading!),
         class:
           'w-full rounded-full !bg-gradient-to-r !from-cyan-500 !to-blue-500',
         onClick: onSubmit,
@@ -158,8 +161,8 @@ function setFormData(userName: string, password: string) {
 }
 
 onMounted(() => {
-  if (userStoreAuth.remember) {
-    setFormData(userStoreAuth.remember.userName!, userStoreAuth.remember.password!)
+  if (userStoreAuth.getRemember) {
+    setFormData(userStoreAuth.getRemember!.userName!, userStoreAuth.getRemember!.password!)
   }
 })
 

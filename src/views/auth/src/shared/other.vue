@@ -2,7 +2,6 @@
 import type { Recordable } from 'easy-fns-ts'
 import { getGiteeURIAPI, getGitHubURIAPI } from '@/api/auth/third'
 import { openOAuthWindow } from '@/utils/window/open'
-import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
   name: 'SharedOtherWayToSignin',
@@ -13,7 +12,6 @@ const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreBackendSettings = useAppStoreSettingBackend()
 const appStoreFingerprint = useAppStoreFingerprint()
-const { loading } = useAuthContext()
 
 let childWindow: Window | null
 
@@ -35,7 +33,7 @@ const iconArr = computed(() =>
 )
 
 async function onOAuth(type: string) {
-  loading.value = true
+  userStoreAuth.setLoading(true)
 
   const api: Recordable = {
     gitee: getGiteeURIAPI,
@@ -63,11 +61,9 @@ async function onOAuth(type: string) {
           await userStoreAuth.ExecuteCoreFnAfterAuth(res.data.accessToken)
         }
 
-        loading.value = false
         eventSource.close()
       }
       else {
-        loading.value = false
         eventSource.close()
         childWindow?.close()
         useAppMsgError(res.message)
@@ -76,11 +72,14 @@ async function onOAuth(type: string) {
     catch (error) {
       console.log(error)
     }
+    finally {
+      userStoreAuth.setLoading(false)
+    }
   }
 
   const id = setInterval(() => {
     if (childWindow && childWindow.closed) {
-      loading.value = false
+      userStoreAuth.setLoading(false)
       eventSource.close()
       clearInterval(id)
     }
@@ -118,7 +117,7 @@ onUnmounted(() => {
           :title="item.title"
         >
           <WIconButton
-            :button-props="{ text: true, disabled: loading, onClick: () => onClick(item.key) }"
+            :button-props="{ text: true, disabled: userStoreAuth.getLoading, onClick: () => onClick(item.key) }"
             :icon-props="{ icon: item.icon, width: '20' }"
           />
         </span>

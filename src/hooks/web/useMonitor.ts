@@ -31,7 +31,7 @@ export function useAppUserMonitor() {
     (v) => {
       sendUserMonitorBeacon({
         currentRouter: v.fullPath,
-        auth: !!userStoreAuth.accessToken,
+        auth: !!userStoreAuth.getAccessToken,
         focus: true,
         left: false,
       })

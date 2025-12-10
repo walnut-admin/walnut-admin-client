@@ -39,7 +39,7 @@ const [register, { onOpen }] = useForm<typeof formData.value>({
         try {
           await switchRoleAPI(formData.value.roleId!)
           useAppMessage()
-          await userStoreAuth.ExcuteAfterSwitchRole()
+          await userStoreAuth.ExecuteAfterSwitchRole()
         }
         finally {
           done()

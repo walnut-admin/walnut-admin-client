@@ -260,6 +260,7 @@ export namespace IStoreUser {
    * User auth state
    */
   export interface Auth {
+    loading?: boolean
     accessToken?: Ref<string | null>
     remember?: Ref<Partial<Omit<IRequestPayload.Auth.Password, 'rememberMe'>> | null>
   }

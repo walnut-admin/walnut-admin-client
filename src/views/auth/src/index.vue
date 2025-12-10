@@ -7,8 +7,6 @@ import SignInWithQR from './common/QR.vue'
 
 import SignInWitSMS from './common/SMS.vue'
 
-import { setAuthContext } from './hooks/useAuthContext'
-
 import { useGoogleOneTap } from './hooks/useGoogleOneTap'
 import SharedOther from './shared/other.vue'
 
@@ -23,8 +21,6 @@ const tabsInstRef = ref<TabsInst>()
 const account = ref<{ setFormData: (n: string, p: string) => Record<string, never> }>()
 const appStoreBackendSettings = useAppStoreSettingBackend()
 
-const loading = ref(false)
-
 watch(
   () => [locale, appStoreBackendSettings.auth],
   () => nextTick(() => tabsInstRef.value?.syncBarPosition()),
@@ -37,8 +33,6 @@ watch(
 defineExpose({
   setFormData: (n: string, p: string) => account.value?.setFormData(n, p),
 })
-
-setAuthContext({ loading })
 
 useGoogleOneTap()
 </script>

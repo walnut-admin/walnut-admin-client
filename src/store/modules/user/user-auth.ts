@@ -24,13 +24,27 @@ const rememberStorage = await useAppStorageAsync(AppConstPersistKey.REMEMBER, {
 
 const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
   state: (): IStoreUser.Auth => ({
+    loading: false,
     accessToken: accessTokenStorage,
     remember: rememberStorage,
   }),
 
-  getters: {},
+  getters: {
+    getLoading(state) {
+      return state.loading
+    },
+    getAccessToken(state) {
+      return state.accessToken
+    },
+    getRemember(state) {
+      return state.remember
+    },
+  },
 
   actions: {
+    setLoading(payload: boolean) {
+      this.loading = payload
+    },
     setAccessToken(payload: string) {
       this.accessToken = payload
     },
@@ -56,7 +70,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description refresh AT and permission after switch role
      */
-    async ExcuteAfterSwitchRole() {
+    async ExecuteAfterSwitchRole() {
       // destroy socket
       destroySocket()
 

@@ -7,7 +7,6 @@ import { sendAuthEmailAPI } from '@/api/auth/email'
 import { getNeedCapAPI } from '@/api/security/cap'
 import { isEmailAddress } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
-import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
   transitionName: 'SignInWithEmail',
@@ -19,8 +18,6 @@ const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
 const compStoreCapJS = useStoreCompCapJS()
 
-const { loading } = useAuthContext()
-
 const emailFormData = reactive<NullableRecord<IRequestPayload.Auth.Email.Verify & { agree: string }>>({
   emailAddress: null,
   verifyCode: null,
@@ -28,7 +25,7 @@ const emailFormData = reactive<NullableRecord<IRequestPayload.Auth.Email.Verify 
 })
 
 async function onSignIn() {
-  loading.value = true
+  userStoreAuth.setLoading(true)
 
   try {
     await userStoreAuth.AuthWithEmailAddress({
@@ -40,7 +37,7 @@ async function onSignIn() {
     appStoreNaive.destroyAllNotiInst()
   }
   finally {
-    loading.value = false
+    userStoreAuth.setLoading(false)
   }
 }
 
@@ -64,7 +61,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
   baseRules: true,
   showLabel: false,
   xGap: 0,
-  disabled: loading,
+  disabled: computed(() => userStoreAuth.getLoading!),
   schemas: [
     {
       type: 'Extra:EmailInput',
@@ -118,23 +115,29 @@ const [register, { validate }] = useForm<typeof emailFormData>({
           if (!valid)
             return Promise.reject(new Error('EmailAddress Invalid'))
 
-          const needCap = await getNeedCapAPI('emailAddress', emailFormData.emailAddress!)
+          userStoreAuth.setLoading(true)
+          try {
+            const needCap = await getNeedCapAPI('emailAddress', emailFormData.emailAddress!)
 
-          if (needCap) {
-            return new Promise<boolean>((resolve) => {
-              compStoreCapJS.onOpenCapModal(async () => {
-                await sendAuthEmailAPI({
-                  emailAddress: emailFormData.emailAddress!,
+            if (needCap) {
+              return new Promise<boolean>((resolve) => {
+                compStoreCapJS.onOpenCapModal(async () => {
+                  await sendAuthEmailAPI({
+                    emailAddress: emailFormData.emailAddress!,
+                  })
+                  return resolve(true)
                 })
-                return resolve(true)
               })
-            })
+            }
+            else {
+              await sendAuthEmailAPI({
+                emailAddress: emailFormData.emailAddress!,
+              })
+              return Promise.resolve(true)
+            }
           }
-          else {
-            await sendAuthEmailAPI({
-              emailAddress: emailFormData.emailAddress!,
-            })
-            return Promise.resolve(true)
+          finally {
+            userStoreAuth.setLoading(false)
           }
         },
       },
@@ -219,9 +222,9 @@ const [register, { validate }] = useForm<typeof emailFormData>({
             {t('app.base.signup')}
           </span>
         ),
-        loading,
+        loading: computed(() => userStoreAuth.getLoading!),
         disabled: computed(
-          () => !!emailFormData.agree && loading.value,
+          () => !!emailFormData.agree && userStoreAuth.getLoading!,
         ),
         style: {
           width: '100%',

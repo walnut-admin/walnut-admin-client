@@ -36,7 +36,7 @@ export async function requestInterceptors(config: AxiosRequestConfig) {
 
   // carry token
   if (getBoolean(config._carryToken))
-    userStoreAuth.accessToken && setTokenHeaderWithConfig(config, userStoreAuth.accessToken)
+    userStoreAuth.getAccessToken && setTokenHeaderWithConfig(config, userStoreAuth.getAccessToken)
 
   // add timestamp
   if (config._timestamp) {

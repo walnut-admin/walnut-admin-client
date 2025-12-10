@@ -27,7 +27,7 @@ export function setupSocket() {
     path,
     withCredentials: true,
     extraHeaders: {
-      'Authorization': `Bearer ${userStoreAuth.accessToken}`,
+      'Authorization': `Bearer ${userStoreAuth.getAccessToken}`,
       'x-language': appStoreLocale.getLocale,
       'x-fingerprint': appStoreFingerprint.getFingerprint,
     },

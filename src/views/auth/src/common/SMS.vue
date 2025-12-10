@@ -8,7 +8,6 @@ import { sendAuthTextMsgAPI } from '@/api/auth/phone'
 import { getNeedCapAPI } from '@/api/security/cap'
 import { isPhoneNumber } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
-import { useAuthContext } from '../hooks/useAuthContext'
 
 defineOptions({
   transitionName: 'SignInWithSMS',
@@ -20,8 +19,6 @@ const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
 const compStoreCapJS = useStoreCompCapJS()
 
-const { loading } = useAuthContext()
-
 const countryCallingCode = ref()
 const SMSFormData = reactive<NullableRecord<IRequestPayload.Auth.Phone.Verify & { agree: string }>>({
   phoneNumber: null,
@@ -30,7 +27,7 @@ const SMSFormData = reactive<NullableRecord<IRequestPayload.Auth.Phone.Verify & 
 })
 
 async function onSignIn() {
-  loading.value = true
+  userStoreAuth.setLoading(true)
 
   try {
     await userStoreAuth.AuthWithPhoneNumber({
@@ -42,7 +39,7 @@ async function onSignIn() {
     appStoreNaive.destroyAllNotiInst()
   }
   finally {
-    loading.value = false
+    userStoreAuth.setLoading(false)
   }
 }
 
@@ -66,7 +63,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
   baseRules: true,
   showLabel: false,
   xGap: 0,
-  disabled: loading,
+  disabled: computed(() => userStoreAuth.getLoading!),
   schemas: [
     {
       type: 'Extra:PhoneNumberInput',
@@ -124,23 +121,30 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           if (!valid)
             return false
 
-          const needCap = await getNeedCapAPI('phoneNumber', SMSFormData.phoneNumber!)
+          userStoreAuth.setLoading(true)
 
-          if (needCap) {
-            return new Promise<boolean>((resolve) => {
-              compStoreCapJS.onOpenCapModal(async () => {
-                await sendAuthTextMsgAPI({
-                  phoneNumber: SMSFormData.phoneNumber!,
+          try {
+            const needCap = await getNeedCapAPI('phoneNumber', SMSFormData.phoneNumber!)
+
+            if (needCap) {
+              return new Promise<boolean>((resolve) => {
+                compStoreCapJS.onOpenCapModal(async () => {
+                  await sendAuthTextMsgAPI({
+                    phoneNumber: SMSFormData.phoneNumber!,
+                  })
+                  return resolve(true)
                 })
-                return resolve(true)
               })
-            })
+            }
+            else {
+              await sendAuthTextMsgAPI({
+                phoneNumber: SMSFormData.phoneNumber!,
+              })
+              return Promise.resolve(true)
+            }
           }
-          else {
-            await sendAuthTextMsgAPI({
-              phoneNumber: SMSFormData.phoneNumber!,
-            })
-            return Promise.resolve(true)
+          finally {
+            userStoreAuth.setLoading(false)
           }
         },
 
@@ -227,9 +231,9 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
             {t('app.base.signup')}
           </span>
         ),
-        loading,
+        loading: computed(() => userStoreAuth.getLoading!),
         disabled: computed(
-          () => !!SMSFormData.agree && loading.value,
+          () => !!SMSFormData.agree && userStoreAuth.getLoading!,
         ),
         style: {
           width: '100%',
