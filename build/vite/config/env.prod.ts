@@ -1,15 +1,13 @@
 import { defineConfig } from '@julr/vite-plugin-validate-env'
 import { z } from 'zod/v4'
-import { VITE_PROXY_VALIDATE } from './shared'
+import { VITE_PROXY_VALIDATE, VITE_SENTRY_CONFIG, VITE_SHARED_CONFIG } from './shared'
 
 export default defineConfig({
+  ...VITE_SHARED_CONFIG(),
+
   VITE_PUBLIC_PATH: z.string(),
 
   VITE_PROXY: VITE_PROXY_VALIDATE(),
-
-  VITE_SECONDS_AXIOS_TIMEOUT: z.coerce.number(),
-  VITE_SECONDS_AXIOS_CACHE: z.coerce.number(),
-  VITE_SECONDS_PERSIST: z.coerce.number(),
 
   VITE_BUILD_OUT_DIR: z.string(),
   VITE_BUILD_OBFUSCATOR: z.coerce.boolean(),
@@ -20,9 +18,5 @@ export default defineConfig({
   VITE_BUILD_BANNER: z.coerce.boolean(),
   VITE_BUILD_DISABLE_BROWSER_DEVTOOL: z.coerce.boolean(),
 
-  VITE_BUILD_SENTRY: z.coerce.boolean(),
-  VITE_BUILD_SENTRY_DSN: z.string(),
-  VITE_BUILD_SENTRY_ORG: z.string(),
-  VITE_BUILD_SENTRY_PROJECT: z.string(),
-  VITE_BUILD_SENTRY_AUTH_TOKEN: z.string(),
+  ...VITE_SENTRY_CONFIG(),
 })

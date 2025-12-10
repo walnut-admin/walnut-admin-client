@@ -5,6 +5,7 @@ import { setupRouter } from '@/router'
 import { setupStore } from '@/store/pinia'
 import { isDev } from '@/utils/constant/vue'
 import { setupAppScripts } from './scripts'
+import { setupGoogleSignIn } from './scripts/google-signin'
 import { setupSentry } from './scripts/sentry'
 
 /**
@@ -12,6 +13,8 @@ import { setupSentry } from './scripts/sentry'
  */
 export async function setupApp(app: App) {
   setupStore(app)
+
+  setupGoogleSignIn(app)
 
   await setupAppScripts()
 

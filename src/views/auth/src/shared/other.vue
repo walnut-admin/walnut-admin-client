@@ -60,7 +60,7 @@ async function onOAuth(type: string) {
       if (res.success) {
         if (res.data.event === `token:${type}`) {
           useAppMsgSuccess(t('app.oauth.success'))
-          await userStoreAuth.ExcuteCoreFnAfterAuth(res.data.accessToken)
+          await userStoreAuth.ExecuteCoreFnAfterAuth(res.data.accessToken)
         }
 
         loading.value = false

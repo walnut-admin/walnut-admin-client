@@ -3,6 +3,7 @@ import type { IStoreUser } from '@/store/types'
 import { defineStore } from 'pinia'
 import { authWithPwdAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
+import { authWithGoogleAPI } from '@/api/auth/google'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
@@ -65,13 +66,13 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       AppRouter.removeRoute(AppRootRoute.name!)
       AppRouter.addRoute(AppRootRoute)
 
-      await this.ExcuteCoreFnAfterAuth(accessToken)
+      await this.ExecuteCoreFnAfterAuth(accessToken)
     },
 
     /**
-     * @description core function after signin to excute
+     * @description core function after signin to execute
      */
-    async ExcuteCoreFnAfterAuth(at: string) {
+    async ExecuteCoreFnAfterAuth(at: string) {
       const userStoreProfile = useAppStoreUserProfile()
       const appStoreMenu = useAppStoreMenu()
 
@@ -100,8 +101,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         password: payload.password,
       })
 
-      // excute core fn
-      await this.ExcuteCoreFnAfterAuth(res.accessToken)
+      // execute core fn
+      await this.ExecuteCoreFnAfterAuth(res.accessToken)
 
       const { userName, password, rememberMe } = payload
 
@@ -118,8 +119,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     async AuthWithEmailAddress(payload: IRequestPayload.Auth.Email.Verify) {
       const res = await authWithEmailAPI(payload)
 
-      // excute core fn
-      await this.ExcuteCoreFnAfterAuth(res.accessToken)
+      // execute core fn
+      await this.ExecuteCoreFnAfterAuth(res.accessToken)
     },
 
     /**
@@ -128,8 +129,21 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     async AuthWithPhoneNumber(payload: IRequestPayload.Auth.Phone.Verify) {
       const res = await authWithPhoneNumberAPI(payload)
 
-      // excute core fn
-      await this.ExcuteCoreFnAfterAuth(res.accessToken)
+      // execute core fn
+      await this.ExecuteCoreFnAfterAuth(res.accessToken)
+    },
+
+    /**
+     * @description google way to auth
+     */
+    async AuthWithGoogleFedCM(payload: IRequestPayload.Auth.Google) {
+      const res = await authWithGoogleAPI({
+        credential: payload.credential,
+        select_by: payload.select_by,
+      })
+
+      // execute core fn
+      await this.ExecuteCoreFnAfterAuth(res.accessToken)
     },
 
     /**

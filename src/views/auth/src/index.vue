@@ -4,10 +4,12 @@ import type { TabsInst } from 'naive-ui'
 import SignInWithAccount from './common/account.vue'
 import SignInWitEmail from './common/email.vue'
 import SignInWithQR from './common/QR.vue'
+
 import SignInWitSMS from './common/SMS.vue'
 
 import { setAuthContext } from './hooks/useAuthContext'
 
+import { useGoogleOneTap } from './hooks/useGoogleOneTap'
 import SharedOther from './shared/other.vue'
 
 defineOptions({
@@ -37,6 +39,8 @@ defineExpose({
 })
 
 setAuthContext({ loading })
+
+useGoogleOneTap()
 </script>
 
 <template>

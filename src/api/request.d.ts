@@ -29,6 +29,11 @@ export namespace IRequestPayload {
       password: string
       rememberMe?: boolean
     }
+
+    export interface Google {
+      credential: string
+      select_by: string
+    }
   }
 
   export namespace Security {}

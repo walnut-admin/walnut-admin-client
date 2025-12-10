@@ -1,10 +1,9 @@
 import { defineConfig } from '@julr/vite-plugin-validate-env'
 import { z } from 'zod/v4'
-import { VITE_PROXY_VALIDATE } from './shared'
+import { VITE_PROXY_VALIDATE, VITE_SHARED_CONFIG } from './shared'
 
 export default defineConfig({
-  VITE_APP_TITLE: z.string(),
-  VITE_GA_ID: z.string(),
+  ...VITE_SHARED_CONFIG(),
 
   VITE_PORT: z.coerce.number(),
   VITE_HOST: z.string(),
@@ -13,8 +12,4 @@ export default defineConfig({
 
   VITE_DEV_CSP: z.coerce.boolean(),
   VITE_DEV_PWA: z.coerce.boolean(),
-
-  VITE_SECONDS_AXIOS_TIMEOUT: z.coerce.number(),
-  VITE_SECONDS_AXIOS_CACHE: z.coerce.number(),
-  VITE_SECONDS_PERSIST: z.coerce.number(),
 })
