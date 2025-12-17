@@ -11,7 +11,10 @@ export function useGoogleOneTap() {
         select_by: response.select_by!,
       })
     },
-    onError: () => console.error('Error with One Tap Login'),
+    onError: () => {
+      userStoreAuth.setLoading(false)
+      console.error('Error with One Tap Login')
+    },
     onPromptMomentNotification: (notification: PromptMomentNotification) => {
       if (notification.isSkippedMoment()) {
         userStoreAuth.setLoading(false)
