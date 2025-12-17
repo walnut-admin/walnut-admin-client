@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import devtoolsJson from 'vite-plugin-devtools-json'
-import { creatAutoImportPlugin } from './auto-import'
+import { createAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
 import { createCdnImportPlugin } from './cdn-import'
 import { createCheckerPlugin } from './checker'
@@ -24,7 +24,7 @@ import { createRestartPlugin } from './restart'
 import { createSentryPlugin } from './sentry'
 import { createTurboConsolePlugin } from './turbo-console'
 import { createUnoCSSPlugin } from './unocss'
-import { creatValidateEnvPlugin } from './validate-env'
+import { createValidateEnvPlugin } from './validate-env'
 import { createVisualizerPlugin } from './visualizer'
 
 export function createVitePlugins(mode: string, env: IViteEnv) {
@@ -46,13 +46,13 @@ export function createVitePlugins(mode: string, env: IViteEnv) {
     vueJsx(),
 
     // https://github.com/Julien-R44/vite-plugin-validate-env
-    creatValidateEnvPlugin(mode),
+    createValidateEnvPlugin(mode),
 
     // https://github.com/yjl9903/unplugin-info
     createInfoPlugin(),
 
     // https://github.com/antfu/unplugin-auto-import
-    creatAutoImportPlugin(),
+    createAutoImportPlugin(),
 
     // https://github.com/antfu/unplugin-vue-components
     createComponentPlugin(),

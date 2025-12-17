@@ -12,7 +12,7 @@ const envSchemaMap: Record<string, RecordViteKeys<StandardSchemaV1>> = {
   production: ProdSchema,
 }
 
-export function creatValidateEnvPlugin(mode: string) {
+export function createValidateEnvPlugin(mode: string) {
   return ValidateEnv({
     validator: 'standard',
     schema: envSchemaMap[mode],

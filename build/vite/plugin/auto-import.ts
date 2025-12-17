@@ -1,6 +1,6 @@
 import AutoImport from 'unplugin-auto-import/vite'
 
-export function creatAutoImportPlugin() {
+export function createAutoImportPlugin() {
   return AutoImport({
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
