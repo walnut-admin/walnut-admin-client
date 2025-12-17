@@ -67,14 +67,14 @@
   - [x] 手机号组件，邮箱填充组件
   - [ ] 身份证组件
   - [x] https://github.com/theajack/disable-devtool
-  - [ ] https://github.com/rrweb-io/rrweb
+  - [x] https://github.com/rrweb-io/rrweb sentry自带录屏功能，这个就不集成了
   - [ ] https://github.com/hrynko/vue-pdf-embed
   - [x] cap https://github.com/tiagorangel1/cap
   - [x] https://github.com/zumerlab/snapdom https://github.com/sindresorhus/capture-website still use html-to-image
   - [x] https://github.com/yjl9903/unplugin-info
   - [x] https://github.com/SSShooter/mind-elixir-core instead of vue3-mindmap
   - [x] https://github.com/vite-pwa/vite-plugin-pwa
-  - [ ] https://github.com/antfu/case-police
+  - [x] https://github.com/antfu/case-police not that sensitive
   - [x] https://github.com/sindresorhus/capture-website
   - [x] closure-compiler (尝试搞过，难搞)
 
@@ -87,7 +87,7 @@
   - [x] hover css
   - [x] tab样式重做
   - [x] 劫持F5事件
-  - [ ] 搜索组件
+  - [x] 搜索组件
   - [x] ~~~99 tsx + setup + auto-import 打包后会出问题，暂时需要显式引入 [issue](https://github.com/antfu/unplugin-auto-import/issues/75)~~~
 
 - 不知道如何解决的问题
