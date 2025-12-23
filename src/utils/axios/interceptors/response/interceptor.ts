@@ -73,7 +73,7 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
 
   // rsa decrypt failed
   if (code === BusinessCodeConst.RSA_DECRYPT_FAILED) {
-    // allow to excute encrypt logic in request interceptor again
+    // allow to execute encrypt logic in request interceptor again
     res.config._encrypted = false
     await SingletonPromiseRsaDecryptFailed(res)
     return await AppAxios.request(res.config)
@@ -96,6 +96,10 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   if (errorCodeList.includes(code)) {
     useAppMsgError(msg)
     return Promise.reject(new Error('Error'))
+  }
+
+  if (code === BusinessCodeConst.INTERVAL_SERVER_ERROR) {
+    await AppRouter.replace({ name: App500Name, force: true })
   }
 
   return Promise.reject(new Error('Missing Error Code'))

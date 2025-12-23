@@ -83,4 +83,5 @@ export const builtinRoutes: RouteRecordRaw[] = [
   AppNotAllowedRoute,
   // fix router warning
   App404Route,
+  App500Route,
 ]

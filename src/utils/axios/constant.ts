@@ -9,6 +9,8 @@ export const BusinessCodeConst = {
   SIGNATURE_EXPIRED: 40113,
 
   TOO_MANY_REQUESTS: 42900,
+
+  INTERVAL_SERVER_ERROR: 50000,
 } as const
 
 export const notAllowedErrorCodeMap: Record<number, string> = {

@@ -45,4 +45,6 @@ export const routeWhiteListPath: string[] = [
   AppAuthPrivacyPolicyPath,
   AppAuthServiceAgreementPath,
   AppNotAllowedPath,
+  App404Path,
+  App500Path,
 ]
