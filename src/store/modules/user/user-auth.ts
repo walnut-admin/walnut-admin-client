@@ -1,9 +1,12 @@
 import type { IRequestPayload } from '@/api/request'
 import type { IStoreUser } from '@/store/types'
+import * as opaque from '@serenity-kit/opaque'
 import { defineStore } from 'pinia'
+
 import { authWithPwdAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
+import { opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
@@ -64,6 +67,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
       this.setAccessToken(accessToken)
 
+      // when refresh AT, also refresh session key sliding storage
+      const appStoreSecurity = useAppStoreSecurity()
+      appStoreSecurity.touchSessionKey()
+
       return accessToken
     },
 
@@ -86,9 +93,15 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description core function after signin to execute
      */
-    async ExecuteCoreFnAfterAuth(at: string) {
+    async ExecuteCoreFnAfterAuth(at: string, sessionKey?: string) {
+      const appStoreSecurity = useAppStoreSecurity()
       const userStoreProfile = useAppStoreUserProfile()
       const appStoreMenu = useAppStoreMenu()
+
+      // set session key
+      if (sessionKey) {
+        appStoreSecurity.setSessionKey(sessionKey)
+      }
 
       // set tokens
       this.setAccessToken(at)
@@ -110,13 +123,14 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description password way to auth
      */
     async AuthWithBasicPassword(payload: IRequestPayload.Auth.Password) {
+      // TODO if(config.enabledOpaque)
       const res = await authWithPwdAPI({
         userName: payload.userName,
         password: payload.password,
       })
 
       // execute core fn
-      await this.ExecuteCoreFnAfterAuth(res.accessToken)
+      await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
 
       const { userName, password, rememberMe } = payload
 
@@ -125,6 +139,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         this.setRemember({ userName, password })
       else
         this.setRemember(undefined)
+
+      // await this.AuthWithOpaque(payload)
     },
 
     /**
@@ -134,7 +150,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const res = await authWithEmailAPI(payload)
 
       // execute core fn
-      await this.ExecuteCoreFnAfterAuth(res.accessToken)
+      await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
     },
 
     /**
@@ -144,7 +160,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const res = await authWithPhoneNumberAPI(payload)
 
       // execute core fn
-      await this.ExecuteCoreFnAfterAuth(res.accessToken)
+      await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
     },
 
     /**
@@ -157,7 +173,59 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       })
 
       // execute core fn
-      await this.ExecuteCoreFnAfterAuth(res.accessToken)
+      await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
+    },
+
+    /**
+     * @description opaque way to auth
+     */
+    async AuthWithOpaque(payload: IRequestPayload.Auth.Password) {
+      const { userName, password } = payload
+
+      try {
+        // ==================== 步骤 1: 客户端开始登录 ====================
+        const { clientLoginState, startLoginRequest } = opaque.client.startLogin({
+          password,
+        })
+
+        // ==================== 步骤 2: 发送登录请求到服务器 ====================
+        const loginResponse = await opaqueLoginStartAPI({
+          userName,
+          loginRequest: startLoginRequest,
+        })
+
+        // ==================== 步骤 3: 客户端完成登录 ====================
+        const loginResult = opaque.client.finishLogin({
+          clientLoginState,
+          loginResponse,
+          password,
+        })
+
+        if (!loginResult) {
+          throw new Error('Login failed')
+        }
+
+        const { sessionKey, exportKey, finishLoginRequest } = loginResult
+
+        // ==================== 步骤 4: 发送最终登录确认到服务器 ====================
+        const sessionKeyResponse = await opaqueLoginFinishAPI({
+          userName,
+          loginFinish: finishLoginRequest,
+        })
+
+        // ==================== 登录成功 ====================
+        return {
+          success: true,
+          userName,
+          sessionKey,
+          exportKey,
+          message: 'Login successful',
+        }
+      }
+      catch (error: any) {
+        console.error('Login failed:', error)
+        throw new Error(error.response?.data?.message || 'Login failed')
+      }
     },
 
     /**
@@ -171,6 +239,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       const compStoreCapJS = useStoreCompCapJS()
       const appStoreCachedViews = useAppStoreCachedViews()
       const appStoreLock = useAppStoreLock()
+      const userStorePreference = useAppStoreUserPreference()
+      const appStoreSecurity = useAppStoreSecurity()
 
       // call signout to remove refresh_token
       if (callApi) {
@@ -179,6 +249,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
       // clear tokens
       this.clearTokens()
+
+      // clear session key
+      appStoreSecurity.clearSessionKey()
 
       // clear capjs token
       compStoreCapJS.$reset()
@@ -197,6 +270,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
       // clear cached views
       appStoreCachedViews.$reset()
+
+      // clear preference
+      userStorePreference.$reset()
 
       // clear lock
       appStoreLock.$reset()

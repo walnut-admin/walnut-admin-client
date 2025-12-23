@@ -115,6 +115,7 @@ export namespace IStoreApp {
     clientRsaPubKey: Ref<Nullable<string>>
     clientRsaPrivKey: Ref<Nullable<string>>
     signAesSecretKey: string
+    sessionKey: Ref<Nullable<string>>
   }
 
   /**

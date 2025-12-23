@@ -82,6 +82,7 @@ export namespace IResponseData {
   export namespace Auth {
     export interface TokenPayload {
       accessToken: string
+      sessionKey: string
     }
 
     export interface Permissions {
