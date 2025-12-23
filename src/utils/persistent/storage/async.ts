@@ -31,6 +31,8 @@ export async function useAppStorageAsync<T>(
 
   const realKey = usePresetKey ? getStorageKey(key) : key
   const state = ref<T>()
+  let isInitializing = true // ✅ 添加初始化标志
+  let cachedExpireTime: number | null = null // ✅ 缓存过期时间
 
   const { arm: armExpireTimer, clear: clearExpireTimer } = useExpireTimer({
     onExpire: async () => {
@@ -41,6 +43,8 @@ export async function useAppStorageAsync<T>(
   async function resetToInitial() {
     await storage.removeItem(realKey)
     clearExpireTimer()
+    cachedExpireTime = null // ✅ 清除缓存
+
     if (resetBehavior === 'keepInitial') {
       const fresh = cloneDeep(initialValue)
       state.value = toShallowReactive(fresh)
@@ -56,6 +60,10 @@ export async function useAppStorageAsync<T>(
     if (ttlMode === 'sliding')
       return Date.now() + expire
 
+    // ✅ 使用缓存避免重复读取
+    if (cachedExpireTime !== null)
+      return cachedExpireTime
+
     const oldRaw = await storage.getItem(realKey)
     if (oldRaw) {
       try {
@@ -63,7 +71,10 @@ export async function useAppStorageAsync<T>(
         if (typeof e === 'number')
           return e
       }
-      catch {}
+      catch (error) {
+        // ✅ 记录错误
+        console.warn(`Failed to parse storage data for key "${realKey}":`, error)
+      }
     }
     return Date.now() + expire
   }
@@ -75,14 +86,22 @@ export async function useAppStorageAsync<T>(
 
     try {
       const { v, e } = superjson.parse(raw) as IStorageData<T>
-      if (e && Date.now() >= e) {
+
+      // ✅ 保存过期时间到缓存
+      cachedExpireTime = e ?? null
+
+      // ✅ 使用 > 而不是 >= 更符合直觉
+      if (e && Date.now() > e) {
         resetToInitial()
         return null
       }
+
       return v as T
     }
-    catch {
-      await storage.removeItem(realKey)
+    catch (error) {
+      // ✅ 记录错误
+      console.warn(`Failed to read storage data for key "${realKey}":`, error)
+      storage.removeItem(realKey)
       return null
     }
   }
@@ -94,8 +113,14 @@ export async function useAppStorageAsync<T>(
       e: expire === Infinity ? null : exp,
       _v: version,
     }
-    await storage.setItem(realKey, superjson.stringify(payload))
-    exp ? armExpireTimer(exp) : clearExpireTimer()
+    try {
+      await storage.setItem(realKey, superjson.stringify(payload))
+      exp ? armExpireTimer(exp) : clearExpireTimer()
+    }
+    catch (error) {
+      // ✅ 处理存储失败（如 QuotaExceededError）
+      console.error(`Failed to write storage data for key "${realKey}":`, error)
+    }
   }
 
   const res = await read()
@@ -104,18 +129,27 @@ export async function useAppStorageAsync<T>(
   }
   else {
     state.value = toShallowReactive(cloneDeep(initialValue))
-    write(initialValue)
+    await write(initialValue)
   }
+
+  isInitializing = false // ✅ 初始化完成
+
+  // ✅ 防抖写入，避免频繁 I/O
+  const debouncedWrite = useDebounceFn(write, 100, { maxWait: 500 })
 
   watch(
     state,
     async (val) => {
-      if (val === null) {
+      if (isInitializing)
+        return // ✅ 跳过初始化触发
+
+      if (val === null || val === undefined) {
         await storage.removeItem(realKey)
         clearExpireTimer()
+        cachedExpireTime = null
       }
       else {
-        await write(val!)
+        await debouncedWrite(val) // ✅ 使用防抖
       }
     },
     { deep: true, flush: 'post' },
