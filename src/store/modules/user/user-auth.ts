@@ -6,7 +6,7 @@ import { defineStore } from 'pinia'
 import { refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
-import { opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
+import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
@@ -179,7 +179,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
         // this normally means password error
         if (!loginResult) {
-          throw new Error('Login failed')
+          useAppMsgError(AppI18n().global.t('app.base.failure'))
+          return
         }
 
         const { finishLoginRequest } = loginResult
@@ -202,6 +203,41 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       catch (error: any) {
         console.error('Login failed:', error)
         throw new Error(error.response?.data?.message || 'Login failed')
+      }
+    },
+
+    /**
+     * @description opaque way to change password
+     */
+    async changePasswordWithOpaque(newPassword: string) {
+      try {
+        // ==================== 步骤 1: 开始注册流程 ====================
+        const { clientRegistrationState, registrationRequest } = opaque.client.startRegistration({
+          password: newPassword,
+        })
+
+        // ==================== 步骤 2: 发送注册请求到服务器 ====================
+        const registrationResponse = await opaqueChangePasswordStartAPI({
+          registrationRequest,
+        })
+
+        // ==================== 步骤 3: 完成注册，生成新的注册记录 ====================
+        const { registrationRecord } = opaque.client.finishRegistration({
+          clientRegistrationState,
+          registrationResponse,
+          password: newPassword,
+        })
+
+        // ==================== 步骤 4: 提交新的注册记录 ====================
+        await opaqueChangePasswordFinishAPI({
+          registrationRecord,
+        })
+
+        console.log('Password changed successfully')
+      }
+      catch (error: any) {
+        console.error('Change password failed:', error)
+        throw new Error(error.response?.data?.message || 'Change password failed')
       }
     },
 

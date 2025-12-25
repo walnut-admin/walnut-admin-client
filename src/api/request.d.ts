@@ -36,14 +36,27 @@ export namespace IRequestPayload {
     }
 
     export namespace Opaque {
-      export interface Start {
-        userName: string
-        loginRequest: string
+
+      export namespace Login {
+        export interface Start {
+          userName: string
+          loginRequest: string
+        }
+
+        export interface Finish {
+          userName: string
+          loginFinish: string
+        }
       }
 
-      export interface Finish {
-        userName: string
-        loginFinish: string
+      export namespace Register {
+        export interface Start {
+          registrationRequest: string
+        }
+
+        export interface Finish {
+          registrationRecord: string
+        }
       }
     }
   }
