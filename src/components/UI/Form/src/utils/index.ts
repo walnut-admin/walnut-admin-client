@@ -149,9 +149,13 @@ export function generateRuleMessage<T>(t: Fn, i: SchemaItem<T>, p: ComputedRef<F
 }
 
 /**
- * @description generate base rules based on schemas
+ * @description generate base rules based on schemas and merge with custom rules
  */
-export function generateBaseRules<T>(t: ReturnType<typeof AppI18n>['global']['t'], schemas: Ref<SchemaItem<T>[]>, props: ComputedRef<FormProps<T>>): FormRules {
+export function generateBaseRules<T>(
+  t: ReturnType<typeof AppI18n>['global']['t'],
+  schemas: Ref<SchemaItem<T>[]>,
+  props: ComputedRef<FormProps<T>>,
+): FormRules {
   const getBaseRuleObj = (
     i: SchemaItem<T>,
     extra?: FormItemRule[],
@@ -169,7 +173,8 @@ export function generateBaseRules<T>(t: ReturnType<typeof AppI18n>['global']['t'
     return extra ? base.concat(extra) : base
   }
 
-  return Object.fromEntries(
+  // 生成基础规则
+  const baseRules = Object.fromEntries(
     schemas.value
       .map((i) => {
         if (i.formProp?.path && i.formProp?.rule !== false) {
@@ -189,6 +194,29 @@ export function generateBaseRules<T>(t: ReturnType<typeof AppI18n>['global']['t'
       })
       .filter(i => i.length !== 0),
   )
+
+  // 合并自定义规则
+  const customRules = props.value.rules || {}
+  const mergedRules: FormRules = { ...baseRules }
+
+  // 遍历自定义规则,合并到基础规则中
+  Object.keys(customRules).forEach((key) => {
+    const customRule = customRules[key]
+    const baseRule = mergedRules[key]
+
+    if (baseRule) {
+      // 如果基础规则存在,合并规则数组
+      mergedRules[key] = Array.isArray(baseRule)
+        ? [...baseRule, ...(Array.isArray(customRule) ? customRule : [customRule])]
+        : [baseRule, ...(Array.isArray(customRule) ? customRule : [customRule])]
+    }
+    else {
+      // 如果基础规则不存在,直接使用自定义规则
+      mergedRules[key] = customRule
+    }
+  })
+
+  return mergedRules
 }
 
 export function extractDefaultFormDataFromSchemas<T>(schemas: SchemaItem<T>[]) {
