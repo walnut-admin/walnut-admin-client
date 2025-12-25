@@ -3,7 +3,7 @@ import type { IStoreUser } from '@/store/types'
 import * as opaque from '@serenity-kit/opaque'
 import { defineStore } from 'pinia'
 
-import { authWithPwdAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
+import { refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
 import { opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
@@ -120,30 +120,6 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     },
 
     /**
-     * @description password way to auth
-     */
-    async AuthWithBasicPassword(payload: IRequestPayload.Auth.Password) {
-      // TODO if(config.enabledOpaque)
-      const res = await authWithPwdAPI({
-        userName: payload.userName,
-        password: payload.password,
-      })
-
-      // execute core fn
-      await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
-
-      const { userName, password, rememberMe } = payload
-
-      // remember me
-      if (rememberMe)
-        this.setRemember({ userName, password })
-      else
-        this.setRemember(undefined)
-
-      // await this.AuthWithOpaque(payload)
-    },
-
-    /**
      * @description email way to auth
      */
     async AuthWithEmailAddress(payload: IRequestPayload.Auth.Email.Verify) {
@@ -201,26 +177,27 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
           password,
         })
 
+        // this normally means password error
         if (!loginResult) {
           throw new Error('Login failed')
         }
 
-        const { sessionKey, exportKey, finishLoginRequest } = loginResult
+        const { finishLoginRequest } = loginResult
 
         // ==================== 步骤 4: 发送最终登录确认到服务器 ====================
-        const sessionKeyResponse = await opaqueLoginFinishAPI({
+        const res = await opaqueLoginFinishAPI({
           userName,
           loginFinish: finishLoginRequest,
         })
 
-        // ==================== 登录成功 ====================
-        return {
-          success: true,
-          userName,
-          sessionKey,
-          exportKey,
-          message: 'Login successful',
-        }
+        // remember me
+        if (payload.rememberMe)
+          this.setRemember({ userName, password })
+        else
+          this.setRemember(undefined)
+
+        // execute core fn
+        await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
       }
       catch (error: any) {
         console.error('Login failed:', error)

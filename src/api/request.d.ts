@@ -34,6 +34,18 @@ export namespace IRequestPayload {
       credential: string
       select_by: string
     }
+
+    export namespace Opaque {
+      export interface Start {
+        userName: string
+        loginRequest: string
+      }
+
+      export interface Finish {
+        userName: string
+        loginFinish: string
+      }
+    }
   }
 
   export namespace Security {}

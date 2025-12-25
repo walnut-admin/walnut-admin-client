@@ -24,7 +24,7 @@ async function onSignIn() {
   userStoreAuth.setLoading(true)
 
   try {
-    await userStoreAuth.AuthWithBasicPassword(accountFormData.value)
+    await userStoreAuth.AuthWithOpaque(accountFormData.value)
 
     // close demonstrate notification
     appStoreNaive.destroyAllNotiInst()

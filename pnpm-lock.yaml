@@ -41,6 +41,9 @@ importers:
       '@sentry/vue':
         specifier: 10.11.0
         version: 10.11.0(pinia@3.0.3(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))
+      '@serenity-kit/opaque':
+        specifier: 1.0.0
+        version: 1.0.0
       '@tinymce/tinymce-vue':
         specifier: 6.3.0
         version: 6.3.0(tinymce@8.0.2)(vue@3.5.21(typescript@5.9.2))
@@ -2436,6 +2439,10 @@ packages:
     peerDependenciesMeta:
       pinia:
         optional: true
+
+  '@serenity-kit/opaque@1.0.0':
+    resolution: {integrity: sha512-UCu92RBFroWaUOdrIJzjXW8M/wqGGi7/2J8D5BPbCNAYU27iyzr5JDZ0N6wq31IhNhEIr7C/8V3+9aSgXi4F3A==}
+    hasBin: true
 
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
@@ -9934,6 +9941,8 @@ snapshots:
       vue: 3.5.21(typescript@5.9.2)
     optionalDependencies:
       pinia: 3.0.3(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2))
+
+  '@serenity-kit/opaque@1.0.0': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
 

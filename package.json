@@ -62,6 +62,7 @@
     "@codemirror/view": "6.38.2",
     "@fingerprintjs/fingerprintjs": "4.6.2",
     "@sentry/vue": "10.11.0",
+    "@serenity-kit/opaque": "1.0.0",
     "@tinymce/tinymce-vue": "6.3.0",
     "@vueuse/core": "13.9.0",
     "@vueuse/integrations": "13.9.0",
