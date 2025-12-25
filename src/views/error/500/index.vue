@@ -11,7 +11,7 @@ function onClick() {
 </script>
 
 <template>
-  <div class="h-full w-full flex items-center justify-center bg-bodyColor p-5">
+  <div class="h-screen w-full flex items-center justify-center bg-bodyColor p-5">
     <div class="text-center">
       <div class="inline-flex rounded-full bg-red-100 p-4">
         <div class="rounded-full bg-red-200 stroke-red-600 p-4">

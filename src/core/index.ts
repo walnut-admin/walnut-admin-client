@@ -21,6 +21,10 @@ export async function AppCoreFn1() {
   // Here is where we request from back end to get login user permissions.
   const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs, internalIframeList } = await getPermissionsAPI()
 
+  if (permissionRouteTree.length === 0) {
+    return false
+  }
+
   // set menu tree
   appStoreMenu.setMenus(permissionMenuTree)
 
@@ -53,4 +57,6 @@ export async function AppCoreFn1() {
   rootRoute.redirect = {
     name: appStoreMenu.getIndexMenuName,
   }
+
+  return true
 }

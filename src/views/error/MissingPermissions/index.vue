@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'AppErrorNotAllowed',
+  name: 'AppErrorMissingPermissions',
 })
 
 const userStoreAuth = useAppStoreUserAuth()
 
-const type = useRouterQuery('type')
 const { t } = useAppI18n()
 
 function onContactAdmin() {
@@ -21,8 +20,7 @@ async function onGoToAuth() {
   <div class="h-screen w-screen flex items-center justify-center bg-bodyColor">
     <n-result
       status="warning"
-      :title="$t('app.base.notAllowed')"
-      :description="$t('app.base.notAllowedDetail', { type: $t(`app.base.${type}`) })"
+      :title="$t('app.base.missingPermissions')"
     >
       <template #footer>
         <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">

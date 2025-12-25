@@ -22,6 +22,9 @@ export const App404Name = 'App404'
 export const App500Path = '/500'
 export const App500Name = 'App500'
 
+export const AppMissingPermissionsPath = '/missing-permissions'
+export const AppMissingPermissionsName = 'AppErrorMissingPermissions'
+
 export const AppNotAllowedPath = '/not-allowed'
 export const AppNotAllowedName = 'AppErrorNotAllowed'
 
@@ -45,6 +48,7 @@ export const routeWhiteListPath: string[] = [
   AppAuthPrivacyPolicyPath,
   AppAuthServiceAgreementPath,
   AppNotAllowedPath,
+  AppMissingPermissionsPath,
   App404Path,
   App500Path,
 ]

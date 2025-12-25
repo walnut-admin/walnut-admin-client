@@ -41,7 +41,13 @@ export function createBeforeEachGuard(router: Router) {
     if (!appStoreLock.getLocked && isEmpty((appStoreMenu.menus))) {
       // At this step, user has login but didn't got dynamic routes generated
       // Below we call app core fn1 to handle logic
-      await AppCoreFn1()
+      const hasPermissions = await AppCoreFn1()
+
+      // If no permissions, redirect to missing permissions page
+      if (!hasPermissions) {
+        return { name: AppMissingPermissionsName, replace: true }
+      }
+
       // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards
       return to.fullPath
     }
