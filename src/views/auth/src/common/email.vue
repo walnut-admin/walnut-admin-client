@@ -125,6 +125,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                   await sendAuthEmailAPI({
                     emailAddress: emailFormData.emailAddress!,
                   })
+                  userStoreAuth.setLoading(false)
                   return resolve(true)
                 })
               })
@@ -133,11 +134,13 @@ const [register, { validate }] = useForm<typeof emailFormData>({
               await sendAuthEmailAPI({
                 emailAddress: emailFormData.emailAddress!,
               })
+              userStoreAuth.setLoading(false)
               return Promise.resolve(true)
             }
           }
-          finally {
+          catch (error) {
             userStoreAuth.setLoading(false)
+            console.error(error)
           }
         },
       },

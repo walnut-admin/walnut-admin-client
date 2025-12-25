@@ -143,8 +143,9 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
               return Promise.resolve(true)
             }
           }
-          finally {
+          catch (error) {
             userStoreAuth.setLoading(false)
+            console.error(error)
           }
         },
 
