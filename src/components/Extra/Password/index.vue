@@ -16,7 +16,7 @@ const {
 
 const emits = defineEmits<{ submit: [] }>()
 
-const value = defineModel<string | null>('value', { required: true })
+const value = defineModel<string | null | undefined>('value', { required: true })
 
 const percentage = ref(0)
 const status = ref<ProgressStatus>('success')
