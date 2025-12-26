@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   glareOpacity: 0.3,
   glareAngle: -45,
   glareSize: 250,
-  transitionDuration: 650,
+  transitionDuration: 1200,
   playOnce: false,
   className: '',
   style: () => ({}),
