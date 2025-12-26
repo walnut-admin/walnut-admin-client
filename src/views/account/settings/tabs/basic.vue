@@ -12,6 +12,7 @@ defineOptions({
 
 const { t } = useAppI18n()
 const userStoreProfile = useAppStoreUserProfile()
+const appStoreAdapter = useAppStoreAdapter()
 
 const avatarUploadRef = useTemplateRef<WAvatarUploadInst>('avatarUploadRef')
 const formData = ref<IModels.SystemUser>({
@@ -40,6 +41,9 @@ const [register, { validate }] = useForm<typeof formData.value>({
   localeUniqueKey: 'userInfo',
   baseRules: true,
   labelWidth: 120,
+
+  labelPlacement: appStoreAdapter.isMobile ? 'top' : 'left',
+  labelAlign: appStoreAdapter.isMobile ? 'left' : 'right',
 
   disabled: computed(() => loading.value),
 
@@ -118,13 +122,13 @@ const [register, { validate }] = useForm<typeof formData.value>({
 </script>
 
 <template>
-  <n-grid x-gap="12" :cols="2">
-    <n-gi>
-      <WForm :model="formData" @hook="register" />
-    </n-gi>
-
-    <n-gi>
-      <div class="vstack items-center justify-center">
+  <n-grid
+    x-gap="12"
+    :cols="appStoreAdapter.isMobile ? 1 : 2"
+    class="flex flex-col md:flex-row"
+  >
+    <n-gi class="order-1 md:order-2">
+      <div class="mb-6 vstack items-center justify-center md:mb-0">
         <WAvatar :value="tempAvatar || formData.avatar" :size="16" />
 
         <WAvatarUpload
@@ -134,6 +138,10 @@ const [register, { validate }] = useForm<typeof formData.value>({
           @success="onAvatarSuccess"
         />
       </div>
+    </n-gi>
+
+    <n-gi class="order-2 md:order-1">
+      <WForm :model="formData" @hook="register" />
     </n-gi>
   </n-grid>
 </template>

@@ -15,7 +15,7 @@ const appStoreAdapter = useAppStoreAdapter()
     bordered
     collapse-mode="width"
     class="z-2000 h-screen"
-    :width="appStoreAdapter.isMobile ? '80vw' : `${appStoreSettingDev.getMenuWidth * userStorePreference.getFontSize}rem`"
+    :width="appStoreAdapter.isMobile ? '80vw' : `${appStoreSettingDev.getMenuWidth}rem`"
     :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth * userStorePreference.getFontSize"
     :show-trigger="appStoreSettingDev.getMenuCollapseBuiltInStatus"
     :inverted="userStorePreference.getMenuInverted"
