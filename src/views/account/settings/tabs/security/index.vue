@@ -6,12 +6,12 @@ defineOptions({
   defaultView: false,
 })
 
-const activeTab = useRouterQuery('ptab', '1')
+const activeCTab = defineModel('value', { type: String })
 </script>
 
 <template>
   <n-tabs
-    v-model:value="activeTab"
+    v-model:value="activeCTab"
     type="line"
     animated
     placement="left"
@@ -21,15 +21,15 @@ const activeTab = useRouterQuery('ptab', '1')
     </n-tab-pane>
 
     <!-- <n-tab-pane name="2" display-directive="show:lazy" :tab="$t('app.base.accessibility')">
-      <WAccountSettingsTabPreferenceAccessibility />
+      123
     </n-tab-pane>
 
     <n-tab-pane name="3" display-directive="show:lazy" :tab="$t('app.base.theme')">
-      <WAccountSettingsTabPreferenceTheme />
+      321
     </n-tab-pane>
 
     <n-tab-pane name="4" display-directive="show:lazy" :tab="$t('app.base.layout')">
-      <WAccountSettingsTabPreferenceLayout />
+      222
     </n-tab-pane> -->
   </n-tabs>
 </template>

@@ -9,12 +9,12 @@ defineOptions({
   defaultView: false,
 })
 
-const activeTab = useRouterQuery('ptab', '1')
+const activeCTab = defineModel('value', { type: String })
 </script>
 
 <template>
   <n-tabs
-    v-model:value="activeTab"
+    v-model:value="activeCTab"
     type="line"
     animated
     placement="left"
