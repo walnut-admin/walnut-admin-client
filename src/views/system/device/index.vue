@@ -22,6 +22,7 @@ const auths = {
 }
 
 const { t } = useAppI18n()
+const appStoreAdapter = useAppStoreAdapter()
 
 const data = ref<IModels.SystemDevice[]>([])
 const total = ref(0)
@@ -474,12 +475,13 @@ useKeepAliveEffect(() => {
 
     <n-pagination
       v-if="total > (listParams.page?.pageSize || 0)"
-      class="col-span-24 col-start-16"
+      class="col-span-24 flex justify-center px-4 py-2 sm:col-start-16 sm:justify-end"
       :disabled="loading"
       :item-count="total"
       :page="listParams.page?.page"
-      show-size-picker
+      :show-size-picker="!appStoreAdapter.isMobile"
       :page-sizes="[8, 16, 24, 32]"
+      :page-slot="appStoreAdapter.isMobile ? 5 : 9"
       @update-page="onUpdatePage"
       @update-page-size="onUpdatePageSize"
     />
