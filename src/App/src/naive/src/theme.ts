@@ -91,10 +91,6 @@ export const getThemeOverrides = computed(
     },
 
     Input: {
-      paddingTiny: '0 0.5714rem', // 8px ÷ 14 ≈ 0.5714rem
-      paddingSmall: '0 0.7143rem', // 10px ÷ 14 ≈ 0.7143rem
-      paddingMedium: '0 0.8571rem', // 12px ÷ 14 ≈ 0.8571rem
-      paddingLarge: '0 1rem', // 14px = 1rem
       clearSize: '1.1429rem', // 16px ÷ 14 ≈ 1.1429rem
     },
 
