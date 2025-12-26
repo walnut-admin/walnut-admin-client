@@ -2,6 +2,7 @@
 import type { Recordable } from 'easy-fns-ts'
 import { getGiteeURIAPI, getGitHubURIAPI } from '@/api/auth/third'
 import { openOAuthWindow } from '@/utils/window/open'
+import { useGoogleOneTap } from '../hooks/useGoogleOneTap'
 
 defineOptions({
   name: 'SharedOtherWayToSignin',
@@ -12,6 +13,7 @@ const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreBackendSettings = useAppStoreSettingBackend()
 const appStoreFingerprint = useAppStoreFingerprint()
+const { isReady, login } = useGoogleOneTap()
 
 let childWindow: Window | null
 
@@ -28,6 +30,12 @@ const iconArr = computed(() =>
       icon: 'simple-icons:gitee',
       title: t('app.auth.other.gitee'),
       show: appStoreBackendSettings.getGiteeEnabled,
+    },
+    {
+      key: 'google',
+      icon: 'simple-icons:google',
+      title: t('app.auth.other.google'),
+      show: appStoreBackendSettings.getGoogleEnabled,
     },
   ].filter(i => i.show ?? true),
 )
@@ -89,6 +97,12 @@ async function onOAuth(type: string) {
 async function onClick(key: string) {
   if (['wechat', 'alipay', 'qq'].includes(key)) {
     useAppMessage().warning(t('app.base.wip'))
+    return
+  }
+
+  if (key === 'google' && isReady.value) {
+    userStoreAuth.setLoading(true)
+    login()
     return
   }
 

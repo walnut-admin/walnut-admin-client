@@ -4,12 +4,18 @@ import { useOneTap } from 'vue3-google-signin'
 const userStoreAuth = useAppStoreUserAuth()
 
 export function useGoogleOneTap() {
-  useOneTap({
+  return useOneTap({
+    disableAutomaticPrompt: true,
     onSuccess: async (response: CredentialResponse) => {
-      await userStoreAuth.AuthWithGoogleFedCM({
-        credential: response.credential!,
-        select_by: response.select_by!,
-      })
+      try {
+        await userStoreAuth.AuthWithGoogleFedCM({
+          credential: response.credential!,
+          select_by: response.select_by!,
+        })
+      }
+      finally {
+        userStoreAuth.setLoading(false)
+      }
     },
     onError: () => {
       userStoreAuth.setLoading(false)

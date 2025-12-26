@@ -13,6 +13,7 @@ const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
 const compStoreCapJS = useStoreCompCapJS()
+const appStoreBackendSettings = useAppStoreSettingBackend()
 
 const accountFormData = ref<IRequestPayload.Auth.Password>({
   userName: '',
@@ -113,15 +114,17 @@ const [register, { validate }] = useForm<typeof accountFormData.value>({
               {t('form.app.auth.remember')}
             </NCheckbox>
 
-            <NButton
-              text
-              size="small"
-              type="tertiary"
-              onClick={onForgetPassword}
-              disabled={userStoreAuth.getLoading!}
-            >
-              {t('form.app.auth.forget')}
-            </NButton>
+            {appStoreBackendSettings.getOpaqueForgetEnabled && (
+              <NButton
+                text
+                size="small"
+                type="tertiary"
+                onClick={onForgetPassword}
+                disabled={userStoreAuth.getLoading!}
+              >
+                {t('form.app.auth.forget')}
+              </NButton>
+            )}
           </div>
         ),
       },

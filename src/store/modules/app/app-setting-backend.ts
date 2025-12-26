@@ -13,10 +13,6 @@ const useAppStoreSettingBackendInside = defineStore(
     }),
 
     getters: {
-      getAccountEnabled(state) {
-        return state.auth.account
-      },
-
       getEmailEnabled(state) {
         return state.auth.email
       },
@@ -35,6 +31,23 @@ const useAppStoreSettingBackendInside = defineStore(
 
       getGitHubEnabled(state) {
         return state.auth.github
+      },
+
+      getGoogleEnabled(state) {
+        return state.auth.google
+      },
+
+      getOpaqueEnabled(state) {
+        return state.auth.opaque?.enable ?? false
+      },
+
+      // TODO need register form
+      getOpaqueRegisterEnabled(state) {
+        return state.auth.opaque?.register ?? false
+      },
+
+      getOpaqueForgetEnabled(state) {
+        return state.auth.opaque?.forget ?? false
       },
 
       getFullScreenEnabled(state) {
