@@ -11,6 +11,7 @@ import TheAside from './TheAside'
 const appStoreMenu = useAppStoreMenu()
 const appStoreSettingDev = useAppStoreSettingDev()
 const appSettingScope = useAppStoreSettingScope()
+const appStoreAdapter = useAppStoreAdapter()
 
 // lock socket on
 const appStoreLock = useAppStoreLock()
@@ -46,8 +47,8 @@ useStarOnGithub()
 
     <n-drawer
       v-else
-      v-model:show="appStoreMenu.getShowAside"
-      :width="`${appStoreSettingDev.getMenuWidth}rem`"
+      v-model:show="appStoreMenu.showAside"
+      :width="appStoreAdapter.isMobile ? '80vw' : `${appStoreSettingDev.getMenuWidth}rem`"
       placement="left"
       :native-scrollbar="false"
     >

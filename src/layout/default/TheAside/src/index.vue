@@ -6,6 +6,7 @@ import AsideMenu from './menu.vue'
 const appStoreMenu = useAppStoreMenu()
 const appStoreSettingDev = useAppStoreSettingDev()
 const userStorePreference = useAppStoreUserPreference()
+const appStoreAdapter = useAppStoreAdapter()
 </script>
 
 <template>
@@ -14,7 +15,7 @@ const userStorePreference = useAppStoreUserPreference()
     bordered
     collapse-mode="width"
     class="z-2000 h-screen"
-    :width="appStoreSettingDev.getMenuWidth * userStorePreference.getFontSize"
+    :width="appStoreAdapter.isMobile ? '80vw' : `${appStoreSettingDev.getMenuWidth * userStorePreference.getFontSize}rem`"
     :collapsed-width="appStoreSettingDev.getMenuCollapsedWidth * userStorePreference.getFontSize"
     :show-trigger="appStoreSettingDev.getMenuCollapseBuiltInStatus"
     :inverted="userStorePreference.getMenuInverted"
