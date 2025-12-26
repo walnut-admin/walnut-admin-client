@@ -9,7 +9,6 @@ import { getTheme } from '@/App/src/naive/src/theme'
 
 defineOptions({
   name: 'AppSearch',
-  inheritAttrs: false,
 })
 
 const { t } = useAppI18n()
@@ -116,98 +115,100 @@ useEventListener('keydown', (e) => {
 </script>
 
 <template>
-  <WIcon icon="mdi:feature-search-outline" height="28" @click="onOpenSearch" />
+  <div>
+    <WIcon icon="mdi:feature-search-outline" height="24" @click="onOpenSearch" />
 
-  <n-modal
-    v-model:show="modalShow"
-    preset="card"
-    :show-icon="false"
-    transform-origin="center"
-    :auto-focus="false"
-    :segmented=" {
-      content: 'soft',
-      footer: 'soft',
-    }"
-    :closable="false"
-    class="w-2/5 -top-[20vh]"
-  >
-    <template #header>
-      <n-input
-        ref="inputRef"
-        v-model:value="searchQuery"
-        :placeholder="$t('app.base.search')"
-        size="large"
-        clearable
-        @change="onInputChange"
-      >
-        <template #prefix>
-          <WIcon icon="ant-design:search-outlined" />
-        </template>
-      </n-input>
-    </template>
+    <n-modal
+      v-model:show="modalShow"
+      preset="card"
+      :show-icon="false"
+      transform-origin="center"
+      :auto-focus="false"
+      :segmented=" {
+        content: 'soft',
+        footer: 'soft',
+      }"
+      :closable="false"
+      class="w-2/5 -top-[20vh]"
+    >
+      <template #header>
+        <n-input
+          ref="inputRef"
+          v-model:value="searchQuery"
+          :placeholder="$t('app.base.search')"
+          size="large"
+          clearable
+          @change="onInputChange"
+        >
+          <template #prefix>
+            <WIcon icon="ant-design:search-outlined" />
+          </template>
+        </n-input>
+      </template>
 
-    <template #default>
-      <div v-if="getFilteredResults.length > 0">
-        <n-card :bordered="false">
-          <n-list hoverable clickable>
-            <WScrollbar ref="scrollbarRef" height="30vh">
-              <n-list-item
-                v-for="(item, idx) in getFilteredResults"
-                :key="item._id"
-                class="group cursor-pointer rounded-lg px-2 py-1"
-                :style="{
-                  background: idx === activeIndex ? getTheme.common.primaryColor : '',
-                }"
-                @click="onSelect(item)"
-              >
-                <div class="flex flex-row flex-nowrap items-center justify-start gap-x-4">
-                  <WIcon :icon="item.icon" class="transition-transform duration-200 group-hover:scale-115" />
+      <template #default>
+        <div v-if="getFilteredResults.length > 0">
+          <n-card :bordered="false">
+            <n-list hoverable clickable>
+              <WScrollbar ref="scrollbarRef" height="30vh">
+                <n-list-item
+                  v-for="(item, idx) in getFilteredResults"
+                  :key="item._id"
+                  class="group cursor-pointer rounded-lg px-2 py-1"
+                  :style="{
+                    background: idx === activeIndex ? getTheme.common.primaryColor : '',
+                  }"
+                  @click="onSelect(item)"
+                >
+                  <div class="flex flex-row flex-nowrap items-center justify-start gap-x-4">
+                    <WIcon :icon="item.icon" class="transition-transform duration-200 group-hover:scale-115" />
 
-                  <div class="flex flex-col flex-wrap">
-                    <n-highlight
-                      :text="item.title"
-                      :patterns="[searchQuery]"
-                    />
-                    <n-highlight
-                      v-if="item.desc"
-                      :text="item.desc"
-                      class="mt-1 truncate text-xs text-gray-500"
-                      :patterns="[searchQuery]"
-                    />
+                    <div class="flex flex-col flex-wrap">
+                      <n-highlight
+                        :text="item.title"
+                        :patterns="[searchQuery]"
+                      />
+                      <n-highlight
+                        v-if="item.desc"
+                        :text="item.desc"
+                        class="mt-1 truncate text-xs text-gray-500"
+                        :patterns="[searchQuery]"
+                      />
+                    </div>
                   </div>
-                </div>
-              </n-list-item>
-            </WScrollbar>
-          </n-list>
-        </n-card>
-      </div>
-
-      <div v-if="!searchQuery" class="h-[30vh] flex flex-col flex-wrap items-center justify-center gap-y-4">
-        <WIcon icon="emojione-v1:face-savoring-food" height="64" />
-        <div>{{ $t('app.search.start') }}</div>
-      </div>
-
-      <n-empty
-        v-else-if="getFilteredResults.length === 0 && searchQuery"
-        class="h-[30vh] flex items-center justify-center"
-      />
-    </template>
-
-    <template #footer>
-      <div class="flex flex-row flex-nowrap items-center justify-start gap-x-8 text-sm text-gray-500 children:(flex flex-row flex-nowrap items-center gap-x-1)">
-        <div>
-          <WIcon icon="ant-design:enter-outlined" height="14" />
-          <span>{{ $t('app.base.enter') }}</span>
+                </n-list-item>
+              </WScrollbar>
+            </n-list>
+          </n-card>
         </div>
 
-        <div>
-          <WIcon icon="ant-design:arrow-up-outlined" height="14" />
-          <WIcon icon="ant-design:arrow-down-outlined" height="14" />
-          <span>{{ $t('app.base.switch') }}</span>
+        <div v-if="!searchQuery" class="h-[30vh] flex flex-col flex-wrap items-center justify-center gap-y-4">
+          <WIcon icon="emojione-v1:face-savoring-food" height="64" />
+          <div>{{ $t('app.search.start') }}</div>
         </div>
-      </div>
-    </template>
-  </n-modal>
+
+        <n-empty
+          v-else-if="getFilteredResults.length === 0 && searchQuery"
+          class="h-[30vh] flex items-center justify-center"
+        />
+      </template>
+
+      <template #footer>
+        <div class="flex flex-row flex-nowrap items-center justify-start gap-x-8 text-sm text-gray-500 children:(flex flex-row flex-nowrap items-center gap-x-1)">
+          <div>
+            <WIcon icon="ant-design:enter-outlined" height="14" />
+            <span>{{ $t('app.base.enter') }}</span>
+          </div>
+
+          <div>
+            <WIcon icon="ant-design:arrow-up-outlined" height="14" />
+            <WIcon icon="ant-design:arrow-down-outlined" height="14" />
+            <span>{{ $t('app.base.switch') }}</span>
+          </div>
+        </div>
+      </template>
+    </n-modal>
+  </div>
 </template>
 
 <style lang="scss" scoped>
