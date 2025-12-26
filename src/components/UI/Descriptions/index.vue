@@ -65,7 +65,7 @@ function isHovering(index: number) {
   <n-descriptions>
     <n-descriptions-item v-for="(item, index) in getShowItem" :key="index" v-bind="omit(item, 'label')">
       <template #label>
-        <span :style="item.labelStyle" class="whitespace-nowrap" :class="[item.labelClass]">{{ colon ? `${item.label}：` : item.label }}</span>
+        <span :style="item.labelStyle" :class="[item.labelClass]">{{ colon ? `${item.label}：` : item.label }}</span>
       </template>
 
       <template #default>

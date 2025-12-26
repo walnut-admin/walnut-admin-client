@@ -9,6 +9,7 @@ defineOptions({
 })
 
 const { t } = useAppI18n()
+const appStoreAdapter = useAppStoreAdapter()
 
 const infoItems = computed<ICompUIDescriptionsItem[]>(
   () =>
@@ -114,7 +115,7 @@ onBeforeMount(onGetBackendDeps)
         size="small"
         label-placement="left"
         bordered
-        :column="2"
+        :column="appStoreAdapter.isMobile ? 1 : 2"
         :items="infoItems"
         :label-style="{ width: '30%' }"
         :content-style="{ width: '20%' }"
@@ -136,7 +137,7 @@ onBeforeMount(onGetBackendDeps)
             size="small"
             label-placement="left"
             bordered
-            :column="2"
+            :column="appStoreAdapter.isMobile ? 1 : 2"
             :items="frontendDeps"
             :label-style="{ width: '30%' }"
             :content-style="{ width: '20%' }"
@@ -156,7 +157,7 @@ onBeforeMount(onGetBackendDeps)
             size="small"
             label-placement="left"
             bordered
-            :column="2"
+            :column="appStoreAdapter.isMobile ? 1 : 2"
             :items="frontendDevDeps"
             :label-style="{ width: '30%' }"
             :content-style="{ width: '20%' }"
@@ -178,7 +179,7 @@ onBeforeMount(onGetBackendDeps)
             size="small"
             label-placement="left"
             bordered
-            :column="2"
+            :column="appStoreAdapter.isMobile ? 1 : 2"
             :items="backendDeps"
             :label-style="{ width: '30%' }"
             :content-style="{ width: '20%' }"
@@ -198,7 +199,7 @@ onBeforeMount(onGetBackendDeps)
             size="small"
             label-placement="left"
             bordered
-            :column="2"
+            :column="appStoreAdapter.isMobile ? 1 : 2"
             :items="backendDevDeps"
             :label-style="{ width: '30%' }"
             :content-style="{ width: '20%' }"
