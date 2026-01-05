@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { ProgressStatus } from 'naive-ui'
+import type { EffectScope } from 'vue'
 import type { ICompExtraPasswordProps } from '.'
-import { checkStrStrong, statusTable } from './utils'
+import { zxcvbnAsync } from '@zxcvbn-ts/core'
+import { statusTable } from './utils'
 
 defineOptions({
   name: 'WCompExtraPasswordInput',
@@ -21,19 +23,48 @@ const value = defineModel<string | null | undefined>('value', { required: true }
 const percentage = ref(0)
 const status = ref<ProgressStatus>('success')
 
-watch(
-  () => value.value,
-  (val) => {
-    if (!progress) {
-      return
-    }
-    const strong: number = checkStrStrong(val!)
+async function calculatePasswordStrength(password: string | null | undefined) {
+  if (!password) {
+    percentage.value = 0
+    status.value = 'success'
+    return
+  }
 
-    status.value = statusTable[strong]
-    percentage.value = strong * 20
-  },
-  { immediate: true },
-)
+  try {
+    const result = await zxcvbnAsync(password)
+    const score = result?.score ?? 0
+
+    status.value = statusTable[score]
+    percentage.value = (score + 1) * 20
+  }
+  catch (error) {
+    console.error('Password strength calculation failed:', error)
+    percentage.value = 0
+    status.value = 'success'
+  }
+}
+
+let scope: EffectScope
+
+if (progress) {
+  scope = effectScope()
+
+  scope.run(() => {
+    const debouncedCalculate = useDebounceFn(calculatePasswordStrength, 200)
+
+    watch(
+      () => value.value,
+      (newValue) => {
+        debouncedCalculate(newValue)
+      },
+      { immediate: true },
+    )
+  })
+}
+
+onUnmounted(() => {
+  scope?.stop()
+})
 
 function onKeyup() {
   emits('submit')
