@@ -15,6 +15,9 @@ import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
+// JUST DO NOT CHANGE THIS
+const opaqueServerIdentifier = 'walnut-admin'
+
 // eslint-disable-next-line antfu/no-top-level-await
 const accessTokenStorage = await useAppStorageAsync(AppConstPersistKey.ACCESS_TOKEN, '', { storage: enhancedAesGcmLocalStorage(true) })
 // eslint-disable-next-line antfu/no-top-level-await
@@ -175,6 +178,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
           clientLoginState,
           loginResponse,
           password,
+          identifiers: {
+            client: userName,
+            server: opaqueServerIdentifier,
+          },
         })
 
         // this normally means password error
@@ -183,7 +190,14 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
           return
         }
 
-        const { finishLoginRequest } = loginResult
+        // export key can be used on end-to-end encryption
+        const { finishLoginRequest, exportKey: _exportKey, serverStaticPublicKey } = loginResult
+
+        // server static public key check
+        if (serverStaticPublicKey !== import.meta.env.VITE_SERVER_STATIC_PUBLIC_KEY) {
+          useAppMsgError(AppI18n().global.t('app.base.failure'))
+          return
+        }
 
         // ==================== 步骤 4: 发送最终登录确认到服务器 ====================
         const res = await opaqueLoginFinishAPI({
@@ -210,6 +224,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
      * @description opaque way to change password
      */
     async changePasswordWithOpaque(newPassword: string) {
+      const userStoreProfile = useAppStoreUserProfile()
+
+      const userName = userStoreProfile.profile.userName
+
       try {
         // ==================== 步骤 1: 开始注册流程 ====================
         const { clientRegistrationState, registrationRequest } = opaque.client.startRegistration({
@@ -226,6 +244,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
           clientRegistrationState,
           registrationResponse,
           password: newPassword,
+          identifiers: {
+            client: userName,
+            server: opaqueServerIdentifier,
+          },
         })
 
         // ==================== 步骤 4: 提交新的注册记录 ====================

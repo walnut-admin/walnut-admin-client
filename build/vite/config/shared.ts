@@ -36,6 +36,7 @@ export function VITE_SHARED_CONFIG() {
     VITE_APP_TITLE: z.string(),
     VITE_GA_ID: z.string(),
     VITE_GOOGLE_CLIENT_ID: z.string(),
+    VITE_SERVER_STATIC_PUBLIC_KEY: z.string(),
 
     VITE_SECONDS_AXIOS_TIMEOUT: z.coerce.number(),
     VITE_SECONDS_AXIOS_CACHE: z.coerce.number(),
