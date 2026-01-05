@@ -3,6 +3,7 @@ import { AppAxios } from '@/utils/axios'
 
 const Auth = {
   SIGNOUT: '/auth/signout',
+  KICK_OUT_ALL: '/auth/kick-out-all-devices',
   REFRESH_TOKEN: '/auth/refresh',
   PERMISSION: '/auth/permissions',
   PROFILE: '/auth/profile',
@@ -15,6 +16,15 @@ const Auth = {
 export function signoutAPI() {
   return AppAxios.post({
     url: Auth.SIGNOUT,
+  })
+}
+
+/**
+ * @description Kick out all devices
+ */
+export function kickOutAllDevicesAPI(type: string) {
+  return AppAxios.post({
+    url: `${Auth.KICK_OUT_ALL}?type=${type}`,
   })
 }
 

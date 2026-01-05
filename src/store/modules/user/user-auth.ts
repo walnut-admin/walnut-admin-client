@@ -3,7 +3,7 @@ import type { IStoreUser } from '@/store/types'
 import * as opaque from '@serenity-kit/opaque'
 import { defineStore } from 'pinia'
 
-import { refreshTokenAPI, signoutAPI } from '@/api/auth'
+import { kickOutAllDevicesAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
 import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
@@ -256,6 +256,9 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         })
 
         console.log('Password changed successfully')
+
+        // kick out all devices
+        await kickOutAllDevicesAPI('updatePass')
       }
       catch (error: any) {
         console.error('Change password failed:', error)
