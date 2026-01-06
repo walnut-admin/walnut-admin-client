@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
-import { resetPassowrdAPI, updatePassowrdAPI, userAPI } from '@/api/system/user'
+import { clearPasswordAPI, userAPI } from '@/api/system/user'
 
 defineOptions({
   name: 'User',
 })
 
 const { t } = useAppI18n()
+const userStoreAuth = useAppStoreUserAuth()
 
 // locale unique key
 const key = 'user'
 const keyField = '_id'
 
-const { stateRef: updatePasswordFormData, resetState: resetPasswordFormData } = useState({ userId: '', newPassword: '' })
+const { stateRef: updatePasswordFormData, resetState: resetPasswordFormData } = useState({ userId: '', userName: '', newPassword: '' })
 
 const [registerUpdatePassword, { onOpen }] = useForm<typeof updatePasswordFormData.value>({
   dialogPreset: 'modal',
@@ -224,10 +225,11 @@ const [
             _show: row => !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.ROOT) && !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.DEVELOPER),
             async onPresetClick(rowData) {
               updatePasswordFormData.value.userId = rowData[keyField]!
+              updatePasswordFormData.value.userName = rowData.userName!
               onOpen()
             },
             buttonProps: {
-              textProp: () => t('app.base.pass.update'),
+              textProp: () => t('dict.sys_operate_type.update_password'),
               type: 'info',
               size: 'small',
               auth: `system:${key}:pass:update`,
@@ -237,14 +239,14 @@ const [
             },
           },
           {
-            _builtInType: 'resetPass',
+            _builtInType: 'clearPass',
             _dropdown: true,
             _show: row => !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.ROOT) && !row.populated_rolesList?.map(i => i.roleName).includes(AppConstRoles.DEVELOPER),
             async onPresetClick(rowData) {
-              const { confirmed } = await useAppConfirm(t('app.base.pass.reset.confirm', { userName: rowData.userName }))
+              const { confirmed } = await useAppConfirm(t('app.base.pass.clear.confirm', { userName: rowData.userName }))
 
               if (confirmed) {
-                const res = await resetPassowrdAPI({ userId: rowData[keyField]! })
+                const res = await clearPasswordAPI({ _id: rowData[keyField]! })
 
                 if (res) {
                   useAppMsgSuccess()
@@ -253,10 +255,10 @@ const [
               }
             },
             buttonProps: {
-              textProp: () => t('app.base.pass.reset'),
+              textProp: () => t('dict.sys_operate_type.clear_password'),
               type: 'warning',
               size: 'small',
-              auth: `system:${key}:pass:reset`,
+              auth: `system:${key}:pass:clear`,
             },
             iconProps: {
               icon: 'mdi:lock-reset',
@@ -318,8 +320,9 @@ const [
 
 async function onYes(_: any, done: () => void) {
   try {
-    await updatePassowrdAPI({
+    await userStoreAuth.updatePasswordWithOpaqueForAdmin({
       userId: updatePasswordFormData.value.userId,
+      userName: updatePasswordFormData.value.userName,
       newPassword: updatePasswordFormData.value.newPassword,
     })
     useAppMsgSuccess()

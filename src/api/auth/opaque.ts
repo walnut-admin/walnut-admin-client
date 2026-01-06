@@ -3,10 +3,11 @@ import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
 
 const authOpaque = {
-  AUTH_OPAQUE_LOGIN_START: '/auth/opaque/login/start',
-  AUTH_OPAQUE_LOGIN_FINISH: '/auth/opaque/login/finish',
-  AUTH_OPAQUE_CHANGE_PASSWORD_START: '/auth/opaque/change-password/start',
-  AUTH_OPAQUE_CHANGE_PASSWORD_FINISH: '/auth/opaque/change-password/finish',
+  LOGIN_START: '/auth/opaque/user/login/start',
+  LOGIN_FINISH: '/auth/opaque/user/login/finish',
+  CHANGE_PASSWORD_START: '/auth/opaque/user/change-password/start',
+  CHANGE_PASSWORD_FINISH: '/auth/opaque/user/change-password/finish',
+  KICK_OUT_ALL_DEVICES: '/auth/opaque/user/kick-out-all-devices',
 } as const
 
 /**
@@ -14,7 +15,7 @@ const authOpaque = {
  */
 export function opaqueLoginStartAPI(data: IRequestPayload.Auth.Opaque.Login.Start) {
   return AppAxios.post<string>({
-    url: authOpaque.AUTH_OPAQUE_LOGIN_START,
+    url: authOpaque.LOGIN_START,
     data,
   })
 }
@@ -24,7 +25,7 @@ export function opaqueLoginStartAPI(data: IRequestPayload.Auth.Opaque.Login.Star
  */
 export function opaqueLoginFinishAPI(data: IRequestPayload.Auth.Opaque.Login.Finish) {
   return AppAxios.post<IResponseData.Auth.TokenPayload>({
-    url: authOpaque.AUTH_OPAQUE_LOGIN_FINISH,
+    url: authOpaque.LOGIN_FINISH,
     data,
   })
 }
@@ -34,7 +35,7 @@ export function opaqueLoginFinishAPI(data: IRequestPayload.Auth.Opaque.Login.Fin
  */
 export function opaqueChangePasswordStartAPI(data: IRequestPayload.Auth.Opaque.Register.Start) {
   return AppAxios.post<string>({
-    url: authOpaque.AUTH_OPAQUE_CHANGE_PASSWORD_START,
+    url: authOpaque.CHANGE_PASSWORD_START,
     data,
   })
 }
@@ -44,7 +45,17 @@ export function opaqueChangePasswordStartAPI(data: IRequestPayload.Auth.Opaque.R
  */
 export function opaqueChangePasswordFinishAPI(data: IRequestPayload.Auth.Opaque.Register.Finish) {
   return AppAxios.post<boolean>({
-    url: authOpaque.AUTH_OPAQUE_CHANGE_PASSWORD_FINISH,
+    url: authOpaque.CHANGE_PASSWORD_FINISH,
+    data,
+  })
+}
+
+/**
+ * @description Kick out all devices for current user
+ */
+export function kickOutAllDevicesAPI(data: IRequestPayload.Auth.KickOutAllDevices) {
+  return AppAxios.post({
+    url: authOpaque.KICK_OUT_ALL_DEVICES,
     data,
   })
 }

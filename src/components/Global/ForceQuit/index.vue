@@ -7,7 +7,7 @@ defineOptions({
 const loading = ref(false)
 
 const compStoreForceQuit = useStoreCompForceQuit()
-const { retryText, resume } = useCountdownStorage({ persistKey: 'force-quit', persistSeconds: 10, onCountdownComplete: onForceQuit })
+const { retryText, resume, pause } = useCountdownStorage({ persistKey: 'force-quit', persistSeconds: 10, onCountdownComplete: onForceQuit })
 resume()
 
 async function onForceQuit() {
@@ -16,6 +16,7 @@ async function onForceQuit() {
   try {
     compStoreForceQuit.onCloseForceQuitModal()
     const userStoreAuth = useAppStoreUserAuth()
+    pause()
     await userStoreAuth.Signout()
     compStoreForceQuit.$reset()
   }

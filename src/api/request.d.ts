@@ -4,6 +4,14 @@ export namespace IRequestPayload {
   export namespace App {}
 
   export namespace Auth {
+    export interface KickOutAllDevices {
+      type: string
+    }
+
+    export interface KickOutAllDevicesForAdmin extends KickOutAllDevices {
+      _id: string
+    }
+
     export namespace Email {
       export interface Verify {
         emailAddress: string
@@ -37,14 +45,29 @@ export namespace IRequestPayload {
 
     export namespace Opaque {
 
+      export namespace Admin {
+        export interface UpdatePasswordStart extends Opaque.Register.Start {
+          _id: string
+        }
+
+        export interface UpdatePasswordFinish extends Opaque.Register.Finish {
+          _id: string
+        }
+
+        export interface ResetPasswordStart extends Opaque.Register.Start {
+          _id: string
+        }
+
+        export interface ResetPasswordFinish extends Opaque.Register.Finish {
+          _id: string
+        }
+      }
       export namespace Login {
-        export interface Start {
-          userName: string
+        export interface Start extends Pick<IModels.SystemUser, 'userName'> {
           loginRequest: string
         }
 
-        export interface Finish {
-          userName: string
+        export interface Finish extends Pick<IModels.SystemUser, 'userName'> {
           loginFinish: string
         }
       }

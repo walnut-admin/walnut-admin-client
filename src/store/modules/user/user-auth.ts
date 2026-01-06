@@ -3,11 +3,12 @@ import type { IStoreUser } from '@/store/types'
 import * as opaque from '@serenity-kit/opaque'
 import { defineStore } from 'pinia'
 
-import { kickOutAllDevicesAPI, refreshTokenAPI, signoutAPI } from '@/api/auth'
+import { refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
-import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
+import { kickOutAllDevicesAPI, opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
+import { kickOutAllDevicesForAdminAPI, updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/user'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
 import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
@@ -220,14 +221,12 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       }
     },
 
-    /**
-     * @description opaque way to change password
-     */
-    async changePasswordWithOpaque(newPassword: string) {
-      const userStoreProfile = useAppStoreUserProfile()
-
-      const userName = userStoreProfile.profile.userName
-
+    async opaqueRegisterCore(
+      userName: string,
+      newPassword: string,
+      startApi: ({ userName, registrationRequest }: { userName: string, registrationRequest: string }) => Promise<string>,
+      finishApi: ({ userName, registrationRecord }: { userName: string, registrationRecord: string }) => Promise<boolean>,
+    ) {
       try {
         // ==================== 步骤 1: 开始注册流程 ====================
         const { clientRegistrationState, registrationRequest } = opaque.client.startRegistration({
@@ -235,12 +234,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         })
 
         // ==================== 步骤 2: 发送注册请求到服务器 ====================
-        const registrationResponse = await opaqueChangePasswordStartAPI({
-          registrationRequest,
-        })
+        const registrationResponse = await startApi({ userName, registrationRequest })
 
         // ==================== 步骤 3: 完成注册，生成新的注册记录 ====================
-        const { registrationRecord } = opaque.client.finishRegistration({
+        const { registrationRecord, serverStaticPublicKey } = opaque.client.finishRegistration({
           clientRegistrationState,
           registrationResponse,
           password: newPassword,
@@ -250,20 +247,60 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
           },
         })
 
+        // server static public key check
+        if (serverStaticPublicKey !== import.meta.env.VITE_SERVER_STATIC_PUBLIC_KEY) {
+          useAppMsgError(AppI18n().global.t('app.base.failure'))
+          return
+        }
+
         // ==================== 步骤 4: 提交新的注册记录 ====================
-        await opaqueChangePasswordFinishAPI({
-          registrationRecord,
-        })
-
-        console.log('Password changed successfully')
-
-        // kick out all devices
-        await kickOutAllDevicesAPI('updatePass')
+        await finishApi({ userName, registrationRecord })
       }
       catch (error: any) {
-        console.error('Change password failed:', error)
-        throw new Error(error.response?.data?.message || 'Change password failed')
+        console.error(error)
+        throw new Error(error.response?.data?.message)
       }
+    },
+
+    /**
+     * @description opaque way to change password for user
+     */
+    async changePasswordWithOpaque(newPassword: string) {
+      const userStoreProfile = useAppStoreUserProfile()
+
+      const userName = userStoreProfile.profile.userName!
+
+      // password change also means re-register in opaque auth system
+      await this.opaqueRegisterCore(
+        userName,
+        newPassword,
+        ({ registrationRequest }) => opaqueChangePasswordStartAPI({ registrationRequest }),
+        ({ registrationRecord }) => opaqueChangePasswordFinishAPI({ registrationRecord }),
+      )
+
+      // kick out all devices
+      await kickOutAllDevicesAPI({
+        type: 'updatePass',
+      })
+    },
+
+    /**
+     * @description opaque way to update password for admin
+     */
+    async updatePasswordWithOpaqueForAdmin({ userId, userName, newPassword }: { userId: string, userName: string, newPassword: string }) {
+      // password change also means re-register in opaque auth system
+      await this.opaqueRegisterCore(
+        userName,
+        newPassword,
+        ({ registrationRequest }) => updatePasswordStartAPI({ _id: userId, registrationRequest }),
+        ({ registrationRecord }) => updatePasswordFinishAPI({ _id: userId, registrationRecord }),
+      )
+
+      // kick out all devices for admin
+      await kickOutAllDevicesForAdminAPI({
+        _id: userId,
+        type: 'updatePass',
+      })
     },
 
     /**
