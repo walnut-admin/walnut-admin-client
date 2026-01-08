@@ -5,6 +5,7 @@ import type { IRequestPayload } from '@/api/request'
 import { NRadio, NText } from 'naive-ui'
 import { sendAuthEmailAPI } from '@/api/auth/email'
 import { getNeedCapAPI } from '@/api/security/cap'
+import { mainoutConst } from '@/router/routes/mainout'
 import { isEmailAddress } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
 
@@ -179,7 +180,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                     // @ts-expect-error no onClick for NText
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation()
-                      openExternalLink(AppAuthServiceAgreementPath)
+                      openExternalLink(mainoutConst.serviceAgreement.path)
                     }}
                   >
                     {' '}
@@ -193,7 +194,7 @@ const [register, { validate }] = useForm<typeof emailFormData>({
                     // @ts-expect-error no onClick for NText
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation()
-                      openExternalLink(AppAuthPrivacyPolicyPath)
+                      openExternalLink(mainoutConst.privacyPolicy.path)
                     }}
                   >
                     {' '}

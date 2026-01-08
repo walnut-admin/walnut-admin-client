@@ -11,6 +11,7 @@ import { authWithPhoneNumberAPI } from '@/api/auth/phone'
 import { kickOutAllDevicesForAdminAPI, updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/user'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
+import { mainoutConst } from '@/router/routes/mainout'
 import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
 import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { StoreKeys } from '../../constant'
@@ -359,7 +360,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
       const id = setTimeout(async () => {
         // push to signin page
-        await useAppRouterPush({ name: AppAuthName, replace: true, force: true })
+        await useAppRouterPush({ name: mainoutConst.auth.name, replace: true, force: true })
         clearTimeout(id)
       }, 200)
     },

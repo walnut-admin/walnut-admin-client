@@ -3,12 +3,12 @@ import type { RouteLocationRaw } from 'vue-router'
 
 import { createRouter, createWebHistory } from 'vue-router'
 import { createRouterGuard } from './guard'
-import { routes } from './routes'
+import { builtinRoutes } from './routes/builtin'
 import { parseQuery, stringifyQuery } from './utils/query'
 
 export const AppRouter = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: builtinRoutes,
   strict: true,
   stringifyQuery,
   parseQuery,

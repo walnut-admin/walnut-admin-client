@@ -6,6 +6,7 @@ import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/
 import { NRadio, NText } from 'naive-ui'
 import { sendAuthTextMsgAPI } from '@/api/auth/phone'
 import { getNeedCapAPI } from '@/api/security/cap'
+import { mainoutConst } from '@/router/routes/mainout'
 import { isPhoneNumber } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
 
@@ -185,7 +186,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
                     // @ts-expect-error no onClick for NText
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation()
-                      openExternalLink(AppAuthServiceAgreementPath)
+                      openExternalLink(mainoutConst.serviceAgreement.path)
                     }}
                   >
                     {' '}
@@ -199,7 +200,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
                     // @ts-expect-error no onClick for NText
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation()
-                      openExternalLink(AppAuthPrivacyPolicyPath)
+                      openExternalLink(mainoutConst.privacyPolicy.path)
                     }}
                   >
                     {' '}

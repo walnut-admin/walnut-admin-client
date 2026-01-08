@@ -1,6 +1,7 @@
 import { aesGcmDecrypt, aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
 import { SingletonPromise } from '@/utils/queue'
 import { fromUrlSafeBase64, toUrlSafeBase64 } from '@/utils/shared'
+import { layoutConst } from '../routes/builtin'
 
 const urlMaskingAesKeyQueue = new SingletonPromise<void>()
 
@@ -41,7 +42,7 @@ export async function decryptRouterUrl(value: string) {
   catch (error) {
     console.warn('Url decryption failed, fallback to empty', error)
     const { push } = useAppRouter()
-    await push({ name: App404Name })
+    await push({ name: layoutConst.notFound.name })
     return null
   }
 }

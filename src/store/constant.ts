@@ -1,3 +1,6 @@
+import { layoutConst } from '@/router/routes/builtin'
+import { mainoutRoutes } from '@/router/routes/mainout'
+
 export const StoreKeys = {
   APP_ADAPTER: 'APP_ADAPTER',
   APP_DARK: 'APP_DARK',
@@ -32,8 +35,9 @@ export const StoreKeys = {
  * @description route name list that should not appear in tabs
  */
 export const tabBlackListName: string[] = [
-  AppAuthName,
-  App404Name,
-  App500Name,
-  AppRedirectName,
+  ...mainoutRoutes.map(item => item.name as string),
+  layoutConst.lock.name,
+  layoutConst.notFound.name,
+  layoutConst.serverError.name,
+  layoutConst.redirect.name,
 ]

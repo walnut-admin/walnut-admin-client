@@ -1,4 +1,5 @@
 import { getPermissionsAPI } from '@/api/auth'
+import { layoutConst } from '@/router/routes/builtin'
 import { buildRoutes } from '@/router/utils/route'
 
 /**
@@ -16,7 +17,7 @@ export async function AppCoreFn1() {
   const { addRoute, getRoutes, hasRoute } = AppRouter
 
   const rootRoute
-    = getRoutes()[getRoutes().findIndex(i => i.path === AppRootPath)]
+    = getRoutes()[getRoutes().findIndex(i => i.path === layoutConst.root.path)]
 
   // Here is where we request from back end to get login user permissions.
   const { permissionMenuTree, permissionStrings, permissionRouteTree, keepAliveNames, indexMenuName, affixedTabs, internalIframeList } = await getPermissionsAPI()
@@ -49,7 +50,7 @@ export async function AppCoreFn1() {
   // add to root route
   routes.forEach((route) => {
     if (!hasRoute(route.name as string)) {
-      addRoute(AppRootName, route)
+      addRoute(layoutConst.root.name, route)
     }
   })
 

@@ -1,3 +1,5 @@
+import { mainoutConst } from '@/router/routes/mainout'
+
 /**
  * @description open external link safely
  * @link https://developer.mozilla.org/en-US/docs/Web/API/Window/open#noopener
@@ -5,7 +7,7 @@
 export function openExternalLink(url: string, safe = false, target: '_blank' | '_self' = '_blank') {
   if (safe) {
     window.open(
-      `${AppOpenExternalPath}?url=${url}`,
+      `${mainoutConst.openExternal.path}?url=${url}`,
       target,
       'noopener=yes, noreferrer=yes',
     )

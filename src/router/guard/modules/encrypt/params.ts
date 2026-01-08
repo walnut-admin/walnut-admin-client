@@ -1,5 +1,6 @@
 import type { Router } from 'vue-router'
 import { version } from '~build/package'
+import { layoutConst } from '@/router/routes/builtin'
 import { decryptRouterUrl, encryptRouterUrl } from '@/router/utils/crypto'
 
 const ENHANCED_URL_PREFIX = `__ep__${version}__`
@@ -27,7 +28,7 @@ export function createRouteParamEncryptGuard(router: Router) {
     // no name => refresh page
     // to.name redirect
     // route params enhancing
-    if (!router.currentRoute.value.name || to.name === AppRedirectName)
+    if (!router.currentRoute.value.name || to.name === layoutConst.redirect.name)
       return true
 
     const needEncrypt = Object.entries(to.params)
@@ -49,7 +50,7 @@ export function createRouteParamEncryptGuard(router: Router) {
       return true
 
     // to.name redirect
-    if (to.name === AppRedirectName)
+    if (to.name === layoutConst.redirect.name)
       return true
 
     const encryptedEntries = Object.entries(to.params)

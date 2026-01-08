@@ -39,7 +39,7 @@ watch(locale, () => {
 
 <template>
   <!-- https://tailwindcomponents.com/component/login-register-form-with-image -->
-  <section class="min-h-screen flex items-stretch">
+  <section class="min-h-screen min-w-screen flex items-stretch">
     <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">
       <n-button text>
         <WAppLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" />

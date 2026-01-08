@@ -5,6 +5,7 @@ import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { lockAPI, unlockAPI } from '@/api/system/user_lock'
 import { AppCoreFn1 } from '@/core'
+import { layoutConst } from '@/router/routes/builtin'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -69,7 +70,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      * @description logic after lock
      */
     async logicAfterLock() {
-      await useAppRouterPush({ name: AppLockName })
+      await useAppRouterPush({ name: layoutConst.lock.name })
     },
 
     /**

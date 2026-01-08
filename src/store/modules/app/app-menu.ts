@@ -1,6 +1,7 @@
 import type { IModels } from '@/api/models'
 import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
+import { layoutConst } from '@/router/routes/builtin'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -50,7 +51,7 @@ const useAppStoreMenuInside = defineStore(StoreKeys.APP_MENU, {
      * @link https://github.com/vuejs/vue-router-next/issues/626
      */
     createKeepAliveRouteNames(menus: string[]): string[] {
-      return menus.concat(AppRootName)
+      return menus.concat(layoutConst.root.name)
     },
 
     /**

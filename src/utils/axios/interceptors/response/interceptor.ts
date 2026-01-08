@@ -2,6 +2,8 @@ import type { AxiosResponse } from 'axios'
 import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
 import { get, isArray, set } from 'lodash-es'
+import { layoutConst } from '@/router/routes/builtin'
+import { mainoutConst } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
 import { BusinessCodeConst, errorCodeList, notAllowedErrorCodeMap } from '../../constant'
@@ -88,13 +90,13 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   // not allowed
   if (Object.values(notAllowedErrorCodeMap).map(Number).includes(code)) {
     removeCurrentPageRequests(AppRouter.currentRoute.value.path)
-    await AppRouter.replace({ name: AppNotAllowedName, force: true, query: { type: notAllowedErrorCodeMap[code] } })
+    await AppRouter.replace({ name: mainoutConst.notAllowed.name, force: true, query: { type: notAllowedErrorCodeMap[code] } })
     return Promise.reject(new Error('Not Allowed'))
   }
 
   // mfa required
   if (code === BusinessCodeConst.MFA_REQUIRED) {
-    await AppRouter.replace({ name: AppMfaRequiredName, force: true })
+    await AppRouter.replace({ name: mainoutConst.mfaRequired.name, force: true })
     return Promise.reject(new Error('MFA Required'))
   }
 
@@ -105,7 +107,7 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   }
 
   if (code === BusinessCodeConst.INTERVAL_SERVER_ERROR) {
-    await AppRouter.replace({ name: App500Name, force: true })
+    await AppRouter.replace({ name: layoutConst.serverError.name, force: true })
   }
 
   return Promise.reject(new Error('Missing Error Code'))

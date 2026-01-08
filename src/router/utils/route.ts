@@ -4,7 +4,7 @@ import type { RouteRecordMultipleViewsWithChildren, RouteRecordNameGeneric, Rout
 import { findPath, formatTree } from 'easy-fns-ts'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
-import { App404Route, App500Route } from '../routes/builtin'
+import { App404Route, App500Route, layoutConst } from '../routes/builtin'
 
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
@@ -96,8 +96,8 @@ export function buildRoutes(payload: RouteRecordRaw[]) {
   // fix router warning
   // remove first cause initial builtin in builtinRoutes
   const { removeRoute, hasRoute } = AppRouter
-  if (hasRoute(App404Name)) {
-    removeRoute(App404Name)
+  if (hasRoute(layoutConst.notFound.name)) {
+    removeRoute(layoutConst.notFound.name)
   }
 
   // finally push the 404/500

@@ -1,4 +1,5 @@
 import type { IModels } from '@/api/models'
+import { layoutConst } from '@/router/routes/builtin'
 
 const appStoreFingerprint = useAppStoreFingerprint()
 
@@ -15,7 +16,7 @@ export function sendUserMonitorBeacon(data: Partial<IModels.AppMonitorUser>) {
     { type: 'application/json; charset=UTF-8' },
   )
 
-  if (data.currentRouter === AppRootPath)
+  if (data.currentRouter === layoutConst.root.path)
     return
 
   navigator.sendBeacon(`${httpUrl}/app/monitor/user/state`, blob)
