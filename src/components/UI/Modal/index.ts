@@ -6,7 +6,7 @@ export { default } from './index.vue'
 export interface ICompUIModalProps extends /* @vue-ignore */ Omit<ModalProps, 'segmented'> {
   show?: boolean
   loading?: boolean
-  closeable?: boolean
+  closable?: boolean
   title?: string
   helpMessage?: string
   width?: string

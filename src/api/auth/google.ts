@@ -7,7 +7,7 @@ import { AppAxios } from '@/utils/axios'
  */
 export function authWithGoogleAPI(data: IRequestPayload.Auth.Google) {
   return AppAxios.post<IResponseData.Auth.TokenPayload>({
-    url: 'auth/google',
+    url: '/auth/google',
     data,
   })
 }

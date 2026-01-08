@@ -85,6 +85,32 @@ export namespace IResponseData {
       sessionKey: string
     }
 
+    export namespace MFA {
+      export interface AvailableMethods {
+        availableMethods: string[]
+        availableMethodsCount: number
+        verifiedMethods: string[]
+        verifiedMethodsCount: number
+      }
+
+      export interface TotpGenerate {
+        totpId: string
+        secret: string
+        qrCode: string
+        account: string
+      }
+
+      export interface TotpStatus {
+        enabled: boolean
+        boundAt?: string
+        lastUsedAt?: string
+      }
+
+      export interface TotpBind {
+        backupCodes: string[]
+      }
+    }
+
     export interface Permissions {
       permissionMenuTree: TreeNodeItem<IModels.SystemMenu>[]
       permissionRouteTree: RouteRecordRaw[]

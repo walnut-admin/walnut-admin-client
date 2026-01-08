@@ -217,7 +217,6 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       }
       catch (error: any) {
         console.error('Login failed:', error)
-        throw new Error(error.response?.data?.message || 'Login failed')
       }
     },
 

@@ -22,7 +22,7 @@ const [registerUpdatePassword, { onOpen }] = useForm<typeof updatePasswordFormDa
   xGap: 0,
 
   dialogProps: {
-    title: computed(() => t('app.base.pass.update')),
+    title: computed(() => t('dict.sys_operate_type.update_password')),
     width: '40%',
     onYes,
     onNo: (done) => {

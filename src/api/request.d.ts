@@ -4,6 +4,17 @@ export namespace IRequestPayload {
   export namespace App {}
 
   export namespace Auth {
+
+    export namespace MFA {
+      export interface TotpGenerate {
+        name: string
+      }
+      export interface TotpBind {
+        name: string
+        code: string
+        tempTotpId: string
+      }
+    }
     export interface KickOutAllDevices {
       type: string
     }

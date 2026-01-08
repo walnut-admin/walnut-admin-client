@@ -28,6 +28,9 @@ export const AppMissingPermissionsName = 'AppErrorMissingPermissions'
 export const AppNotAllowedPath = '/not-allowed'
 export const AppNotAllowedName = 'AppErrorNotAllowed'
 
+export const AppMfaRequiredPath = '/mfa-required'
+export const AppMfaRequiredName = 'MfaRequired'
+
 export const AppTestMainoutPath = '/test-mainout'
 export const AppTestMainoutName = 'TestMainout'
 
@@ -48,6 +51,7 @@ export const routeWhiteListPath: string[] = [
   AppAuthPrivacyPolicyPath,
   AppAuthServiceAgreementPath,
   AppNotAllowedPath,
+  AppMfaRequiredPath,
   AppMissingPermissionsPath,
   App404Path,
   App500Path,

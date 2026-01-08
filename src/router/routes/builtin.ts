@@ -74,6 +74,12 @@ export const AppNotAllowedRoute: RouteRecordSingleView = {
   component: () => import('../../views/error/NotAllowed/index.vue'),
 }
 
+export const AppMfaRequiredRoute: RouteRecordSingleView = {
+  name: constant.AppMfaRequiredName,
+  path: constant.AppMfaRequiredPath,
+  component: () => import('../../views/error/MfaRequired/index.vue'),
+}
+
 export const AppMissingPermissionsRoute: RouteRecordSingleView = {
   name: constant.AppMissingPermissionsName,
   path: constant.AppMissingPermissionsPath,
@@ -87,6 +93,7 @@ export const builtinRoutes: RouteRecordRaw[] = [
   AppRootRoute,
   AppRedirectRoute,
   AppNotAllowedRoute,
+  AppMfaRequiredRoute,
   AppMissingPermissionsRoute,
   // fix router warning
   App404Route,

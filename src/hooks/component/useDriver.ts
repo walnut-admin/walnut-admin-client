@@ -30,9 +30,9 @@ export function useDriver(key: string, steps: DriveStep[]) {
       }
       driverInst.value?.moveNext()
     },
-    doneBtnText: t('app.intro.done'),
-    nextBtnText: t('app.intro.next'),
-    prevBtnText: t('app.intro.prev'),
+    doneBtnText: t('app.base.done'),
+    nextBtnText: t('app.base.next'),
+    prevBtnText: t('app.base.prev'),
     steps,
   })
 

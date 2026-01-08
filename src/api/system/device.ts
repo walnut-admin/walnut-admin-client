@@ -2,7 +2,7 @@ import type { IModels } from '../models'
 import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
-import { detectDeviceType, getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
+import { getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
 export const deviceAPI = new BaseAPI<IModels.SystemDevice>({
@@ -69,7 +69,7 @@ export async function initialDeviceAPI() {
     url: '/system/device/initial',
     data: {
       rawDeviceId: appStoreFingerprint.getFingerprint,
-      deviceName: `${detectDeviceType()}_${appStoreFingerprint.getFingerprint.slice(0, 6)}`.toLocaleUpperCase(),
+      deviceName: appStoreFingerprint.getDeviceNameFromFingerprint,
       sr: {
         width: window.screen.width,
         height: window.screen.height,

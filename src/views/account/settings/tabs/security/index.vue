@@ -16,7 +16,7 @@ const activeCTab = defineModel('value', { type: String })
     animated
     placement="left"
   >
-    <n-tab-pane name="1" display-directive="show:lazy" :tab="$t('app.base.pass.update')">
+    <n-tab-pane name="1" display-directive="show:lazy" :tab="$t('dict.sys_operate_type.update_password')">
       <WAccountSettingsTabSecurityOpaque />
     </n-tab-pane>
 
