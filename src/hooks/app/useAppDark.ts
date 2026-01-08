@@ -27,18 +27,23 @@ export function toggleDark(e: MouseEvent) {
     await nextTick()
   })
 
-  const x = e.clientX
-  const y = e.clientY
-
+  const target = e.target as HTMLElement
+  const { left, top, width, height } = target.getBoundingClientRect()
+  const x = left + width / 2
+  const y = top + height / 2
   const endRadius = Math.hypot(
     Math.max(x, innerWidth - x),
     Math.max(y, innerHeight - y),
   )
+  const ratioX = (100 * x) / innerWidth
+  const ratioY = (100 * y) / innerHeight
+  const referR = Math.hypot(innerWidth, innerHeight) / Math.SQRT2
+  const ratioR = (100 * endRadius) / referR
 
   transition.ready.then(() => {
     const clipPath = [
-      `circle(0px at ${x}px ${y}px)`,
-      `circle(${endRadius}px at ${x}px ${y}px)`,
+      `circle(0% at ${ratioX}% ${ratioY}%)`,
+      `circle(${ratioR}% at ${ratioX}% ${ratioY}%)`,
     ]
     document.documentElement.animate(
       {
@@ -47,8 +52,9 @@ export function toggleDark(e: MouseEvent) {
           : clipPath,
       },
       {
-        duration: 400,
-        easing: 'ease-out',
+        duration: 500,
+        fill: 'both',
+        easing: 'ease-in-out',
         pseudoElement: isDark.value
           ? '::view-transition-old(root)'
           : '::view-transition-new(root)',
