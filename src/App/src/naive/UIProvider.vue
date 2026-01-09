@@ -21,6 +21,8 @@ const appStoreNaive = useAppStoreNaive()
     :date-locale="getDateLocale"
     cls-prefix="w"
   >
+    <n-global-style />
+
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider
