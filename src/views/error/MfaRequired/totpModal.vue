@@ -85,7 +85,7 @@ async function onUnbind() {
 }
 
 // close bind modal
-function closeBindModal() {
+function onCloseBindModal() {
   show.value = false
   currentStep.value = 1
   totpData.value = undefined
@@ -101,8 +101,8 @@ function onGoStep2() {
   })
 }
 
-// 下载备用码
-function downloadBackupCodes() {
+//  download backup codes
+function onDownloadBackupCodes() {
   const content = `${name} - ${t('mfa.totp.backupCodes')}\n${t('app.base.createdAt')}: ${new Date().toLocaleString()}\n\n${backupCodes.value.join('\n')}\n\n${t('mfa.totp.backupCodes.title1')} - ${t('mfa.totp.backupCodes.title3')}`
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
   downloadByBlob(blob, `totp-backup-codes-${Date.now()}.txt`)
@@ -122,7 +122,7 @@ defineExpose({
     :style="{ width: '600px' }"
     :closable="currentStep !== 3"
     :mask-closable="false"
-    @close="closeBindModal"
+    @close="onCloseBindModal"
   >
     <!-- step -->
     <NSteps :current="currentStep" class="mb-8 ml-20" content-placement="bottom">
@@ -142,13 +142,13 @@ defineExpose({
         <img :src="totpData.qrCode" alt="TOTP QR Code" class="h-64 w-64">
       </div>
 
-      <p class="mb-4 text-sm text-gray-600">
+      <p class="mb-4 text-sm">
         {{ $t('app.base.account') }}: <span class="font-medium font-mono">{{ totpData.account }}</span>
       </p>
 
       <!-- manual input option -->
       <details class="text-left">
-        <summary class="mb-2 cursor-pointer text-sm text-blue-600 hover:text-blue-700">
+        <summary class="mb-2 cursor-pointer text-sm text-warning">
           {{ $t('mfa.totp.manual') }}
         </summary>
         <NAlert type="info" class="mt-2">
@@ -156,7 +156,7 @@ defineExpose({
             <p class="mb-2">
               {{ $t('mfa.totp.manual.key') }}
             </p>
-            <div class="flex items-center justify-between rounded bg-gray-100 px-3 py-2 font-mono">
+            <div class="flex items-center justify-between rounded px-3 py-2 font-mono">
               <span class="break-all">{{ totpData.secret }}</span>
               <WCopy
                 :source="totpData.secret"
@@ -167,7 +167,7 @@ defineExpose({
       </details>
 
       <NSpace justify="center" class="mt-6">
-        <NButton @click="closeBindModal">
+        <NButton @click="onCloseBindModal">
           {{ $t('app.base.no') }}
         </NButton>
         <NButton type="primary" @click="onGoStep2">
@@ -220,7 +220,7 @@ defineExpose({
 
     <!-- Step3: done -->
     <div v-if="currentStep === 3" class="text-center">
-      <WIcon icon="carbon-checkmark-filled" class="mx-auto mb-4 text-6xl text-green-500" />
+      <WIcon icon="carbon-checkmark-filled" class="mx-auto mb-4 text-6xl" />
       <h3 class="mb-2 text-lg font-semibold">
         {{ $t('mfa.totp.done.title1') }}
       </h3>
@@ -240,14 +240,14 @@ defineExpose({
             {{ $t('mfa.totp.backupCodes.title2') }}
             <strong class="text-orange-700">{{ $t('mfa.totp.backupCodes.title3') }}</strong>
           </p>
-          <div class="mb-3 max-h-48 overflow-y-auto rounded bg-gray-50 p-3 text-xs font-mono">
+          <div class="mb-3 max-h-48 overflow-y-auto rounded p-3 text-xs font-mono">
             <div v-for="(code, index) in backupCodes" :key="index" class="mb-1">
               {{ index + 1 }}. {{ code }}
             </div>
           </div>
           <NSpace>
             <WCopy :source="backupCodes.join('\n')" />
-            <NButton size="tiny" dashed type="info" @click="downloadBackupCodes">
+            <NButton size="tiny" dashed type="info" @click="onDownloadBackupCodes">
               <template #icon />
               {{ $t('app.base.download') }}
             </NButton>
@@ -255,7 +255,7 @@ defineExpose({
         </div>
       </NAlert>
 
-      <NButton type="primary" block @click="closeBindModal">
+      <NButton type="primary" block @click="onCloseBindModal">
         {{ $t('app.base.done') }}
       </NButton>
     </div>

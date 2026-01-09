@@ -8,8 +8,8 @@ defineOptions({
 
 interface MfaMethod {
   key: string
-  name: string
-  description: string
+  name: string | ComputedRef<string>
+  description: string | ComputedRef<string>
   icon: string
   recommended?: boolean
   enabled?: boolean
@@ -27,8 +27,8 @@ const loading = ref(true)
 const mfaMethodsConfig = ref<MfaMethod[]>([
   {
     key: 'authenticator',
-    name: t('mfa.totp'),
-    description: t('mfa.totp.desc'),
+    name: computed(() => t('mfa.totp')),
+    description: computed(() => t('mfa.totp.desc')),
     icon: 'simple-icons:google',
     recommended: true,
     enabled: false,
@@ -41,8 +41,8 @@ const mfaMethodsConfig = ref<MfaMethod[]>([
   },
   {
     key: 'webauthn',
-    name: t('mfa.webauthn'),
-    description: t('mfa.webauthn.desc'),
+    name: computed(() => t('mfa.webauthn')),
+    description: computed(() => t('mfa.webauthn.desc')),
     icon: 'simple-icons:webauthn',
     recommended: false,
     enabled: false,
@@ -106,28 +106,28 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen w-screen flex items-center justify-center from-blue-50 to-indigo-50 bg-gradient-to-br p-4">
+  <div class="min-h-screen w-screen flex items-center justify-center p-4">
     <div class="max-w-4xl w-full">
       <!-- header -->
       <div class="mb-8 text-center">
-        <div class="mb-4 h-20 w-20 inline-flex items-center justify-center rounded-full bg-blue-100">
+        <div class="mb-4 h-20 w-20 inline-flex items-center justify-center rounded-full bg-info text-white">
           <WIcon icon="carbon-security" height="32" />
         </div>
-        <h1 class="mb-2 text-3xl text-gray-900 font-bold">
+        <h1 class="mb-2 text-3xl font-bold">
           {{ $t('mfa.title1') }}
         </h1>
-        <p class="text-base text-gray-600">
+        <p class="text-base">
           {{ $t('mfa.title2') }}
         </p>
       </div>
 
       <!-- loading state -->
       <div v-if="loading" class="flex justify-center py-12">
-        <NSpin size="large" />
+        <n-spin size="large" />
       </div>
 
       <!-- empty state -->
-      <NEmpty
+      <n-empty
         v-else-if="mfaMethodsConfig.length === 0"
         :description="$t('mfa.empty')"
         class="py-12"
@@ -135,7 +135,7 @@ onBeforeMount(async () => {
 
       <!-- mfa methods list -->
       <div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <NCard
+        <n-card
           v-for="method in mfaMethodsConfig"
           :key="method.key"
           :bordered="true"
@@ -143,34 +143,34 @@ onBeforeMount(async () => {
           :class="method.recommended ? 'ring-2 ring-blue-400' : ''"
           @click="() => method.enabled ? method.onUnbind!() : method.onBind!()"
         >
-          <NTag
+          <n-tag
             v-if="method.enabled && method.recommended"
             type="info"
             size="small"
             class="absolute right-4 top-4"
           >
             {{ $t('app.base.enabled') }}/{{ $t('app.base.recommended') }}
-          </NTag>
+          </n-tag>
 
           <!-- enabled tag -->
-          <NTag
+          <n-tag
             v-else-if="method.enabled"
             type="success"
             size="small"
             class="absolute right-4 top-4"
           >
             {{ $t('app.base.enabled') }}
-          </NTag>
+          </n-tag>
 
           <!-- recommended tag -->
-          <NTag
+          <n-tag
             v-else-if="method.recommended"
             type="info"
             size="small"
             class="absolute right-4 top-4"
           >
             {{ $t('app.base.recommended') }}
-          </NTag>
+          </n-tag>
 
           <div class="flex items-start gap-4">
             <!-- icon -->
@@ -182,10 +182,10 @@ onBeforeMount(async () => {
 
             <!-- content -->
             <div class="min-w-0 flex-1">
-              <h3 class="mb-1 text-lg text-gray-900 font-semibold">
+              <h3 class="mb-1 text-lg font-semibold">
                 {{ method.name }}
               </h3>
-              <p class="mb-4 text-sm text-gray-600">
+              <p class="mb-4 text-sm">
                 {{ method.description }}
               </p>
 
@@ -200,23 +200,15 @@ onBeforeMount(async () => {
               </WButton>
             </div>
           </div>
-        </NCard>
+        </n-card>
       </div>
 
       <!-- footer note -->
-      <div class="mt-8 border border-amber-200 rounded-lg bg-amber-50 p-4">
-        <div class="flex items-start gap-3">
-          <WIcon icon="carbon-information" height="24" class="mt-0.5 flex-shrink-0 text-xl text-amber-600" />
-          <div class="text-sm text-amber-800">
-            <p class="mb-1 font-medium">
-              {{ $t('mfa.tip1') }}
-            </p>
-            <p class="text-amber-700">
-              {{ $t('mfa.tip2') }}
-            </p>
-          </div>
+      <n-alert type="warning" class="mt-8 border border-amber-200 rounded-lg" :title="$t('mfa.tip1')">
+        <div class="text-sm">
+          {{ $t('mfa.tip2') }}
         </div>
-      </div>
+      </n-alert>
 
       <WButton type="success" class="mx-auto mt-4 w-32 flex items-center justify-center tracking-widest" :disabled="!getButtonCanClick || loading" round @click="onVerifyMfa">
         {{ $t('app.base.verify') }}
