@@ -91,7 +91,7 @@ const externalLinkRoute: RouteRecordRaw = {
   path: mainoutConst.openExternal.path,
   component: () => import('../../views/features/external-link.vue'),
   meta: {
-    _auth: false,
+    _auth: true,
   },
 }
 
@@ -118,18 +118,27 @@ const AppNotAllowedRoute: RouteRecordSingleView = {
   name: mainoutConst.notAllowed.name,
   path: mainoutConst.notAllowed.path,
   component: () => import('../../views/error/NotAllowed/index.vue'),
+  meta: {
+    _auth: true,
+  },
 }
 
 const AppMfaRequiredRoute: RouteRecordSingleView = {
   name: mainoutConst.mfaRequired.name,
   path: mainoutConst.mfaRequired.path,
   component: () => import('../../views/error/MfaRequired/index.vue'),
+  meta: {
+    _auth: true,
+  },
 }
 
 const AppMissingPermissionsRoute: RouteRecordSingleView = {
   name: mainoutConst.missingPermissions.name,
   path: mainoutConst.missingPermissions.path,
   component: () => import('../../views/error/MissingPermissions/index.vue'),
+  meta: {
+    _auth: true,
+  },
 }
 
 export const mainoutRoutes: RouteRecordRaw[] = [

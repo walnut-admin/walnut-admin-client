@@ -14,8 +14,6 @@ defineOptions({
 const { t, locale } = useAppI18n()
 const { title: envTitle } = useAppEnvTitle()
 
-const appStoreBackendSettings = useAppStoreSettingBackend()
-
 const { signInRef } = useDemonstrate()
 
 function onClickBeian() {
@@ -40,15 +38,6 @@ watch(locale, () => {
 <template>
   <!-- https://tailwindcomponents.com/component/login-register-form-with-image -->
   <section class="min-h-screen min-w-screen flex items-stretch">
-    <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">
-      <n-button text>
-        <WAppLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" />
-      </n-button>
-      <n-button text>
-        <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" />
-      </n-button>
-    </div>
-
     <div class="relative hidden w-1/2 items-center bg-cover bg-no-repeat lg:flex">
       <div class="abs-center z-10 w-full px-24">
         <h1 id="untyper1" class="text-left text-5xl text-gray-50 font-bold tracking-wide" />
