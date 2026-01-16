@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { authMfaAvailableMethodsAPI, authMfaTotopStatusAPI, authMfaVerifyAPI } from '@/api/auth/mfa'
+import { authMfaStatusAPI, authMfaVerifyAPI } from '@/api/auth/mfa'
 import TotpModal from './totpModal.vue'
+import WebauthnModal from './webauthnModal.vue'
 
 defineOptions({
   name: 'AppErrorMfaRequired',
@@ -21,12 +22,14 @@ const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 
 const totpModalRef = useTemplateRef('totpModalRef')
+const webauthnModalRef = useTemplateRef('webauthnModalRef')
 
 const loading = ref(true)
+const trusted = ref(false)
 
 const mfaMethodsConfig = ref<MfaMethod[]>([
   {
-    key: 'authenticator',
+    key: 'totp',
     name: computed(() => t('mfa.totp')),
     description: computed(() => t('mfa.totp.desc')),
     icon: 'simple-icons:google',
@@ -47,40 +50,25 @@ const mfaMethodsConfig = ref<MfaMethod[]>([
     recommended: false,
     enabled: false,
     onBind: () => {
-      useAppMsgInfo(t('app.base.wip'))
+      webauthnModalRef.value?.onBind()
     },
     onUnbind: () => {
-      useAppMsgInfo(t('app.base.wip'))
+      webauthnModalRef.value?.onUnbind()
     },
   },
 ])
 
 const getButtonCanClick = computed(() => mfaMethodsConfig.value.some(method => method.enabled))
 
-async function onTotpSuccess() {
-  await onGetTotpStatus()
-}
-
-async function onGetTotpStatus() {
-  try {
-    loading.value = true
-    const totpStatus = await authMfaTotopStatusAPI()
-
-    const target = mfaMethodsConfig.value.find(method => method.key === 'authenticator')
-    if (target) {
-      target.enabled = totpStatus.enabled
-    }
-  }
-  finally {
-    loading.value = false
-  }
-}
-
 async function onInit() {
   try {
     loading.value = true
-    const res = await authMfaAvailableMethodsAPI()
-    mfaMethodsConfig.value = mfaMethodsConfig.value.filter(method => res.availableMethods.includes(method.key))
+    const res = await authMfaStatusAPI()
+    mfaMethodsConfig.value = mfaMethodsConfig.value.map((i) => {
+      const target = res.find(item => item.type === i.key)
+      i.enabled = target?.enabled || false
+      return i
+    })
   }
   finally {
     loading.value = false
@@ -91,8 +79,8 @@ async function onInit() {
 async function onVerifyMfa() {
   try {
     loading.value = true
-    const accessToken = await authMfaVerifyAPI()
-    userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
+    const accessToken = await authMfaVerifyAPI(trusted.value)
+    await userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
   }
   finally {
     loading.value = false
@@ -101,7 +89,6 @@ async function onVerifyMfa() {
 
 onBeforeMount(async () => {
   await onInit()
-  await onGetTotpStatus()
 })
 </script>
 
@@ -210,12 +197,20 @@ onBeforeMount(async () => {
         </div>
       </n-alert>
 
-      <WButton type="success" class="mx-auto mt-4 w-32 flex items-center justify-center tracking-widest" :disabled="!getButtonCanClick || loading" round @click="onVerifyMfa">
-        {{ $t('app.base.verify') }}
-      </WButton>
+      <div class="mx-auto mt-4 flex flex-col items-center justify-center gap-y-4">
+        <n-checkbox v-model:checked="trusted" :disabled="loading">
+          {{ $t('mfa.trusted') }}
+        </n-checkbox>
+
+        <WButton type="success" class="w-32 tracking-widest" :disabled="!getButtonCanClick || loading" round @click="onVerifyMfa">
+          {{ $t('app.base.verify') }}
+        </WButton>
+      </div>
     </div>
 
     <!-- totp modal -->
-    <TotpModal ref="totpModalRef" @success="onTotpSuccess" />
+    <TotpModal ref="totpModalRef" @success="onInit" />
+    <!-- webauthn modal -->
+    <WebauthnModal ref="webauthnModalRef" @success="onInit" />
   </div>
 </template>

@@ -26,7 +26,7 @@ function onChange(path: string) {
     <router-view />
 
     <div v-if="isDev()" class="absolute left-8 top-8 z-50 w-96">
-      <n-select v-model:value="$route.path" :options="getMainoutRouteOptions" @change="onChange" />
+      <n-select v-model:value="$route.path" :options="getMainoutRouteOptions" @update:value="onChange" />
     </div>
 
     <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">

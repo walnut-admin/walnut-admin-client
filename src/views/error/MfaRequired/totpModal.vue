@@ -6,8 +6,7 @@ import { authMfaTotpBindAPI, authMfaTotpGenerateAPI, authMfaTotpUnbindAPI } from
 import { downloadByBlob } from '@/utils/file/download'
 
 defineOptions({
-  name: 'Name',
-  inheritAttrs: true,
+  name: 'MfaTotpModal',
 })
 
 const emits = defineEmits<{ success: [] }>()
@@ -21,7 +20,7 @@ const show = ref(false)
 const currentStep = ref(1)
 const loading = ref(false)
 
-const totpData = ref<IResponseData.Auth.MFA.TotpGenerate>()
+const totpData = ref<IResponseData.Auth.MFA.Totp.Generate>()
 const verifyCode = ref('')
 const backupCodes = ref<string[]>([])
 

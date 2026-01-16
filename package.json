@@ -63,6 +63,7 @@
     "@fingerprintjs/fingerprintjs": "4.6.2",
     "@sentry/vue": "10.11.0",
     "@serenity-kit/opaque": "1.0.0",
+    "@simplewebauthn/browser": "13.2.2",
     "@tinymce/tinymce-vue": "6.3.0",
     "@vueuse/core": "13.9.0",
     "@vueuse/integrations": "13.9.0",

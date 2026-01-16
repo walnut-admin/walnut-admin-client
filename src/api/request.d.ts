@@ -1,3 +1,4 @@
+import type { AuthenticationResponseJSON, RegistrationResponseJSON } from '@simplewebauthn/browser'
 import type { IModels } from './models'
 
 export namespace IRequestPayload {
@@ -6,13 +7,38 @@ export namespace IRequestPayload {
   export namespace Auth {
 
     export namespace MFA {
-      export interface TotpGenerate {
-        name: string
+      export namespace Totp {
+
+        export interface Generate {
+          name: string
+        }
+
+        export interface Bind {
+          name: string
+          code: string
+          tempTotpId: string
+        }
+
+        export interface Verify {
+          trusted: boolean
+          code: string
+        }
       }
-      export interface TotpBind {
-        name: string
-        code: string
-        tempTotpId: string
+
+      export namespace Webauthn {
+        export interface RegisterOptions {
+          name: string
+        }
+
+        export interface RegisterVerify {
+          name: string
+          response: RegistrationResponseJSON
+        }
+
+        export interface AuthenticateVerify {
+          trusted: boolean
+          response: AuthenticationResponseJSON
+        }
       }
     }
     export interface KickOutAllDevices {

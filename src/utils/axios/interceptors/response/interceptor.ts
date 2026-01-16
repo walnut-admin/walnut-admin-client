@@ -100,6 +100,12 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     return Promise.reject(new Error('MFA Required'))
   }
 
+  // mfa verified
+  if (code === BusinessCodeConst.MFA_VERIFIED) {
+    await AppRouter.replace({ name: mainoutConst.mfaVerified.name, force: true })
+    return Promise.reject(new Error('MFA Verified'))
+  }
+
   // custom error code
   if (errorCodeList.includes(code)) {
     useAppMsgError(msg)

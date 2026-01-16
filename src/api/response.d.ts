@@ -1,3 +1,4 @@
+import type { PublicKeyCredentialCreationOptionsJSON, PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/browser'
 import type { TreeNodeItem } from 'easy-fns-ts'
 import type { RouteRecordRaw } from 'vue-router'
 import type { IModels } from './models'
@@ -86,29 +87,40 @@ export namespace IResponseData {
     }
 
     export namespace MFA {
-      export interface AvailableMethods {
-        availableMethods: string[]
-        availableMethodsCount: number
-        verifiedMethods: string[]
-        verifiedMethodsCount: number
-      }
-
-      export interface TotpGenerate {
-        totpId: string
-        secret: string
-        qrCode: string
-        account: string
-      }
-
-      export interface TotpStatus {
+      export type AvailableMethods = {
+        type: 'totp' | 'webauthn'
         enabled: boolean
-        boundAt?: string
-        lastUsedAt?: string
+      }[]
+
+      export namespace Webauthn {
+        export interface RegisterOptions {
+          options: PublicKeyCredentialCreationOptionsJSON
+        }
+
+        export interface AuthenticateOptions {
+          options: PublicKeyCredentialRequestOptionsJSON
+        }
       }
 
-      export interface TotpBind {
-        backupCodes: string[]
+      export namespace Totp {
+        export interface Generate {
+          totpId: string
+          secret: string
+          qrCode: string
+          account: string
+        }
+
+        export interface Status {
+          enabled: boolean
+          boundAt?: string
+          lastUsedAt?: string
+        }
+
+        export interface Bind {
+          backupCodes: string[]
+        }
       }
+
     }
 
     export interface Permissions {

@@ -1,101 +1,58 @@
-import { compare } from 'compare-versions'
 import { version } from '~build/package'
-import { getStorageKey } from './shared'
 
-// TODO fetch from api
-const migrations: Record<string, { key: string, action: 'remove' }[]> = {
-  // '1.2.0': [
-  //   {
-  //     key: AppConstPersistKey.REMEMBER,
-  //     action: 'update',
-  //     newValue: '123',
-  //   },
-  // ],
-  // '1.2.1': [
-  //   {
-  //     key: AppConstPersistKey.REMEMBER,
-  //     action: 'update',
-  //     newValue: '3213',
-  //   },
-  //   {
-  //     key: '222',
-  //     action: 'remove',
-  //   },
-  // ],
-  // '1.2.2': [
-  //   {
-  //     key: AppConstPersistKey.REMEMBER,
-  //     action: 'update',
-  //     newValue: 'qqq',
-  //   },
-  // ],
-  // '1.2.3': [
-  //   {
-  //     key: '333',
-  //     action: 'update',
-  //     newValue: '333',
-  //   },
-  // ],
-}
+// TODO need to delete after several versions of release
+localStorage.removeItem('__APP_MIGRATION_VERSION__')
 
-const MIGRATION_DONE_KEY = `__APP_MIGRATION_VERSION__`
+const VERSION_KEY = '__APP_VERSION__'
+
+/**
+ * Configures which versions require cache clearance.
+ * - 'all' = Clear cache on any version change
+ * - Specific version = Clear cache only when updating to that version
+ */
+const CLEAR_ON_VERSIONS: string[] = [
+  '1.13.0',
+]
 
 export function setupStorageMigrations() {
-  const lastMigrationVersion = localStorage.getItem(MIGRATION_DONE_KEY)
+  const storedVersion = localStorage.getItem(VERSION_KEY)
 
-  // First run: persist current version and skip all migrations
-  if (!lastMigrationVersion) {
-    localStorage.setItem(MIGRATION_DONE_KEY, version)
-    console.log(`[storage-migration] First run, persisted version ${version}, skip migrations`)
+  // first run, record version and skip clear
+  if (!storedVersion) {
+    localStorage.setItem(VERSION_KEY, version)
+    console.log(`[storage-migration] First run, persisted version ${version}`)
     return
   }
 
-  // Skip if current version is not greater than the last migrated version
-  if (!compare(version, lastMigrationVersion, '>')) {
-    // turbo-console-disable-next-line
-    console.log(`[storage-migration] Already migrated to ${lastMigrationVersion}, skipping`)
+  // version unchanged, skip clear
+  if (storedVersion === version) {
+    console.log(`[storage-migration] Version unchanged (${version}), skipping`)
     return
   }
 
-  // Build a sorted list of available migration versions
-  const allVersions = Object.keys(migrations)
-    .filter(v => compare(v, '0.0.0', '>')) // ignore invalid versions
-    .sort((a, b) => (compare(a, b, '>') ? 1 : -1)) // ascending semver order
+  // version changed: check if clear is needed
+  const shouldClear = CLEAR_ON_VERSIONS.includes('all') || CLEAR_ON_VERSIONS.includes(version)
 
-  // Iterate over each version that needs to be applied
-  for (const ver of allVersions) {
-    // Skip versions already applied (extra safeguard)
-    if (lastMigrationVersion && !compare(ver, lastMigrationVersion, '>'))
-      continue
+  if (shouldClear) {
+    console.log(`[storage-migration] Version changed: ${storedVersion} → ${version}, clearing all storage`)
 
-    const rules = migrations[ver] ?? []
-    for (const rule of rules) {
-      const { key: originalKey, action } = rule
+    // clear localStorage
+    localStorage.clear()
 
-      // Apply rule for both preset and non-preset keys
-      for (const usePreset of [true, false]) {
-        const realKey = usePreset ? getStorageKey(originalKey) : originalKey
+    // clear sessionStorage
+    sessionStorage.clear()
 
-        // Apply rule for both localStorage and sessionStorage
-        for (const storage of [localStorage, sessionStorage]) {
-          const raw = storage.getItem(realKey)
+    // clear backend cookies (async, doesn't block startup)
+    fetch('/api/reset-cookies', { method: 'POST' }).catch((err) => {
+      console.error('[storage-migration] Failed to clear backend cookies:', err)
+    })
 
-          // If no data exists, only 'remove' rules can run; others are skipped
-          if (!raw && action !== 'remove')
-            continue
-
-          switch (action) {
-            case 'remove':
-              storage.removeItem(realKey)
-              console.log(`[storage-migration] Removed ${realKey}`)
-              break
-          }
-        }
-      }
-    }
+    console.log(`[storage-migration] All storage cleared`)
+  }
+  else {
+    console.log(`[storage-migration] Version changed: ${storedVersion} → ${version}, but no clear needed`)
   }
 
-  // After all migrations complete, record the current version
-  localStorage.setItem(MIGRATION_DONE_KEY, version)
-  console.log(`[storage-migration] All migrations completed, recorded version ${version}`)
+  // update version in localStorage
+  localStorage.setItem(VERSION_KEY, version)
 }

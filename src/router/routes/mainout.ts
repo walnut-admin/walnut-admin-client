@@ -41,6 +41,10 @@ export const mainoutConst = {
     path: '/mfa-required',
     name: 'MfaRequired',
   },
+  mfaVerified: {
+    path: '/mfa-verified',
+    name: 'MfaVerified',
+  },
   missingPermissions: {
     path: '/missing-permissions',
     name: 'AppErrorMissingPermissions',
@@ -132,6 +136,15 @@ const AppMfaRequiredRoute: RouteRecordSingleView = {
   },
 }
 
+const AppMfaVerifiedRoute: RouteRecordSingleView = {
+  name: mainoutConst.mfaVerified.name,
+  path: mainoutConst.mfaVerified.path,
+  component: () => import('../../views/error/MfaVerified/index.vue'),
+  meta: {
+    _auth: true,
+  },
+}
+
 const AppMissingPermissionsRoute: RouteRecordSingleView = {
   name: mainoutConst.missingPermissions.name,
   path: mainoutConst.missingPermissions.path,
@@ -151,6 +164,7 @@ export const mainoutRoutes: RouteRecordRaw[] = [
   splashCursorRoute,
   AppNotAllowedRoute,
   AppMfaRequiredRoute,
+  AppMfaVerifiedRoute,
   AppMissingPermissionsRoute,
 ]
 
