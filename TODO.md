@@ -33,6 +33,8 @@
   - [x] px => rem => 应该是base-font change的最佳方案？项目中px全部剔除掉
   - [ ] features 页面统一风格
   - [x] JSON表单项
+  - [ ] 字体自定义
+  - [ ] 色盲模式细分
 
 - 重要不紧急
 
