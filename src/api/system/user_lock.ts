@@ -2,6 +2,15 @@ import type { IResponseData } from '../response'
 import type { IStoreApp } from '@/store/types'
 import { AppAxios } from '@/utils/axios'
 
+// get lock status
+export function getLockStatusAPI() {
+  return AppAxios.get<IResponseData.System.User.LockStatus>(
+    {
+      url: '/system/user/lock/read',
+    },
+  )
+}
+
 // lock
 export function lockAPI(lockRoute: IStoreApp.LockRoute) {
   return AppAxios.patch<IResponseData.System.User.Lock>(

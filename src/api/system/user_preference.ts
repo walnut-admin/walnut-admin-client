@@ -1,5 +1,15 @@
+import type { IResponseData } from '../response'
 import type { IStoreUser } from '@/store/types'
 import { AppAxios } from '@/utils/axios'
+
+// get user preference
+export function getPreferenceAPI() {
+  return AppAxios.get<IResponseData.System.User.Preference>(
+    {
+      url: '/system/user/preference/read',
+    },
+  )
+}
 
 // update basic
 export function updatePreferenceBasicAPI(payload: IStoreUser.Preference.Basic) {

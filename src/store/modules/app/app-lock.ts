@@ -3,7 +3,7 @@ import type { IResponseData } from '@/api/response'
 import type { ValueOfAppConstLockMode } from '@/const'
 import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
-import { lockAPI, unlockAPI } from '@/api/system/user_lock'
+import { getLockStatusAPI, lockAPI, unlockAPI } from '@/api/system/user_lock'
 import { AppCoreFn1 } from '@/core'
 import { layoutConst } from '@/router/routes/builtin'
 import { StoreKeys } from '../../constant'
@@ -33,7 +33,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
   },
 
   actions: {
-    setLockPreference(payload: IResponseData.Auth.ProfileLockPreference) {
+    setLockPreference(payload: IResponseData.System.User.LockStatus) {
       this.setLocked(payload.locked)
       this.setLockCrossDevice(payload.lockCrossDevice)
       this.setLockRoute(payload.lockRoute)
@@ -64,6 +64,14 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
 
     setLockSecuritySec(payload: number) {
       this.lockSecuritySec = payload
+    },
+
+    /**
+     * @description init lock state
+     */
+    async onInitLockState() {
+      const res = await getLockStatusAPI()
+      this.setLockPreference(res)
     },
 
     /**

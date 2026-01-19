@@ -133,12 +133,8 @@ export namespace IResponseData {
       internalIframeList: { name: string, url: string, cache: boolean }[]
     }
 
-    export type ProfileLockPreference = IModels.SystemUserLockPreference & Pick<IModels.SystemUserDevice, 'locked'>
-
     export interface Profile {
       user: IModels.SystemUser
-      preference: IStoreUser.Preference.State
-      lockPreference: ProfileLockPreference
     }
 
     export interface Keys {
@@ -197,6 +193,8 @@ export namespace IResponseData {
     export namespace User {
       export type Lock = boolean
       export type Unlock = boolean
+      export type LockStatus = IModels.SystemUserLockPreference & Pick<IModels.SystemUserDevice, 'locked'>
+      export type Preference = IStoreUser.Preference.State
     }
 
     export namespace LogOperate {

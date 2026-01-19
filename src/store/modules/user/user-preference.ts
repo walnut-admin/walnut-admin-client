@@ -1,5 +1,6 @@
 import type { IStoreUser } from '@/store/types'
 import { defineStore } from 'pinia'
+import { getPreferenceAPI } from '@/api/system/user_preference'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -131,6 +132,11 @@ const useAppStoreUserPreferenceInside = defineStore(StoreKeys.USER_PREFERENCE, {
   },
 
   actions: {
+    async onInitPreference() {
+      const res = await getPreferenceAPI()
+      this.setPreference(res)
+    },
+
     setPreference(payload: IStoreUser.Preference.State) {
       this.$patch(payload)
     },

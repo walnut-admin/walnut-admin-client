@@ -77,7 +77,7 @@ export namespace IStoreApp {
   /**
    * App lock state
    */
-  export interface Lock extends IResponseData.Auth.ProfileLockPreference {
+  export interface Lock extends IResponseData.System.User.LockStatus {
     loading: boolean
     enable: boolean
   }
