@@ -22,19 +22,28 @@ function onChange(path: string) {
 </script>
 
 <template>
-  <div class="relative h-screen w-screen flex items-center justify-center">
-    <router-view />
-
-    <div v-if="isDev()" class="absolute left-8 top-8 z-50 w-96">
-      <n-select v-model:value="$route.path" :options="getMainoutRouteOptions" @update:value="onChange" />
+  <div class="relative min-h-screen w-full">
+    <!--  main content area with max-width constraint -->
+    <div class="min-h-screen flex items-center justify-center px-4 py-8 lg:px-8 sm:px-6">
+      <router-view />
     </div>
 
-    <div class="absolute right-8 top-8 z-50 hstack children:cursor-pointer space-x-4">
-      <n-button text>
-        <WAppLocalePicker v-if="appStoreBackendSettings.getLocaleEnabled" />
+    <!-- mainout route selector (visible only in dev mode) -->
+    <div v-if="isDev()" class="fixed left-4 top-4 z-50 w-72 sm:left-8 sm:top-8 sm:w-96">
+      <n-select
+        v-model:value="$route.path"
+        :options="getMainoutRouteOptions"
+        @update:value="onChange"
+      />
+    </div>
+
+    <!-- mainout global controls -->
+    <div class="fixed right-4 top-4 z-50 flex items-center gap-2 sm:right-8 sm:top-8 sm:gap-4">
+      <n-button v-if="appStoreBackendSettings.getLocaleEnabled" text>
+        <WAppLocalePicker />
       </n-button>
-      <n-button text>
-        <WAppDarkMode v-if="appStoreBackendSettings.getDarkEnabled" />
+      <n-button v-if="appStoreBackendSettings.getDarkEnabled" text>
+        <WAppDarkMode />
       </n-button>
     </div>
   </div>

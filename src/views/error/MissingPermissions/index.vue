@@ -17,7 +17,7 @@ async function onGoToAuth() {
 </script>
 
 <template>
-  <div class="h-screen w-screen flex items-center justify-center bg-bodyColor">
+  <div class="max-w-4xl min-w-[280px] w-full flex items-center justify-center">
     <n-result
       status="warning"
       :title="$t('app.base.missingPermissions')"

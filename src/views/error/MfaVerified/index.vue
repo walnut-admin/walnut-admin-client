@@ -171,141 +171,139 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen w-screen flex items-center justify-center p-4">
-    <div class="max-w-4xl w-full">
-      <div class="mb-8 text-center">
-        <div class="mb-4 h-20 w-20 inline-flex items-center justify-center rounded-full bg-info text-white">
-          <WIcon icon="carbon-security" height="32" />
-        </div>
-        <h1 class="mb-2 text-3xl font-bold">
-          {{ $t('mfa.verify.title1') }}
-        </h1>
-        <p class="text-base">
-          {{ $t('mfa.verify.title2') }}
-        </p>
+  <div class="max-w-4xl min-w-[280px] w-full">
+    <div class="mb-8 text-center">
+      <div class="mb-4 h-20 w-20 inline-flex items-center justify-center rounded-full bg-info text-white">
+        <WIcon icon="carbon-security" height="32" />
       </div>
+      <h1 class="mb-2 text-3xl font-bold">
+        {{ $t('mfa.verify.title1') }}
+      </h1>
+      <p class="text-base">
+        {{ $t('mfa.verify.title2') }}
+      </p>
+    </div>
 
-      <NSteps :current="currentStep" class="mb-8 ml-52" content-placement="bottom">
-        <NStep :title="$t('mfa.verify.step1.title')" />
-        <NStep :title="$t('mfa.verify.step2.title')" />
-      </NSteps>
+    <NSteps :current="currentStep" class="mb-8 ml-1/5" content-placement="bottom">
+      <NStep :title="$t('mfa.verify.step1.title')" />
+      <NStep :title="$t('mfa.verify.step2.title')" />
+    </NSteps>
 
-      <div v-if="loading && currentStep === 1" class="flex justify-center py-12">
-        <NSpin size="large" />
-      </div>
+    <div v-if="loading && currentStep === 1" class="flex justify-center py-12">
+      <NSpin size="large" />
+    </div>
 
-      <template v-else-if="currentStep === 1">
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <NCard
-            v-for="method in mfaMethods.filter(m => m.enabled)"
-            :key="method.key"
-            :bordered="true"
-            class="cursor-pointer transition-all duration-300 hover:shadow-lg"
-            @click="selectMethod(method.key)"
-          >
-            <div class="flex items-start gap-4">
-              <div class="flex-shrink-0">
-                <div class="h-12 w-12 flex items-center justify-center rounded-lg from-blue-500 to-indigo-600 bg-gradient-to-br">
-                  <WIcon :icon="method.icon" height="24" class="text-white" />
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <h3 class="mb-1 text-lg font-semibold">
-                  {{ method.name }}
-                </h3>
-                <p class="text-sm text-gray-500">
-                  {{ method.description }}
-                </p>
+    <template v-else-if="currentStep === 1">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <NCard
+          v-for="method in mfaMethods.filter(m => m.enabled)"
+          :key="method.key"
+          :bordered="true"
+          class="cursor-pointer transition-all duration-300 hover:shadow-lg"
+          @click="selectMethod(method.key)"
+        >
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="h-12 w-12 flex items-center justify-center rounded-lg from-blue-500 to-indigo-600 bg-gradient-to-br">
+                <WIcon :icon="method.icon" height="24" class="text-white" />
               </div>
             </div>
-          </NCard>
-        </div>
 
-        <n-checkbox v-model:checked="trusted" :disabled="loading" class="mt-4 w-full flex items-center justify-center">
-          {{ $t('mfa.trusted') }}
-        </n-checkbox>
-      </template>
-
-      <div v-else-if="currentStep === 2 && selectedMethod === 'totp'" class="mx-auto max-w-md">
-        <div class="text-center">
-          <h3 class="mb-4 text-lg font-semibold">
-            {{ $t('app.base.verifyCode.input') }}
-          </h3>
-
-          <p class="mb-6 text-sm text-gray-500">
-            {{ $t('mfa.totp.verify.title1') }}
-          </p>
-
-          <div class="mb-6">
-            <NInput
-              ref="nInputRef"
-              v-model:value="verifyCode"
-              placeholder="000000"
-              size="large"
-              maxlength="6"
-              :allow-input="(value: string) => /^\d*$/.test(value)"
-              class="text-center text-2xl tracking-widest font-mono"
-              @keyup.enter="verifyTotp"
-            >
-              <template #prefix>
-                <WIcon icon="carbon-password" />
-              </template>
-            </NInput>
-          </div>
-
-          <NAlert v-if="errorMessage" type="error" class="mb-4">
-            {{ errorMessage }}
-          </NAlert>
-
-          <NSpace justify="center">
-            <NButton :disabled="loading" @click="goBackToMethodSelection">
-              {{ $t('app.base.back') }}
-            </NButton>
-            <NButton
-              type="primary"
-              :disabled="!canVerify"
-              :loading="loading"
-              @click="verifyTotp"
-            >
-              {{ $t('app.base.verify') }}
-            </NButton>
-          </NSpace>
-        </div>
-      </div>
-
-      <div v-else-if="currentStep === 2 && selectedMethod === 'webauthn'" class="mx-auto max-w-md">
-        <div class="py-8 text-center">
-          <NSpin size="large" class="mb-6" />
-
-          <h3 class="mb-4 text-lg font-semibold">
-            {{ $t('mfa.webauthn.step2.title') }}
-          </h3>
-
-          <p class="mb-4 text-gray-500">
-            {{ $t('mfa.webauthn.step2.desc') }}
-          </p>
-
-          <NAlert type="warning">
-            <div class="text-sm">
-              <p class="mb-2 font-medium">
-                {{ $t('mfa.webauthn.step2.action') }}
+            <div class="min-w-0 flex-1">
+              <h3 class="mb-1 text-lg font-semibold">
+                {{ method.name }}
+              </h3>
+              <p class="text-sm text-gray-500">
+                {{ method.description }}
               </p>
-              <ul class="ml-4 list-disc text-left space-y-1">
-                <li>{{ $t('mfa.webauthn.step2.action1') }}</li>
-                <li>{{ $t('mfa.webauthn.step2.action2') }}</li>
-              </ul>
             </div>
-          </NAlert>
+          </div>
+        </NCard>
+      </div>
 
-          <NAlert v-if="errorMessage" type="error" class="mt-4">
-            {{ errorMessage }}
-          </NAlert>
+      <n-checkbox v-model:checked="trusted" :disabled="loading" class="mt-4 w-full flex items-center justify-center">
+        {{ $t('mfa.trusted') }}
+      </n-checkbox>
+    </template>
 
-          <NButton class="mt-6" :disabled="loading" :loading="loading" @click="goBackToMethodSelection">
-            {{ $t('app.base.cancel') }}
-          </NButton>
+    <div v-else-if="currentStep === 2 && selectedMethod === 'totp'" class="mx-auto max-w-md">
+      <div class="text-center">
+        <h3 class="mb-4 text-lg font-semibold">
+          {{ $t('app.base.verifyCode.input') }}
+        </h3>
+
+        <p class="mb-6 text-sm text-gray-500">
+          {{ $t('mfa.totp.verify.title1') }}
+        </p>
+
+        <div class="mb-6">
+          <NInput
+            ref="nInputRef"
+            v-model:value="verifyCode"
+            placeholder="000000"
+            size="large"
+            maxlength="6"
+            :allow-input="(value: string) => /^\d*$/.test(value)"
+            class="text-center text-2xl tracking-widest font-mono"
+            @keyup.enter="verifyTotp"
+          >
+            <template #prefix>
+              <WIcon icon="carbon-password" />
+            </template>
+          </NInput>
         </div>
+
+        <NAlert v-if="errorMessage" type="error" class="mb-4">
+          {{ errorMessage }}
+        </NAlert>
+
+        <NSpace justify="center">
+          <NButton :disabled="loading" @click="goBackToMethodSelection">
+            {{ $t('app.base.back') }}
+          </NButton>
+          <NButton
+            type="primary"
+            :disabled="!canVerify"
+            :loading="loading"
+            @click="verifyTotp"
+          >
+            {{ $t('app.base.verify') }}
+          </NButton>
+        </NSpace>
+      </div>
+    </div>
+
+    <div v-else-if="currentStep === 2 && selectedMethod === 'webauthn'" class="mx-auto max-w-md">
+      <div class="py-8 text-center">
+        <NSpin size="large" class="mb-6" />
+
+        <h3 class="mb-4 text-lg font-semibold">
+          {{ $t('mfa.webauthn.step2.title') }}
+        </h3>
+
+        <p class="mb-4 text-gray-500">
+          {{ $t('mfa.webauthn.step2.desc') }}
+        </p>
+
+        <NAlert type="warning">
+          <div class="text-sm">
+            <p class="mb-2 font-medium">
+              {{ $t('mfa.webauthn.step2.action') }}
+            </p>
+            <ul class="ml-4 list-disc text-left space-y-1">
+              <li>{{ $t('mfa.webauthn.step2.action1') }}</li>
+              <li>{{ $t('mfa.webauthn.step2.action2') }}</li>
+            </ul>
+          </div>
+        </NAlert>
+
+        <NAlert v-if="errorMessage" type="error" class="mt-4">
+          {{ errorMessage }}
+        </NAlert>
+
+        <NButton class="mt-6" :disabled="loading" :loading="loading" @click="goBackToMethodSelection">
+          {{ $t('app.base.cancel') }}
+        </NButton>
       </div>
     </div>
   </div>

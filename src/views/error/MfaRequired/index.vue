@@ -93,119 +93,121 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen w-screen flex items-center justify-center p-4">
-    <div class="max-w-4xl w-full">
-      <!-- header -->
-      <div class="mb-8 text-center">
-        <div class="mb-4 h-20 w-20 inline-flex items-center justify-center rounded-full bg-info text-white">
-          <WIcon icon="carbon-security" height="32" />
-        </div>
-        <h1 class="mb-2 text-3xl font-bold">
-          {{ $t('mfa.title1') }}
-        </h1>
-        <p class="text-base">
-          {{ $t('mfa.title2') }}
-        </p>
+  <div class="max-w-4xl min-w-[280px] w-full">
+    <!-- header -->
+    <div class="mb-8 text-center">
+      <div class="mb-4 h-20 w-20 inline-flex items-center justify-center rounded-full bg-info text-white">
+        <WIcon icon="carbon-security" height="32" />
       </div>
+      <h1 class="mb-2 text-2xl font-bold sm:text-3xl">
+        {{ $t('mfa.title1') }}
+      </h1>
+      <p class="text-sm sm:text-base">
+        {{ $t('mfa.title2') }}
+      </p>
+    </div>
 
-      <!-- loading state -->
-      <div v-if="loading" class="flex justify-center py-12">
-        <n-spin size="large" />
-      </div>
+    <!-- loading state -->
+    <div v-if="loading" class="flex justify-center py-12">
+      <n-spin size="large" />
+    </div>
 
-      <!-- empty state -->
-      <n-empty
-        v-else-if="mfaMethodsConfig.length === 0"
-        :description="$t('mfa.empty')"
-        class="py-12"
-      />
+    <!-- empty state -->
+    <n-empty
+      v-else-if="mfaMethodsConfig.length === 0"
+      :description="$t('mfa.empty')"
+      class="py-12"
+    />
 
-      <!-- mfa methods list -->
-      <div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <n-card
-          v-for="method in mfaMethodsConfig"
-          :key="method.key"
-          :bordered="true"
-          class="relative cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-          :class="method.recommended ? 'ring-2 ring-blue-400' : ''"
-          @click="() => method.enabled ? method.onUnbind!() : method.onBind!()"
+    <!-- mfa methods list -->
+    <div v-else class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <n-card
+        v-for="method in mfaMethodsConfig"
+        :key="method.key"
+        :bordered="true"
+        class="relative cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
+        :class="method.recommended ? 'ring-2 ring-blue-400' : ''"
+        @click="() => method.enabled ? method.onUnbind!() : method.onBind!()"
+      >
+        <n-tag
+          v-if="method.enabled && method.recommended"
+          type="info"
+          size="small"
+          class="absolute right-2 top-2 text-xs sm:right-4 sm:top-4"
         >
-          <n-tag
-            v-if="method.enabled && method.recommended"
-            type="info"
-            size="small"
-            class="absolute right-4 top-4"
-          >
-            {{ $t('app.base.enabled') }}/{{ $t('app.base.recommended') }}
-          </n-tag>
+          {{ $t('app.base.enabled') }}/{{ $t('app.base.recommended') }}
+        </n-tag>
 
-          <!-- enabled tag -->
-          <n-tag
-            v-else-if="method.enabled"
-            type="success"
-            size="small"
-            class="absolute right-4 top-4"
-          >
-            {{ $t('app.base.enabled') }}
-          </n-tag>
+        <n-tag
+          v-else-if="method.enabled"
+          type="success"
+          size="small"
+          class="absolute right-2 top-2 sm:right-4 sm:top-4"
+        >
+          {{ $t('app.base.enabled') }}
+        </n-tag>
 
-          <!-- recommended tag -->
-          <n-tag
-            v-else-if="method.recommended"
-            type="info"
-            size="small"
-            class="absolute right-4 top-4"
-          >
-            {{ $t('app.base.recommended') }}
-          </n-tag>
+        <n-tag
+          v-else-if="method.recommended"
+          type="info"
+          size="small"
+          class="absolute right-2 top-2 sm:right-4 sm:top-4"
+        >
+          {{ $t('app.base.recommended') }}
+        </n-tag>
 
-          <div class="flex items-start gap-4">
-            <!-- icon -->
-            <div class="flex-shrink-0">
-              <div class="h-12 w-12 flex items-center justify-center rounded-lg from-blue-500 to-indigo-600 bg-gradient-to-br">
-                <WIcon :icon="method.icon" height="24" class="text-white" />
-              </div>
-            </div>
-
-            <!-- content -->
-            <div class="min-w-0 flex-1">
-              <h3 class="mb-1 text-lg font-semibold">
-                {{ method.name }}
-              </h3>
-              <p class="mb-4 text-sm">
-                {{ method.description }}
-              </p>
-
-              <WButton
-                :type="method.enabled ? 'warning' : 'info'"
-                size="small"
-                class="w-full md:w-auto"
-                icon="carbon-arrow-right"
-                @click.self="() => method.enabled ? method.onUnbind!() : method.onBind!()"
-              >
-                {{ method.enabled ? $t('app.base.unbind') : $t('app.base.configThis') }}
-              </WButton>
+        <div class="flex items-start gap-3 sm:gap-4">
+          <!-- icon -->
+          <div class="flex-shrink-0">
+            <div class="h-10 w-10 flex items-center justify-center rounded-lg from-blue-500 to-indigo-600 bg-gradient-to-br sm:h-12 sm:w-12">
+              <WIcon :icon="method.icon" :height="20" class="text-white sm:h-6" />
             </div>
           </div>
-        </n-card>
-      </div>
 
-      <!-- footer note -->
-      <n-alert type="warning" class="mt-8 border border-amber-200 rounded-lg" :title="$t('mfa.tip1')">
-        <div class="text-sm">
-          {{ $t('mfa.tip2') }}
+          <!-- content -->
+          <div class="min-w-0 flex-1 overflow-hidden">
+            <h3 class="mb-1 break-words text-base font-semibold sm:text-lg">
+              {{ method.name }}
+            </h3>
+            <p class="mb-3 break-words text-xs sm:mb-4 sm:text-sm">
+              {{ method.description }}
+            </p>
+
+            <WButton
+              :type="method.enabled ? 'warning' : 'info'"
+              size="small"
+              class="w-full sm:w-auto"
+              icon="carbon-arrow-right"
+              @click.self="() => method.enabled ? method.onUnbind!() : method.onBind!()"
+            >
+              {{ method.enabled ? $t('app.base.unbind') : $t('app.base.configThis') }}
+            </WButton>
+          </div>
         </div>
-      </n-alert>
+      </n-card>
+    </div>
 
-      <div class="mx-auto mt-4 flex flex-col items-center justify-center gap-y-4">
-        <n-checkbox v-model:checked="trusted" :disabled="loading">
-          {{ $t('mfa.trusted') }}
-        </n-checkbox>
-
-        <WButton type="success" class="w-32 tracking-widest" :disabled="!getButtonCanClick || loading" round @click="onVerifyMfa">
-          {{ $t('app.base.verify') }}
-        </WButton>
+    <!-- footer note -->
+    <n-alert type="warning" class="mt-6 overflow-hidden border border-amber-200 rounded-lg sm:mt-8" :title="$t('mfa.tip1')">
+      <div class="break-words text-xs sm:text-sm">
+        {{ $t('mfa.tip2') }}
       </div>
+    </n-alert>
+
+    <div class="mx-auto mt-4 flex flex-col items-center justify-center gap-y-4 sm:mt-6">
+      <n-checkbox v-model:checked="trusted" :disabled="loading">
+        <span class="text-sm sm:text-base">{{ $t('mfa.trusted') }}</span>
+      </n-checkbox>
+
+      <WButton
+        type="success"
+        class="w-32 tracking-widest"
+        :disabled="!getButtonCanClick || loading"
+        round
+        @click="onVerifyMfa"
+      >
+        {{ $t('app.base.verify') }}
+      </WButton>
     </div>
 
     <!-- totp modal -->
