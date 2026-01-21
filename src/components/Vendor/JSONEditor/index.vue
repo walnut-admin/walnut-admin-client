@@ -4,7 +4,6 @@ import JsonEditorVue from 'json-editor-vue'
 
 defineOptions({
   name: 'WCompVendorJSONEditor',
-  inheritAttrs: false,
 })
 
 const { button = false, modalTitle } = defineProps<ICompVendorJSONEditorProps>()
@@ -23,33 +22,36 @@ watch(() => isDark.value, async (v) => {
 </script>
 
 <template>
-  <DefineJSONEditor>
-    <!-- @vue-expect-error mode -->
-    <JsonEditorVue
-      v-model="value"
-      mode="tree"
-      :class="{ 'jse-theme-dark': isDark }"
-    />
-  </DefineJSONEditor>
+  <div>
+    <DefineJSONEditor>
+      <!-- @vue-expect-error mode -->
+      <JsonEditorVue
+        v-model="value"
+        mode="tree"
+        :class="{ 'jse-theme-dark': isDark }"
+        v-bind="$attrs"
+      />
+    </DefineJSONEditor>
 
-  <template v-if="button">
-    <WButton type="primary" @click="showModal = true">
-      {{ $t('app.base.checkOrEdit') }}
-    </WButton>
+    <template v-if="button">
+      <WButton type="primary" @click="showModal = true">
+        {{ $t('app.base.checkOrEdit') }}
+      </WButton>
 
-    <WModal
-      v-model:show="showModal"
-      width="60%"
-      :title="modalTitle"
-      :close-on-esc="false"
-      :closable="false"
-      :mask-closable="false"
-      :fullscreen="false"
-      @yes="showModal = false"
-    >
-      <ReuseJSONEditor />
-    </WModal>
-  </template>
+      <WModal
+        v-model:show="showModal"
+        width="60%"
+        :title="modalTitle"
+        :close-on-esc="false"
+        :closable="false"
+        :mask-closable="false"
+        :fullscreen="false"
+        @yes="showModal = false"
+      >
+        <ReuseJSONEditor />
+      </WModal>
+    </template>
 
-  <ReuseJSONEditor v-else />
+    <ReuseJSONEditor v-else />
+  </div>
 </template>
