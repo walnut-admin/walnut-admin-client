@@ -12,10 +12,15 @@ const appStoreMenu = useAppStoreMenu()
 const appStoreSettingDev = useAppStoreSettingDev()
 const appSettingScope = useAppStoreSettingScope()
 const appStoreAdapter = useAppStoreAdapter()
+const appStorePreference = useAppStoreUserPreference()
 
 // lock socket on
 const appStoreLock = useAppStoreLock()
 appStoreLock.lockFromSocket()
+
+// get preference
+appStorePreference.onInitPreference()
+
 // TODO layout
 // watchEffect(() => {
 //   if (setting.app.layout === AppConstLayoutMode.LEFT_MENU) {
