@@ -24,7 +24,7 @@ function onChange(path: string) {
 <template>
   <div class="relative min-h-screen w-full">
     <!--  main content area with max-width constraint -->
-    <div class="min-h-screen flex items-center justify-center px-4 py-8 lg:px-8 sm:px-6">
+    <div class="min-h-screen flex items-center justify-center">
       <router-view />
     </div>
 
