@@ -69,7 +69,7 @@ watch(() => [autoDefaultCountry, isOnline.value, language.value], async () => {
     if (isOnline.value) {
       loading.value = true
       try {
-        value.value = appStoreGeoIP.getGeoInfo.country_code as CountryCode
+        value.value = appStoreGeoIP.getCountryCode as CountryCode
       }
       finally {
         loading.value = false

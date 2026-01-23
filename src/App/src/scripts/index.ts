@@ -11,7 +11,6 @@ export async function setupAppScripts() {
   sendUserMonitorBeacon({ left: false })
 
   const appStoreGeoIP = useAppStoreGeoIP()
-  await appStoreGeoIP.setupGeoIP()
   await appStoreGeoIP.setupDeviceId()
 
   const appStoreSecurity = useAppStoreSecurity()

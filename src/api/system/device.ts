@@ -63,12 +63,10 @@ export function unbanDeviceAPI(id: string) {
  */
 export async function initialDeviceAPI() {
   const appStoreFingerprint = useAppStoreFingerprint()
-  const appStoreGeoIP = useAppStoreGeoIP()
 
   return AppAxios.post<IResponseData.System.Device.Initial>({
     url: '/system/device/initial',
     data: {
-      rawDeviceId: appStoreFingerprint.getFingerprint,
       deviceName: appStoreFingerprint.getDeviceNameFromFingerprint,
       sr: {
         width: window.screen.width,
@@ -83,21 +81,10 @@ export async function initialDeviceAPI() {
         memory: getMemoryGB(),
         gpu: await getGPUArchitecture(),
       },
-      ipHistory: [appStoreGeoIP.getGeoInfo.ip],
-      geoLocation: {
-        type: 'Point',
-        coordinates: [appStoreGeoIP.getGeoInfo.longitude, appStoreGeoIP.getGeoInfo.latitude],
-      },
       deviceInfo: {
         // @ts-expect-error https://developer.mozilla.org/zh-CN/docs/Web/API/NetworkInformation/effectiveType
         netType: navigator.connection?.effectiveType,
         platform: navigator.platform,
-        isp: appStoreGeoIP.getGeoInfo.isp,
-      },
-      locationInfo: {
-        country: appStoreGeoIP.getGeoInfo.country,
-        city: appStoreGeoIP.getGeoInfo.city,
-        region: appStoreGeoIP.getGeoInfo.region,
       },
     } as IRequestPayload.System.Deivce.Initial,
   })

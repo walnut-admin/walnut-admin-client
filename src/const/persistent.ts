@@ -23,10 +23,10 @@ export const AppConstPersistKey = {
   SIGN_AES_KEY: 'SIGN_AES_KEY',
   AUTH_SESSION_KEY: 'AUTH_SESSION_KEY',
 
-  // geo ip info, fetch from EXTERNAL_LINKS.GEOIP
-  GEO_IP_INFO: 'GEO_IP_INFO',
-
-  DEVICE_ID: 'DEVICE_ID',
+  // geo ip info
+  GEO_IP_COUNTRY_CODE: 'GEO_IP_COUNTRY_CODE',
+  GEO_IP_LONGITUDE: 'GEO_IP_LONGITUDE',
+  GEO_IP_LATITUDE: 'GEO_IP_LATITUDE',
 
   // count down
   COUNTDOWN: 'COUNTDOWN_MAP',

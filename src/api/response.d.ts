@@ -165,7 +165,9 @@ export namespace IResponseData {
   export namespace System {
     export namespace Device {
       export interface Initial {
-        deviceId: string
+        longitude?: number
+        latitude?: number
+        countryCode?: string
       }
 
       export type CurrentActiveUser = IModels.SystemUser

@@ -39,7 +39,7 @@ function onUpdate(val: ICompExtraPhoneNumberInputUpdateParams) {
 
       <n-list-item>
         <WTitle prefix="bar" class="mb-2">
-          Auto get current user country code (if online get result from {{ EXTERNAL_LINKS.GEOIP }}, otherwise use `new Intl.Locale(navigator.language).region` to get country cdoe)
+          Get current user country code (if online get when device initial, otherwise use `new Intl.Locale(navigator.language).region` to get country cdoe)
         </WTitle>
 
         <WPhoneNumberInput v-model:value="state.phoneNumber2" class="w-80" auto-default-country />
