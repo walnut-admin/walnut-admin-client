@@ -10,10 +10,13 @@ const closable = ref(false)
 
 const compStoreCapJS = useStoreCompCapJS()
 
-function onCapSolve(e: { detail: { token: string } }) {
+async function onCapSolve(e: { detail: { token: string } }) {
   const token = e.detail.token
 
-  compStoreCapJS.onSuccess!(token)
+  if (compStoreCapJS.onSuccess) {
+    await compStoreCapJS.onSuccess!(token)
+  }
+
   const id = setTimeout(() => {
     compStoreCapJS.onCloseCapModal()
     clearTimeout(id)

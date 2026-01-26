@@ -59,10 +59,27 @@ const useStoreCompCapJSInside = defineStore(StoreKeys.COMP_CAPJS, {
       }
     },
 
-    async onOpenCapModal(onSuccess: (token: string) => void) {
-      this.onSuccess = onSuccess
+    async onOpenCapModal<T>(
+      onSuccess: (token: string) => Promise<T>,
+    ): Promise<T> {
       await this.loadCap()
       this.show = true
+
+      return new Promise<T>((resolve, reject) => {
+        this.onSuccess = async (token: string) => {
+          try {
+            const result = await onSuccess(token)
+            resolve(result)
+          }
+          catch (e) {
+            reject(e)
+          }
+          finally {
+            this.show = false
+            this.onSuccess = null
+          }
+        }
+      })
     },
 
     onCloseCapModal() {

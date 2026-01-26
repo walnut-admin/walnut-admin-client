@@ -241,7 +241,7 @@ export namespace IStoreComp {
     loading: boolean
     inst: Nullable<ICapInst>
     show: boolean
-    onSuccess: Nullable<(token: string) => void>
+    onSuccess: Nullable<(token: string) => Promise<void>>
   }
 
   /**

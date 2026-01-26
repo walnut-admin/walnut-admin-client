@@ -2,7 +2,6 @@
 import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NButton, NCheckbox } from 'naive-ui'
-import { getNeedCapAPI } from '@/api/security/cap'
 
 defineOptions({
   name: 'SignInWithAccount',
@@ -12,7 +11,6 @@ defineOptions({
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
-const compStoreCapJS = useStoreCompCapJS()
 const appStoreBackendSettings = useAppStoreSettingBackend()
 
 const accountFormData = ref<IRequestPayload.Auth.Password>({
@@ -20,20 +18,6 @@ const accountFormData = ref<IRequestPayload.Auth.Password>({
   password: '',
   rememberMe: true,
 })
-
-async function onSignIn() {
-  userStoreAuth.setLoading(true)
-
-  try {
-    await userStoreAuth.AuthWithOpaque(accountFormData.value)
-
-    // close demonstrate notification
-    appStoreNaive.destroyAllNotiInst()
-  }
-  finally {
-    userStoreAuth.setLoading(false)
-  }
-}
 
 async function onSubmit() {
   // eslint-disable-next-line ts/no-use-before-define
@@ -44,16 +28,10 @@ async function onSubmit() {
 
   userStoreAuth.setLoading(true)
   try {
-    const needCap = await getNeedCapAPI('userName', accountFormData.value.userName)
+    await userStoreAuth.AuthWithOpaque(accountFormData.value)
 
-    if (needCap) {
-      await compStoreCapJS.onOpenCapModal(async () => {
-        await onSignIn()
-      })
-    }
-    else {
-      await onSignIn()
-    }
+    // close demonstrate notification
+    appStoreNaive.destroyAllNotiInst()
   }
   finally {
     userStoreAuth.setLoading(false)

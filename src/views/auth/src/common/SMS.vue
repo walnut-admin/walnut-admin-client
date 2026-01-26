@@ -5,7 +5,6 @@ import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { sendAuthTextMsgAPI } from '@/api/auth/phone'
-import { getNeedCapAPI } from '@/api/security/cap'
 import { mainoutConst } from '@/router/routes/mainout'
 import { isPhoneNumber } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
@@ -18,7 +17,6 @@ defineOptions({
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
-const compStoreCapJS = useStoreCompCapJS()
 
 const countryCallingCode = ref()
 const SMSFormData = reactive<NullableRecord<IRequestPayload.Auth.Phone.Verify & { agree: string }>>({
@@ -125,24 +123,10 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           userStoreAuth.setLoading(true)
 
           try {
-            const needCap = await getNeedCapAPI('phoneNumber', SMSFormData.phoneNumber!)
-
-            if (needCap) {
-              return new Promise<boolean>((resolve) => {
-                compStoreCapJS.onOpenCapModal(async () => {
-                  await sendAuthTextMsgAPI({
-                    phoneNumber: SMSFormData.phoneNumber!,
-                  })
-                  return resolve(true)
-                })
-              })
-            }
-            else {
-              await sendAuthTextMsgAPI({
-                phoneNumber: SMSFormData.phoneNumber!,
-              })
-              return Promise.resolve(true)
-            }
+            await sendAuthTextMsgAPI({
+              phoneNumber: SMSFormData.phoneNumber!,
+            })
+            userStoreAuth.setLoading(false)
           }
           catch (error) {
             userStoreAuth.setLoading(false)

@@ -4,7 +4,6 @@ import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { sendAuthEmailAPI } from '@/api/auth/email'
-import { getNeedCapAPI } from '@/api/security/cap'
 import { mainoutConst } from '@/router/routes/mainout'
 import { isEmailAddress } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
@@ -17,7 +16,6 @@ defineOptions({
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
-const compStoreCapJS = useStoreCompCapJS()
 
 const emailFormData = reactive<NullableRecord<IRequestPayload.Auth.Email.Verify & { agree: string }>>({
   emailAddress: null,
@@ -118,26 +116,10 @@ const [register, { validate }] = useForm<typeof emailFormData>({
 
           userStoreAuth.setLoading(true)
           try {
-            const needCap = await getNeedCapAPI('emailAddress', emailFormData.emailAddress!)
-
-            if (needCap) {
-              return new Promise<boolean>((resolve) => {
-                compStoreCapJS.onOpenCapModal(async () => {
-                  await sendAuthEmailAPI({
-                    emailAddress: emailFormData.emailAddress!,
-                  })
-                  userStoreAuth.setLoading(false)
-                  return resolve(true)
-                })
-              })
-            }
-            else {
-              await sendAuthEmailAPI({
-                emailAddress: emailFormData.emailAddress!,
-              })
-              userStoreAuth.setLoading(false)
-              return Promise.resolve(true)
-            }
+            await sendAuthEmailAPI({
+              emailAddress: emailFormData.emailAddress!,
+            })
+            userStoreAuth.setLoading(false)
           }
           catch (error) {
             userStoreAuth.setLoading(false)

@@ -7,7 +7,7 @@ import { mainoutConst } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
 import { BusinessCodeConst, errorCodeList, notAllowedErrorCodeMap } from '../../constant'
-import { SingletonPromiseCapJSToken } from './capJSToken'
+import { SingletonPromiseCapJSInteraction, SingletonPromiseCapJSRefresh } from './capJSToken'
 import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
 import { SingletonPromiseRsaDecryptFailed } from './rsaDecrypt'
@@ -48,10 +48,17 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     return Promise.reject(new Error('Too Many Requests'))
   }
 
-  // cap js token refresh (front end only and invisible mode)
+  // cap js token interaction required
+  // manually call cap global modal and verify
+  if (code === BusinessCodeConst.CAPJS_TOKEN_INTERACTION_REQUIRED) {
+    await SingletonPromiseCapJSInteraction()
+    return await AppAxios.request(res.config)
+  }
+
+  // cap js token refresh required
   // https://capjs.js.org/guide/invisible.html
-  if (code === BusinessCodeConst.CAPJS_TOKEN_EXPIRED) {
-    await SingletonPromiseCapJSToken()
+  if (code === BusinessCodeConst.CAPJS_TOKEN_REFRESH_REQUIRED) {
+    await SingletonPromiseCapJSRefresh()
     return await AppAxios.request(res.config)
   }
 
@@ -88,7 +95,7 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   }
 
   // not allowed
-  if (Object.values(notAllowedErrorCodeMap).map(Number).includes(code)) {
+  if (Object.keys(notAllowedErrorCodeMap).map(Number).includes(code)) {
     removeCurrentPageRequests(AppRouter.currentRoute.value.path)
     await AppRouter.replace({ name: mainoutConst.notAllowed.name, force: true, query: { type: notAllowedErrorCodeMap[code] } })
     return Promise.reject(new Error('Not Allowed'))
