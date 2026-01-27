@@ -4,8 +4,6 @@ import settingsDev from '@/settings-dev.json'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
-const userStorePreference = useAppStoreUserPreference()
-
 const useAppStoreSettingDevInside = defineStore(StoreKeys.SETTING_DEV, {
   state: (): IStoreSetting.Dev => (settingsDev as IStoreSetting.Dev),
 
@@ -187,6 +185,8 @@ const useAppStoreSettingDevInside = defineStore(StoreKeys.SETTING_DEV, {
      * @description get collapse button status
      */
     getMenuCollapseButtonStatus(): boolean {
+      const userStorePreference = useAppStoreUserPreference()
+
       return (
         this.getMenuCollapseStatus
         && userStorePreference.getMenuCollapseMode === AppConstCollapseMode.BUTTON
@@ -197,6 +197,8 @@ const useAppStoreSettingDevInside = defineStore(StoreKeys.SETTING_DEV, {
      * @description get collapse icon status
      */
     getMenuCollapseIconStatus(): boolean {
+      const userStorePreference = useAppStoreUserPreference()
+
       return (
         this.getMenuCollapseStatus
         && userStorePreference.getMenuCollapseMode === AppConstCollapseMode.ICON
@@ -207,6 +209,8 @@ const useAppStoreSettingDevInside = defineStore(StoreKeys.SETTING_DEV, {
      * @description get collapse built-in status
      */
     getMenuCollapseBuiltInStatus(): boolean | 'bar' | 'arrow-circle' {
+      const userStorePreference = useAppStoreUserPreference()
+
       if (
         this.getMenuCollapseStatus
         && userStorePreference.getMenuCollapseMode !== AppConstCollapseMode.ICON
