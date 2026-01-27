@@ -6,8 +6,6 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const closable = ref(false)
-
 const compStoreCapJS = useStoreCompCapJS()
 
 async function onCapSolve(e: { detail: { token: string } }) {
@@ -22,18 +20,14 @@ async function onCapSolve(e: { detail: { token: string } }) {
     clearTimeout(id)
   }, 1000)
 }
-
-function onCapError() {
-  closable.value = true
-}
 </script>
 
 <template>
   <WModal
     v-model:show="compStoreCapJS.show"
-    :close-on-esc="closable"
-    :closable="closable"
-    :mask-closable="closable"
+    :close-on-esc="false"
+    :closable="false"
+    :mask-closable="false"
     :default-button="false"
     :fullscreen="false"
     :title="$t('app.base.cap')"
@@ -60,7 +54,6 @@ function onCapError() {
           :data-cap-i18n-solved-label="$t('comp.cap.solved')"
           :data-cap-i18n-error-label="$t('comp.cap.error')"
           @solve="onCapSolve"
-          @error="onCapError"
         />
       </div>
     </n-element>
