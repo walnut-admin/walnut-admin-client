@@ -44,6 +44,7 @@ export namespace IStoreApp {
    * App geo ip state
    */
   export interface GeoIP {
+    deviceId: Ref<Nullable<string>>
     countryCode: Ref<Nullable<string>>
     longitude: Ref<Nullable<number>>
     latitude: Ref<Nullable<number>>
