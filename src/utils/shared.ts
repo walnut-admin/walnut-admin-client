@@ -1,6 +1,7 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Slots } from 'vue'
 import type { IAxios } from './axios/types'
+import { detectIncognito } from 'detectincognitojs'
 import { Base64 } from 'js-base64'
 import { forEach, isArray, isPlainObject, isUndefined, set } from 'lodash-es'
 
@@ -52,6 +53,18 @@ export function detectDeviceType() {
   }
   else {
     return 'Desktop'
+  }
+}
+
+// get is in incognito mode
+export async function getIsInIncognitoMode() {
+  try {
+    const result = await detectIncognito()
+    return result.isPrivate
+  }
+  catch (error) {
+    console.error(error)
+    return false
   }
 }
 

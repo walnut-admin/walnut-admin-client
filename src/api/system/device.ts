@@ -2,7 +2,7 @@ import type { IModels } from '../models'
 import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
 import { AppAxios } from '@/utils/axios'
-import { getCPUCoreCount, getGPUArchitecture, getMemoryGB } from '@/utils/shared'
+import { getCPUCoreCount, getGPUArchitecture, getIsInIncognitoMode, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
 export const deviceAPI = new BaseAPI<IModels.SystemDevice>({
@@ -68,6 +68,7 @@ export async function initialDeviceAPI() {
     url: '/system/device/initial',
     data: {
       deviceName: appStoreFingerprint.getDeviceNameFromFingerprint,
+      private: await getIsInIncognitoMode(),
       sr: {
         width: window.screen.width,
         height: window.screen.height,

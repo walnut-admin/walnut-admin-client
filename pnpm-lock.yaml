@@ -83,6 +83,9 @@ importers:
       crypto-js:
         specifier: 4.2.0
         version: 4.2.0
+      detectincognitojs:
+        specifier: 1.6.2
+        version: 1.6.2
       driver.js:
         specifier: 1.3.6
         version: 1.3.6
@@ -3865,6 +3868,9 @@ packages:
   detect-libc@2.0.4:
     resolution: {integrity: sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA==}
     engines: {node: '>=8'}
+
+  detectincognitojs@1.6.2:
+    resolution: {integrity: sha512-q4JXwcc7CZXDfSfWHBapnB1EHZgtW6OMcCWOXwN9/2gPJPRzDZL9wMrtpojWe1eUWDFP6bfuT4GIWJ07Waaq4w==}
 
   detective-amd@6.0.1:
     resolution: {integrity: sha512-TtyZ3OhwUoEEIhTFoc1C9IyJIud3y+xYkSRjmvCt65+ycQuc3VcBrPRTMWoO/AnuCyOB8T5gky+xf7Igxtjd3g==}
@@ -11605,6 +11611,8 @@ snapshots:
     optional: true
 
   detect-libc@2.0.4: {}
+
+  detectincognitojs@1.6.2: {}
 
   detective-amd@6.0.1:
     dependencies:
