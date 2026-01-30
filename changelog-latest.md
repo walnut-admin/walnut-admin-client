@@ -1,222 +1,140 @@
-## [v1.13.0] - 2026-01-21
+## [v1.14.0] - 2026-01-30
 
 ## Major Update
-- OPAQUE enhancement
-- MFA implementation
-- Bug fix
+- risk module implement
+- cap guard workflow enhance
+- device enhance
+- fingerprint logic enhance
+- playwrite test implement
 
 ## Frontend
 
 ### ✨ Features
 
-- Opaque identifiers implement ([fbc2911](https://github.com/walnut-admin/walnut-admin-client/commit/fbc2911494c758f931885b9ed6123e16d9464607))
+- Totally remove needCap api logic and support axios interceptor ([392fbc6](https://github.com/walnut-admin/walnut-admin-client/commit/392fbc65888e1bf2c21ee349a719bf9ed9ca6adf))
 
-- Zxcvbn password check ([7f65c15](https://github.com/walnut-admin/walnut-admin-client/commit/7f65c15335315e6fabe5778ff58d9d57b47f49bf))
-
-- Kick out all devices after update password ([eb5a4f5](https://github.com/walnut-admin/walnut-admin-client/commit/eb5a4f558a7450b0a01b9f6bf9b2d29094c85b65))
-
-- Mfa totop ([fe5f1c4](https://github.com/walnut-admin/walnut-admin-client/commit/fe5f1c4a10853e3b994aa7af18ba5fcf2a378087))
+- Device private detect ([255bbcc](https://github.com/walnut-admin/walnut-admin-client/commit/255bbccbf1ad2804e57924b47796c4c570ae6c37))
 
 ### 🐛 Bug Fixes
 
-- Mobile aside menu width missing ([03ec04f](https://github.com/walnut-admin/walnut-admin-client/commit/03ec04f60e142378aff8f74ae1bffdd11afde68d))
+- Json editor prop not working ([6ce38f8](https://github.com/walnut-admin/walnut-admin-client/commit/6ce38f82a64ec5e6a0c668668feb3f84a8196855))
 
-- Dark mode change slash ([ce937f7](https://github.com/walnut-admin/walnut-admin-client/commit/ce937f7feef5c62a8e960cf2c2c1f7342b5baa5e))
+- Closable not working ([70404cc](https://github.com/walnut-admin/walnut-admin-client/commit/70404ccf4f338b3f4ef5df2aec4c400f4c0bb68f))
 
-- Auth mainout also need preferences ([aaf7468](https://github.com/walnut-admin/walnut-admin-client/commit/aaf746831559742fd7468094c7d0c70d45845439))
+- Init error ([082f9e6](https://github.com/walnut-admin/walnut-admin-client/commit/082f9e66fa65c498ac10ea1fff2f7cb514ac132c))
 
-- Still need global style in naive-ui ([87c32e5](https://github.com/walnut-admin/walnut-admin-client/commit/87c32e5a5ad8f1e9932ed647d838321a5d85b4c6))
-
-- Remove mainout padding ([7ae9eca](https://github.com/walnut-admin/walnut-admin-client/commit/7ae9ecaddfca82940dfa461a159f08e5c5a8a35e))
-
-- Missing preference fetch after signin ([d77d378](https://github.com/walnut-admin/walnut-admin-client/commit/d77d37875e1203ca15d873b8aa958bf699c3fb3c))
+- Fingerprint diff in chrome & edge & its private window ([80a7ad2](https://github.com/walnut-admin/walnut-admin-client/commit/80a7ad20e4650823e7d3315105ffd55e0fc94b7f))
 
 ### 🔧 Refactor
 
-- About desc style in mobile ([80b139c](https://github.com/walnut-admin/walnut-admin-client/commit/80b139c1f8594126497560d432be746c88222d10))
+- Device initial logic change ([fcd8f72](https://github.com/walnut-admin/walnut-admin-client/commit/fcd8f72c3aa17b924a03605a0c70b40e1309637c))
 
-- About info mobile style ([1e55e4c](https://github.com/walnut-admin/walnut-admin-client/commit/1e55e4cc59f428a7067342e157d05c6b083ee29e))
+- Remove closable control ([40d19ce](https://github.com/walnut-admin/walnut-admin-client/commit/40d19ce9f888442b6987ec948cb8d50cd25daf69))
 
-- Device mobile style ([8d327cb](https://github.com/walnut-admin/walnut-admin-client/commit/8d327cbd9e7f9d8f8b6881c86835a495b992badc))
+- Device id ([3328c72](https://github.com/walnut-admin/walnut-admin-client/commit/3328c72f99032e2b50b78bcfbbfd681029f22048))
 
-- Opaque update/clear password for admin ([791c40f](https://github.com/walnut-admin/walnut-admin-client/commit/791c40fe7e54141d6df8c346ffc5b24c01279d26))
+- Fingerprint components ([792700d](https://github.com/walnut-admin/walnut-admin-client/commit/792700d94994cb338d829b8bf7fd0504b976b226))
 
-- Route layout/mainout diff ([871266a](https://github.com/walnut-admin/walnut-admin-client/commit/871266a8bd16ac75f0d3407297d7f49b225f24bb))
-
-- Mfa theme & i18n ([d2179e5](https://github.com/walnut-admin/walnut-admin-client/commit/d2179e5cb6288c7c7cf58d2b1852aaff4f72cc37))
-
-- Extract lock/preference from profile endpoint ([a2cfc33](https://github.com/walnut-admin/walnut-admin-client/commit/a2cfc339f0aece5110efa0c7b0e1769ff4f1bed8))
-
-- Mainout style ([dd1079e](https://github.com/walnut-admin/walnut-admin-client/commit/dd1079ed3770fd03321293e725877db5277b8862))
+- Device private detect ([bf2434d](https://github.com/walnut-admin/walnut-admin-client/commit/bf2434db95becc2cf59090493c4e47b1c3c67cea))
 
 ### 🔩 Chores
 
-- Todo ([c5d8378](https://github.com/walnut-admin/walnut-admin-client/commit/c5d83781733ee87bb8f469625ee69aa92c2c99e8))
-
-### 🚧 WIP
-
-- Mfa ([1a401ff](https://github.com/walnut-admin/walnut-admin-client/commit/1a401ff82646b51f4338dbcae5fa23bf8854997f))
+- Update mind-elixir ([cd61e33](https://github.com/walnut-admin/walnut-admin-client/commit/cd61e33fa9decfec677fb06e34abdb84cf9f79e9))
 
 ## Backend
 
+### ✅ Tests
+
+- Playwright implement ([79dba36](https://github.com/walnut-admin/walnut-admin-server/commit/79dba3632ab310a8085562a06c8ba11a5886f07c))
+
 ### ✨ Features
 
-- Dev only guard ([c1cdad7](https://github.com/walnut-admin/walnut-admin-server/commit/c1cdad70de225f2d77e579cfe4caf376e098c80c))
+- Add normalized ip support ([5fcae63](https://github.com/walnut-admin/walnut-admin-server/commit/5fcae633bf0b094c93073df0cbe060261a2d55c4))
 
-- Opaque identifiers implement ([c8d27df](https://github.com/walnut-admin/walnut-admin-server/commit/c8d27dfe5332e243a846ebd9e374d6b62751ef48))
+- Ip utils ([ce81054](https://github.com/walnut-admin/walnut-admin-server/commit/ce810540481201a7c2fc482412a1c9d166d7ec5d))
 
-- Update password should kick out all relative devices ([d256682](https://github.com/walnut-admin/walnut-admin-server/commit/d2566826c06ac4558b32bc583ae7291c5774fe5d))
+- Redis module ([0c0ce07](https://github.com/walnut-admin/walnut-admin-server/commit/0c0ce07e9defbd08b878a83a7a1ee0c2483a6112))
 
-- Opaque admin/user separate & logic integrate ([27b6e1a](https://github.com/walnut-admin/walnut-admin-server/commit/27b6e1a183c1ad4362017b8245c49564c682739b))
+- Risk guard ([247c7f7](https://github.com/walnut-admin/walnut-admin-server/commit/247c7f71843df027bfd5c94aa5fbf04e745f8e76))
 
-- Mfa module ([c57f02b](https://github.com/walnut-admin/walnut-admin-server/commit/c57f02bc3102bb0923215bc5c209558ddf0c16c7))
+- Risk module ([f5122ca](https://github.com/walnut-admin/walnut-admin-server/commit/f5122ca29abb574e62017348c4fd9772e2f7a45d))
 
-- AT payload mfa relative ([30af0c1](https://github.com/walnut-admin/walnut-admin-server/commit/30af0c1d626b4d7fdc2b3709adcea558a68a90ed))
+- Add delByPattern ([4e91038](https://github.com/walnut-admin/walnut-admin-server/commit/4e910386542d883a4a6a8a1b985d0dbf2b36db5e))
 
-- Mfa setup & verified ([d9f7ba7](https://github.com/walnut-admin/walnut-admin-server/commit/d9f7ba744e78d23cc34011fc9f88133637d68352))
+- Device ip change update ([6842276](https://github.com/walnut-admin/walnut-admin-server/commit/68422765aa90be4e06cb4aa808f8c3fe4491c154))
 
-- Decorators eslint support ([71eb7f9](https://github.com/walnut-admin/walnut-admin-server/commit/71eb7f9e8a61a534bf0417fde84dbd2388cef900))
-
-- Api ok response add operation ([7be7acb](https://github.com/walnut-admin/walnut-admin-server/commit/7be7acb7773fad1317a8eb0ab13a44f1cc3c653d))
+- Device private field ([7e44c25](https://github.com/walnut-admin/walnut-admin-server/commit/7e44c250404b8dcfa2175f29b11d46f8a9bbbad8))
 
 ### 🐛 Bug Fixes
 
-- Oauth callback error ([0ec7cd2](https://github.com/walnut-admin/walnut-admin-server/commit/0ec7cd2e7fc3976f51fc93a118d6fe9d6cc89cad))
+- Visitor should not have mfa guard ([7e00534](https://github.com/walnut-admin/walnut-admin-server/commit/7e00534887ddba01bf728b583b7f5d10b04dd355))
 
-- Session error ([eca1024](https://github.com/walnut-admin/walnut-admin-server/commit/eca1024b92d41f7faacdda6c6b558e08adb4e0bc))
+- Sign guard error when at expired ([436b122](https://github.com/walnut-admin/walnut-admin-server/commit/436b122ce0d949a888183accb529003f3291e2a3))
 
-- Force quit error after password change ([1580cc4](https://github.com/walnut-admin/walnut-admin-server/commit/1580cc44645a11e9da126e3c33042efc0f9af32c))
+- Throttler guard error ([519cc96](https://github.com/walnut-admin/walnut-admin-server/commit/519cc9657a5f0bcee41cdc0d3f4c577393311696))
 
-- GetAppSettings default error ([9a0708d](https://github.com/walnut-admin/walnut-admin-server/commit/9a0708d5b5205fa76a605f9dd8c5c6ebbf586706))
+- Auth error logic cannot excute in interptor, so extend AuthGuard to handle error logic ([a1e1658](https://github.com/walnut-admin/walnut-admin-server/commit/a1e1658a88d297690b6fda66388b4ec7ba5b09e3))
 
-- Device generate error ([7d01957](https://github.com/walnut-admin/walnut-admin-server/commit/7d019570460ada12c620b45ebb085f7fef608d81))
+- App error userId error ([cffb637](https://github.com/walnut-admin/walnut-admin-server/commit/cffb6378792a5cfdaa96724f6d470669802c6a11))
 
-- Totp bind temp id error ([ec95b38](https://github.com/walnut-admin/walnut-admin-server/commit/ec95b38a21e7ef87f0ec568ec6ba5cfd52205805))
+- Monitor user transaction error ([451237a](https://github.com/walnut-admin/walnut-admin-server/commit/451237af5ee0e874689da63c918bb31cc965db79))
 
-- VerifyMfaStatus should update before error ([83aef42](https://github.com/walnut-admin/walnut-admin-server/commit/83aef428e5bd8eee520ab8d92a86bf4b70188819))
+- Missing condition in cap guard ([b90a81c](https://github.com/walnut-admin/walnut-admin-server/commit/b90a81c7aee8ea9b53d0ca462608e0af026c095a))
 
-- Device initial should use db session ([809a4b5](https://github.com/walnut-admin/walnut-admin-server/commit/809a4b50de0a607a533d2251434444e2a6a84a92))
+- Sync device & monitor cron job ([40e4822](https://github.com/walnut-admin/walnut-admin-server/commit/40e48223be8e622baa586e41ba0a86eb36ab14d4))
 
-- Winston log missing level ([baa2065](https://github.com/walnut-admin/walnut-admin-server/commit/baa20656cf875d6ee3f48fc2fd379f2a4b75f0f8))
+- Locale message should throw error in param ([d820684](https://github.com/walnut-admin/walnut-admin-server/commit/d82068449c7480ca70aee1789f7a434bf8fdf5cb))
 
-- Eslint error ([536b416](https://github.com/walnut-admin/walnut-admin-server/commit/536b416785b2d5734fd087dc0eac78d1b368c6c1))
+- Ua middleware error ([68145b9](https://github.com/walnut-admin/walnut-admin-server/commit/68145b99e1b15e1155a6ea9261ab3b6b9a5af6aa))
 
-- Swagger dynamic dto name error ([ba8bb4a](https://github.com/walnut-admin/walnut-admin-server/commit/ba8bb4a76e8b1c3f454a0f2b20d699e66f27cbde))
-
-- Ok response not support array ([06385b3](https://github.com/walnut-admin/walnut-admin-server/commit/06385b361cc5cf0e0417506cab07ee3a68642ead))
-
-- Mfa post verify error ([99ae90a](https://github.com/walnut-admin/walnut-admin-server/commit/99ae90a58e4ec29bda050b6229f482178bf8f70d))
-
-- Type error ([be8dfc6](https://github.com/walnut-admin/walnut-admin-server/commit/be8dfc6ae35faf4a735680d28a6c485f119ba81a))
-
-- Errors after update deps ([697c7dc](https://github.com/walnut-admin/walnut-admin-server/commit/697c7dce279aa8e7e7b50d70708c7d0057c32409))
-
-- Preference/lock/private setting should lock free ([5c568dd](https://github.com/walnut-admin/walnut-admin-server/commit/5c568dd3201bd1f851632ab3ccdd1edb564d8593))
-
-- Lock error ([59f5f07](https://github.com/walnut-admin/walnut-admin-server/commit/59f5f07b93679b36e3a14ab595b116a868cae909))
-
-### 📦 Misc
-
-- Mfa global guard ([3983d89](https://github.com/walnut-admin/walnut-admin-server/commit/3983d894dfff9960d3c86670c8dc740a717c3968))
+- Get is local ip is promise ([4312ca1](https://github.com/walnut-admin/walnut-admin-server/commit/4312ca1ffdc988951c42279a9a14cee38d793cf4))
 
 ### 🔧 Refactor
 
-- Permission cache key use userId ([1b562fb](https://github.com/walnut-admin/walnut-admin-server/commit/1b562fb08fa6794f76f23e2a0d1b1369f2e573f7))
+- Cap error code ([0c15251](https://github.com/walnut-admin/walnut-admin-server/commit/0c15251a02ac860b768d4a3cc3c63c69a4709c3a))
 
-- Remove pwd relative code ([068cbe0](https://github.com/walnut-admin/walnut-admin-server/commit/068cbe003d80a8eef526ba76046512c4b8bbb391))
+- Device initial logic change ([8f15b36](https://github.com/walnut-admin/walnut-admin-server/commit/8f15b3616775c6c3703b4f71c8beac0a29b5d573))
 
-- Email shared module ([54ab18d](https://github.com/walnut-admin/walnut-admin-server/commit/54ab18d88551daacc8e23aacb08d7395c45a7eb9))
+- Ip service ([9a73ac8](https://github.com/walnut-admin/walnut-admin-server/commit/9a73ac82898bd544a1a11008febd055884fc37c6))
 
-- Clean up user module ([ea74400](https://github.com/walnut-admin/walnut-admin-server/commit/ea74400b77dc96bda9ea4847d506a368ae1bdc8f))
+- Remove temp useless code ([40df1b3](https://github.com/walnut-admin/walnut-admin-server/commit/40df1b3b35911d1f0b80819d705e7ab98bf5407d))
 
-- Verify code cache service ([528173d](https://github.com/walnut-admin/walnut-admin-server/commit/528173dd268b31e0e00bd30f44083decf3a03912))
+- Remove risk middleware ([8226f69](https://github.com/walnut-admin/walnut-admin-server/commit/8226f69db79d2c7aa8a728728ef71ef5aad6dc53))
 
-- Task rename ([400318f](https://github.com/walnut-admin/walnut-admin-server/commit/400318f9b3330c2a7fd128af24b37b3ab7a4705e))
+- Risk & cap guard enhancement ([5356289](https://github.com/walnut-admin/walnut-admin-server/commit/53562896542753f444511a8ddf38eb319c35f4f7))
 
-- Monitor user shared module ([6855ee2](https://github.com/walnut-admin/walnut-admin-server/commit/6855ee2bdbc18d4f334e036d0cf0bb17ed0025ae))
+- Optimize risk ([e629a43](https://github.com/walnut-admin/walnut-admin-server/commit/e629a43a61d2fba17af807839ecae8e513511d4a))
 
-- Refresh shared module ([a0ae933](https://github.com/walnut-admin/walnut-admin-server/commit/a0ae933a211fbc176afa66b71cfabe3e4043d92b))
+- Optimize risk module ([a022dff](https://github.com/walnut-admin/walnut-admin-server/commit/a022dff7ecbbfc9853810eccc9bd98b6c9e9a4af))
 
-- Oauth optimise ([719886c](https://github.com/walnut-admin/walnut-admin-server/commit/719886ccb966af8b4c8e4ef77429c01f3116e663))
+- Risk service ([1ba203c](https://github.com/walnut-admin/walnut-admin-server/commit/1ba203c15252ea93f7e83fae6b266bf41844f597))
 
-- Base repo readById session ([a056aff](https://github.com/walnut-admin/walnut-admin-server/commit/a056aff54a40f7114c303f94c5ca85e35b5195a2))
+- Risk rate service ([40bc401](https://github.com/walnut-admin/walnut-admin-server/commit/40bc4011c79a38a7fdbf9a81c971c3f32e0aab7d))
 
-- User read session ([4e363c6](https://github.com/walnut-admin/walnut-admin-server/commit/4e363c6e06b4696d67de0256a058bebba7634ded))
+- Date.now() => AppDayjs().valueOf() ([c70a789](https://github.com/walnut-admin/walnut-admin-server/commit/c70a78902aa520f8f8fb316557652a417681dd60))
 
-- User shared module ([6d15021](https://github.com/walnut-admin/walnut-admin-server/commit/6d150213edafe087b5d362486cb9eff4fbca99ad))
+- Monitor user visitor id index & unique ([4b00ffc](https://github.com/walnut-admin/walnut-admin-server/commit/4b00ffc4f714bb1ce00c854d1735e0a7e743083a))
 
-- Crypto module ([06ec775](https://github.com/walnut-admin/walnut-admin-server/commit/06ec775ba5aeaf9bce137a7bdddc9936ba09c75a))
+- Cache device params ([1ff51e1](https://github.com/walnut-admin/walnut-admin-server/commit/1ff51e1142d3c1976e9bae19e0a9e64fb08bcaa0))
 
-- Encrypt/hash diff ([c4c4b91](https://github.com/walnut-admin/walnut-admin-server/commit/c4c4b9181e56919f91dca8ed5067306a447fcfc5))
+- Remove cap need endpoint ([cf7c143](https://github.com/walnut-admin/walnut-admin-server/commit/cf7c143a2fa46d933a900a4499ba1d0bda691d3c))
 
-- Mfa totp error exception ([26f6701](https://github.com/walnut-admin/walnut-admin-server/commit/26f67018c4c347c9829a8e7ac4ee2ca24942fd2c))
+- Device repo ([e268d8a](https://github.com/walnut-admin/walnut-admin-server/commit/e268d8a516d4c7d2080e66a071cca693b016a1ac))
 
-- Sign ticket cookie expire same as at ([3e6d4f4](https://github.com/walnut-admin/walnut-admin-server/commit/3e6d4f4b3546d80bfdfd9feb282344a0a6dc0fbf))
+- Risk murlock cache key ([4c5939d](https://github.com/walnut-admin/walnut-admin-server/commit/4c5939d0d836538962597036c50a3581a4fcdf1f))
 
-- Sign ttl same as at ([314bdca](https://github.com/walnut-admin/walnut-admin-server/commit/314bdcaac8da1bb1f81e2784c94ef98bcc99607d))
+- User device repo ([c2f97f4](https://github.com/walnut-admin/walnut-admin-server/commit/c2f97f47c77f7f300474985424c66ba82348a5a5))
 
-- Token module => global ([a477f45](https://github.com/walnut-admin/walnut-admin-server/commit/a477f453fc75f1fe74429d7b22523534932882a9))
+- User repo ([b1e4841](https://github.com/walnut-admin/walnut-admin-server/commit/b1e484197a12ecddb9606f595810665d25af724e))
 
-- Monitor user repo extract ([5815d38](https://github.com/walnut-admin/walnut-admin-server/commit/5815d38cf95d76d04b995e60e52a52e22570eb83))
+- Temp/permanent ip intergrate ([661de84](https://github.com/walnut-admin/walnut-admin-server/commit/661de84286b18550d854e65c698e2bbbf2c6ba0d))
 
-- Refresh repo extract ([cea1833](https://github.com/walnut-admin/walnut-admin-server/commit/cea1833ef362bd89eaa8f3c925e2a21f7f248fdc))
+- Cache log ([d3e4034](https://github.com/walnut-admin/walnut-admin-server/commit/d3e40347babe676630f8bd609b804c7447a9c7ba))
 
-- Still need deviceId when generate AT payload ([ad7db5c](https://github.com/walnut-admin/walnut-admin-server/commit/ad7db5ce2a9f24d95e61946aa7d4fd72a0d8bb48))
+- Remove ip cookie ([edf117d](https://github.com/walnut-admin/walnut-admin-server/commit/edf117d102f5ca21e0b64a999f3e826f96a24a50))
 
-- Monitor user repo extract ([b5225ca](https://github.com/walnut-admin/walnut-admin-server/commit/b5225ca3d6bfa51b046c2ea7e80e0db6450f4101))
-
-- Device guard log ([f2b181c](https://github.com/walnut-admin/walnut-admin-server/commit/f2b181cc083049cb199ee320ec47ed5fab7d601b))
-
-- Cache unify ([b9bd52d](https://github.com/walnut-admin/walnut-admin-server/commit/b9bd52dc2b4abfad0f49bc9411ca96f7b2a609de))
-
-- Device/lock logger ([197f610](https://github.com/walnut-admin/walnut-admin-server/commit/197f6102c4731177627838b865f7865ce40322af))
-
-- Mfa guard logger ([b21f814](https://github.com/walnut-admin/walnut-admin-server/commit/b21f81493ef42697cdd5ad9b28636a7bad6a8419))
-
-- Rename crud decorator ([db79fc2](https://github.com/walnut-admin/walnut-admin-server/commit/db79fc239e34455b6dd886ba0129c1984550a307))
-
-- Sign free decorator ([30e3efc](https://github.com/walnut-admin/walnut-admin-server/commit/30e3efcb207f31cb7c1040f11a4f52acd2e3fcc6))
-
-- Device id from cookie ([9727fd0](https://github.com/walnut-admin/walnut-admin-server/commit/9727fd0e9634939f08a6150150880745bd2d146f))
-
-- Ok response dto swagger cleanup ([c41739a](https://github.com/walnut-admin/walnut-admin-server/commit/c41739a064e8b80c7dd76d315991c133fb8e2c2b))
-
-- Do not use ApiOkResponse ([c434a17](https://github.com/walnut-admin/walnut-admin-server/commit/c434a17d629ee7da3755ab7cde4e19318f6411e5))
-
-- Enhance mfa code ([1c93afc](https://github.com/walnut-admin/walnut-admin-server/commit/1c93afcb56d0fe0b35789da6da68597e8f20823c))
-
-- User mfa model rename ([c812a9f](https://github.com/walnut-admin/walnut-admin-server/commit/c812a9f69978e6441a040a78322ce4dd8cc2c3f7))
-
-- Primitive data in swagger ([d0cc4d0](https://github.com/walnut-admin/walnut-admin-server/commit/d0cc4d0430a3f87e3ac62c5a0fa930216bbeaff8))
-
-- Remove ApiBody ([1c87e65](https://github.com/walnut-admin/walnut-admin-server/commit/1c87e65d67478835d28f44cb49546d29f3331784))
-
-- Jwt optional guard ([9f351f2](https://github.com/walnut-admin/walnut-admin-server/commit/9f351f24b0fd28a3322e33f59fa91471214f72ea))
-
-- Extract lock/preference from profile endpoint ([0b1cbeb](https://github.com/walnut-admin/walnut-admin-server/commit/0b1cbebebc6880fac03fc3f2e1eedb1ee7652571))
+- Error log ip ([413a06a](https://github.com/walnut-admin/walnut-admin-server/commit/413a06ae5e2da7da50dc62a27b6a168100dd593f))
 
 ### 🔩 Chores
 
-- New env ([71931ab](https://github.com/walnut-admin/walnut-admin-server/commit/71931ab6a2cda7075e432c69f5ee07e34cc3a853))
-
-- Do not change app name ([e0d0597](https://github.com/walnut-admin/walnut-admin-server/commit/e0d0597600b89190c0e358ebca3b27fbb624d989))
-
-- Webauthn config ([d7afbe0](https://github.com/walnut-admin/walnut-admin-server/commit/d7afbe0c42105d2414d6cce7777d07a5374f19db))
-
-- Decorators eslint rules ([09b2a05](https://github.com/walnut-admin/walnut-admin-server/commit/09b2a058768a143ce6f03e4a1de9308f1d610d1f))
-
-- Eslint rule ([254f155](https://github.com/walnut-admin/walnut-admin-server/commit/254f15546b30665a5441b0b748bfa9138c856d13))
-
-- Swagger => scalar ([35071c5](https://github.com/walnut-admin/walnut-admin-server/commit/35071c58bc9a346011fd2d26f6f2684fdcdd17f3))
-
-- WalnutAdminGuardJwtOptional lint ([d687f62](https://github.com/walnut-admin/walnut-admin-server/commit/d687f62af238660d96097d8922b73a59b28f1622))
-
-- Remove useless deps ([80362cb](https://github.com/walnut-admin/walnut-admin-server/commit/80362cb3c65fc0927383bfd4d946c7745bf6b27f))
-
-- Update deps ([584b7b3](https://github.com/walnut-admin/walnut-admin-server/commit/584b7b33d97b5c31edccf41b2f2adea76b36993b))
-
-- Scalar should be in deps but not dev deps ([a9f40f9](https://github.com/walnut-admin/walnut-admin-server/commit/a9f40f917a1f8eb9eef7f7802d40a84b1c0f72a9))
-
-### 🚧 WIP
-
-- Opaque module re-design ([c0fbbc9](https://github.com/walnut-admin/walnut-admin-server/commit/c0fbbc97d7df5a4926782b08fb8cd2ec97ef0894))
+- Missing release scripts ([7c51751](https://github.com/walnut-admin/walnut-admin-server/commit/7c51751d73e3e9ae8759456458e6e8f15db3a315))
