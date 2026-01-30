@@ -1,9 +1,8 @@
-import { setupStorageMigrations } from '@/utils/persistent/migrate'
-
 // LINK https://utc.yuy1n.io/features/highlight.html#options-1
 // TODO build error, did not figure out which plugin conflict
 // import '~console/theme-detect'
 
+import { setupStorageMigrations } from '@/utils/persistent/migrate'
 import { App, setupApp } from './App'
 import { installAppPlugins } from './plugins'
 // unocss

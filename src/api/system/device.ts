@@ -63,12 +63,13 @@ export function unbanDeviceAPI(id: string) {
  */
 export async function initialDeviceAPI() {
   const appStoreFingerprint = useAppStoreFingerprint()
+  const isPrivate = await getIsInIncognitoMode()
 
   return AppAxios.post<IResponseData.System.Device.Initial>({
     url: '/system/device/initial',
     data: {
       deviceName: appStoreFingerprint.getDeviceNameFromFingerprint,
-      private: await getIsInIncognitoMode(),
+      private: isPrivate,
       sr: {
         width: window.screen.width,
         height: window.screen.height,
