@@ -32,6 +32,7 @@ async function onCapSolve(e: { detail: { token: string } }) {
     :fullscreen="false"
     :title="$t('app.base.cap')"
     width="auto"
+    :z-index="999999"
   >
     <n-element>
       <div
