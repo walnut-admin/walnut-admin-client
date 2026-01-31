@@ -10,12 +10,9 @@ useAppHooks()
 
 // get public setting first
 const appStoreBackendSettings = useAppStoreSettingBackend()
-// get user preference
-const appStorePreference = useAppStoreUserPreference()
 
 onBeforeMount(() => {
   appStoreBackendSettings.onInitPublicSettings()
-  appStorePreference.onInitPreference()
 })
 </script>
 

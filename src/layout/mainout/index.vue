@@ -19,6 +19,12 @@ const getMainoutRouteOptions = computed(() => {
 function onChange(path: string) {
   router.push(path)
 }
+
+// get user preference
+const appStorePreference = useAppStoreUserPreference()
+onBeforeMount(() => {
+  appStorePreference.onInitPreference()
+})
 </script>
 
 <template>
