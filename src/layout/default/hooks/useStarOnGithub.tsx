@@ -9,23 +9,27 @@ export async function useStarOnGithub() {
   const appStoreSettingDev = useAppStoreSettingDev()
   const naiveStore = useAppStoreNaive()
 
+  const dontShow = getCookie('dont-show-star')
+  if (dontShow === true)
+    return
+
   function onClick() {
     openExternalLink(homepage)
   }
 
   function onCheckboxChange(val: boolean) {
     setCookie('dont-show-star', val)
+    if (val) {
+      const timeId = setTimeout(async () => {
+        await naiveStore.destroyCurrentNotiInst()
+        clearTimeout(timeId)
+      }, 1000)
+    }
   }
-
-  const dontShow = getCookie('dont-show-star')
-
-  if (dontShow === true)
-    return
-
   await naiveStore.destroyCurrentNotiInst()
 
   useAppNotiInfo('', {
-    duration: 30000,
+    duration: 60 * 1000,
     description: t('app.github.desc'),
     containerStyle: {
       marginTop: `${appStoreSettingDev.getHeaderHeight}rem`,

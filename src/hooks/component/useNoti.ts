@@ -30,6 +30,8 @@ export function AppNoti(msg: string, options: AppNotiOptions) {
     meta: options.meta ?? formatTime(new Date()),
   })
 
+  appStoreNaive.setCurrentNotiInst(inst)
+
   if (inst) {
     inst.onClose = () => {
       // recover the default placement and container style when current inst is closed
@@ -37,8 +39,6 @@ export function AppNoti(msg: string, options: AppNotiOptions) {
       appStoreNaive.setNotiContainerStyle({})
     }
   }
-
-  appStoreNaive.setCurrentNotiInst(inst)
 }
 
 export function useAppNotiSuccess(msg: string, options?: Omit<AppNotiOptions, 'type'>) {
