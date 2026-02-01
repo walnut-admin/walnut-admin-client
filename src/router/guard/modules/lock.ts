@@ -13,13 +13,6 @@ export function createLockGuard(router: Router) {
 
     // 2. Locked status && target lock route is specified
     if (appStoreLock.getLocked && appStoreLock.getLockRoute) {
-      // Route not registered
-      if (!router.hasRoute(layoutConst.lock.name)) {
-        appStoreLock.addLockRoute()
-        // Use the method recommended in docs: Return original "to" path to trigger re-matching after route addition
-        return to.fullPath
-      }
-
       // Route already registered, but current "to" is not the lock screen page
       if (to.name !== layoutConst.lock.name) {
         return { name: layoutConst.lock.name, replace: true }

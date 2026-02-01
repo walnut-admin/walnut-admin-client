@@ -88,16 +88,10 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       this.setLockPreference(res)
 
       if (res.locked) {
-        await this.logicAfterLock()
+        // NOTICE: DO NOT PUSH ROUTER BELOW
+        // ROUTER PUSH SHOULD BE DONE IN INTERCEPTOR
+        this.addLockRoute()
       }
-    },
-
-    /**
-     * @description logic after lock
-     */
-    async logicAfterLock() {
-      this.addLockRoute()
-      await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
     },
 
     /**
@@ -114,9 +108,10 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
           return
         const socket = await getSocket()
 
-        socket.on(AppSocketEvents.LOCK, (payload: { fingerprint: string, userId: string }) => {
+        socket.on(AppSocketEvents.LOCK, async (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
-            this.logicAfterLock()
+            this.addLockRoute()
+            await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
           }
         })
       })
@@ -145,7 +140,8 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
           params: route.value.params,
         })
 
-        await this.logicAfterLock()
+        this.addLockRoute()
+        await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
       }
       finally {
         this.loading = false

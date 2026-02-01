@@ -116,7 +116,8 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   // user locked
   if (code === BusinessCodeConst.USER_LOCKED) {
     const appStoreLock = useAppStoreLock()
-    await appStoreLock.logicAfterLock()
+    appStoreLock.addLockRoute()
+    await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
     return Promise.reject(new Error('User Locked'))
   }
 
