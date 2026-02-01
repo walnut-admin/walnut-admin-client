@@ -1,6 +1,7 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { Socket } from 'socket.io-client'
 import { io } from 'socket.io-client'
+import { SingletonPromise } from '@/utils/queue'
 
 const { ws } = useAppEnvProxy()
 const useProxy = +ws[0] === 1
@@ -9,14 +10,16 @@ const path = useProxy ? ws[1] : ws[3]
 
 let socket: Socket | null = null
 
-export function getSocket(): Socket | null {
-  return socket
+const socketInit = new SingletonPromise<Socket>(false)
+
+export async function getSocket(): Promise<Socket> {
+  return socketInit.run(() => setupSocket())
 }
 
 export function setupSocket() {
   if (socket) {
     console.info('[Socket] Already initialized')
-    return socket
+    return Promise.resolve(socket)
   }
 
   const userStoreAuth = useAppStoreUserAuth()
@@ -60,7 +63,7 @@ export function setupSocket() {
   })
 
   console.info('[Socket] Initialized successfully')
-  return socket
+  return Promise.resolve(socket)
 }
 
 export function destroySocket() {
