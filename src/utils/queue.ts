@@ -2,6 +2,11 @@ type AsyncTask<T> = () => Promise<T>
 
 export class SingletonPromise<T> {
   private promise: Promise<T> | null = null
+  private clearOnFinally: boolean = true
+
+  constructor(clearOnFinally: boolean = true) {
+    this.clearOnFinally = clearOnFinally
+  }
 
   run(task: AsyncTask<T>): Promise<T> {
     if (!this.promise) {
@@ -11,7 +16,8 @@ export class SingletonPromise<T> {
           throw e
         })
         .finally(() => {
-          this.promise = null
+          if (this.clearOnFinally)
+            this.promise = null
         })
     }
     return this.promise
