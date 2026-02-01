@@ -7,7 +7,6 @@ import { mainoutRoutes } from './routes/mainout'
 export const routeWhiteListPath: string[] = [
   ...mainoutRoutes.map(item => item.path),
   layoutConst.redirect.path,
-  layoutConst.lock.path,
   layoutConst.notFound.path,
   layoutConst.serverError.path,
 ]

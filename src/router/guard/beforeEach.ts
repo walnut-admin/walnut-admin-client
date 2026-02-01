@@ -36,7 +36,7 @@ export function createBeforeEachGuard(router: Router) {
       return to.fullPath
     }
 
-    // if locked, next to lock page and return
+    // user locked, early return
     const appStoreLock = useAppStoreLock()
     if (appStoreLock.getLocked) {
       return true

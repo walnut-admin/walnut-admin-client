@@ -80,10 +80,6 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      * @description init lock state
      */
     async onInitLockState() {
-      if (!this.getEnable) {
-        return
-      }
-
       const res = await getLockStatusAPI()
       this.setLockPreference(res)
 
