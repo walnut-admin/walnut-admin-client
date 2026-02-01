@@ -1,5 +1,5 @@
 import type { Router } from 'vue-router'
-import { AppLockRoute, layoutConst } from '@/router/routes/builtin'
+import { layoutConst } from '@/router/routes/builtin'
 
 export function createLockGuard(router: Router) {
   const appStoreLock = useAppStoreLock()
@@ -15,7 +15,7 @@ export function createLockGuard(router: Router) {
     if (appStoreLock.getLocked && appStoreLock.getLockRoute) {
       // Route not registered
       if (!router.hasRoute(layoutConst.lock.name)) {
-        router.addRoute(AppLockRoute)
+        appStoreLock.addLockRoute()
         // Use the method recommended in docs: Return original "to" path to trigger re-matching after route addition
         return to.fullPath
       }

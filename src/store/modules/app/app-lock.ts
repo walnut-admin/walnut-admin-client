@@ -5,7 +5,7 @@ import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { getLockStatusAPI, lockAPI, unlockAPI } from '@/api/system/user_lock'
 import { AppCoreFn1 } from '@/core'
-import { layoutConst } from '@/router/routes/builtin'
+import { AppLockRoute, layoutConst } from '@/router/routes/builtin'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -67,18 +67,37 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     },
 
     /**
+     * @description add lock route
+     */
+    addLockRoute() {
+      const { addRoute, hasRoute } = useAppRouter()
+      if (hasRoute(layoutConst.lock.name))
+        return
+      addRoute(AppLockRoute)
+    },
+
+    /**
      * @description init lock state
      */
     async onInitLockState() {
+      if (!this.getEnable) {
+        return
+      }
+
       const res = await getLockStatusAPI()
       this.setLockPreference(res)
+
+      if (res.locked) {
+        await this.logicAfterLock()
+      }
     },
 
     /**
      * @description logic after lock
      */
     async logicAfterLock() {
-      await useAppRouterPush({ name: layoutConst.lock.name })
+      this.addLockRoute()
+      await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
     },
 
     /**
@@ -90,18 +109,22 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       }
       const appStoreFingerprint = useAppStoreFingerprint()
 
-      tryOnMounted(() => {
+      tryOnMounted(async () => {
         if (!this.getLockCrossDevice)
           return
-        getSocket()?.on(AppSocketEvents.LOCK, (payload: { fingerprint: string, userId: string }) => {
+        const socket = await getSocket()
+
+        socket.on(AppSocketEvents.LOCK, (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
             this.logicAfterLock()
           }
         })
       })
 
-      tryOnUnmounted(() => {
-        getSocket()?.off(AppSocketEvents.LOCK)
+      tryOnUnmounted(async () => {
+        const socket = await getSocket()
+
+        socket.off(AppSocketEvents.LOCK)
       })
     },
 
@@ -149,18 +172,22 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
 
       const appStoreFingerprint = useAppStoreFingerprint()
 
-      tryOnMounted(() => {
+      tryOnMounted(async () => {
         if (!this.getLockCrossDevice)
           return
-        getSocket()?.on(AppSocketEvents.UNLOCK, (payload: { fingerprint: string, userId: string }) => {
+
+        const socket = await getSocket()
+        socket.on(AppSocketEvents.UNLOCK, (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
             this.logicAfterUnlock()
           }
         })
       })
 
-      tryOnUnmounted(() => {
-        getSocket()?.off(AppSocketEvents.UNLOCK)
+      tryOnUnmounted(async () => {
+        const socket = await getSocket()
+
+        socket.off(AppSocketEvents.UNLOCK)
       })
     },
 

@@ -113,6 +113,13 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     return Promise.reject(new Error('MFA Verified'))
   }
 
+  // user locked
+  if (code === BusinessCodeConst.USER_LOCKED) {
+    const appStoreLock = useAppStoreLock()
+    await appStoreLock.logicAfterLock()
+    return Promise.reject(new Error('User Locked'))
+  }
+
   // custom error code
   if (errorCodeList.includes(code)) {
     useAppMsgError(msg)

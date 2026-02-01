@@ -1,11 +1,11 @@
 import type { EffectScope } from 'vue'
-import { AppLockRoute, layoutConst } from '@/router/routes/builtin'
+import { layoutConst } from '@/router/routes/builtin'
 
 export function useAppLock() {
   let lockScope: EffectScope | null = null
   let modeScope: EffectScope | null = null
 
-  const { currentRoute, addRoute, removeRoute } = useAppRouter()
+  const { currentRoute, removeRoute } = useAppRouter()
   const appStoreLock = useAppStoreLock()
 
   function stopMode() {
@@ -95,7 +95,7 @@ export function useAppLock() {
       if (enabled) {
         lockScope = effectScope()
         lockScope.run(() => {
-          addRoute(AppLockRoute)
+          appStoreLock.addLockRoute()
 
           watch(() => appStoreLock.getLockMode, setupLockMode, { immediate: true })
         })

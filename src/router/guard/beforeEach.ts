@@ -27,9 +27,8 @@ export function createBeforeEachGuard(router: Router) {
     if (!userStoreAuth.getAccessToken)
       return { path: mainoutConst.auth.path, replace: true }
 
-    const userStoreProfile = useAppStoreUserProfile()
-
     // Get user info
+    const userStoreProfile = useAppStoreUserProfile()
     if (isEmpty(userStoreProfile.profile)) {
       // fetch profile
       await userStoreProfile.getProfile()
@@ -37,9 +36,14 @@ export function createBeforeEachGuard(router: Router) {
       return to.fullPath
     }
 
+    // if locked, next to lock page and return
     const appStoreLock = useAppStoreLock()
+    if (appStoreLock.getLocked) {
+      return true
+    }
+
     // not locked => Get permission
-    if (!appStoreLock.getLocked && isEmpty((appStoreMenu.menus))) {
+    if (isEmpty((appStoreMenu.menus))) {
       // At this step, user has login but didn't got dynamic routes generated
       // Below we call app core fn1 to handle logic
       const hasPermissions = await AppCoreFn1()
