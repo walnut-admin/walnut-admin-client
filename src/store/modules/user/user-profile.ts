@@ -56,7 +56,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
 
       // set locked preference
       const appStoreLock = useAppStoreLock()
-      appStoreLock.onInitLockState()
+      await appStoreLock.onInitLockState()
 
       // get private settings
       const appSettingScope = useAppStoreSettingScope()
