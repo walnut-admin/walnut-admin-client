@@ -121,7 +121,7 @@ async function performWebAuthnVerification() {
       trusted: trusted.value,
     })
 
-    userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
+    await userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
   }
   catch (error: any) {
     console.error('WebAuthn verification failed:', error)
@@ -134,6 +134,7 @@ async function performWebAuthnVerification() {
   }
 }
 
+// TODO
 function getWebAuthnErrorMessage(error: any): string {
   const errorName = error?.name || ''
   const errorMessage = error?.message || ''
@@ -196,15 +197,14 @@ onBeforeMount(async () => {
     <template v-else-if="currentStep === 1">
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <NCard
-          v-for="method in mfaMethods.filter(m => m.enabled)"
-          :key="method.key"
-          :bordered="true"
-          class="cursor-pointer transition-all duration-300 hover:shadow-lg"
-          @click="selectMethod(method.key)"
+          v-for="method in mfaMethods.filter(m => m.enabled)" :key="method.key" :bordered="true"
+          class="cursor-pointer transition-all duration-300 hover:shadow-lg" @click="selectMethod(method.key)"
         >
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
-              <div class="h-12 w-12 flex items-center justify-center rounded-lg from-blue-500 to-indigo-600 bg-gradient-to-br">
+              <div
+                class="h-12 w-12 flex items-center justify-center rounded-lg from-blue-500 to-indigo-600 bg-gradient-to-br"
+              >
                 <WIcon :icon="method.icon" height="24" class="text-white" />
               </div>
             </div>
@@ -238,13 +238,8 @@ onBeforeMount(async () => {
 
         <div class="mb-6">
           <NInput
-            ref="nInputRef"
-            v-model:value="verifyCode"
-            placeholder="000000"
-            size="large"
-            maxlength="6"
-            :allow-input="(value: string) => /^\d*$/.test(value)"
-            class="text-center text-2xl tracking-widest font-mono"
+            ref="nInputRef" v-model:value="verifyCode" placeholder="000000" size="large" maxlength="6"
+            :allow-input="(value: string) => /^\d*$/.test(value)" class="text-center text-2xl tracking-widest font-mono"
             @keyup.enter="verifyTotp"
           >
             <template #prefix>
@@ -261,12 +256,7 @@ onBeforeMount(async () => {
           <NButton :disabled="loading" @click="goBackToMethodSelection">
             {{ $t('app.base.back') }}
           </NButton>
-          <NButton
-            type="primary"
-            :disabled="!canVerify"
-            :loading="loading"
-            @click="verifyTotp"
-          >
+          <NButton type="primary" :disabled="!canVerify" :loading="loading" @click="verifyTotp">
             {{ $t('app.base.verify') }}
           </NButton>
         </NSpace>
