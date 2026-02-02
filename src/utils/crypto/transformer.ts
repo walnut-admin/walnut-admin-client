@@ -33,7 +33,7 @@ export function base64ToUint8Array(b64: string): Uint8Array {
  * @returns Decoded ArrayBuffer.
  */
 export function base64ToArrayBuffer(b64: string): ArrayBuffer {
-  return Base64.toUint8Array(b64).buffer as ArrayBuffer
+  return Base64.toUint8Array(b64).slice().buffer
 }
 
 /**
@@ -41,7 +41,7 @@ export function base64ToArrayBuffer(b64: string): ArrayBuffer {
  * @param u8 - The Uint8Array to convert.
  * @returns Hexadecimal string representation.
  */
-export function u8ToHex(u8: Uint8Array): string {
+export function uint8ArrayToHex(u8: Uint8Array): string {
   return [...u8].map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
@@ -51,7 +51,7 @@ export function u8ToHex(u8: Uint8Array): string {
  * @throws {TypeError} If the hex string length is odd.
  * @returns Decoded Uint8Array.
  */
-export function hexToU8(hex: string): Uint8Array {
+export function hexToUint8Array(hex: string): Uint8Array {
   const len = hex.length
   if (len % 2)
     throw new TypeError('Odd hex string')
@@ -66,7 +66,7 @@ export function hexToU8(hex: string): Uint8Array {
  * @param str - The string to encode.
  * @returns Encoded Uint8Array.
  */
-export function utf8ToU8(str: string) {
+export function utf8ToUint8Array(str: string): Uint8Array<ArrayBuffer> {
   return new TextEncoder().encode(str)
 }
 
@@ -75,6 +75,6 @@ export function utf8ToU8(str: string) {
  * @param u8 - The Uint8Array to decode.
  * @returns Decoded UTF-8 string.
  */
-export function u8ToUtf8(u8: Uint8Array): string {
+export function uint8ArrayToUtf8(u8: Uint8Array): string {
   return new TextDecoder().decode(u8)
 }

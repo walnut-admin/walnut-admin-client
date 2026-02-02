@@ -4,15 +4,16 @@
  * Algorithm: RSA-OAEP + SHA-256
  */
 
+import type { RsaKeyPairPEM } from '../const'
 import { exportKeyToPEM, generateRsaOaepKeyPairCore, importRsaPrivateKey, rsaOaepDecrypt } from '../shared'
-import { base64ToArrayBuffer, u8ToUtf8 } from '../transformer'
+import { base64ToArrayBuffer, uint8ArrayToUtf8 } from '../transformer'
 
 /**
  * Generates RSA-OAEP key pair
  * @description Generates an RSA-OAEP key pair with SHA-256 hashing algorithm
  * @returns Promise resolving to an object containing public and private keys in PEM format, or null on failure
  */
-export async function generateRSAKeyPair() {
+export async function generateRsaOaepKeyPair(): Promise<RsaKeyPairPEM | null> {
   try {
     const keyPair = await generateRsaOaepKeyPairCore()
     const publicKeyPem = await exportKeyToPEM(keyPair.publicKey, 'public')
@@ -36,7 +37,7 @@ export async function generateRSAKeyPair() {
  * @param base64Cipher - Encrypted data in Base64 format
  * @returns Promise resolving to decrypted string, or null on failure
  */
-export async function decryptWithPrivateKey(
+export async function rsaOaepDecryptWithPrivateKey(
   privateKeyPem: string,
   base64Cipher: string,
 ): Promise<string | null> {
@@ -55,7 +56,7 @@ export async function decryptWithPrivateKey(
     // Reuse RSA-OAEP decryption logic from shared.ts
     const decryptedBuffer = await rsaOaepDecrypt(privateKey, cipherBuffer)
 
-    return u8ToUtf8(new Uint8Array(decryptedBuffer))
+    return uint8ArrayToUtf8(new Uint8Array(decryptedBuffer))
   }
   catch (err) {
     console.error('Decryption failed:', err)

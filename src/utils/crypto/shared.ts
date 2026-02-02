@@ -1,3 +1,5 @@
+import type { PEMKeyType } from './const'
+import { AES_GCM, PEM, RSA_OAEP } from './const'
 import { arrayBufferToBase64 } from './transformer'
 
 /**
@@ -7,13 +9,13 @@ import { arrayBufferToBase64 } from './transformer'
  * @param type - Specifies whether the key is 'public' or 'private'
  * @returns Promise resolving to a PEM formatted string
  */
-export async function exportKeyToPEM(key: CryptoKey, type: 'public' | 'private'): Promise<string> {
+export async function exportKeyToPEM(key: CryptoKey, type: PEMKeyType): Promise<string> {
   const exported = await crypto.subtle.exportKey(
     type === 'public' ? 'spki' : 'pkcs8',
     key,
   )
   const base64Key = arrayBufferToBase64(exported)
-  const pemHeader = type === 'public' ? 'PUBLIC KEY' : 'PRIVATE KEY'
+  const pemHeader = type === 'public' ? PEM.PUBLIC_KEY.HEADER : PEM.PRIVATE_KEY.HEADER
   const pemBody = base64Key.match(/.{1,64}/g)?.join('\n') || ''
   return `-----BEGIN ${pemHeader}-----\n${pemBody}\n-----END ${pemHeader}-----`
 }
@@ -31,12 +33,12 @@ export async function exportKeyToPEM(key: CryptoKey, type: 'public' | 'private')
  */
 export async function importKeyFromPEM(
   pem: string,
-  type: 'public' | 'private',
+  type: PEMKeyType,
   algorithm: AlgorithmIdentifier | RsaHashedImportParams | EcKeyImportParams,
   extractable: boolean,
   keyUsages: KeyUsage[],
 ): Promise<CryptoKey> {
-  const pemHeader = type === 'public' ? 'PUBLIC KEY' : 'PRIVATE KEY'
+  const pemHeader = type === 'public' ? PEM.PUBLIC_KEY.HEADER : PEM.PRIVATE_KEY.HEADER
   const pemPrefix = `-----BEGIN ${pemHeader}-----`
   const pemSuffix = `-----END ${pemHeader}-----`
 
@@ -69,7 +71,7 @@ export async function importRsaPrivateKey(pem: string): Promise<CryptoKey> {
   return importKeyFromPEM(
     pem,
     'private',
-    { name: 'RSA-OAEP', hash: 'SHA-256' },
+    { name: RSA_OAEP.NAME, hash: RSA_OAEP.HASH },
     false,
     ['decrypt'],
   )
@@ -82,7 +84,7 @@ export async function importRsaPublicKey(pem: string): Promise<CryptoKey> {
   return importKeyFromPEM(
     pem,
     'public',
-    { name: 'RSA-OAEP', hash: 'SHA-256' },
+    { name: RSA_OAEP.NAME, hash: RSA_OAEP.HASH },
     false,
     ['encrypt'],
   )
@@ -96,7 +98,7 @@ export async function importRsaPublicKey(pem: string): Promise<CryptoKey> {
  */
 export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): Promise<ArrayBuffer> {
   return crypto.subtle.encrypt(
-    { name: 'RSA-OAEP' },
+    { name: RSA_OAEP.NAME },
     publicKey,
     data,
   )
@@ -109,12 +111,12 @@ export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): P
  * @returns Decrypted data (ArrayBuffer)
  */
 export async function rsaOaepDecrypt(privateKey: CryptoKey, encryptedData: ArrayBuffer): Promise<ArrayBuffer> {
-  if (privateKey.algorithm.name !== 'RSA-OAEP') {
+  if (privateKey.algorithm.name !== RSA_OAEP.NAME) {
     throw new TypeError('Key must be RSA-OAEP')
   }
 
   return crypto.subtle.decrypt(
-    { name: 'RSA-OAEP' },
+    { name: RSA_OAEP.NAME },
     privateKey,
     encryptedData,
   )
@@ -125,7 +127,7 @@ export async function rsaOaepDecrypt(privateKey: CryptoKey, encryptedData: Array
  */
 export async function generateAes256Key(): Promise<CryptoKey> {
   return crypto.subtle.generateKey(
-    { name: 'AES-GCM', length: 256 },
+    { name: AES_GCM.NAME, length: AES_GCM.KEY_LENGTH },
     true,
     ['encrypt', 'decrypt'],
   )
@@ -138,10 +140,10 @@ export async function generateAes256Key(): Promise<CryptoKey> {
 export async function generateRsaOaepKeyPairCore(): Promise<CryptoKeyPair> {
   return crypto.subtle.generateKey(
     {
-      name: 'RSA-OAEP',
-      modulusLength: 2048,
-      publicExponent: new Uint8Array([0x01, 0x00, 0x01]), // 65537
-      hash: 'SHA-256',
+      name: RSA_OAEP.NAME,
+      modulusLength: RSA_OAEP.MODULUS_LENGTH,
+      publicExponent: RSA_OAEP.PUBLIC_EXPONENT,
+      hash: RSA_OAEP.HASH,
     },
     true, // extractable
     ['encrypt', 'decrypt'],
@@ -151,20 +153,21 @@ export async function generateRsaOaepKeyPairCore(): Promise<CryptoKeyPair> {
 /**
  * Exports AES key to raw format (ArrayBuffer)
  */
-export async function exportAesKeyRaw(key: CryptoKey): Promise<ArrayBuffer> {
+export async function exportAesKeyToRaw(key: CryptoKey): Promise<ArrayBuffer> {
   return crypto.subtle.exportKey('raw', key)
 }
 
 /**
  * Imports AES key from raw format (ArrayBuffer)
+ * @fixed Corrected keyUsages order to match generation order
  */
-export async function importAesKeyRaw(rawKey: ArrayBuffer): Promise<CryptoKey> {
+export async function importAesKeyFromRaw(rawKey: ArrayBuffer): Promise<CryptoKey> {
   return crypto.subtle.importKey(
     'raw',
     rawKey,
-    { name: 'AES-GCM' },
+    { name: AES_GCM.NAME },
     false,
-    ['decrypt', 'encrypt'],
+    ['encrypt', 'decrypt'], // Fixed: was ['decrypt', 'encrypt']
   )
 }
 
@@ -180,11 +183,11 @@ export async function aesGcmEncryptCore(
   plaintext: Uint8Array<ArrayBuffer>,
   iv: Uint8Array<ArrayBuffer>,
 ): Promise<ArrayBuffer> {
-  if (key.algorithm.name !== 'AES-GCM') {
+  if (key.algorithm.name !== AES_GCM.NAME) {
     throw new TypeError('Key must be AES-GCM')
   }
   return crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
+    { name: AES_GCM.NAME, iv },
     key,
     plaintext,
   )
@@ -202,11 +205,11 @@ export async function aesGcmDecryptCore(
   cipherWithTag: ArrayBuffer,
   iv: Uint8Array<ArrayBuffer>,
 ): Promise<ArrayBuffer> {
-  if (key.algorithm.name !== 'AES-GCM') {
+  if (key.algorithm.name !== AES_GCM.NAME) {
     throw new TypeError('Key must be AES-GCM')
   }
   return crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
+    { name: AES_GCM.NAME, iv },
     key,
     cipherWithTag,
   )

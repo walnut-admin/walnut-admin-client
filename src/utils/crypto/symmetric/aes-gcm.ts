@@ -1,5 +1,7 @@
+import type { AesGcmRawInput, AesGcmRawResult } from '../const'
+import { AES_GCM } from '../const'
 import { aesGcmDecryptCore, aesGcmEncryptCore } from '../shared'
-import { base64ToUint8Array, u8ToUtf8, uint8ArrayToBase64, utf8ToU8 } from '../transformer'
+import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToUtf8, utf8ToUint8Array } from '../transformer'
 
 /**
  * Unified AES-256-GCM Encryption Interface
@@ -22,31 +24,28 @@ export async function aesGcmEncrypt(
   key: CryptoKey,
   plaintext: string,
   raw: true
-): Promise<{ iv: Uint8Array<ArrayBuffer>, ciphertext: Uint8Array<ArrayBuffer>, tag: Uint8Array<ArrayBuffer> }>
+): Promise<AesGcmRawResult>
 export async function aesGcmEncrypt(
   key: CryptoKey,
   plaintext: string,
   raw = false,
 ) {
   /* ---------- Pre-check ---------- */
-  if (key.algorithm.name !== 'AES-GCM') {
+  if (key.algorithm.name !== AES_GCM.NAME) {
     throw new TypeError('Key must be AES-GCM')
   }
 
   /* ---------- Encryption ---------- */
-  const IV_LEN = 12 // 96-bit IV recommended for GCM
-  const TAG_LEN = 16 // 128-bit tag fixed for GCM
-
-  const iv = crypto.getRandomValues(new Uint8Array(IV_LEN))
+  const iv = crypto.getRandomValues(new Uint8Array(AES_GCM.IV_LENGTH))
   const cipherBuffer = await aesGcmEncryptCore(
     key,
-    utf8ToU8(plaintext),
+    utf8ToUint8Array(plaintext),
     iv,
   )
 
   const cipherBytes = new Uint8Array(cipherBuffer)
-  const ciphertext = cipherBytes.slice(0, cipherBytes.length - TAG_LEN)
-  const tag = cipherBytes.slice(-TAG_LEN)
+  const ciphertext = cipherBytes.slice(0, cipherBytes.length - AES_GCM.TAG_LENGTH)
+  const tag = cipherBytes.slice(-AES_GCM.TAG_LENGTH)
 
   /* ---------- Return Format ---------- */
   if (raw) {
@@ -55,9 +54,9 @@ export async function aesGcmEncrypt(
 
   // Concatenate iv|ciphertext|tag at once before converting to Base64
   // to reduce frontend decoding times
-  const payload = new Uint8Array(IV_LEN + cipherBytes.length)
+  const payload = new Uint8Array(AES_GCM.IV_LENGTH + cipherBytes.length)
   payload.set(iv, 0)
-  payload.set(cipherBytes, IV_LEN)
+  payload.set(cipherBytes, AES_GCM.IV_LENGTH)
   return uint8ArrayToBase64(payload)
 }
 
@@ -75,14 +74,14 @@ export async function aesGcmDecrypt(
 ): Promise<string | null>
 export async function aesGcmDecrypt(
   key: CryptoKey,
-  parts: { iv: Uint8Array<ArrayBuffer>, ct: Uint8Array<ArrayBuffer>, tag: Uint8Array<ArrayBuffer> }
+  parts: AesGcmRawInput
 ): Promise<string | null>
 export async function aesGcmDecrypt(
   key: CryptoKey,
-  input: string | { iv: Uint8Array<ArrayBuffer>, ct: Uint8Array<ArrayBuffer>, tag: Uint8Array<ArrayBuffer> },
+  input: string | AesGcmRawInput,
 ): Promise<string | null> {
   /* ---------- Pre-check ---------- */
-  if (key.algorithm.name !== 'AES-GCM') {
+  if (key.algorithm.name !== AES_GCM.NAME) {
     console.warn('Key must be AES-GCM')
     return null
   }
@@ -94,10 +93,15 @@ export async function aesGcmDecrypt(
     /* ---------- Branch 1: Base64 string ---------- */
     if (typeof input === 'string') {
       const data = base64ToUint8Array(input)
-      if (data.length < 12 + 16)
-        return null // Minimum length 28 (12 for IV + 16 for TAG)
-      iv = data.slice(0, 12)
-      cipherWithTag = data.slice(12)
+      // Fixed: More precise minimum length check
+      // Need at least: IV (12) + TAG (16) + at least 1 byte ciphertext = 29
+      // But we can be lenient and allow empty ciphertext for edge cases
+      if (data.length < AES_GCM.MIN_PAYLOAD_LENGTH) {
+        console.warn(`Invalid payload length: ${data.length}, expected at least ${AES_GCM.MIN_PAYLOAD_LENGTH}`)
+        return null
+      }
+      iv = data.slice(0, AES_GCM.IV_LENGTH)
+      cipherWithTag = data.slice(AES_GCM.IV_LENGTH)
     }
     /* ---------- Branch 2: Split object ---------- */
     else {
@@ -113,7 +117,7 @@ export async function aesGcmDecrypt(
       cipherWithTag.buffer,
       iv,
     )
-    return u8ToUtf8(new Uint8Array(plainBuffer))
+    return uint8ArrayToUtf8(new Uint8Array(plainBuffer))
   }
   catch (e) {
     console.warn('AES-GCM decryption failed', e)
