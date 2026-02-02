@@ -21,10 +21,14 @@ export function uint8ArrayToBase64(u8: Uint8Array): string {
 /**
  * Decodes a Base64 encoded string into a Uint8Array.
  * @param b64 - The Base64 encoded string.
- * @returns Decoded Uint8Array.
+ * @returns Decoded Uint8Array with ArrayBuffer.
  */
-export function base64ToUint8Array(b64: string): Uint8Array {
-  return Base64.toUint8Array(b64)
+export function base64ToUint8Array(b64: string): Uint8Array<ArrayBuffer> {
+  const u8 = Base64.toUint8Array(b64)
+  // 确保是 ArrayBuffer 而不是 SharedArrayBuffer
+  return u8.buffer instanceof ArrayBuffer
+    ? u8 as Uint8Array<ArrayBuffer>
+    : new Uint8Array(u8)
 }
 
 /**
@@ -33,7 +37,7 @@ export function base64ToUint8Array(b64: string): Uint8Array {
  * @returns Decoded ArrayBuffer.
  */
 export function base64ToArrayBuffer(b64: string): ArrayBuffer {
-  return Base64.toUint8Array(b64).slice().buffer
+  return base64ToUint8Array(b64).buffer
 }
 
 /**

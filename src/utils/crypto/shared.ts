@@ -96,7 +96,7 @@ export async function importRsaPublicKey(pem: string): Promise<CryptoKey> {
  * @param data - Data to encrypt (ArrayBuffer)
  * @returns Encrypted data (ArrayBuffer)
  */
-export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): Promise<ArrayBuffer> {
+export async function rsaOaepEncrypt(publicKey: CryptoKey, data: BufferSource): Promise<ArrayBuffer> {
   return crypto.subtle.encrypt(
     { name: RSA_OAEP.NAME },
     publicKey,
@@ -107,10 +107,13 @@ export async function rsaOaepEncrypt(publicKey: CryptoKey, data: ArrayBuffer): P
 /**
  * RSA-OAEP Decryption
  * @param privateKey - RSA private key
- * @param encryptedData - Encrypted data (ArrayBuffer)
+ * @param encryptedData - Encrypted data (ArrayBuffer or Uint8Array)
  * @returns Decrypted data (ArrayBuffer)
  */
-export async function rsaOaepDecrypt(privateKey: CryptoKey, encryptedData: ArrayBuffer): Promise<ArrayBuffer> {
+export async function rsaOaepDecrypt(
+  privateKey: CryptoKey,
+  encryptedData: BufferSource,
+): Promise<ArrayBuffer> {
   if (privateKey.algorithm.name !== RSA_OAEP.NAME) {
     throw new TypeError('Key must be RSA-OAEP')
   }

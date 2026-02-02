@@ -1,6 +1,6 @@
-import { exportAesKeyRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
+import { exportAesKeyToRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
 import { aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
-import { arrayBufferToBase64 } from '@/utils/crypto/transformer'
+import { arrayBufferToBase64, uint8ArrayToBase64 } from '@/utils/crypto/transformer'
 
 interface CipherEnvelope {
   enc: 'AES_256_GCM'
@@ -18,7 +18,7 @@ export async function encryptRequestValue(value: string) {
   const { iv, ciphertext, tag } = await aesGcmEncrypt(aesKey, value, true)
 
   // 3. Export raw AES key and encrypt with RSA
-  const rawAesKey = await exportAesKeyRaw(aesKey)
+  const rawAesKey = await exportAesKeyToRaw(aesKey)
   const appStoreSecurity = useAppStoreSecurity()
   const serverRsaPubKey = await appStoreSecurity.getServerRsaPubKey()
   const rsaPublicKey = await importRsaPublicKey(serverRsaPubKey)
@@ -28,9 +28,9 @@ export async function encryptRequestValue(value: string) {
   const envelope: CipherEnvelope = {
     enc: 'AES_256_GCM',
     key: arrayBufferToBase64(encryptedAesKey),
-    iv: arrayBufferToBase64(iv.buffer),
-    ct: arrayBufferToBase64(ciphertext.buffer),
-    tag: arrayBufferToBase64(tag.buffer),
+    iv: uint8ArrayToBase64(iv),
+    ct: uint8ArrayToBase64(ciphertext),
+    tag: uint8ArrayToBase64(tag),
   }
 
   return btoa(JSON.stringify(envelope))
