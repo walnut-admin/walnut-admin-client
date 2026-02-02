@@ -78,3 +78,12 @@ export function utf8ToUint8Array(str: string): Uint8Array<ArrayBuffer> {
 export function uint8ArrayToUtf8(u8: Uint8Array): string {
   return new TextDecoder().decode(u8)
 }
+
+/**
+ * ArrayBuffer to Hexadecimal string
+ */
+export function arrayBufferToHex(buffer: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+}
