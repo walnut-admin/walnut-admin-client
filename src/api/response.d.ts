@@ -145,7 +145,8 @@ export namespace IResponseData {
   export namespace Security {
     export namespace Sign {
       export interface AesKey {
-        encryptedAes: string
+        aesKey?: string
+        hkdfInfo: string
       }
     }
   }

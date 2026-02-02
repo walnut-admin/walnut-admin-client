@@ -21,7 +21,7 @@ export async function requestInterceptors(config: AxiosRequestConfig) {
   config.headers[AppConstRequestHeaders.FINGERPRINT] = appStoreFingerprint.axiosReqInterceptorBuildFingerprint(config)
 
   // sign
-  config.headers[AppConstRequestHeaders.SIGN] = appStoreSecurity.axiosReqInterceptorBuildSign(config)
+  config.headers[AppConstRequestHeaders.SIGN] = await appStoreSecurity.axiosReqInterceptorBuildSign(config)
 
   // carry token
   if (userStoreAuth.getAccessToken)

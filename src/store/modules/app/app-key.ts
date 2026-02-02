@@ -2,7 +2,7 @@ import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { urlKeyAPI } from '@/api/app/key'
 import { getBaiduKeyAPI } from '@/api/auth'
-import { importAesKeyRaw } from '@/utils/crypto/shared'
+import { importAesKeyFromRaw } from '@/utils/crypto/shared'
 import { base64ToArrayBuffer } from '@/utils/crypto/transformer'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -43,7 +43,7 @@ const useAppStoreKeyInside = defineStore(StoreKeys.APP_KEY, {
       const res = await urlKeyAPI()
 
       const raw = base64ToArrayBuffer(res.keyB64)
-      const aesKey = await importAesKeyRaw(raw)
+      const aesKey = await importAesKeyFromRaw(raw)
 
       this.setUrlMaskingAesKey(aesKey)
     },

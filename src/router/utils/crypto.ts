@@ -41,8 +41,7 @@ export async function decryptRouterUrl(value: string) {
   }
   catch (error) {
     console.warn('Url decryption failed, fallback to empty', error)
-    const { push } = useAppRouter()
-    await push({ name: layoutConst.notFound.name })
+    await useAppRouterPush({ name: layoutConst.notFound.name })
     return null
   }
 }

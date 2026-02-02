@@ -132,10 +132,6 @@ const data: MindElixirData = {
                     id: `${getRandomInt(0, 999999)}`,
                     topic: 'qrcode',
                   },
-                  {
-                    id: `${getRandomInt(0, 999999)}`,
-                    topic: 'crypto-js',
-                  },
                 ],
               },
               {
