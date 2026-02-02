@@ -11,10 +11,6 @@ export const BusinessCodeConst = {
   CAPJS_TOKEN_INTERACTION_REQUIRED: 40116,
   CAPJS_TOKEN_REFRESH_REQUIRED: 40117,
   USER_LOCKED: 40118,
-
-  TOO_MANY_REQUESTS: 42900,
-
-  INTERVAL_SERVER_ERROR: 50000,
 } as const
 
 export const notAllowedErrorCodeMap: Record<number, string> = {
@@ -29,38 +25,3 @@ export const notAllowedErrorCodeMap: Record<number, string> = {
   40607: 'deviceBanned',
   40666: 'riskTooHigh',
 }
-
-// see more in backend nestjs project `reponseCode` const
-export const errorCodeList = [
-  40000,
-  40001,
-  40002,
-  40003,
-  40004,
-  40100,
-  40103,
-  40104,
-  40105,
-  40106,
-  40107,
-  40108,
-  40109,
-  40110,
-  40112,
-  40300,
-  40400,
-  40401,
-  40600,
-  40601,
-  40602,
-  40603,
-  40604,
-  40800,
-  42900,
-  50000,
-  50001,
-  50300,
-  50301,
-  50400,
-  50500,
-]

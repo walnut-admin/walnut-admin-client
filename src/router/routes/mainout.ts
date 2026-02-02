@@ -127,6 +127,7 @@ export const mainoutNotAllowedRoute: RouteRecordSingleView = {
   path: mainoutConst.notAllowed.path,
   component: () => import('../../views/error/NotAllowed/index.vue'),
   meta: {
+    title: 'app.base.notAllowed',
     _auth: true,
   },
 }
@@ -136,7 +137,7 @@ export const mainoutLockRoute: RouteRecordSingleView = {
   path: mainoutConst.lock.path,
   component: () => import('../../components/App/AppLock/lock.vue'),
   meta: {
-    title: 'sys.menu.lock',
+    title: 'app.intro.lock',
     _auth: true,
   },
 }
@@ -146,6 +147,7 @@ export const mainoutMfaRequiredRoute: RouteRecordSingleView = {
   path: mainoutConst.mfaRequired.path,
   component: () => import('../../views/error/MfaRequired/index.vue'),
   meta: {
+    title: 'sys.menu.mfaRequired',
     _auth: true,
   },
 }
@@ -155,6 +157,7 @@ export const mainoutMfaVerifiedRoute: RouteRecordSingleView = {
   path: mainoutConst.mfaVerified.path,
   component: () => import('../../views/error/MfaVerified/index.vue'),
   meta: {
+    title: 'sys.menu.mfaVerified',
     _auth: true,
   },
 }
@@ -164,6 +167,7 @@ export const mainoutMissingPermissionsRoute: RouteRecordSingleView = {
   path: mainoutConst.missingPermissions.path,
   component: () => import('../../views/error/MissingPermissions/index.vue'),
   meta: {
+    title: 'sys.menu.missingPermissions',
     _auth: true,
   },
 }

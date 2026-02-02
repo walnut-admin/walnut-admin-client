@@ -6,7 +6,7 @@ import { layoutConst } from '@/router/routes/builtin'
 import { mainoutConst, mainoutLockRoute, mainoutMfaRequiredRoute, mainoutMfaVerifiedRoute, mainoutNotAllowedRoute } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
-import { BusinessCodeConst, errorCodeList, notAllowedErrorCodeMap } from '../../constant'
+import { BusinessCodeConst, notAllowedErrorCodeMap } from '../../constant'
 import { SingletonPromiseCapJSInteraction, SingletonPromiseCapJSRefresh } from './capJSToken'
 import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
@@ -40,12 +40,6 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
       return Promise.resolve(decryptedData)
     }
     return Promise.resolve(data)
-  }
-
-  // too many requests
-  if (code === BusinessCodeConst.TOO_MANY_REQUESTS) {
-    useAppMsgError(msg)
-    return Promise.reject(new Error('Too Many Requests'))
   }
 
   // cap js token interaction required
@@ -127,15 +121,7 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     return Promise.reject(new Error('User Locked'))
   }
 
-  // custom error code
-  if (errorCodeList.includes(code)) {
-    useAppMsgError(msg)
-    return Promise.reject(new Error('Error'))
-  }
-
-  if (code === BusinessCodeConst.INTERVAL_SERVER_ERROR) {
-    await AppRouter.replace({ name: layoutConst.serverError.name, force: true })
-  }
-
+  useAppMsgError(msg)
+  await AppRouter.replace({ name: layoutConst.serverError.name, force: true })
   return Promise.reject(new Error('Missing Error Code'))
 }
