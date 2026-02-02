@@ -94,25 +94,6 @@ const testMainoutRoute: RouteRecordRaw = {
   },
 }
 
-export const mainoutLockRoute: RouteRecordSingleView = {
-  name: mainoutConst.lock.name,
-  path: mainoutConst.lock.path,
-  component: () => import('../../components/App/AppLock/lock.vue'),
-  meta: {
-    title: 'sys.menu.lock',
-    _auth: true,
-  },
-}
-
-const externalLinkRoute: RouteRecordRaw = {
-  name: mainoutConst.openExternal.name,
-  path: mainoutConst.openExternal.path,
-  component: () => import('../../views/features/external-link.vue'),
-  meta: {
-    _auth: true,
-  },
-}
-
 const testFrontAuthRoute: RouteRecordRaw = {
   name: mainoutConst.testFrontAuth.name,
   path: mainoutConst.testFrontAuth.path,
@@ -132,7 +113,16 @@ const splashCursorRoute: RouteRecordRaw = {
   },
 }
 
-const AppNotAllowedRoute: RouteRecordSingleView = {
+export const mainoutExternalLinkRoute: RouteRecordRaw = {
+  name: mainoutConst.openExternal.name,
+  path: mainoutConst.openExternal.path,
+  component: () => import('../../views/features/external-link.vue'),
+  meta: {
+    _auth: true,
+  },
+}
+
+export const mainoutNotAllowedRoute: RouteRecordSingleView = {
   name: mainoutConst.notAllowed.name,
   path: mainoutConst.notAllowed.path,
   component: () => import('../../views/error/NotAllowed/index.vue'),
@@ -141,7 +131,17 @@ const AppNotAllowedRoute: RouteRecordSingleView = {
   },
 }
 
-const AppMfaRequiredRoute: RouteRecordSingleView = {
+export const mainoutLockRoute: RouteRecordSingleView = {
+  name: mainoutConst.lock.name,
+  path: mainoutConst.lock.path,
+  component: () => import('../../components/App/AppLock/lock.vue'),
+  meta: {
+    title: 'sys.menu.lock',
+    _auth: true,
+  },
+}
+
+export const mainoutMfaRequiredRoute: RouteRecordSingleView = {
   name: mainoutConst.mfaRequired.name,
   path: mainoutConst.mfaRequired.path,
   component: () => import('../../views/error/MfaRequired/index.vue'),
@@ -150,7 +150,7 @@ const AppMfaRequiredRoute: RouteRecordSingleView = {
   },
 }
 
-const AppMfaVerifiedRoute: RouteRecordSingleView = {
+export const mainoutMfaVerifiedRoute: RouteRecordSingleView = {
   name: mainoutConst.mfaVerified.name,
   path: mainoutConst.mfaVerified.path,
   component: () => import('../../views/error/MfaVerified/index.vue'),
@@ -159,7 +159,7 @@ const AppMfaVerifiedRoute: RouteRecordSingleView = {
   },
 }
 
-const AppMissingPermissionsRoute: RouteRecordSingleView = {
+export const mainoutMissingPermissionsRoute: RouteRecordSingleView = {
   name: mainoutConst.missingPermissions.name,
   path: mainoutConst.missingPermissions.path,
   component: () => import('../../views/error/MissingPermissions/index.vue'),
@@ -173,13 +173,8 @@ export const mainoutRoutes: RouteRecordRaw[] = [
   AppAuthPrivacyPolicyRoute,
   AppAuthServiceAgreementRoute,
   testMainoutRoute,
-  externalLinkRoute,
   testFrontAuthRoute,
   splashCursorRoute,
-  AppNotAllowedRoute,
-  AppMfaRequiredRoute,
-  AppMfaVerifiedRoute,
-  AppMissingPermissionsRoute,
 ]
 
 export const mainoutRootRoute: RouteRecordRaw = {

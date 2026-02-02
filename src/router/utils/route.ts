@@ -5,6 +5,7 @@ import { findPath, formatTree } from 'easy-fns-ts'
 import ParentComponent from '@/layout/default/TheContent'
 import IFrameFaker from '@/layout/iframe/faker.vue'
 import { App404Route, App500Route, layoutConst } from '../routes/builtin'
+import { mainoutConst, mainoutExternalLinkRoute } from '../routes/mainout'
 
 /**
  * @description Util Function 2 - Resolve `catalog` type menu with self name
@@ -77,6 +78,12 @@ export function buildRoutes(payload: RouteRecordRaw[]) {
           // or [Vue Router warn]: Record with path "/demo/link/internal/iconify" is either missing a "component(s)" or "children" property.
           component: resolveIFrameComponent(node.name),
         }
+      }
+
+      if (node.meta!.ternal === AppConstMenuTernal.EXTERNAL) {
+        const { addRoute, hasRoute } = useAppRouter()
+        if (!hasRoute(mainoutConst.openExternal.name))
+          addRoute(mainoutConst.root.name, mainoutExternalLinkRoute)
       }
 
       // common view route

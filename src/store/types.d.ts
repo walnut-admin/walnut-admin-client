@@ -9,6 +9,14 @@ import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppCons
 
 export namespace IStoreApp {
   /**
+   * App route state
+   */
+  export interface Route {
+    whiteListPath: string[]
+
+  }
+
+  /**
    * App adapter state
    */
   export interface Adapter {
@@ -156,9 +164,9 @@ export namespace IStoreApp {
      * @description app tab meta extend fields
      */
     export interface MetaExtend {
-    /**
-     * @description tab hover state, manually managed
-     */
+      /**
+       * @description tab hover state, manually managed
+       */
       _hovered?: boolean
 
       /**
@@ -484,10 +492,10 @@ export namespace IStoreSetting {
     }
 
     app: {
-    /**
-     * @description Keep Alive component, vue features
-     * @default true
-     */
+      /**
+       * @description Keep Alive component, vue features
+       * @default true
+       */
       keepAlive: boolean
 
       /**
@@ -504,10 +512,10 @@ export namespace IStoreSetting {
     }
 
     logo: {
-    /**
-     * @description DOM element id
-     * @default walnut-admin-logo
-     */
+      /**
+       * @description DOM element id
+       * @default walnut-admin-logo
+       */
       id: string
 
       /**
@@ -530,10 +538,10 @@ export namespace IStoreSetting {
     }
 
     header: {
-    /**
-     * @description DOM element id
-     * @default walnut-admin-header
-     */
+      /**
+       * @description DOM element id
+       * @default walnut-admin-header
+       */
       id: string
 
       /**
@@ -574,10 +582,10 @@ export namespace IStoreSetting {
     }
 
     tabs: {
-    /**
-     * @description DOM element id
-     * @default walnut-admin-tabs
-     */
+      /**
+       * @description DOM element id
+       * @default walnut-admin-tabs
+       */
       id: string
 
       /**
@@ -661,10 +669,10 @@ export namespace IStoreSetting {
     }
 
     breadcrumb: {
-    /**
-     * @description DOM element id
-     * @default walnut-admin-breadcrumb
-     */
+      /**
+       * @description DOM element id
+       * @default walnut-admin-breadcrumb
+       */
       id: string
 
       /**
@@ -749,10 +757,10 @@ export namespace IStoreSetting {
     }
 
     footer: {
-    /**
-     * @description DOM element id
-     * @default walnut-admin-footer
-     */
+      /**
+       * @description DOM element id
+       * @default walnut-admin-footer
+       */
       id: string
 
       /**

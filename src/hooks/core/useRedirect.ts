@@ -1,3 +1,5 @@
+import { layoutConst } from '@/router/routes/builtin'
+
 /**
  * @description use redirect
  */
@@ -6,7 +8,7 @@ export function useRedirect(): Promise<boolean> {
 
   const { query } = currentRoute.value
 
-  const path = AppRedirectPath + currentRoute.value.fullPath
+  const path = layoutConst.redirect.path + currentRoute.value.fullPath
 
   return new Promise(resolve =>
     replace({

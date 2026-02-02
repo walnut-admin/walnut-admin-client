@@ -3,6 +3,7 @@ import type { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/brow
 import type { InputInst } from 'naive-ui'
 import { startAuthentication } from '@simplewebauthn/browser'
 import { authMfaStatusAPI, authMfaTotpVerifyAPI, authMfaWebauthnAuthenticateOptionsAPI, authMfaWebauthnAuthenticateVerifyAPI } from '@/api/auth/mfa'
+import { mainoutMfaVerifiedRoute } from '@/router/routes/mainout'
 
 defineOptions({
   name: 'MfaVerify',
@@ -18,7 +19,7 @@ interface MfaMethod {
 
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
-
+const appStoreRoute = useAppStoreRoute()
 const nInputRef = useTemplateRef<InputInst>('nInputRef')
 
 const currentStep = ref(1)
@@ -96,6 +97,7 @@ async function verifyTotp() {
     })
 
     await userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
+    appStoreRoute.removeDynamicAuthRoute(mainoutMfaVerifiedRoute)
   }
   finally {
     loading.value = false

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { authMfaStatusAPI, authMfaVerifyAPI } from '@/api/auth/mfa'
+import { mainoutMfaRequiredRoute } from '@/router/routes/mainout'
 import TotpModal from './totpModal.vue'
 import WebauthnModal from './webauthnModal.vue'
 
@@ -20,6 +21,7 @@ interface MfaMethod {
 
 const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
+const appStoreRoute = useAppStoreRoute()
 
 const totpModalRef = useTemplateRef('totpModalRef')
 const webauthnModalRef = useTemplateRef('webauthnModalRef')
@@ -81,6 +83,7 @@ async function onVerifyMfa() {
     loading.value = true
     const accessToken = await authMfaVerifyAPI(trusted.value)
     await userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
+    appStoreRoute.removeDynamicAuthRoute(mainoutMfaRequiredRoute)
   }
   finally {
     loading.value = false

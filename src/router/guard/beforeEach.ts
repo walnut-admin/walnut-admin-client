@@ -1,15 +1,16 @@
 import type { Router } from 'vue-router'
 import { isEmpty, isUndefined } from 'lodash-es'
 import { AppCoreFn1 } from '@/core'
-import { mainoutConst } from '../routes/mainout'
+import { mainoutConst, mainoutMissingPermissionsRoute } from '../routes/mainout'
 
 export function createBeforeEachGuard(router: Router) {
   router.beforeEach(async (to, _from) => {
     const userStoreAuth = useAppStoreUserAuth()
     const appStoreMenu = useAppStoreMenu()
+    const appStoreRoute = useAppStoreRoute()
 
-    // Paths in `routeWhiteListPath` will enter directly
-    if (routeWhiteListPath.includes(to.path)) {
+    // white list paths will enter directly
+    if (appStoreRoute.isPathInWhiteList(to.path)) {
       // Login and push to auth page, will go index menu
       if (userStoreAuth.getAccessToken && to.path === mainoutConst.auth.path)
         return { name: appStoreMenu.getIndexMenuName }
@@ -50,7 +51,10 @@ export function createBeforeEachGuard(router: Router) {
 
       // If no permissions, redirect to missing permissions page
       if (!hasPermissions) {
-        return { name: AppMissingPermissionsName, replace: true }
+        const { addRoute, hasRoute } = useAppRouter()
+        if (!hasRoute(mainoutConst.missingPermissions.name))
+          addRoute(mainoutConst.root.name, mainoutMissingPermissionsRoute)
+        return { name: mainoutConst.missingPermissions.name, replace: true }
       }
 
       // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards

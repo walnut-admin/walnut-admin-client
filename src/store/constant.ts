@@ -1,7 +1,8 @@
 import { layoutConst } from '@/router/routes/builtin'
-import { mainoutConst, mainoutRoutes } from '@/router/routes/mainout'
+import { mainoutRoutes } from '@/router/routes/mainout'
 
 export const StoreKeys = {
+  APP_ROUTE: 'APP_ROUTE',
   APP_ADAPTER: 'APP_ADAPTER',
   APP_DARK: 'APP_DARK',
   APP_KEY: 'APP_KEY',

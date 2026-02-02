@@ -1,5 +1,4 @@
 import type { Router } from 'vue-router'
-import { layoutConst } from '@/router/routes/builtin'
 import { mainoutConst } from '@/router/routes/mainout'
 
 export function createLockGuard(router: Router) {

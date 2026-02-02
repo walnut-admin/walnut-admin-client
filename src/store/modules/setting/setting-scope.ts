@@ -97,7 +97,8 @@ const useAppStoreSettingScopeInside = defineStore(StoreKeys.SETTING_SCOPE, {
 
   actions: {
     getRouterEnhanceWhiteListCondition(route: RouteLocationNormalized) {
-      if (routeWhiteListPath.includes(route.path))
+      const appStoreRoute = useAppStoreRoute()
+      if (appStoreRoute.isPathInWhiteList(route.path))
         return true
       return !this.getMaskUrlStatus || !this.getMaskUrlValue(route)
     },

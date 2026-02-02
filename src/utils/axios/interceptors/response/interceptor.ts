@@ -3,7 +3,7 @@ import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
 import { get, isArray, set } from 'lodash-es'
 import { layoutConst } from '@/router/routes/builtin'
-import { mainoutConst } from '@/router/routes/mainout'
+import { mainoutConst, mainoutLockRoute, mainoutMfaRequiredRoute, mainoutMfaVerifiedRoute, mainoutNotAllowedRoute } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
 import { BusinessCodeConst, errorCodeList, notAllowedErrorCodeMap } from '../../constant'
@@ -97,27 +97,33 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   // not allowed
   if (Object.keys(notAllowedErrorCodeMap).map(Number).includes(code)) {
     removeCurrentPageRequests(AppRouter.currentRoute.value.path)
+    const appStoreRoute = useAppStoreRoute()
+    appStoreRoute.addDynamicAuthRoute(mainoutNotAllowedRoute)
     await AppRouter.replace({ name: mainoutConst.notAllowed.name, force: true, query: { type: notAllowedErrorCodeMap[code] } })
     return Promise.reject(new Error('Not Allowed'))
   }
 
   // mfa required
   if (code === BusinessCodeConst.MFA_REQUIRED) {
+    const appStoreRoute = useAppStoreRoute()
+    appStoreRoute.addDynamicAuthRoute(mainoutMfaRequiredRoute)
     await AppRouter.replace({ name: mainoutConst.mfaRequired.name, force: true })
     return Promise.reject(new Error('MFA Required'))
   }
 
   // mfa verified
   if (code === BusinessCodeConst.MFA_VERIFIED) {
+    const appStoreRoute = useAppStoreRoute()
+    appStoreRoute.addDynamicAuthRoute(mainoutMfaVerifiedRoute)
     await AppRouter.replace({ name: mainoutConst.mfaVerified.name, force: true })
     return Promise.reject(new Error('MFA Verified'))
   }
 
   // user locked
   if (code === BusinessCodeConst.USER_LOCKED) {
-    const appStoreLock = useAppStoreLock()
-    appStoreLock.addLockRoute()
-    await useAppRouterPush({ name: mainoutConst.lock.name, replace: true })
+    const appStoreRoute = useAppStoreRoute()
+    appStoreRoute.addDynamicAuthRoute(mainoutLockRoute)
+    await AppRouter.replace({ name: mainoutConst.lock.name, force: true })
     return Promise.reject(new Error('User Locked'))
   }
 

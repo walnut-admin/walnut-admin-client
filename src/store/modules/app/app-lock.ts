@@ -5,7 +5,6 @@ import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { getLockStatusAPI, lockAPI, unlockAPI } from '@/api/system/user_lock'
 import { AppCoreFn1 } from '@/core'
-import { layoutConst } from '@/router/routes/builtin'
 import { mainoutConst, mainoutLockRoute } from '@/router/routes/mainout'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
@@ -68,16 +67,6 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     },
 
     /**
-     * @description add lock route
-     */
-    addLockRoute() {
-      const { addRoute, hasRoute } = useAppRouter()
-      if (hasRoute(mainoutConst.lock.name))
-        return
-      addRoute(mainoutConst.root.name, mainoutLockRoute)
-    },
-
-    /**
      * @description init lock state
      */
     async onInitLockState() {
@@ -85,9 +74,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       this.setLockPreference(res)
 
       if (res.locked) {
-        // NOTICE: DO NOT PUSH ROUTER BELOW
-        // ROUTER PUSH SHOULD BE DONE IN INTERCEPTOR
-        this.addLockRoute()
+        await this.logicAfterLock()
       }
     },
 
@@ -107,8 +94,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
 
         socket.on(AppSocketEvents.LOCK, async (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
-            this.addLockRoute()
-            await useAppRouterPush({ name: mainoutConst.lock.name, replace: true })
+            await this.logicAfterLock()
           }
         })
       })
@@ -137,12 +123,21 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
           params: route.value.params,
         })
 
-        this.addLockRoute()
-        await useAppRouterPush({ name: mainoutConst.lock.name, replace: true })
+        await this.logicAfterLock()
       }
       finally {
         this.loading = false
       }
+    },
+
+    /**
+     * @description logic after lock
+     */
+    async logicAfterLock(push = true) {
+      const appStoreRoute = useAppStoreRoute()
+      appStoreRoute.addDynamicAuthRoute(mainoutLockRoute)
+      if (push)
+        await useAppRouterPush({ name: mainoutConst.lock.name, replace: true })
     },
 
     /**
@@ -153,6 +148,9 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       await userStoreProfile.getProfile()
       await AppCoreFn1()
       await useAppRouterPush(this.getLockRoute)
+
+      const appStoreRoute = useAppStoreRoute()
+      appStoreRoute.removeDynamicAuthRoute(mainoutLockRoute)
     },
 
     /**
