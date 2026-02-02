@@ -31,22 +31,16 @@ const pool: Record<number, Fn> = {
   3: () => {
     _request({ _throttle: 1000 })
   },
-  4: () => {
-    _request({ _retryTimes: 3, _error: true })
-  },
   5: () => {
     _request({ _timestamp: true })
   },
   6: () => {
     _request({ _carryToken: false })
   },
-  8: () => {
-    _request({ _sleep: 2000 })
-  },
   9: () => {
-    _request({ _sleep: 1000 })
-    _request({ _sleep: 3000 })
-    _request({ _sleep: 5000 })
+    _request({ })
+    _request({ })
+    _request({ })
 
     const id = setTimeout(() => {
       removeLatestRequest()
@@ -56,7 +50,7 @@ const pool: Record<number, Fn> = {
   10: () => {
     for (let i = 0; i < 10; i++) {
       const id = setTimeout(async () => {
-        await _request({ _sleep: i * 1000, _timestamp: true })
+        await _request({ _timestamp: true })
         clearTimeout(id)
       }, i * 100)
     }
@@ -122,18 +116,18 @@ const items = [
           <n-button @click="onSend(3)">
             Send Request with throttle support (only GET method)
           </n-button>
-          <n-button @click="onSend(4)">
+          <!-- <n-button @click="onSend(4)">
             Send Request with retry support
-          </n-button>
+          </n-button> -->
           <n-button @click="onSend(5)">
             Send Request with timestamp query
           </n-button>
           <n-button @click="onSend(6)">
             Send Request with not carry token
           </n-button>
-          <n-button @click="onSend(8)">
+          <!-- <n-button @click="onSend(8)">
             Send Request with sleep miliseconds(endpoint support)
-          </n-button>
+          </n-button> -->
           <n-button @click="onSend(9)">
             Send Request with cancel support
           </n-button>

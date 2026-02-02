@@ -1,6 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
 import { cloneDeep, get, isArray, set } from 'lodash-es'
-import { getBoolean } from '@/utils/shared'
 import { setTokenHeaderWithConfig } from '../../utils'
 import { encryptRequestValue } from './crypto'
 
@@ -16,27 +15,17 @@ export async function requestInterceptors(config: AxiosRequestConfig) {
   }
 
   // custom headers
-  config.headers['x-language'] = appStoreLocale.getLocale
+  config.headers[AppConstRequestHeaders.LANGUAGE] = appStoreLocale.getLocale
 
   // fingerprint
-  // assign the x-fingerprint header
-  config.headers['x-fingerprint'] = appStoreFingerprint.axiosReqInterceptorBuildFingerprint(config)
+  config.headers[AppConstRequestHeaders.FINGERPRINT] = appStoreFingerprint.axiosReqInterceptorBuildFingerprint(config)
 
   // sign
-  // assign the x-sign header/x-timestamp/x-nonce three headers
-  config.headers['x-sign'] = appStoreSecurity.axiosReqInterceptorBuildSign(config)
-
-  // a request doomed to fail
-  if (config._error)
-    config.headers['x-error'] = 1
-
-  // sleep for a while
-  if (config._sleep)
-    config.headers['x-sleep'] = config._sleep
+  config.headers[AppConstRequestHeaders.SIGN] = appStoreSecurity.axiosReqInterceptorBuildSign(config)
 
   // carry token
-  if (getBoolean(config._carryToken))
-    userStoreAuth.getAccessToken && setTokenHeaderWithConfig(config, userStoreAuth.getAccessToken)
+  if (userStoreAuth.getAccessToken)
+    setTokenHeaderWithConfig(config, userStoreAuth.getAccessToken)
 
   // add timestamp
   if (config._timestamp) {

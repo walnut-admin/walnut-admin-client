@@ -30,9 +30,9 @@ export function setupSocket() {
     path,
     withCredentials: true,
     extraHeaders: {
-      'Authorization': `Bearer ${userStoreAuth.getAccessToken}`,
-      'x-language': appStoreLocale.getLocale,
-      'x-fingerprint': appStoreFingerprint.getFingerprint,
+      [AppConstRequestHeaders.AUTHORIZATION]: `Bearer ${userStoreAuth.getAccessToken}`,
+      [AppConstRequestHeaders.LANGUAGE]: appStoreLocale.getLocale,
+      [AppConstRequestHeaders.FINGERPRINT]: appStoreFingerprint.getFingerprint,
     },
   })
 

@@ -294,8 +294,8 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
       // 1. 生成时间戳和 Nonce
       const timestamp = Date.now()
       const nonce = generateNonce()
-      config.headers!['x-timestamp'] = timestamp
-      config.headers!['x-nonce'] = nonce
+      config.headers![AppConstRequestHeaders.TIMESTAMP] = timestamp
+      config.headers![AppConstRequestHeaders.NONCE] = nonce
 
       // 2. 构建签名原文
       const raw = this.buildSignRaw(config, timestamp, nonce)

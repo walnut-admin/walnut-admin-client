@@ -15,16 +15,6 @@ declare module 'axios' {
     _timestamp?: boolean
 
     /**
-     * send a request doomed to be failed
-     */
-    _error?: boolean
-
-    /**
-     * sleep for milliseconds, need endpoint support
-     */
-    _sleep?: number
-
-    /**
      * cache flag
      * optimised from https://github.com/kuitos/axios-extensions
      */

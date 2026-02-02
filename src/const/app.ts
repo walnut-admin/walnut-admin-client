@@ -1,3 +1,5 @@
+import type { ValueOf } from 'easy-fns-ts'
+
 export const AppConstDevice = {
   MOBILE: 'mobile',
   TABLET: 'tablet',
@@ -5,24 +7,21 @@ export const AppConstDevice = {
   DESKTOP: 'desktop',
 } as const
 
-export type ValueOfAppConstDevice
-  = typeof AppConstDevice[keyof typeof AppConstDevice]
+export type ValueOfAppConstDevice = ValueOf<typeof AppConstDevice>
 
 export const AppConstFontSize = {
   EN_US: 'en_US',
   ZH_CN: 'zh_CN',
 } as const
 
-export type ValueOfAppConstFontSize
-  = typeof AppConstFontSize[keyof typeof AppConstFontSize]
+export type ValueOfAppConstFontSize = ValueOf<typeof AppConstFontSize>
 
 export const AppConstLocale = {
   EN_US: 'en_US',
   ZH_CN: 'zh_CN',
 } as const
 
-export type ValueOfAppConstLocale
-  = typeof AppConstLocale[keyof typeof AppConstLocale]
+export type ValueOfAppConstLocale = ValueOf<typeof AppConstLocale>
 
 export const AppConstCollapseMode = {
   ICON: 'icon',
@@ -31,24 +30,21 @@ export const AppConstCollapseMode = {
   BUTTON: 'button',
 } as const
 
-export type ValueOfAppConstCollapseMode
-  = typeof AppConstCollapseMode[keyof typeof AppConstCollapseMode]
+export type ValueOfAppConstCollapseMode = ValueOf<typeof AppConstCollapseMode>
 
 export const AppConstLayoutMode = {
   LEFT_MENU: 'left-menu',
   TOP_MENU: 'top-menu',
 } as const
 
-export type ValueOfAppConstLayoutMode
-  = typeof AppConstLayoutMode[keyof typeof AppConstLayoutMode]
+export type ValueOfAppConstLayoutMode = ValueOf<typeof AppConstLayoutMode>
 
 export const AppConstScrollMode = {
   CONTENT: 'content',
   WRAPPER: 'wrapper',
 } as const
 
-export type ValueOfAppConstScrollMode
-  = typeof AppConstScrollMode[keyof typeof AppConstScrollMode]
+export type ValueOfAppConstScrollMode = ValueOf<typeof AppConstScrollMode>
 
 export const AppConstLockMode = {
   DEFAULT: 'default',
@@ -56,16 +52,14 @@ export const AppConstLockMode = {
   IDLE: 'idle',
 } as const
 
-export type ValueOfAppConstLockMode
-  = typeof AppConstLockMode[keyof typeof AppConstLockMode]
+export type ValueOfAppConstLockMode = ValueOf<typeof AppConstLockMode>
 
 export const AppConstBasicMode = {
   GLOBAL: 'global',
   SCOPE: 'scope',
 } as const
 
-export type ValueOfAppConstBasicMode
-  = typeof AppConstBasicMode[keyof typeof AppConstBasicMode]
+export type ValueOfAppConstBasicMode = ValueOf<typeof AppConstBasicMode>
 
 export const AppConstColorMode = {
   DEFAULT: 'default',
@@ -76,8 +70,7 @@ export const AppConstColorMode = {
   INVERTED: 'inverted',
 } as const
 
-export type ValueOfAppConstColorMode
-  = typeof AppConstColorMode[keyof typeof AppConstColorMode]
+export type ValueOfAppConstColorMode = ValueOf<typeof AppConstColorMode>
 
 export const AppConstRoles = {
   ROOT: 'root',
@@ -86,5 +79,15 @@ export const AppConstRoles = {
   VISITOR: 'visitor',
 } as const
 
-export type ValueOfAppConstRoles
-  = typeof AppConstRoles[keyof typeof AppConstRoles]
+export type ValueOfAppConstRoles = ValueOf<typeof AppConstRoles>
+
+export const AppConstRequestHeaders = {
+  AUTHORIZATION: 'Authorization',
+  LANGUAGE: 'x-language',
+  FINGERPRINT: 'x-fingerprint',
+  SIGN: 'x-sign',
+  TIMESTAMP: 'x-timestamp',
+  NONCE: 'x-nonce',
+} as const
+
+export type ValueOfAppConstRequestHeaders = ValueOf<typeof AppConstRequestHeaders>

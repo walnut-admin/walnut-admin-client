@@ -8,7 +8,7 @@ import { getBoolean } from '../shared'
  */
 export function setTokenHeaderWithConfig(config: AxiosRequestConfig, token: string) {
   if (getBoolean(config._carryToken))
-    config.headers!.Authorization = `Bearer ${token}`
+    config.headers![AppConstRequestHeaders.AUTHORIZATION] = `Bearer ${token}`
 }
 
 /**
