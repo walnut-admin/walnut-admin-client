@@ -67,9 +67,7 @@ async function bindTotp() {
 
 // unbind totp
 async function onUnbind() {
-  const { confirmed } = await useAppConfirm('解绑后，您将无法使用双因素认证。建议先确保有其他登录方式。确定要继续吗？', {
-    title: '确认解绑',
-  })
+  const { confirmed } = await useAppConfirm(t('mfa.totp.unbind'))
 
   if (confirmed) {
     try {

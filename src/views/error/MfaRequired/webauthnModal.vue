@@ -8,6 +8,7 @@ import {
   authMfaWebauthnRegisterOptionsAPI,
   authMfaWebauthnRegisterVerifyAPI,
 } from '@/api/auth/mfa'
+import { getWebAuthnErrorMessage } from './shared'
 
 defineOptions({
   name: 'MfaWebauthnModal',
@@ -140,31 +141,6 @@ function onCloseModal() {
   registrationOptions.value = undefined
   registeredDeviceName.value = ''
   errorMessage.value = ''
-}
-
-// get friendly error message
-function getWebAuthnErrorMessage(error: any): string {
-  const errorName = error?.name || ''
-  const errorMessage = error?.message || ''
-
-  switch (errorName) {
-    case 'NotAllowedError':
-      return '操作被取消或超时，请重试'
-    case 'InvalidStateError':
-      return '此验证器已注册，请使用其他设备'
-    case 'NotSupportedError':
-      return '您的浏览器不支持此类型的验证器'
-    case 'SecurityError':
-      return '操作不安全，请使用 HTTPS 连接'
-    case 'AbortError':
-      return '操作被中止，请重试'
-    case 'TimeoutError':
-      return '操作超时，请重试'
-    case 'NetworkError':
-      return '网络错误，请检查连接'
-    default:
-      return errorMessage || '注册失败，请重试'
-  }
 }
 
 defineExpose({
