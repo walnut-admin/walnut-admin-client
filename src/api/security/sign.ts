@@ -20,7 +20,6 @@ export async function signInitialAPI(rsaPubKey: string, force = false) {
 export async function signAesKeyAPI() {
   return await AppAxios.post<IResponseData.Security.Sign.AesKey>({
     url: `/security/sign/aes-key`,
-    // TODO fuck types
     _autoDecryptResponseData: ['aesKey'],
   })
 }

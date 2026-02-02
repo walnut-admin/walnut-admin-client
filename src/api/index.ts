@@ -2,7 +2,7 @@ import type { AxiosRequestConfig } from 'axios'
 import type { IResponseData } from './response'
 import { AppAxios } from '@/utils/axios'
 
-export function HelloAPI(config: AxiosRequestConfig) {
+export function HelloAPI(config: AxiosRequestConfig<string, string>) {
   return AppAxios.get<string>(
     {
       url: '',
@@ -11,7 +11,7 @@ export function HelloAPI(config: AxiosRequestConfig) {
   )
 }
 
-export function HelloWithTokenAPI(config: AxiosRequestConfig) {
+export function HelloWithTokenAPI(config: AxiosRequestConfig<string, string>) {
   return AppAxios.get<string>(
     {
       url: '/auth',

@@ -3,7 +3,7 @@ import type { DataTableSortOrder } from 'naive-ui'
 import type { IModels } from '@/api/models'
 
 declare module 'axios' {
-  interface AxiosRequestConfig<D> {
+  interface AxiosRequestConfig<D = any, R = any> {
     /**
      * carry token in header `Authorization Bearer`
      */
@@ -56,12 +56,12 @@ declare module 'axios' {
     /**
      * auto decrypt response specific field data
      */
-    _autoDecryptResponseData?: (keyof D)[]
+    _autoDecryptResponseData?: (keyof R & string)[]
 
     /**
      * auto encrypt request specific field data
      */
-    _autoEncryptRequestData?: string[]
+    _autoEncryptRequestData?: (keyof D & string)[]
 
     /**
      * prevent duplicate encrypt in request interceptor

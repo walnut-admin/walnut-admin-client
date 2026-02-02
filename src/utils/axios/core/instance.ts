@@ -46,8 +46,8 @@ export class Axios {
   /**
    * @description base request method
    */
-  request<T = any>(
-    config: AxiosRequestConfig,
+  request<T = any, D = any>(
+    config: AxiosRequestConfig<D, T>,
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       this.instance
@@ -67,35 +67,35 @@ export class Axios {
   /**
    * @description Axios Get
    */
-  get<T>(config: AxiosRequestConfig) {
-    return this.request<T>({ ...config, method: 'GET' })
+  get<T, D = any>(config: AxiosRequestConfig<D, T>) {
+    return this.request<T, D>({ ...config, method: 'GET' })
   }
 
   /**
    * @description Axios Post
    */
-  post<T>(config: AxiosRequestConfig) {
-    return this.request<T>({ ...config, method: 'POST' })
+  post<T, D = any>(config: AxiosRequestConfig<D, T>) {
+    return this.request<T, D>({ ...config, method: 'POST' })
   }
 
   /**
    * @description Axios Put
    */
-  put<T>(config: AxiosRequestConfig) {
-    return this.request<T>({ ...config, method: 'PUT' })
+  put<T, D = any>(config: AxiosRequestConfig<D, T>) {
+    return this.request<T, D>({ ...config, method: 'PUT' })
   }
 
   /**
    * @description Axios Patch
    */
-  patch<T>(config: AxiosRequestConfig) {
-    return this.request<T>({ ...config, method: 'PATCH' })
+  patch<T, D = any>(config: AxiosRequestConfig<D, T>) {
+    return this.request<T, D>({ ...config, method: 'PATCH' })
   }
 
   /**
    * @description Axios Delete
    */
-  delete<T>(config: AxiosRequestConfig) {
-    return this.request<T>({ ...config, method: 'DELETE' })
+  delete<T, D = any>(config: AxiosRequestConfig<D, T>) {
+    return this.request<T, D>({ ...config, method: 'DELETE' })
   }
 }
