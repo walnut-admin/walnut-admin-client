@@ -226,6 +226,11 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
       // 3. 获取 AES Key
       const aesKey = this.getSignAesSecretKey
 
+      // 3.1. 如果没有 AES Key，直接返回空字符串
+      if (!aesKey) {
+        return ''
+      }
+
       // 4. 判断签名模式
       const sessionKey = this.getSessionKey
       let signature: string
