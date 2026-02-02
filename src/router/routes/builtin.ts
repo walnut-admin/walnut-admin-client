@@ -10,10 +10,6 @@ export const layoutConst = {
     path: '/redirect',
     name: 'Redirect',
   },
-  lock: {
-    path: '/lock',
-    name: 'Lock',
-  },
   notFound: {
     path: '/:path(.*)*',
     name: 'App404',
@@ -37,16 +33,6 @@ export const AppRedirectRoute: RouteRecordSingleView = {
   name: layoutConst.redirect.name,
   path: `${layoutConst.redirect.path}/:path(.*)`,
   component: () => import('../../layout/default/TheRedirect/index.vue'),
-}
-
-// this is added dynamically base on the app setting
-export const AppLockRoute: RouteRecordSingleView = {
-  name: layoutConst.lock.name,
-  path: layoutConst.lock.path,
-  component: () => import('../../components/App/AppLock/lock.vue'),
-  meta: {
-    title: 'sys.menu.lock',
-  },
 }
 
 // below 404/500 routes are added after permission routes loaded

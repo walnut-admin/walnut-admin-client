@@ -5,7 +5,8 @@ import type { IStoreApp } from '@/store/types'
 import { defineStore } from 'pinia'
 import { getLockStatusAPI, lockAPI, unlockAPI } from '@/api/system/user_lock'
 import { AppCoreFn1 } from '@/core'
-import { AppLockRoute, layoutConst } from '@/router/routes/builtin'
+import { layoutConst } from '@/router/routes/builtin'
+import { mainoutConst, mainoutLockRoute } from '@/router/routes/mainout'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -71,9 +72,9 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
      */
     addLockRoute() {
       const { addRoute, hasRoute } = useAppRouter()
-      if (hasRoute(layoutConst.lock.name))
+      if (hasRoute(mainoutConst.lock.name))
         return
-      addRoute(AppLockRoute)
+      addRoute(mainoutConst.root.name, mainoutLockRoute)
     },
 
     /**
@@ -107,7 +108,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
         socket.on(AppSocketEvents.LOCK, async (payload: { fingerprint: string, userId: string }) => {
           if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
             this.addLockRoute()
-            await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
+            await useAppRouterPush({ name: mainoutConst.lock.name, replace: true })
           }
         })
       })
@@ -137,7 +138,7 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
         })
 
         this.addLockRoute()
-        await useAppRouterPush({ name: layoutConst.lock.name, replace: true })
+        await useAppRouterPush({ name: mainoutConst.lock.name, replace: true })
       }
       finally {
         this.loading = false

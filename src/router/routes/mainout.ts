@@ -21,6 +21,10 @@ export const mainoutConst = {
     path: '/test-mainout',
     name: 'TestMainout',
   },
+  lock: {
+    path: '/lock',
+    name: 'Lock',
+  },
   openExternal: {
     path: '/external-link',
     name: 'ExternalLink',
@@ -87,6 +91,16 @@ const testMainoutRoute: RouteRecordRaw = {
   component: () => import('../../views/features/test-mainout.vue'),
   meta: {
     _auth: false,
+  },
+}
+
+export const mainoutLockRoute: RouteRecordSingleView = {
+  name: mainoutConst.lock.name,
+  path: mainoutConst.lock.path,
+  component: () => import('../../components/App/AppLock/lock.vue'),
+  meta: {
+    title: 'sys.menu.lock',
+    _auth: true,
   },
 }
 

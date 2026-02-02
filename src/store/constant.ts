@@ -1,5 +1,5 @@
 import { layoutConst } from '@/router/routes/builtin'
-import { mainoutRoutes } from '@/router/routes/mainout'
+import { mainoutConst, mainoutRoutes } from '@/router/routes/mainout'
 
 export const StoreKeys = {
   APP_ADAPTER: 'APP_ADAPTER',
@@ -36,7 +36,6 @@ export const StoreKeys = {
  */
 export const tabBlackListName: string[] = [
   ...mainoutRoutes.map(item => item.name as string),
-  layoutConst.lock.name,
   layoutConst.notFound.name,
   layoutConst.serverError.name,
   layoutConst.redirect.name,
