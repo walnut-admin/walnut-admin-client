@@ -81,7 +81,7 @@ const getToolBarOptions = computed((): DropdownOption[] => [
     children: [
       {
         key: 'check',
-        label: t('app.base.check'),
+        label: t('app.base.checkAll'),
         icon: () => <WIcon height="20" icon="mdi:select-all"></WIcon>,
         disabled: checkAll.value || !getProps.value.multiple,
       },

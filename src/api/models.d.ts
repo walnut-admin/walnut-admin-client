@@ -70,7 +70,7 @@ export namespace IModels {
     roleMode?: 'switchable' | 'combinable'
     currentRole?: string
 
-    populated_rolesList?: SystemRole[]
+    populated_roles_list?: SystemRole[]
   }
 
   // system user lock preference
@@ -84,7 +84,11 @@ export namespace IModels {
 
   // system user device
   export interface SystemUserDevice extends Base {
+    deviceId: string
+    deviceName: string
+    userId: string
     locked: boolean
+    lastActive?: Date
   }
 
   // system device

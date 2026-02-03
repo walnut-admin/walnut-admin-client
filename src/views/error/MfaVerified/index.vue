@@ -156,7 +156,7 @@ onBeforeMount(async () => {
         <WIcon icon="carbon-security" height="32" />
       </div>
       <h1 class="mb-2 text-3xl font-bold">
-        {{ $t('mfa.verify.title1') }}
+        {{ $t('app.security.tab2') }}
       </h1>
       <p class="text-base">
         {{ $t('mfa.verify.title2') }}

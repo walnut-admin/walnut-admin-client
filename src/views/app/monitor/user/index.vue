@@ -142,7 +142,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<IModels.AppMo
       },
 
       {
-        key: 'populated_device.ipHistory',
+        key: 'populated_device.ip',
         width: 160,
         title: 'ip',
         ellipsis: {
@@ -372,7 +372,7 @@ const [register, { onReadAndOpenUpdateForm, onApiList }] = useCRUD<IModels.AppMo
       {
         type: 'Base:Input',
         formProp: {
-          path: 'populated_device.ipHistory[0]',
+          path: 'populated_device.ip',
           label: 'ip',
         },
         descriptionProp: {
