@@ -8,25 +8,30 @@ defineOptions({
   name: 'AccountSetting',
 })
 
-const activeTab = useRouterQuery('tab', 'info')
-const child_tab = useRouterQuery('child_tab', '1')
+const activeTab = useRouterQuery('tab')
+const child_tab = useRouterQuery('child_tab')
 
-// 🔥 用 Map 存储每个大 Tab 的小 Tab 状态
-const childTabMemory = new Map<string, string>([
-  ['security', '1'],
-  ['prefer', '1'],
-])
+const childTabMemory = new Map<string, string>()
 
-// 切换大 Tab 时:保存当前小 Tab 状态 → 恢复新大 Tab 的小 Tab 状态
 watch(() => activeTab.value, (newTab, oldTab) => {
   // 1. 保存旧大 Tab 的小 Tab 状态到内存
   if (oldTab && child_tab.value) {
     childTabMemory.set(oldTab, child_tab.value)
   }
 
-  // 2. 恢复新大 Tab 的小 Tab 状态到 URL
+  // 2. 恢复新大 Tab 的小 Tab 状态
   if (newTab) {
-    child_tab.value = childTabMemory.get(newTab) || '1'
+    // 🔥 修复：初始化时（oldTab 为 undefined），保留 URL 中的值
+    if (oldTab === undefined) {
+      // 刷新场景：将 URL 中的值保存到内存
+      if (child_tab.value) {
+        childTabMemory.set(newTab, child_tab.value)
+      }
+    }
+    else {
+      // 切换场景：从内存恢复或使用默认值
+      child_tab.value = childTabMemory.get(newTab)
+    }
   }
 }, { immediate: true })
 
