@@ -39,9 +39,9 @@ const props = withDefaults(defineProps<WTable.Props<T>>(), {
   loading: false,
   minRowHeight: 28,
   paginateSinglePage: true,
-  pagination: false,
+  pagination: true, // default => true
   paginationBehaviorOnFilter: 'current',
-  remote: false,
+  remote: true, // default => true
   singleColumn: false,
   singleLine: true,
   size: 'medium',
@@ -56,6 +56,7 @@ const props = withDefaults(defineProps<WTable.Props<T>>(), {
   // extend
   headerLeftBuiltInActions: () => ([{ _builtInType: 'create' }, { _builtInType: 'delete' }]),
   headerLeftExtraActions: () => ([]),
+  columnSetting: true,
 })
 
 const emits = defineEmits<WTable.Emits<T>>()
@@ -137,8 +138,8 @@ const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentH
     <n-data-table
       ref="tableRef"
       v-bind="getTableProps"
-      :min-height="getTableHeight"
-      :max-height="getTableHeight"
+      :min-height="getProps?.minHeight ?? getTableHeight"
+      :max-height="getProps?.maxHeight ?? getTableHeight"
       :columns="tableColumns.filter(i => i._internalShow)"
     />
   </n-card>

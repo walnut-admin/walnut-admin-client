@@ -56,25 +56,27 @@ export function useTableAPI<T>(
         // actually i'm thinking is this really a good choice? like mutate the proxyed props inside the component
         // @ts-expect-error haha
         data: computed(() => res.data),
-        pagination: {
-          itemCount: res.total,
-          page: apiListParams.value.page?.page,
-          pageSize: apiListParams.value.page?.pageSize,
-          showSizePicker: true,
-          showQuickJumper: true,
-          pageSizes: [10, 30, 50],
-          pageSlot: 7,
-          onUpdatePage: async (p) => {
-            apiListParams.value.page!.page = p
-            await onApiList()
-          },
-          onUpdatePageSize: async (p) => {
-            apiListParams.value.page!.page = 1
-            apiListParams.value.page!.pageSize = p
-            await onApiList()
-          },
-          prefix: () => t('comp.pagination.total', { total: res.total }),
-        },
+        pagination: props.value.pagination === false
+          ? false
+          : {
+              itemCount: res.total,
+              page: apiListParams.value.page?.page,
+              pageSize: apiListParams.value.page?.pageSize,
+              showSizePicker: true,
+              showQuickJumper: true,
+              pageSizes: [10, 30, 50],
+              pageSlot: 7,
+              onUpdatePage: async (p) => {
+                apiListParams.value.page!.page = p
+                await onApiList()
+              },
+              onUpdatePageSize: async (p) => {
+                apiListParams.value.page!.page = 1
+                apiListParams.value.page!.pageSize = p
+                await onApiList()
+              },
+              prefix: () => t('comp.pagination.total', { total: res.total }),
+            },
       })
     }
     catch (err) {
@@ -145,9 +147,6 @@ export function useTableAPI<T>(
   const onApiListInit = async () => {
     if (!isFunction(props.value.apiProps?.listApi))
       return
-
-    // set remote true for naive-ui
-    setProps({ remote: true })
 
     // handle params.query default
     if (
