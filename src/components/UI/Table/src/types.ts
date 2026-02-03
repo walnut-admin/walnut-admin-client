@@ -236,6 +236,13 @@ export declare namespace WTable {
      * @description polling milliseconds
      */
     polling?: number
+
+    /**
+     * @extends
+     * @description column setting, show column setting
+     * @default true
+     */
+    columnSetting?: boolean
   }
 
   /**

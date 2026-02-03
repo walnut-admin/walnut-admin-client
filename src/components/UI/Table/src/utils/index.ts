@@ -6,7 +6,7 @@ import type { WTable } from '../types'
 import type { IAxios } from '@/utils/axios/types'
 import { getBoolean } from '@/utils/shared'
 
-export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling']
+export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling', 'columnSetting']
 
 export function generateDefaultSortParams<T>(columns: WTable.Column<T>[]) {
   return columns
