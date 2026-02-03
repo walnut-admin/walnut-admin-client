@@ -60,6 +60,19 @@ const [register] = useForm<IStoreUser.Preference.Accessibility>({
       },
     },
     {
+      type: 'Base:Select',
+      formProp: {
+        path: 'CVD',
+      },
+      componentProp: {
+        clearable: true,
+        options: Object.values(AppConstCVD).map(i => ({
+          value: i,
+          label: i,
+        })),
+      },
+    },
+    {
       type: 'Base:Button',
       componentProp: {
         textProp: () => t('app.base.save'),

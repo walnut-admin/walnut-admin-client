@@ -1,9 +1,11 @@
 import { useAppColorMode } from './useAppColorMode'
+import { useAppCvdMode } from './useAppCvdMode'
 import { useAppDark } from './useAppDark'
 import { useAppFontSize } from './useAppFontSize'
 import { useAppLocale } from './useAppLocale'
 import { useAppReducedMotion } from './useAppReducedMotion'
 
+// TODO spilt pre auth post auth
 export function useAppHooks() {
   // regular title
   useAppTitle()
@@ -14,6 +16,8 @@ export function useAppHooks() {
   useAppLocale()
   // app color mode, relative to user preference
   useAppColorMode()
+  // app Color Vision Deficiency
+  useAppCvdMode()
   // app reduced motion, relative to user preference
   useAppReducedMotion()
   // app dark mode, relative to user preference

@@ -51,23 +51,16 @@ useStarOnGithub()
     <TheAside v-if="appStoreSettingDev.getMenuAdapterStatus" />
 
     <n-drawer
-      v-else
-      v-model:show="appStoreMenu.showAside"
-      :width="appStoreAdapter.isMobile ? '80vw' : `${appStoreSettingDev.getMenuWidth}rem`"
-      placement="left"
+      v-else v-model:show="appStoreMenu.showAside"
+      :width="appStoreAdapter.isMobile ? '80vw' : `${appStoreSettingDev.getMenuWidth}rem`" placement="left"
       :native-scrollbar="false"
     >
       <TheAside />
     </n-drawer>
 
-    <div
-      class="h-screen"
-      :style="{ width: `calc(100vw - ${appStoreSettingDev.getMenuWidth}rem)` }"
-    >
+    <div class="h-screen" :style="{ width: `calc(100vw - ${appStoreSettingDev.getMenuWidth}rem)` }">
       <n-layout-content
-        bordered
-        :native-scrollbar="false"
-        :content-style="{ height: '100%' }"
+        bordered :native-scrollbar="false" :content-style="{ height: '100%' }"
         class="relative h-full w-full"
       >
         <TheScrollContent v-if="appStoreSettingDev.getScrollModeIsContent" />

@@ -73,6 +73,7 @@
     "animate.css": "4.1.1",
     "axios": "1.11.0",
     "codemirror": "6.0.2",
+    "colorizr": "4.0.1",
     "compare-versions": "6.1.1",
     "cropperjs": "2.0.1",
     "detectincognitojs": "1.6.2",

@@ -13,6 +13,7 @@ const useAppStoreUserPreferenceInside = defineStore(StoreKeys.USER_PREFERENCE, {
       fontSize: 14,
       reducedMotion: false,
       colorMode: AppConstColorMode.DEFAULT,
+      CVD: AppConstCVD.DEFAULT,
     },
     theme: {
       dark: false,
@@ -61,6 +62,9 @@ const useAppStoreUserPreferenceInside = defineStore(StoreKeys.USER_PREFERENCE, {
     },
     getColorMode(state) {
       return state.accessibility.colorMode
+    },
+    getCVD(state) {
+      return state.accessibility.CVD
     },
     getLayout(state) {
       return state.layout.layout

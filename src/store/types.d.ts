@@ -5,7 +5,7 @@ import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
 import type { IResponseData } from '@/api/response'
-import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppConstDevice, ValueOfAppConstLayoutMode, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName } from '@/const'
+import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppConstDevice, ValueOfAppConstLayoutMode, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName, ValueOfAppCVD } from '@/const'
 
 export namespace IStoreApp {
   /**
@@ -300,6 +300,7 @@ export namespace IStoreUser {
       fontSize: number
       reducedMotion: boolean
       colorMode: ValueOfAppConstColorMode
+      CVD: ValueOfAppCVD
     }
     export interface Theme {
       dark: boolean

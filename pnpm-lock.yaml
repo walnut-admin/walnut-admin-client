@@ -74,6 +74,9 @@ importers:
       codemirror:
         specifier: 6.0.2
         version: 6.0.2
+      colorizr:
+        specifier: 4.0.1
+        version: 4.0.1
       compare-versions:
         specifier: 6.1.1
         version: 6.1.1
@@ -3498,6 +3501,9 @@ packages:
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
+
+  colorizr@4.0.1:
+    resolution: {integrity: sha512-CBHSSK2PE+uPKGGufG0tqsjNrvhWnbkSyerALcZljF62CCw2KzW6nEEJOWWfy7uu3/+MOdGjMtBG6gtBo7t9QA==}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -11255,6 +11261,8 @@ snapshots:
       color-string: 1.9.1
 
   colorette@2.0.20: {}
+
+  colorizr@4.0.1: {}
 
   combined-stream@1.0.8:
     dependencies:

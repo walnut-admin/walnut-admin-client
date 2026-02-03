@@ -72,6 +72,16 @@ export const AppConstColorMode = {
 
 export type ValueOfAppConstColorMode = ValueOf<typeof AppConstColorMode>
 
+export const AppConstCVD = {
+  DEFAULT: 'default',
+  PROTANOPIA: 'protanopia', // no red
+  DEUTERANOPIA: 'deuteranopia', // no green
+  TRITANOPIA: 'tritanopia', // no blue
+  ACHROMATOPIA: 'achromatopsia', // no color
+} as const
+
+export type ValueOfAppCVD = ValueOf<typeof AppConstCVD>
+
 export const AppConstRoles = {
   ROOT: 'root',
   ADMIN: 'admin',

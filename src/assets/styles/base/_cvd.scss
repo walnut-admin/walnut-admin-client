@@ -1,0 +1,36 @@
+// 通用：无论哪种色盲，都强制增加形状和边框辅助
+html[color-mode]:not([color-mode='default']) {
+
+    // 1. Success 统一用深色边框 + 圆点纹理
+    .w-button--success-type {
+        border-radius: 9999px !important; // 胶囊形
+        border: 2px solid currentColor !important;
+        background-image: radial-gradient(currentColor 1px,
+                transparent 1px) !important;
+        background-size: 8px 8px !important; // 圆点阵列
+    }
+
+    // 2. Error 统一用虚线 + 方形
+    .w-button--error-type {
+        border-radius: 2px !important; // 近似方形
+        border: 2px dashed currentColor !important;
+        background: repeating-linear-gradient(45deg,
+                transparent,
+                transparent 5px,
+                currentColor 5px,
+                currentColor 6px // 极细条纹，增加纹理感
+            ) !important;
+        background-size: 10px 10px;
+        // 确保背景不覆盖文字，需要配合 Naive UI 的变量或 CSS mask
+        // 这里简单处理：利用 background-clip
+        background-clip: padding-box;
+    }
+
+    // 3. Warning 统一用切角
+    .w-button--warning-type {
+        clip-path: polygon(10px 0, 100% 0,
+                100% calc(100% - 10px), calc(100% - 10px) 100%,
+                0 100%, 0 10px) !important;
+        border: 2px solid currentColor !important;
+    }
+}

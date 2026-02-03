@@ -2,7 +2,6 @@ import type { AxiosResponse } from 'axios'
 import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
 import { get, isArray, set } from 'lodash-es'
-import { layoutConst } from '@/router/routes/builtin'
 import { mainoutConst, mainoutLockRoute, mainoutMfaRequiredRoute, mainoutMfaVerifiedRoute, mainoutNotAllowedRoute } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
@@ -122,6 +121,7 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
   }
 
   useAppMsgError(msg)
-  await AppRouter.replace({ name: layoutConst.serverError.name, force: true })
+  // TODO when to 500
+  // await AppRouter.replace({ name: layoutConst.serverError.name, force: true })
   return Promise.reject(new Error('Missing Error Code'))
 }

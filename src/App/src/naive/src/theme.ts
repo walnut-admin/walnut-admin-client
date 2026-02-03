@@ -1,10 +1,10 @@
 import type { GlobalThemeOverrides, ThemeCommonVars } from 'naive-ui'
-
-import { adjustColor } from 'easy-fns-ts'
+import { darken, lighten, saturate } from 'colorizr'
 import { merge } from 'lodash-es'
 import { darkTheme, lightTheme } from 'naive-ui'
 
 const appStoreSettingDev = useAppStoreSettingDev()
+const userStorePreference = useAppStoreUserPreference()
 
 export const getTheme = computed(() =>
   !isDark.value ? lightTheme : darkTheme,
@@ -15,31 +15,179 @@ const getThemeStyle = computed(() =>
 )
 
 export const getThemeOverridesCommon = computed(
-  (): Partial<ThemeCommonVars> => ({
-    primaryColor: getThemeStyle.value.primaryColor,
-    primaryColorHover: adjustColor(getThemeStyle.value.primaryColor, 40),
-    primaryColorPressed: adjustColor(getThemeStyle.value.primaryColor, 20),
-    primaryColorSuppl: adjustColor(getThemeStyle.value.primaryColor, -20),
-    infoColor: getThemeStyle.value.infoColor,
-    infoColorHover: adjustColor(getThemeStyle.value.infoColor, 40),
-    infoColorPressed: adjustColor(getThemeStyle.value.infoColor, 20),
-    infoColorSuppl: adjustColor(getThemeStyle.value.infoColor, -20),
-    successColor: getThemeStyle.value.successColor,
-    successColorHover: adjustColor(getThemeStyle.value.successColor, 40),
-    successColorPressed: adjustColor(getThemeStyle.value.successColor, 20),
-    successColorSuppl: adjustColor(getThemeStyle.value.successColor, -20),
-    warningColor: getThemeStyle.value.warningColor,
-    warningColorHover: adjustColor(getThemeStyle.value.warningColor, 40),
-    warningColorPressed: adjustColor(getThemeStyle.value.warningColor, 20),
-    warningColorSuppl: adjustColor(getThemeStyle.value.warningColor, -20),
-    errorColor: getThemeStyle.value.errorColor,
-    errorColorHover: adjustColor(getThemeStyle.value.errorColor, 40),
-    errorColorPressed: adjustColor(getThemeStyle.value.errorColor, 20),
-    errorColorSuppl: adjustColor(getThemeStyle.value.errorColor, -20),
+  (): Partial<ThemeCommonVars> => {
+    const mode = userStorePreference.getCVD
 
-    bodyColor: getThemeStyle.value.bodyColor,
-    invertedColor: getThemeStyle.value.invertedColor,
-  }),
+    // 基础调色板定义
+    const palettes = {
+      default: {
+        primary: getThemeStyle.value.primaryColor,
+        info: getThemeStyle.value.infoColor,
+        success: getThemeStyle.value.successColor,
+        warning: getThemeStyle.value.warningColor,
+        error: getThemeStyle.value.errorColor,
+        body: getThemeStyle.value.bodyColor,
+        invertedColor: getThemeStyle.value.invertedColor,
+        textBase: undefined,
+      },
+
+      // 红色盲（Protanopia）：缺失红色视锥细胞，红色看成深绿/棕色
+      protanopia: {
+        // 红绿色盲最安全的是蓝色和橙色/红色
+        primary: '#0072B2', // 深蓝 (比 #0066CC 更对比度友好)
+        info: '#56B4E9', // 天蓝
+        // ✅ 建议修改：Success 改为蓝绿色或深青色，避开纯绿
+        success: '#0EA5E9', // 使用 Sky Blue 代替 Green，更安全
+        warning: '#D55E00', // 朱红橙 (比 Amber 更可见)
+        error: '#CC79A7', // 红紫/洋红 (与橙色对比明显)
+        body: isDark.value ? '#0f172a' : '#fafafa',
+        invertedColor: undefined,
+        textBase: isDark.value ? '#f8fafc' : '#0f172a',
+      },
+
+      // 绿色盲（Deuteranopia）：缺失绿色视锥细胞，绿色看成米黄/灰色
+      deuteranopia: {
+        primary: '#0066CC', // 深蓝
+        info: '#06B6D4', // 青色
+        success: '#009E73', // 蓝绿
+        warning: '#F59E0B', // 琥珀色
+        error: '#D55E00', // 橙红
+        body: isDark.value ? '#0f172a' : '#fafafa',
+        invertedColor: undefined,
+        textBase: isDark.value ? '#f8fafc' : '#0f172a',
+      },
+
+      // 蓝黄色盲（Tritanopia）：缺失蓝色视锥细胞，蓝色看成绿色，黄色看成粉色
+      tritanopia: {
+        // 蓝黄盲避开蓝色系，使用红/黑/白
+        primary: '#D55E00', // 橙色
+        info: '#E69F00', // 黄/琥珀色
+        // ✅ 建议修改：Success 推荐用红色或深灰色
+        success: '#DC2626', // 红色
+        warning: '#F0E442', // 黄色 (需配黑字)
+        error: '#000000', // 纯黑 (最强对比)
+        body: isDark.value ? '#1c1917' : '#fff7ed',
+        invertedColor: undefined,
+        textBase: isDark.value ? '#fff7ed' : '#1c1917',
+      },
+
+      // 全色盲（Achromatopsia）：只能感知明度，完全无色彩
+      achromatopsia: {
+        primary: '#525252', // 中深灰
+        info: '#737373', // 中灰
+        success: '#404040', // 深灰
+        warning: '#A3A3A3', // 浅灰
+        error: '#000000', // 纯黑
+        body: isDark.value ? '#171717' : '#ffffff',
+        invertedColor: undefined,
+        textBase: isDark.value ? '#ffffff' : '#000000',
+      },
+    }
+
+    const current = mode === AppConstCVD.PROTANOPIA
+      ? palettes.protanopia
+      : mode === AppConstCVD.DEUTERANOPIA
+        ? palettes.deuteranopia
+        : mode === AppConstCVD.TRITANOPIA
+          ? palettes.tritanopia
+          : mode === AppConstCVD.ACHROMATOPIA
+            ? palettes.achromatopsia
+            : palettes.default
+
+    // 暗色模式补偿
+    const adjustForDark = (color: string) => {
+      if (!isDark.value || mode === AppConstCVD.DEFAULT)
+        return color
+
+      // 全色盲：只调亮度
+      if (mode === AppConstCVD.ACHROMATOPIA) {
+        return lighten(color, 15)
+      }
+
+      // 红色盲/绿色盲：增强冷色调
+      if (mode === AppConstCVD.PROTANOPIA || mode === AppConstCVD.DEUTERANOPIA) {
+        return saturate(lighten(color, 25), 12)
+      }
+
+      // 蓝黄色盲：增强暖色调
+      if (mode === AppConstCVD.TRITANOPIA) {
+        return saturate(lighten(color, 20), 8)
+      }
+
+      return color
+    }
+
+    // 模式特定配置
+    const modeSpecificOverrides: Partial<ThemeCommonVars> = mode === AppConstCVD.ACHROMATOPIA
+      ? {
+          // 全色盲：强化阴影深度
+          boxShadow1: '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
+          boxShadow2: '0 3px 6px 0 rgba(0, 0, 0, 0.6)',
+          boxShadow3: '0 6px 12px 0 rgba(0, 0, 0, 0.7)',
+          borderRadius: '0.25rem',
+          borderColor: '#000000',
+          cardColor: isDark.value ? '#262626' : '#f5f5f5',
+          modalColor: isDark.value ? '#262626' : '#ffffff',
+          popoverColor: isDark.value ? '#262626' : '#ffffff',
+          textColor1: isDark.value ? '#ffffff' : '#000000',
+          textColor2: isDark.value ? '#d4d4d4' : '#404040',
+          textColor3: isDark.value ? '#a3a3a3' : '#737373',
+          textColorDisabled: isDark.value ? '#525252' : '#d4d4d4',
+          dividerColor: isDark.value ? '#404040' : '#e5e5e5',
+        }
+      : mode === AppConstCVD.PROTANOPIA || mode === AppConstCVD.DEUTERANOPIA
+        ? {
+            // 红/绿色盲：蓝色系阴影
+            boxShadow1: '0 1px 2px 0 rgba(0, 102, 204, 0.2)',
+            boxShadow2: '0 3px 6px 0 rgba(0, 102, 204, 0.25)',
+            boxShadow3: '0 6px 12px 0 rgba(0, 102, 204, 0.3)',
+            dividerColor: '#0891B2',
+          }
+        : mode === AppConstCVD.TRITANOPIA
+          ? {
+              // 蓝黄色盲：暖色系阴影
+              boxShadow1: '0 1px 2px 0 rgba(5, 150, 105, 0.2)',
+              boxShadow2: '0 3px 6px 0 rgba(5, 150, 105, 0.25)',
+              boxShadow3: '0 6px 12px 0 rgba(5, 150, 105, 0.3)',
+              dividerColor: '#DC2626',
+            }
+          : {}
+
+    return {
+      // 主色系
+      primaryColor: adjustForDark(current.primary),
+      primaryColorHover: lighten(adjustForDark(current.primary), 10),
+      primaryColorPressed: darken(adjustForDark(current.primary), 10),
+      primaryColorSuppl: darken(adjustForDark(current.primary), 20),
+
+      infoColor: adjustForDark(current.info),
+      infoColorHover: lighten(adjustForDark(current.info), 10),
+      infoColorPressed: darken(adjustForDark(current.info), 10),
+      infoColorSuppl: darken(adjustForDark(current.info), 20),
+
+      successColor: adjustForDark(current.success),
+      successColorHover: lighten(adjustForDark(current.success), 10),
+      successColorPressed: darken(adjustForDark(current.success), 10),
+      successColorSuppl: darken(adjustForDark(current.success), 20),
+
+      warningColor: adjustForDark(current.warning),
+      warningColorHover: lighten(adjustForDark(current.warning), 10),
+      warningColorPressed: darken(adjustForDark(current.warning), 10),
+      warningColorSuppl: darken(adjustForDark(current.warning), 20),
+
+      errorColor: adjustForDark(current.error),
+      errorColorHover: lighten(adjustForDark(current.error), 10),
+      errorColorPressed: darken(adjustForDark(current.error), 10),
+      errorColorSuppl: darken(adjustForDark(current.error), 20),
+
+      // 背景和文字
+      bodyColor: current.body,
+      invertedColor: current.invertedColor,
+      textColorBase: current.textBase,
+
+      ...modeSpecificOverrides,
+    }
+  },
 )
 
 // TODO need to fill it little by little
