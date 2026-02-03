@@ -95,7 +95,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             ...tItem,
             render(p) {
               return (
-                <NTag {...(tItem.tagProps!(p) as TagProps)}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
+                <NTag {...(tItem.tagProps ? tItem.tagProps(p) as TagProps : {})}>{tItem.formatter ? tItem.formatter(p) : p}</NTag>
               )
             },
           }
@@ -184,7 +184,10 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             },
           ]
 
-          const bs = toRaw(tItem.columnBuiltInActions.concat(toRaw(tItem?.columnExtraActions ?? [])))
+          const builtInActions = tItem.columnBuiltInActions ?? []
+          const extraActions = tItem.columnExtraActions ?? []
+          const bs = builtInActions
+            .concat(extraActions)
             .sort((a, b) => getBoolean(a._dropdown, false) - getBoolean(b._dropdown, false))
             .map((item) => {
               const button = defaultBuiltInButtons.find(b => b._builtInType === item._builtInType)
@@ -259,7 +262,7 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
                   {hasDropdownButtons
                     ? (
                         <NDropdown size="small" trigger="click" options={dropdownOptions.length ? dropdownOptions : renderDropdownEmpty} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
-                          <div>
+                          <div class="flex items-center justify-center">
                             <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
                           </div>
                         </NDropdown>
