@@ -26,7 +26,14 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
     getLoading: state => state.loading,
     getLockCrossDevice: state => state.lockCrossDevice,
     getLocked: state => state.locked,
-    getLockRoute: state => state.lockRoute,
+    getLockRoute: (state) => {
+      if (!state.lockRoute) {
+        const appStoreMenu = useAppStoreMenu()
+
+        return { name: appStoreMenu.getIndexMenuName }
+      }
+      return state.lockRoute
+    },
     getLockMode: state => state.lockMode,
     getLockIdleSec: state => state.lockIdleSec,
     getLockSecuritySec: state => state.lockSecuritySec,
@@ -85,17 +92,12 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       if (!this.getEnable) {
         return
       }
-      const appStoreFingerprint = useAppStoreFingerprint()
 
       tryOnMounted(async () => {
-        if (!this.getLockCrossDevice)
-          return
         const socket = await getSocket()
 
-        socket.on(AppSocketEvents.LOCK, async (payload: { fingerprint: string, userId: string }) => {
-          if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
-            await this.logicAfterLock()
-          }
+        socket.on(AppSocketEvents.LOCK, async () => {
+          await this.logicAfterLock()
         })
       })
 
@@ -149,8 +151,8 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       await AppCoreFn1()
       await useAppRouterPush(this.getLockRoute)
 
-      const appStoreRoute = useAppStoreRoute()
-      appStoreRoute.removeDynamicAuthRoute(mainoutLockRoute)
+      // const appStoreRoute = useAppStoreRoute()
+      // appStoreRoute.removeDynamicAuthRoute(mainoutLockRoute)
     },
 
     /**
@@ -161,17 +163,10 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
         return
       }
 
-      const appStoreFingerprint = useAppStoreFingerprint()
-
       tryOnMounted(async () => {
-        if (!this.getLockCrossDevice)
-          return
-
         const socket = await getSocket()
-        socket.on(AppSocketEvents.UNLOCK, (payload: { fingerprint: string, userId: string }) => {
-          if (payload.fingerprint !== appStoreFingerprint.getFingerprint) {
-            this.logicAfterUnlock()
-          }
+        socket.on(AppSocketEvents.UNLOCK, () => {
+          this.logicAfterUnlock()
         })
       })
 
