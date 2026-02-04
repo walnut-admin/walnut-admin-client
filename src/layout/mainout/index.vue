@@ -22,16 +22,18 @@ function onChange(path: string) {
 
 // get user preference
 const appStorePreference = useAppStoreUserPreference()
-onBeforeMount(() => {
+watch(() => router.currentRoute.value, () => {
   appStorePreference.onInitPreference()
-})
+}, { immediate: true })
 </script>
 
 <template>
   <div class="relative min-h-screen w-full">
     <!--  main content area with max-width constraint -->
     <div class="min-h-screen flex items-center justify-center">
-      <router-view />
+      <router-view v-slot="{ Component, route }">
+        <component :is="Component" :key="route.path + JSON.stringify(route.params)" />
+      </router-view>
     </div>
 
     <!-- mainout route selector (visible only in dev mode) -->
