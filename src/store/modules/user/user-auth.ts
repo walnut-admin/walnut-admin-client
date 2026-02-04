@@ -6,9 +6,9 @@ import { defineStore } from 'pinia'
 import { refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
-import { kickOutAllDevicesAPI, opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
+import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
 import { authWithPhoneNumberAPI } from '@/api/auth/phone'
-import { kickOutAllDevicesForAdminAPI, updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/user'
+import { updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/user'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
 import { mainoutConst } from '@/router/routes/mainout'
@@ -277,11 +277,6 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         ({ registrationRequest }) => opaqueChangePasswordStartAPI({ registrationRequest }),
         ({ registrationRecord }) => opaqueChangePasswordFinishAPI({ registrationRecord }),
       )
-
-      // kick out all devices
-      await kickOutAllDevicesAPI({
-        type: 'updatePass',
-      })
     },
 
     /**
@@ -295,12 +290,6 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         ({ registrationRequest }) => updatePasswordStartAPI({ _id: userId, registrationRequest }),
         ({ registrationRecord }) => updatePasswordFinishAPI({ _id: userId, registrationRecord }),
       )
-
-      // kick out all devices for admin
-      await kickOutAllDevicesForAdminAPI({
-        _id: userId,
-        type: 'updatePass',
-      })
     },
 
     /**

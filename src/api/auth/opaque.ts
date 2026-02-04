@@ -7,7 +7,6 @@ const authOpaque = {
   LOGIN_FINISH: '/auth/opaque/user/login/finish',
   CHANGE_PASSWORD_START: '/auth/opaque/user/change-password/start',
   CHANGE_PASSWORD_FINISH: '/auth/opaque/user/change-password/finish',
-  KICK_OUT_ALL_DEVICES: '/auth/opaque/user/kick-out-all-devices',
 } as const
 
 /**
@@ -46,16 +45,6 @@ export function opaqueChangePasswordStartAPI(data: IRequestPayload.Auth.Opaque.R
 export function opaqueChangePasswordFinishAPI(data: IRequestPayload.Auth.Opaque.Register.Finish) {
   return AppAxios.post<boolean>({
     url: authOpaque.CHANGE_PASSWORD_FINISH,
-    data,
-  })
-}
-
-/**
- * @description Kick out all devices for current user
- */
-export function kickOutAllDevicesAPI(data: IRequestPayload.Auth.KickOutAllDevices) {
-  return AppAxios.post({
-    url: authOpaque.KICK_OUT_ALL_DEVICES,
     data,
   })
 }

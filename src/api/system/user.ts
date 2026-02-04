@@ -12,7 +12,6 @@ const systemUser = {
   UPDATE_PASSWORD_START: '/auth/opaque/admin/password/update/start',
   UPDATE_PASSWORD_FINISH: '/auth/opaque/admin/password/update/finish',
   CLEAR_PASSWORD: '/auth/opaque/admin/password/clear',
-  KICK_OUT_ALL_DEVICES: '/auth/opaque/admin/kick-out-all-devices',
 } as const
 
 /**
@@ -41,16 +40,6 @@ export function updatePasswordStartAPI(data: IRequestPayload.Auth.Opaque.Admin.U
 export function updatePasswordFinishAPI(data: IRequestPayload.Auth.Opaque.Admin.UpdatePasswordFinish) {
   return AppAxios.post<boolean>({
     url: systemUser.UPDATE_PASSWORD_FINISH,
-    data,
-  })
-}
-
-/**
- * @description Kick out all devices for current user
- */
-export function kickOutAllDevicesForAdminAPI(data: IRequestPayload.Auth.KickOutAllDevicesForAdmin) {
-  return AppAxios.post({
-    url: systemUser.KICK_OUT_ALL_DEVICES,
     data,
   })
 }
