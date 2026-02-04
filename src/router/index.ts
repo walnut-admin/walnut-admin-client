@@ -34,21 +34,13 @@ export function useAppRouter() {
   return useRouter()
 }
 
-export function useAppRouterPush(info: RouteLocationRaw) {
+export async function useAppRouterPush(info: RouteLocationRaw) {
   try {
-    return AppRouter.push(info).catch(() => {
-      // maybe error
-      useAppMessage().warning(AppI18n().global.t('app.menu.error'))
-
-      // finish the loadingbar
-      window.$loadingBar?.finish()
-    })
+    return await AppRouter.push(info)
   }
   catch (error) {
-    // turbo-console-disable-next-line
     console.error('Router push', error)
-
-    // maybe error
     useAppMessage().warning(AppI18n().global.t('app.menu.error'))
+    window.$loadingBar?.finish()
   }
 }
