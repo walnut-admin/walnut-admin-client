@@ -22,8 +22,13 @@ function onChange(path: string) {
 
 // get user preference
 const appStorePreference = useAppStoreUserPreference()
-watch(() => router.currentRoute.value, () => {
-  appStorePreference.onInitPreference()
+const stop = watch(() => router.currentRoute.value, () => {
+  try {
+    appStorePreference.onInitPreference()
+  }
+  catch {
+    stop()
+  }
 }, { immediate: true })
 </script>
 
