@@ -24,7 +24,6 @@ export function sendUserMonitorBeacon(data: Partial<IModels.AppMonitorUser>) {
 
 export function useAppUserMonitor() {
   const isVisible = useSharedDocumentVisibility()
-  const userStoreAuth = useAppStoreUserAuth()
 
   // route
   watch(
@@ -32,7 +31,6 @@ export function useAppUserMonitor() {
     (v) => {
       sendUserMonitorBeacon({
         currentRouter: v.fullPath,
-        auth: !!userStoreAuth.getAccessToken,
         focus: true,
         left: false,
       })
