@@ -194,11 +194,6 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               return button ? Object.assign(button, item) : item
             })
 
-          const onDropdownSelect = (key: WTable.ColumnActionType, rowData: T, rowIndex: number) => {
-            const target = bs.find(i => i._builtInType === key)
-            target && target.onPresetClick!(rowData, rowIndex)
-          }
-
           const renderDropdownEmpty: DropdownOption[] = [
             {
               type: 'render',
@@ -209,6 +204,9 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
             },
           ]
 
+          const hasAnyDropdown = bs.some(i => i._dropdown)
+          const dropdownStates = hasAnyDropdown ? reactive<Map<number, boolean>>(new Map()) : null
+
           return {
             ...tItem,
 
@@ -216,44 +214,61 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
               const isShow = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._show, rowData)
               const isDisabled = (i: WTable.ExtendType.ActionButtons<T>) => getFunctionBoolean(i._disabled, rowData, false)
 
-              const visibleButtons = bs.filter(i => isShow(i)).map(i => omit(i, '_show'))
+              // 统一处理按钮的显示和权限过滤
+              const visibleButtons = bs
+                .filter(i => isShow(i) && userStorePermission.hasPermission(i.buttonProps?.auth as string))
+                .map(i => omit(i, '_show'))
 
-              const hasDropdownButtons = bs.some(i => i._dropdown)
+              // 一次遍历分离 normal 和 dropdown 按钮
+              const normalButtons: typeof visibleButtons = []
+              const dropdownButtons: typeof visibleButtons = []
+              visibleButtons.forEach((i) => {
+                if (i._dropdown) {
+                  dropdownButtons.push(omit(i, '_dropdown'))
+                }
+                else {
+                  normalButtons.push(omit(i, '_dropdown'))
+                }
+              })
 
-              const normalButtons = visibleButtons.filter(i => !i._dropdown).map(i => omit(i, '_dropdown'))
-              const dropdownButtons = visibleButtons.filter(i => i._dropdown).map(i => omit(i, '_dropdown'))
+              const hasDropdownButtons = dropdownButtons.length > 0
 
-              const renderButton = (i: WTable.ExtendType.ActionButtons<T>) => (
+              // 统一的按钮点击处理
+              const handleButtonClick = async (i: WTable.ExtendType.ActionButtons<T>, inDropdown: boolean) => {
+                await i.onPresetClick!(rowData, rowIndex)
+                if (inDropdown && dropdownStates) {
+                  dropdownStates.set(rowIndex, false)
+                }
+              }
+
+              const renderButton = (i: WTable.ExtendType.ActionButtons<T>, inDropdown: boolean) => (
                 <WIconButton
                   button-props={{
                     ...i.buttonProps,
                     disabled: isDisabled(i),
-                    onClick: !i.confirm ? () => i.onPresetClick!(rowData, rowIndex) : null,
+                    onClick: !i.confirm ? () => handleButtonClick(i, inDropdown) : null,
                   }}
                   icon-props={i.iconProps}
                   confirm={i.confirm}
-                  onConfirm={() => i.onPresetClick!(rowData, rowIndex)}
+                  onConfirm={() => handleButtonClick(i, inDropdown)}
                 >
                 </WIconButton>
               )
 
-              const renderNormalButtons = normalButtons.map(renderButton)
+              const renderNormalButtons = normalButtons.map(i => renderButton(i, false))
 
-              const dropdownOptions: DropdownOption[]
-                = dropdownButtons
-                  .filter(i => userStorePermission.hasPermission(i.buttonProps?.auth as string))
-                  .map(i => i.iconProps?.icon
-                    ? {
-                        type: 'render',
-                        key: i._builtInType,
-                        disabled: isDisabled(i),
-                        render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i)}</div> : undefined,
-                      }
-                    : {
-                        key: i._builtInType,
-                        label: i.buttonProps?.textProp,
-                        disabled: isDisabled(i),
-                      })
+              const dropdownOptions: DropdownOption[] = dropdownButtons.map(i => i.iconProps?.icon
+                ? {
+                    type: 'render',
+                    key: i._builtInType,
+                    disabled: isDisabled(i),
+                    render: i?.iconProps?.icon ? () => <div class="mx-2">{renderButton(i, true)}</div> : undefined,
+                  }
+                : {
+                    key: i._builtInType,
+                    label: i.buttonProps?.textProp,
+                    disabled: isDisabled(i),
+                  })
 
               return (
                 <div class="flex flex-row flex-nowrap items-center justify-center gap-x-2">
@@ -261,9 +276,22 @@ export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, ap
 
                   {hasDropdownButtons
                     ? (
-                        <NDropdown size="small" trigger="click" options={dropdownOptions.length ? dropdownOptions : renderDropdownEmpty} onSelect={key => onDropdownSelect(key, rowData, rowIndex)}>
+                        <NDropdown
+                          size="small"
+                          trigger="click"
+                          show={dropdownStates?.get(rowIndex) ?? false}
+                          onUpdateShow={v => dropdownStates?.set(rowIndex, v)}
+                          options={dropdownOptions.length ? dropdownOptions : renderDropdownEmpty}
+                          onSelect={(key) => {
+                            const target = dropdownButtons.find(i => i._builtInType === key)
+                            target && handleButtonClick(target, true)
+                          }}
+                        >
                           <div class="flex items-center justify-center">
-                            <WIconButton icon-props={{ icon: 'ant-design:more-outlined' }} button-props={{ text: false }}></WIconButton>
+                            <WIconButton
+                              icon-props={{ icon: 'ant-design:more-outlined' }}
+                              button-props={{ text: false }}
+                            />
                           </div>
                         </NDropdown>
                       )
