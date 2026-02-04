@@ -2,7 +2,7 @@
 import type { IModels } from '@/api/models'
 import type { WAvatarUploadInst } from '@/components/Business/AvatarUpload'
 import { omit, pick } from 'lodash-es'
-import { updateProfileAPI } from '@/api/system/user'
+import { updateProfileAPI } from '@/api/system/user_me'
 import WAvatar from '../components/avatar.vue'
 
 defineOptions({

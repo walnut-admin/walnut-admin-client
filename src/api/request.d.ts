@@ -133,5 +133,26 @@ export namespace IRequestPayload {
     export namespace Deivce {
       export type Initial = IModels.SystemDevice
     }
+
+    export namespace UserDevice {
+      export interface UpdateName {
+        deviceId: string
+        deviceName: string
+      }
+
+      export interface ForceQuit {
+        deviceId: string
+      }
+
+      export interface Lock {
+        deviceId: string
+      }
+
+      export interface Unlock {
+        deviceId: string
+        lockPwdHash?: string
+      }
+
+    }
   }
 }

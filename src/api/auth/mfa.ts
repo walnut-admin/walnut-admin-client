@@ -10,6 +10,7 @@ const mfaAPI = {
   totpVerified: '/system/user/mfa/totp/verify',
   totpBind: '/system/user/mfa/totp/bind',
   totpUnbind: '/system/user/mfa/totp/unbind',
+  totpStatus: '/system/user/mfa/totp/status',
 
   webauthnRegisterOptions: '/system/user/mfa/webauthn/register/options',
   webauthnRegisterVerify: '/system/user/mfa/webauthn/register/verify',
@@ -74,6 +75,18 @@ export function authMfaTotpBindAPI(data: IRequestPayload.Auth.MFA.Totp.Bind) {
 export function authMfaTotpUnbindAPI() {
   return AppAxios.delete<boolean>({
     url: mfaAPI.totpUnbind,
+  })
+}
+
+/**
+ * @description update totp status
+ */
+export function authMfaTotpUpdateStatusAPI(status: boolean) {
+  return AppAxios.put<boolean>({
+    url: mfaAPI.totpStatus,
+    data: {
+      status,
+    },
   })
 }
 

@@ -38,28 +38,28 @@ export function setupSocket() {
 
   socket.on('connect', () => {
     console.info('[Socket] Connected')
+
+    socket?.on(AppSocketEvents.FORCE_QUIT, async (payload: { strategy: string }) => {
+      const strategyMap: Recordable = {
+        FORCE_IMMEDIATE_SIGNOUT: async () => {
+          await userStoreAuth.Signout()
+        },
+        FORCE_COUNTDOWN_MODAL: () => {
+          useStoreCompForceQuit().onOpenForceQuitModal()
+        },
+        MANUAL_COUNTDOWN_MODAL: () => {
+          useStoreCompForceQuit().onOpenForceQuitModal(true)
+        },
+      }
+
+      const handler = strategyMap[payload.strategy]
+      if (handler)
+        await handler()
+    })
   })
 
   socket.on('error', (err) => {
     console.error('[Socket] Error:', err)
-  })
-
-  socket.on(AppSocketEvents.FORCE_QUIT, async (payload: { strategy: string }) => {
-    const strategyMap: Recordable = {
-      FORCE_IMMEDIATE_SIGNOUT: async () => {
-        await userStoreAuth.Signout()
-      },
-      FORCE_COUNTDOWN_MODAL: () => {
-        useStoreCompForceQuit().onOpenForceQuitModal()
-      },
-      MANUAL_COUNTDOWN_MODAL: () => {
-        useStoreCompForceQuit().onOpenForceQuitModal(true)
-      },
-    }
-
-    const handler = strategyMap[payload.strategy]
-    if (handler)
-      await handler()
   })
 
   console.info('[Socket] Initialized successfully')

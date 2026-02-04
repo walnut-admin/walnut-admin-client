@@ -16,16 +16,6 @@ const systemUser = {
 } as const
 
 /**
- * @description update profile
- */
-export function updateProfileAPI(data: IModels.SystemUser) {
-  return AppAxios.put<boolean>({
-    url: `/system/user/me/profile`,
-    data,
-  })
-}
-
-/**
  * @description clear password
  */
 export function clearPasswordAPI(data: { _id: string }) {

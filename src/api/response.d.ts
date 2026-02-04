@@ -10,6 +10,31 @@ export namespace IResponseData {
     devDependencies: Recordable
   }
 
+  export namespace Me {
+    export namespace Security {
+      export interface Tab1Status {
+        opaque: boolean
+        phoneNumber: boolean
+        emailAddress: boolean
+      }
+
+      export interface Tab2Status {
+        totp: {
+          status: boolean
+          verified: boolean
+        }
+        webauthn: {
+          status: boolean
+          verified: boolean
+        }
+      }
+
+      export interface Tab3Status {
+
+      }
+    }
+  }
+
   export namespace App {
     export namespace Monitor {
       export interface CPU {
@@ -110,12 +135,6 @@ export namespace IResponseData {
           account: string
         }
 
-        export interface Status {
-          enabled: boolean
-          boundAt?: string
-          lastUsedAt?: string
-        }
-
         export interface Bind {
           backupCodes: string[]
         }
@@ -164,6 +183,14 @@ export namespace IResponseData {
   }
 
   export namespace System {
+    export namespace UserDevice {
+      export interface List extends Pick<IModels.SystemUserDevice, 'deviceId' | 'deviceName' | 'locked' | 'lastActive'> {
+        deviceType: string
+        location: string
+        current: boolean
+        auth: boolean
+      }
+    }
     export namespace Device {
       export interface Initial {
         deviceId: string

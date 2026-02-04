@@ -16,6 +16,10 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
       return state.profile._id
     },
 
+    getUserName(state) {
+      return state.profile.userName
+    },
+
     getDisplayName(): string {
       if (this.profile.nickName)
         return upperFirst(this.profile.nickName)
@@ -33,7 +37,7 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     },
 
     getRoleList(state) {
-      return state.profile.populated_rolesList
+      return state.profile.populated_roles_list
     },
 
     getCurrentRole(state) {

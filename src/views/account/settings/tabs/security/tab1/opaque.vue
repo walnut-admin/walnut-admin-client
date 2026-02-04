@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'WAccountSettingsTabSecurityOpaque',
+  name: 'WAccountSettingsTabSecurityTab1Opaque',
   defaultView: false,
 })
 
@@ -19,11 +19,51 @@ const { stateRef: formData, resetState: resetFormData } = useState({
   newPasswordConfirm: undefined,
 })
 
-const [register, { validate }] = useForm<typeof formData.value>({
+const [register, { onOpen, onClose }] = useForm<typeof formData.value>({
   inline: true,
   labelPlacement: appStoreAdapter.isMobile ? 'top' : 'left',
   labelAlign: appStoreAdapter.isMobile ? 'left' : 'right',
   labelWidth: 120,
+
+  dialogPreset: 'modal',
+  dialogProps: {
+    width: '40%',
+    closable: true,
+    autoFocus: false,
+    fullscreen: false,
+    title: computed(() => t('app.security.opaque.title')),
+    onYes: async (_, done) => {
+      // TODO before set/change password need to do verify if has
+      try {
+        await userStoreAuth.changePasswordWithOpaque(formData.value.newPasswordConfirm!)
+        useAppMsgSuccess()
+        resetFormData()
+      }
+      finally {
+        done()
+      }
+
+    //   const { confirmed, inst } = await useAppConfirm(t('app.base.switchRole.confirm', { roleName: getCurrentRoleName.value }), { maskClosable: false })
+    //   if (confirmed) {
+    //     try {
+    //       await switchRoleAPI(formData.value.roleId!)
+    //       useAppMessage()
+    //       await userStoreAuth.ExecuteAfterSwitchRole()
+    //     }
+    //     finally {
+    //       done()
+    //     }
+    //   }
+    //   else {
+    //     inst.destroy()
+    //     // TODO onYes need to expose close fn
+    //     done()
+    //   }
+    },
+    onNo: (close) => {
+      close()
+    },
+  },
 
   baseRules: true,
 
@@ -71,41 +111,16 @@ const [register, { validate }] = useForm<typeof formData.value>({
         maxlength: max,
       },
     },
-    {
-      type: 'Base:Button',
-      componentProp: {
-        textProp: () => t('app.base.save'),
-        type: 'primary',
-        loading: computed(() => loading.value),
-        disabled: computed(() => loading.value),
-        debounce: 500,
-        onClick: async () => {
-          const valid = await validate()
-
-          if (!valid) {
-            return
-          }
-
-          loading.value = true
-
-          try {
-            await userStoreAuth.changePasswordWithOpaque(formData.value.newPasswordConfirm!)
-            useAppMsgSuccess()
-            resetFormData()
-          }
-          finally {
-            loading.value = false
-          }
-        },
-      },
-    },
   ],
+})
+
+defineExpose({
+  onOpen,
+  onClose,
 })
 </script>
 
 <template>
-  <div class="w-2/5 max-lg:w-full">
-    <!-- @vue-generic {typeof formData.value} -->
-    <WForm :model="formData" @hook="register" />
-  </div>
+  <!-- @vue-generic {typeof formData.value} -->
+  <WForm :model="formData" @hook="register" />
 </template>

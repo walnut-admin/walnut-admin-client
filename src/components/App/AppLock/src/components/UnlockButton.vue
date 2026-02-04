@@ -12,7 +12,7 @@ async function onUnlock() {
 
 <template>
   <WIconButton
-    :icon-props="{ icon: 'mdi:lock-open-variant', height: 24 }"
+    :icon-props="{ icon: 'mdi:lock-open-variant-outline', height: 24 }"
     :button-props="{ disabled: appStoreLock.getLoading, onClick: onUnlock, class: 'absolute left-1/2 top-8 -translate-x-1/2' }"
   />
 </template>
