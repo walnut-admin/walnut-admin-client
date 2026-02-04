@@ -122,7 +122,7 @@ export const mainoutExternalLinkRoute: RouteRecordRaw = {
   },
 }
 
-export const mainoutNotAllowedRoute: RouteRecordSingleView = {
+const mainoutNotAllowedRoute: RouteRecordSingleView = {
   name: mainoutConst.notAllowed.name,
   path: mainoutConst.notAllowed.path,
   component: () => import('../../views/error/NotAllowed/index.vue'),
@@ -179,6 +179,7 @@ export const mainoutRoutes: RouteRecordRaw[] = [
   testMainoutRoute,
   testFrontAuthRoute,
   splashCursorRoute,
+  mainoutNotAllowedRoute,
 ]
 
 export const mainoutRootRoute: RouteRecordRaw = {

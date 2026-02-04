@@ -2,7 +2,7 @@ import type { AxiosResponse } from 'axios'
 import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
 import { get, isArray, set } from 'lodash-es'
-import { mainoutConst, mainoutLockRoute, mainoutMfaRequiredRoute, mainoutMfaVerifiedRoute, mainoutNotAllowedRoute } from '@/router/routes/mainout'
+import { mainoutConst, mainoutLockRoute, mainoutMfaRequiredRoute, mainoutMfaVerifiedRoute } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
 import { removeCurrentPageRequests } from '../../adapters/cancel'
 import { BusinessCodeConst, notAllowedErrorCodeMap } from '../../constant'
@@ -89,10 +89,8 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
 
   // not allowed
   if (Object.keys(notAllowedErrorCodeMap).map(Number).includes(code)) {
-    removeCurrentPageRequests(AppRouter.currentRoute.value.path)
-    const appStoreRoute = useAppStoreRoute()
-    appStoreRoute.addDynamicAuthRoute(mainoutNotAllowedRoute)
     await AppRouter.replace({ name: mainoutConst.notAllowed.name, force: true, query: { type: notAllowedErrorCodeMap[code] } })
+    removeCurrentPageRequests(AppRouter.currentRoute.value.path)
     return Promise.reject(new Error('Not Allowed'))
   }
 
