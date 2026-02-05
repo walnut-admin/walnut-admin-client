@@ -65,6 +65,7 @@ async function bindTotp() {
   }
 }
 
+// TODO 删除 没有解绑totp的说法
 // unbind totp
 async function onUnbind() {
   const { confirmed } = await useAppConfirm(t('mfa.totp.unbind'))

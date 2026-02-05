@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { noop } from 'lodash-es'
 import { authMfaStatusAPI, authMfaVerifyAPI } from '@/api/auth/mfa'
 import { mainoutMfaRequiredRoute } from '@/router/routes/mainout'
 import TotpModal from './totpModal.vue'
@@ -16,7 +17,6 @@ interface MfaMethod {
   recommended?: boolean
   enabled?: boolean
   onBind?: () => void
-  onUnbind?: () => void
 }
 
 const { t } = useAppI18n()
@@ -40,9 +40,6 @@ const mfaMethodsConfig = ref<MfaMethod[]>([
     onBind: () => {
       totpModalRef.value?.onBind()
     },
-    onUnbind: () => {
-      totpModalRef.value?.onUnbind()
-    },
   },
   {
     key: 'webauthn',
@@ -53,9 +50,6 @@ const mfaMethodsConfig = ref<MfaMethod[]>([
     enabled: false,
     onBind: () => {
       webauthnModalRef.value?.onBind()
-    },
-    onUnbind: () => {
-      webauthnModalRef.value?.onUnbind()
     },
   },
 ])
@@ -130,7 +124,7 @@ onBeforeMount(async () => {
         :bordered="true"
         class="relative cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
         :class="method.recommended ? 'ring-2 ring-blue-400' : ''"
-        @click="() => method.enabled ? method.onUnbind!() : method.onBind!()"
+        @click="() => method.enabled ? noop : method.onBind!()"
       >
         <n-tag
           v-if="method.enabled && method.recommended"
@@ -181,9 +175,9 @@ onBeforeMount(async () => {
               size="small"
               class="w-full sm:w-auto"
               icon="carbon-arrow-right"
-              @click.self="() => method.enabled ? method.onUnbind!() : method.onBind!()"
+              @click.self="() => method.enabled ? noop() : method.onBind!()"
             >
-              {{ method.enabled ? $t('app.base.unbind') : $t('app.base.configThis') }}
+              {{ method.enabled ? $t('app.base.configed') : $t('app.base.configThis') }}
             </WButton>
           </div>
         </div>
