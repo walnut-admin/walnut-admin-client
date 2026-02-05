@@ -96,6 +96,9 @@ export function setupSocket() {
 
 export function destroySocket() {
   if (socket) {
+    Object.values(AppSocketEvents).forEach((event) => {
+      unregisterSocketEvent(event)
+    })
     socket.disconnect()
     socket = null
     console.info('[Socket] Disconnected')

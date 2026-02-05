@@ -6,19 +6,27 @@ defineOptions({
 
 const loading = ref(false)
 
+const userStoreAuth = useAppStoreUserAuth()
 const compStoreForceQuit = useStoreCompForceQuit()
-const { retryText, resume, pause } = useCountdownStorage({ persistKey: 'force-quit', persistSeconds: 10, onCountdownComplete: onForceQuit })
+
+const { retryText, clear, resume } = useCountdownStorage({
+  persistKey: 'force-quit',
+  persistSeconds: 10,
+  onCountdownComplete: onForceQuit,
+})
+
 resume()
 
 async function onForceQuit() {
+  if (loading.value)
+    return
   loading.value = true
 
   try {
+    clear()
     compStoreForceQuit.onCloseForceQuitModal()
-    const userStoreAuth = useAppStoreUserAuth()
-    pause()
-    await userStoreAuth.Signout()
     compStoreForceQuit.$reset()
+    await userStoreAuth.Signout()
   }
   finally {
     loading.value = false
@@ -28,7 +36,7 @@ async function onForceQuit() {
 
 <template>
   <WModal
-    v-model:show="compStoreForceQuit.getShow"
+    v-model:show="compStoreForceQuit.show!"
     :close-on-esc="false"
     :closable="false"
     :mask-closable="false"

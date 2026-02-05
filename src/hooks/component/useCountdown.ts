@@ -59,6 +59,14 @@ export function useCountdownStorage({
     resume()
   }
 
+  function clear() {
+    pause()
+    retryText.value = undefined
+    _leftSeconds.value = persistSeconds
+    clearPersist()
+    onCountdownComplete?.()
+  }
+
   onBeforeMount(() => {
     if (!persistKey) {
       _leftSeconds.value = persistSeconds
@@ -83,5 +91,5 @@ export function useCountdownStorage({
     }
   })
 
-  return { retryText, pause, resume: startCountdown }
+  return { retryText, pause, resume: startCountdown, clear }
 }

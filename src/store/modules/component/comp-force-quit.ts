@@ -4,9 +4,12 @@ import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
+// NOTICE need to declear first then assign to store
+const show = useAppStorageSync(AppConstPersistKey.FORCE_QUIT_SHOW, false)
+
 const useStoreCompForceQuitInside = defineStore(StoreKeys.COMP_FORCE_QUIT, {
   state: (): IStoreComp.ForceQuit => ({
-    show: useAppStorageSync(AppConstPersistKey.FORCE_QUIT_SHOW, false),
+    show,
     quitButton: false,
   }),
 
@@ -20,7 +23,7 @@ const useStoreCompForceQuitInside = defineStore(StoreKeys.COMP_FORCE_QUIT, {
   },
 
   actions: {
-    async onOpenForceQuitModal(quitButton = false) {
+    onOpenForceQuitModal(quitButton = false) {
       this.quitButton = quitButton
       this.show = true
     },
