@@ -4,9 +4,11 @@ import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
+const scrollEntries = useAppStorageSync(AppConstPersistKey.SCROLL, [])
+
 const useAppStoreUserScrollInside = defineStore(StoreKeys.USER_SCROLL, {
   state: (): IStoreUser.Scroll => ({
-    scrollEntries: useAppStorageSync(AppConstPersistKey.SCROLL, []),
+    scrollEntries,
   }),
 
   getters: {

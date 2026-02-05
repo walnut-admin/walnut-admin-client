@@ -8,13 +8,14 @@ import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
 const preferredLanguages = usePreferredLanguages()
+const locale = useAppStorageSync(
+  AppConstPersistKey.LOCALE,
+  preferredLanguages.value[0].replaceAll('-', '_') as ValueOfAppConstLocale,
+)
 
 const useAppStoreLocaleInside = defineStore(StoreKeys.APP_LOCALE, {
   state: (): IStoreApp.Locale => ({
-    locale: useAppStorageSync(
-      AppConstPersistKey.LOCALE,
-      preferredLanguages.value[0].replaceAll('-', '_') as ValueOfAppConstLocale,
-    ),
+    locale,
     baseI18nKeyList: [],
     langList: [],
   }),

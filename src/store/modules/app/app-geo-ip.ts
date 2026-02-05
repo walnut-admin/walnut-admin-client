@@ -6,12 +6,18 @@ import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
+const deviceId = useAppStorageSync<Nullable<string>>(AppConstPersistKey.GEO_IP_DEVICE_ID, null)
+
+const geoInfo = useAppStorageSync<IStoreApp.GeoIP['geoInfo']>(AppConstPersistKey.GEO_IP_GEO_INFO, {
+  countryCode: '',
+  longitude: 0,
+  latitude: 0,
+})
+
 const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
   state: (): IStoreApp.GeoIP => ({
-    deviceId: useAppStorageSync<Nullable<string>>(AppConstPersistKey.GEO_IP_DEVICE_ID, null),
-    countryCode: useAppStorageSync<Nullable<string>>(AppConstPersistKey.GEO_IP_COUNTRY_CODE, null),
-    longitude: useAppStorageSync<Nullable<number>>(AppConstPersistKey.GEO_IP_LONGITUDE, null),
-    latitude: useAppStorageSync<Nullable<number>>(AppConstPersistKey.GEO_IP_LATITUDE, null),
+    deviceId,
+    geoInfo: geoInfo.value,
   }),
 
   getters: {
@@ -19,13 +25,13 @@ const useAppStoreGeoIPInside = defineStore(StoreKeys.APP_GEO_IP, {
       return state.deviceId
     },
     getLng(state) {
-      return state.longitude as number
+      return state.geoInfo.longitude as number
     },
     getLat(state) {
-      return state.latitude as number
+      return state.geoInfo.latitude as number
     },
     getCountryCode(state) {
-      return state.countryCode
+      return state.geoInfo.countryCode
     },
   },
 

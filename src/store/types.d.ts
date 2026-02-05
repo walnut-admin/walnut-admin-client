@@ -13,7 +13,6 @@ export namespace IStoreApp {
    */
   export interface Route {
     whiteListPath: string[]
-
   }
 
   /**
@@ -37,25 +36,16 @@ export namespace IStoreApp {
     fingerprint: Ref<Nullable<string>>
   }
 
-  export interface GeoIPInfo {
-    country: string
-    city: string
-    region?: string
-    ip: string
-    isp: string
-    longitude?: number
-    latitude?: number
-    country_code: string
-  }
-
   /**
    * App geo ip state
    */
   export interface GeoIP {
     deviceId: Ref<Nullable<string>>
-    countryCode: Ref<Nullable<string>>
-    longitude: Ref<Nullable<number>>
-    latitude: Ref<Nullable<number>>
+    geoInfo: {
+      countryCode: string
+      longitude: number
+      latitude: number
+    }
   }
 
   /**

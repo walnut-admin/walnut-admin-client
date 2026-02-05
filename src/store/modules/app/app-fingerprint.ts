@@ -125,9 +125,11 @@ function getBrowserSpecificComponent() {
   return features.join('|')
 }
 
+const fingerprint = useAppStorageSync<string>(AppConstPersistKey.FINGERPRINT, '', { storage: enhancedBase64LocalStorage() })
+
 const useAppStoreFingerprintInside = defineStore(StoreKeys.APP_FINGERPRINT, {
   state: (): IStoreApp.Fingerprint => ({
-    fingerprint: useAppStorageSync<string>(AppConstPersistKey.FINGERPRINT, '', { storage: enhancedBase64LocalStorage() }),
+    fingerprint,
   }),
 
   getters: {
