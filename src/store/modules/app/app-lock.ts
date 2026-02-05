@@ -93,18 +93,8 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
         return
       }
 
-      tryOnMounted(async () => {
-        const socket = await getSocket()
-
-        socket.on(AppSocketEvents.LOCK, async () => {
-          await this.logicAfterLock()
-        })
-      })
-
-      tryOnUnmounted(async () => {
-        const socket = await getSocket()
-
-        socket.off(AppSocketEvents.LOCK)
+      registerSocketEvent(AppSocketEvents.LOCK, async () => {
+        await this.logicAfterLock()
       })
     },
 
@@ -162,18 +152,8 @@ const useAppStoreLockInside = defineStore(StoreKeys.APP_LOCK, {
       if (!this.getEnable) {
         return
       }
-
-      tryOnMounted(async () => {
-        const socket = await getSocket()
-        socket.on(AppSocketEvents.UNLOCK, () => {
-          this.logicAfterUnlock()
-        })
-      })
-
-      tryOnUnmounted(async () => {
-        const socket = await getSocket()
-
-        socket.off(AppSocketEvents.UNLOCK)
+      registerSocketEvent(AppSocketEvents.UNLOCK, () => {
+        this.logicAfterUnlock()
       })
     },
 

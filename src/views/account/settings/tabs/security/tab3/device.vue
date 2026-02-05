@@ -189,6 +189,7 @@ const [register, { onApiList }] = useTable<IResponseData.System.UserDevice.List>
           _builtInType: 'lock',
           _dropdown: true,
           confirm: true,
+          _disabled: row => !row.auth,
           _show: row => !row.locked,
           iconProps: {
             icon: 'mdi:lock-outline',
@@ -211,6 +212,7 @@ const [register, { onApiList }] = useTable<IResponseData.System.UserDevice.List>
           _builtInType: 'unlock',
           _dropdown: true,
           confirm: true,
+          _disabled: row => !row.auth,
           _show: row => row.locked,
           iconProps: {
             icon: 'mdi:lock-open-variant-outline',
