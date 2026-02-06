@@ -92,7 +92,7 @@ async function verifyTotp() {
     loading.value = true
     errorMessage.value = ''
 
-    const accessToken = await authMfaTotpVerifyAPI({
+    const { accessToken } = await authMfaTotpVerifyAPI({
       trusted: trusted.value,
       code: verifyCode.value,
     })
@@ -119,7 +119,7 @@ async function performWebAuthnVerification() {
       optionsJSON: authenticationOptions.value!,
     })
 
-    const accessToken = await authMfaWebauthnAuthenticateVerifyAPI({
+    const { accessToken } = await authMfaWebauthnAuthenticateVerifyAPI({
       response: authResponse,
       trusted: trusted.value,
     })

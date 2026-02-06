@@ -24,4 +24,5 @@ export const notAllowedErrorCodeMap: Record<number, string> = {
   40606: 'deviceLocked',
   40607: 'deviceBanned',
   40666: 'riskTooHigh',
+  42900: 'tooManyRequests',
 }

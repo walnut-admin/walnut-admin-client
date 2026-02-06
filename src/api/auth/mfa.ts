@@ -31,7 +31,7 @@ export function authMfaStatusAPI() {
  * @description verify mfa status
  */
 export function authMfaVerifyAPI(trusted: boolean) {
-  return AppAxios.post<string>({
+  return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: mfaAPI.verify,
     data: {
       trusted,
@@ -53,7 +53,7 @@ export function authMfaTotpGenerateAPI(data: IRequestPayload.Auth.MFA.Totp.Gener
  * @description verify totp
  */
 export function authMfaTotpVerifyAPI(data: IRequestPayload.Auth.MFA.Totp.Verify) {
-  return AppAxios.post<string>({
+  return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: mfaAPI.totpVerified,
     data,
   })
@@ -123,7 +123,7 @@ export function authMfaWebauthnAuthenticateOptionsAPI() {
  * @description verify webauthn authenticate
  */
 export function authMfaWebauthnAuthenticateVerifyAPI(data: IRequestPayload.Auth.MFA.Webauthn.AuthenticateVerify) {
-  return AppAxios.post<string>({
+  return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: mfaAPI.webauthnAuthenticateVerify,
     data,
   })

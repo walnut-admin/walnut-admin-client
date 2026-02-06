@@ -75,7 +75,7 @@ async function onInit() {
 async function onVerifyMfa() {
   try {
     loading.value = true
-    const accessToken = await authMfaVerifyAPI(trusted.value)
+    const { accessToken } = await authMfaVerifyAPI(trusted.value)
     await userStoreAuth.ExecuteCoreFnAfterAuth(accessToken)
     appStoreRoute.removeDynamicAuthRoute(mainoutMfaRequiredRoute)
   }
