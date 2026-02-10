@@ -5,40 +5,40 @@ import AccountSettingTabPreference from './tabs/preference/index.vue'
 import AccountSettingTabSecurity from './tabs/security/index.vue'
 
 defineOptions({
-  name: 'AccountSetting',
+  name: 'Me',
 })
 
-const activeTab = useRouterQuery('tab')
-const child_tab = useRouterQuery('child_tab')
+const activeTab = useRouterParam('tab', 'basic')
+const child_tab = useRouterParam('child_tab')
 
 const childTabMemory = new Map<string, string>()
 
+function getDefaultChildTab(activeTabValue: string): string {
+  const defaults: Record<string, string> = {
+    basic: '1',
+    security: '1',
+    account: '1',
+    prefer: '1',
+  }
+  return defaults[activeTabValue]
+}
+
 watch(() => activeTab.value, (newTab, oldTab) => {
-  // 1. 保存旧大 Tab 的小 Tab 状态到内存
   if (oldTab && child_tab.value) {
     childTabMemory.set(oldTab, child_tab.value)
   }
 
-  // 2. 恢复新大 Tab 的小 Tab 状态
   if (newTab) {
-    // 🔥 修复：初始化时（oldTab 为 undefined），保留 URL 中的值
-    if (oldTab === undefined) {
-      // 刷新场景：将 URL 中的值保存到内存
-      if (child_tab.value) {
-        childTabMemory.set(newTab, child_tab.value)
-      }
+    const saved = childTabMemory.get(newTab)
+
+    if (saved) {
+      child_tab.value = saved
     }
     else {
-      // 切换场景：从内存恢复或使用默认值
-      child_tab.value = childTabMemory.get(newTab)
+      const defaultValue = getDefaultChildTab(newTab)
+      child_tab.value = defaultValue
+      childTabMemory.set(newTab, defaultValue)
     }
-  }
-}, { immediate: true })
-
-// 小 Tab 变化时同步到内存
-watch(() => child_tab.value, (val) => {
-  if (activeTab.value && val) {
-    childTabMemory.set(activeTab.value, val)
   }
 })
 </script>
@@ -46,7 +46,7 @@ watch(() => child_tab.value, (val) => {
 <template>
   <n-card :title="$t('sys.menu.account.setting')">
     <n-tabs v-model:value="activeTab" type="card" animated>
-      <n-tab-pane name="info" display-directive="show:lazy" :tab="$t('app.base.basic')">
+      <n-tab-pane name="basic" display-directive="show:lazy" :tab="$t('app.base.basic')">
         <AccountSettingTabBasic />
       </n-tab-pane>
 

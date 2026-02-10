@@ -4,7 +4,7 @@ import { updateLayoutPreferenceAPI } from '@/api/system/user_preference'
 import { objectToPaths, pathsToObject } from '@/utils/shared'
 
 defineOptions({
-  name: 'WAccountSettingsTabPreferenceLayout',
+  name: 'WMeTabPreferenceLayout',
   defaultView: false,
 })
 

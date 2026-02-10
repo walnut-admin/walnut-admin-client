@@ -1,21 +1,23 @@
 <script lang="ts" setup>
+import type { SelectMixedOption } from 'naive-ui/es/select/src/interface'
 import type { IStoreUser } from '@/store/types'
-import { updateThemePreferenceAPI } from '@/api/system/user_preference'
+import { updatePreferenceBasicAPI } from '@/api/system/user_preference'
 
 defineOptions({
-  name: 'WAccountSettingsTabPreferenceTheme',
+  name: 'WMeTabPreferenceBasic',
   defaultView: false,
 })
 
 const userStoreProfile = useAppStoreUserProfile()
 const userStorePreference = useAppStoreUserPreference()
+const appStoreLocale = useAppStoreLocale()
 const appStoreAdapter = useAppStoreAdapter()
 
 const { t } = useAppI18n()
 
 const loading = ref(false)
 
-const [register] = useForm<IStoreUser.Preference.Theme>({
+const [register] = useForm<IStoreUser.Preference.Basic>({
   inline: true,
   labelPlacement: appStoreAdapter.isMobile ? 'top' : 'left',
   labelAlign: appStoreAdapter.isMobile ? 'left' : 'right',
@@ -24,11 +26,14 @@ const [register] = useForm<IStoreUser.Preference.Theme>({
   disabled: computed(() => loading.value),
   schemas: [
     {
-      type: 'Base:Switch',
+      type: 'Base:Select',
       formProp: {
-        path: 'dark',
+        path: 'locale',
+        label: computed(() => t('app.base.language')),
       },
-      componentProp: {},
+      componentProp: {
+        options: computed(() => appStoreLocale.getLangList) as unknown as SelectMixedOption[],
+      },
     },
     {
       type: 'Base:Button',
@@ -42,7 +47,7 @@ const [register] = useForm<IStoreUser.Preference.Theme>({
           loading.value = true
 
           try {
-            await updateThemePreferenceAPI(userStorePreference.theme)
+            await updatePreferenceBasicAPI(userStorePreference.basic)
             useAppMsgSuccess()
             await userStoreProfile.getProfile()
           }
@@ -58,6 +63,6 @@ const [register] = useForm<IStoreUser.Preference.Theme>({
 
 <template>
   <div class="w-2/5 max-lg:w-full">
-    <WForm :model="userStorePreference.theme" @hook="register" />
+    <WForm :model="userStorePreference.basic" @hook="register" />
   </div>
 </template>

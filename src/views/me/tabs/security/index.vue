@@ -4,7 +4,7 @@ import WAccountSettingsTabSecurityTab2 from './tab2/index.vue'
 import WAccountSettingsTabSecurityTab3 from './tab3/index.vue'
 
 defineOptions({
-  name: 'WAccountSettingsTabSecurity',
+  name: 'WMeTabSecurity',
   defaultView: false,
 })
 

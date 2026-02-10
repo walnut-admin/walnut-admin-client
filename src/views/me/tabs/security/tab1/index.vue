@@ -1,24 +1,26 @@
 <script lang="ts" setup>
 import type { IResponseData } from '@/api/response'
 import { getSecurityTab1StatusAPI } from '@/api/system/user_me'
-import WAccountSettingsTabSecurityTab3Device from './device.vue'
+import WAccountSettingsTabSecurityTab1Opaque from './opaque.vue'
 
 defineOptions({
-  name: 'WAccountSettingsTabSecurityTab3',
+  name: 'WMeTabSecurityTab1',
   defaultView: false,
 })
 
 const { t } = useAppI18n()
+const userStoreProfile = useAppStoreUserProfile()
 
-const deviceModal = useTemplateRef('deviceModal')
-
-const status = ref<IResponseData.Me.Security.Tab3Status>({
-
+const tab1Ref = useTemplateRef('tab1Ref')
+const status = ref<IResponseData.Me.Security.Tab1Status>({
+  opaque: false,
+  phoneNumber: false,
+  emailAddress: false,
 })
 
-async function onClick(index: number) {
+function onClick(index: number) {
   if (index === 1) {
-    await deviceModal.value?.onOpen()
+    tab1Ref.value?.onOpen()
   }
 
   if (index === 2) {
@@ -43,8 +45,8 @@ onBeforeMount(onInit)
     <n-list-item>
       <template #prefix>
         <WIconButton
-          :icon-props="{ icon: 'mdi:devices' }"
-          :button-props="{ type: 'primary' }"
+          :icon-props="{ icon: 'mdi:account' }"
+          :button-props="{ type: status.opaque ? 'primary' : 'default' }"
         />
       </template>
       <template #suffix>
@@ -53,28 +55,28 @@ onBeforeMount(onInit)
         </n-button>
       </template>
       <n-thing
-        :title="$t('app.security.device')"
-        :description="$t('app.security.device.desc')"
+        :title="$t('app.security.opaque')"
+        :description="status.opaque ? $t('app.security.opaque.desc', { userName: userStoreProfile.getUserName }) : $t('app.security.opaque.desc.unset')"
         description-class="text-sm text-gray-400"
       />
-      <WAccountSettingsTabSecurityTab3Device ref="deviceModal" />
+      <WAccountSettingsTabSecurityTab1Opaque ref="tab1Ref" />
     </n-list-item>
 
     <n-list-item>
       <template #prefix>
         <WIconButton
-          :icon-props="{ icon: 'simple-icons:session' }"
-          :button-props="{ type: 'primary' }"
+          :icon-props="{ icon: 'mdi:cellphone-android' }"
+          :button-props="{ type: status.phoneNumber ? 'primary' : 'default' }"
         />
       </template>
       <template #suffix>
         <n-button type="primary" size="small" @click="onClick(3)">
-          {{ $t('app.base.set') }}
+          {{ status.phoneNumber ? $t('app.base.unbind') : $t('app.base.bind') }}
         </n-button>
       </template>
       <n-thing
-        :title="$t('app.security.sessionStrategy')"
-        :description="$t('app.security.sessionStrategy.desc')"
+        :title="$t('app.security.phoneNumber')"
+        :description="status.phoneNumber ? $t('app.security.phoneNumber.desc') : $t('app.security.phoneNumber.desc.unset')"
         description-class="text-sm text-gray-400"
       />
     </n-list-item>
@@ -82,18 +84,18 @@ onBeforeMount(onInit)
     <n-list-item>
       <template #prefix>
         <WIconButton
-          :icon-props="{ icon: 'carbon:password' }"
-          :button-props="{ type: 'primary' }"
+          :icon-props="{ icon: 'mdi:email' }"
+          :button-props="{ type: status.emailAddress ? 'primary' : 'default' }"
         />
       </template>
       <template #suffix>
         <n-button type="primary" size="small" @click="onClick(2)">
-          {{ $t('app.base.set') }}
+          {{ status.emailAddress ? $t('app.base.unbind') : $t('app.base.bind') }}
         </n-button>
       </template>
       <n-thing
-        :title="$t('app.security.passwordStrategy')"
-        :description="$t('app.security.passwordStrategy.desc')"
+        :title="$t('app.security.emailAddress')"
+        :description="status.emailAddress ? $t('app.security.emailAddress.desc') : $t('app.security.emailAddress.desc.unset')"
         description-class="text-sm text-gray-400"
       />
     </n-list-item>

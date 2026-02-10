@@ -3,7 +3,7 @@ import type { IStoreUser } from '@/store/types'
 import { updateAccessibilityPreferenceAPI } from '@/api/system/user_preference'
 
 defineOptions({
-  name: 'WAccountSettingsTabPreferenceAccessibility',
+  name: 'WMeTabPreferenceAccessibility',
   defaultView: false,
 })
 

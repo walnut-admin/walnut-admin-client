@@ -5,7 +5,7 @@ import WAccountSettingsTabPreferenceLayout from './layout.vue'
 import WAccountSettingsTabPreferenceTheme from './theme.vue'
 
 defineOptions({
-  name: 'WAccountSettingsTabPreference',
+  name: 'WMeTabPreference',
   defaultView: false,
 })
 

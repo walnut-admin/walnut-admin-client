@@ -7,7 +7,7 @@ import { getSecurityTab2StatusAPI } from '@/api/system/user_me'
 import WIcon from '@/components/UI/Icon'
 
 defineOptions({
-  name: 'WAccountSettingsTabSecurityTab2',
+  name: 'WMeTabSecurityTab2',
   defaultView: false,
 })
 

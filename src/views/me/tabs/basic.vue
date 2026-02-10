@@ -6,7 +6,7 @@ import { updateProfileAPI } from '@/api/system/user_me'
 import WAvatar from '../components/avatar.vue'
 
 defineOptions({
-  name: 'WAccountSettingsTabInfo',
+  name: 'WMeTabBasic',
   defaultView: false,
 })
 
