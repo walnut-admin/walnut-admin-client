@@ -8,7 +8,7 @@ import { findPath } from 'easy-fns-ts'
 // TODO 111
 import WRadio from '@/components/UI/Radio'
 import { isProd } from '@/utils/constant/vue'
-import { getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
+import { cacheKeyStrategyOptions, getViewsOptions, menuTernalOptions, menuTypeOptions } from './utils'
 
 export function useMenuFormSchema(
   actionType: Ref<IActionType>,
@@ -273,6 +273,24 @@ export function useMenuFormSchema(
         vIf: ({ formData }) =>
           formData.type === AppConstMenuType.MENU
           && formData['meta.ternal'] !== AppConstMenuTernal.EXTERNAL,
+      },
+    },
+
+    {
+      type: 'Base:Select',
+      formProp: {
+        path: 'meta.cacheKeyStrategy',
+        labelHelpMessage: true,
+        rule: false,
+      },
+      componentProp: {
+        options: cacheKeyStrategyOptions,
+        clearable: true,
+      },
+      visibleProp: {
+        vIf: ({ formData }) =>
+          formData.type === AppConstMenuType.MENU
+          && formData['meta.cache'] === true,
       },
     },
 

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { RouteLocationNormalizedLoadedGeneric } from 'vue-router'
+
 const appStoreMenu = useAppStoreMenu()
 const appStoreSettingDev = useAppStoreSettingDev()
 const appSettingScope = useAppStoreSettingScope()
@@ -8,6 +10,22 @@ const getKeepAliveInclude = computed(() => {
     return []
   return appStoreMenu.getKeepAliveRouteNames
 })
+
+function getComponentKey(route: RouteLocationNormalizedLoadedGeneric) {
+  const strategy = route.meta?.cacheKeyStrategy
+
+  switch (strategy) {
+    case 'name':
+      return route.name as string
+    case 'path':
+      return route.path
+    case 'custom':
+      // TODO your custom cache key strategy
+      return route.fullPath
+    default:
+      return route.fullPath
+  }
+}
 </script>
 
 <template>
@@ -19,10 +37,10 @@ const getKeepAliveInclude = computed(() => {
             v-if="appStoreSettingDev.getKeepAlive"
             :include="getKeepAliveInclude"
           >
-            <component :is="Component" v-if="localRefreshFlag" :key="route.path + JSON.stringify(route.params)" />
+            <component :is="Component" v-if="localRefreshFlag" :key="getComponentKey(route)" />
           </keep-alive>
 
-          <component :is="Component" v-else :key="route.path + JSON.stringify(route.params)" />
+          <component :is="Component" v-else :key="getComponentKey(route)" />
         </WTransition>
 
         <template v-else>
@@ -30,10 +48,10 @@ const getKeepAliveInclude = computed(() => {
             v-if="appStoreSettingDev.getKeepAlive"
             :include="getKeepAliveInclude"
           >
-            <component :is="Component" v-if="localRefreshFlag" :key="route.path + JSON.stringify(route.params)" />
+            <component :is="Component" v-if="localRefreshFlag" :key="getComponentKey(route)" />
           </keep-alive>
 
-          <component :is="Component" v-else :key="route.path + JSON.stringify(route.params)" />
+          <component :is="Component" v-else :key="getComponentKey(route)" />
         </template>
       </router-view>
     </template>

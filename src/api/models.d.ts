@@ -1,6 +1,6 @@
 import type { PromiseFn, Recordable } from 'easy-fns-ts'
 import type { WatermarkProps } from 'naive-ui'
-import type { ValueOfAppConstLockMode, ValueOfAppConstMenuType, ValueOfAppConstTransitionName } from '@/const'
+import type { ValueOfAppConstCacheKeyStrategy, ValueOfAppConstLockMode, ValueOfAppConstMenuTernal, ValueOfAppConstMenuType, ValueOfAppConstTransitionName } from '@/const'
 
 export namespace IModels {
   export interface Base {
@@ -16,6 +16,7 @@ export namespace IModels {
     url?: string
     show?: boolean
     cache?: boolean
+    cacheKeyStrategy?: ValueOfAppConstCacheKeyStrategy
     status?: boolean
     affix?: boolean
     permission?: string

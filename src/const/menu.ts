@@ -12,5 +12,12 @@ export const AppConstMenuTernal = {
   NONE: 'none',
 } as const
 
+export const AppConstCacheKeyStrategy = {
+  NAME: 'name',
+  PATH: 'path',
+  CUSTOM: 'custom',
+} as const
+
 export type ValueOfAppConstMenuType = ValueOf<typeof AppConstMenuType>
 export type ValueOfAppConstMenuTernal = ValueOf<typeof AppConstMenuTernal>
+export type ValueOfAppConstCacheKeyStrategy = ValueOf<typeof AppConstCacheKeyStrategy>

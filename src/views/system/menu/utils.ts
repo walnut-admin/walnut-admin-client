@@ -81,3 +81,18 @@ export const menuTernalOptions: OptionDataItem[] = [
     label: 'Internal',
   },
 ]
+
+export const cacheKeyStrategyOptions: OptionDataItem[] = [
+  {
+    value: AppConstCacheKeyStrategy.NAME,
+    label: 'Name',
+  },
+  {
+    value: AppConstCacheKeyStrategy.PATH,
+    label: 'Path',
+  },
+  {
+    value: AppConstCacheKeyStrategy.CUSTOM,
+    label: 'Custom',
+  },
+]
