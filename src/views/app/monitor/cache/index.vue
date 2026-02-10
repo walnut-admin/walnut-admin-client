@@ -128,7 +128,7 @@ const [
 
       {
         key: 'expire',
-        width: 100,
+        width: 120,
         sorter: {
           multiple: 3,
           compare: 'default',

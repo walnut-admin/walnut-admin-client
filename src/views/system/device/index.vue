@@ -444,7 +444,7 @@ async function onDetail(id?: string) {
   onOpenDetailModal()
 }
 
-useKeepAliveEffect(() => {
+onMounted(() => {
   onApiList()
 })
 </script>
