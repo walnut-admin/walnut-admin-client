@@ -7,7 +7,6 @@ defineOptions({
   defaultView: false,
 })
 
-const userStoreProfile = useAppStoreUserProfile()
 const userStorePreference = useAppStoreUserPreference()
 const appStoreAdapter = useAppStoreAdapter()
 const { t } = useAppI18n()
@@ -86,7 +85,6 @@ const [register] = useForm<IStoreUser.Preference.Accessibility>({
           try {
             await updateAccessibilityPreferenceAPI(userStorePreference.accessibility)
             useAppMsgSuccess()
-            await userStoreProfile.getProfile()
           }
           finally {
             loading.value = false

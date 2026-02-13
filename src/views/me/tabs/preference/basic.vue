@@ -8,7 +8,6 @@ defineOptions({
   defaultView: false,
 })
 
-const userStoreProfile = useAppStoreUserProfile()
 const userStorePreference = useAppStoreUserPreference()
 const appStoreLocale = useAppStoreLocale()
 const appStoreAdapter = useAppStoreAdapter()
@@ -49,7 +48,6 @@ const [register] = useForm<IStoreUser.Preference.Basic>({
           try {
             await updatePreferenceBasicAPI(userStorePreference.basic)
             useAppMsgSuccess()
-            await userStoreProfile.getProfile()
           }
           finally {
             loading.value = false

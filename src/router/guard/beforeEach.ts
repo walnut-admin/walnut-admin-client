@@ -1,5 +1,5 @@
 import type { Router } from 'vue-router'
-import { isEmpty, isUndefined } from 'lodash-es'
+import { isNil, isUndefined } from 'lodash-es'
 import { AppCoreFn1 } from '@/core'
 import { mainoutConst, mainoutMissingPermissionsRoute } from '../routes/mainout'
 
@@ -30,7 +30,7 @@ export function createBeforeEachGuard(router: Router) {
 
     // Get user info
     const userStoreProfile = useAppStoreUserProfile()
-    if (isEmpty(userStoreProfile.profile)) {
+    if (isNil(userStoreProfile.profile?._id)) {
       // fetch profile
       await userStoreProfile.getProfile()
       // LINK https://router.vuejs.org/guide/advanced/dynamic-routing.html#adding-routes-inside-navigation-guards
@@ -44,7 +44,7 @@ export function createBeforeEachGuard(router: Router) {
     }
 
     // not locked => Get permission
-    if (isEmpty((appStoreMenu.menus))) {
+    if (appStoreMenu.menus.length === 0) {
       // At this step, user has login but didn't got dynamic routes generated
       // Below we call app core fn1 to handle logic
       const hasPermissions = await AppCoreFn1()

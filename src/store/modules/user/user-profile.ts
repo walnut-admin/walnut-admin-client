@@ -2,7 +2,7 @@ import type { IModels } from '@/api/models'
 import type { IStoreUser } from '@/store/types'
 import { upperFirst } from 'easy-fns-ts'
 import { defineStore } from 'pinia'
-import { getUserProfileAPI } from '@/api/auth'
+import { getUserProfileAPI } from '@/api/system/user_me'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
@@ -55,8 +55,8 @@ const useAppStoreUserProfileInside = defineStore(StoreKeys.USER_PROFILE, {
     },
 
     async getProfile() {
-      const { user } = await getUserProfileAPI()
-      this.setProfile(user)
+      const data = await getUserProfileAPI()
+      this.setProfile(data)
 
       // set locked preference
       const appStoreLock = useAppStoreLock()

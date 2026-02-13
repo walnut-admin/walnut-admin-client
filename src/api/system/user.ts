@@ -43,12 +43,3 @@ export function updatePasswordFinishAPI(data: IRequestPayload.Auth.Opaque.Admin.
     data,
   })
 }
-
-/**
- * @description switch role
- */
-export function switchRoleAPI(roleId: string) {
-  return AppAxios.patch<boolean>({
-    url: `/auth/role/switch/${roleId}`,
-  })
-}

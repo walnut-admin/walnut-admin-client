@@ -152,9 +152,7 @@ export namespace IResponseData {
       internalIframeList: { name: string, url: string, cache: boolean }[]
     }
 
-    export interface Profile {
-      user: IModels.SystemUser
-    }
+    export type Profile = IModels.SystemUser
 
     export interface Keys {
       B: string

@@ -8,7 +8,6 @@ defineOptions({
   defaultView: false,
 })
 
-const userStoreProfile = useAppStoreUserProfile()
 const userStorePreference = useAppStoreUserPreference()
 const appStoreAdapter = useAppStoreAdapter()
 
@@ -265,7 +264,6 @@ const [register] = useForm<typeof formModel.value>({
           try {
             await updateLayoutPreferenceAPI(realFormData.value)
             useAppMsgSuccess()
-            await userStoreProfile.getProfile()
           }
           finally {
             loading.value = false

@@ -5,7 +5,6 @@ const Auth = {
   SIGNOUT: '/auth/signout',
   REFRESH_TOKEN: '/auth/refresh',
   PERMISSION: '/auth/permissions',
-  PROFILE: '/auth/profile',
   KEYS: '/auth/keys',
 } as const
 
@@ -33,15 +32,6 @@ export function refreshTokenAPI() {
 export function getPermissionsAPI() {
   return AppAxios.get<IResponseData.Auth.Permissions>({
     url: Auth.PERMISSION,
-  })
-}
-
-/**
- * @description Signin user detail info api
- */
-export function getUserProfileAPI() {
-  return AppAxios.get<IResponseData.Auth.Profile>({
-    url: Auth.PROFILE,
   })
 }
 

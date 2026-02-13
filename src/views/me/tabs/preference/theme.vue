@@ -7,7 +7,6 @@ defineOptions({
   defaultView: false,
 })
 
-const userStoreProfile = useAppStoreUserProfile()
 const userStorePreference = useAppStoreUserPreference()
 const appStoreAdapter = useAppStoreAdapter()
 
@@ -44,7 +43,6 @@ const [register] = useForm<IStoreUser.Preference.Theme>({
           try {
             await updateThemePreferenceAPI(userStorePreference.theme)
             useAppMsgSuccess()
-            await userStoreProfile.getProfile()
           }
           finally {
             loading.value = false

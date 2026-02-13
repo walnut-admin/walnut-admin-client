@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { switchRoleAPI } from '@/api/system/user'
+import { switchRoleAPI } from '@/api/system/user_me'
 
 defineOptions({
   name: 'TheHeaderDropdownSwitchRole',
