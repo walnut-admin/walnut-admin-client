@@ -4,7 +4,7 @@ import type { IRequestPayload } from '@/api/request'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
-import { sendAuthTextMsgAPI } from '@/api/auth/phone'
+import { sendWithOTPAPI } from '@/api/auth/otp'
 import { mainoutConst } from '@/router/routes/mainout'
 import { isPhoneNumber } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
@@ -19,8 +19,9 @@ const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
 
 const countryCallingCode = ref()
-const SMSFormData = reactive<NullableRecord<IRequestPayload.Auth.Phone.Verify & { agree: string }>>({
-  phoneNumber: null,
+const SMSFormData = reactive<NullableRecord<IRequestPayload.Auth.OTP.Verify & { agree: string }>>({
+  type: 'sms',
+  identifier: null,
   verifyCode: null,
   agree: null,
 })
@@ -30,7 +31,8 @@ async function onSignIn() {
 
   try {
     await userStoreAuth.AuthWithPhoneNumber({
-      phoneNumber: SMSFormData.phoneNumber!,
+      type: SMSFormData.type!,
+      identifier: SMSFormData.identifier!,
       verifyCode: SMSFormData.verifyCode!,
     })
 
@@ -67,13 +69,13 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
     {
       type: 'Extra:PhoneNumberInput',
       formProp: {
-        path: 'phoneNumber',
+        path: 'identifier',
         locale: false,
         first: true,
         label: computed(() => t('app.base.phoneNumber')),
         rule: [
           {
-            key: 'phoneNumber',
+            key: 'identifier',
             type: 'string',
             trigger: ['change'],
             validator: (_rule, value) => {
@@ -111,11 +113,12 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         locale: false,
       },
       componentProp: {
+        key: 'sms-verify-code',
         retryKey: 'auth-sms',
 
         onBeforeCountdown: async () => {
           // valid phoneNumber before count down
-          const valid = await validate(['phoneNumber'])
+          const valid = await validate(['identifier'])
 
           if (!valid)
             return false
@@ -123,8 +126,9 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
           userStoreAuth.setLoading(true)
 
           try {
-            await sendAuthTextMsgAPI({
-              phoneNumber: SMSFormData.phoneNumber!,
+            await sendWithOTPAPI({
+              type: SMSFormData.type!,
+              identifier: SMSFormData.identifier!,
             })
             userStoreAuth.setLoading(false)
           }

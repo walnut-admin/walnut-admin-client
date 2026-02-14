@@ -62,8 +62,7 @@ export namespace IModels {
     nickName?: string
     age?: number
     gender?: string
-    phoneNumber?: string
-    emailAddress?: string
+
     description?: string
     avatar?: string
     status?: boolean

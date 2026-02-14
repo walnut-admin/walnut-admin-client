@@ -4,10 +4,9 @@ import * as opaque from '@serenity-kit/opaque'
 import { defineStore } from 'pinia'
 
 import { refreshTokenAPI, signoutAPI } from '@/api/auth'
-import { authWithEmailAPI } from '@/api/auth/email'
 import { authWithGoogleAPI } from '@/api/auth/google'
 import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
-import { authWithPhoneNumberAPI } from '@/api/auth/phone'
+import { verifyWithOTPAPI } from '@/api/auth/otp'
 import { updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/user'
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
@@ -127,8 +126,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description email way to auth
      */
-    async AuthWithEmailAddress(payload: IRequestPayload.Auth.Email.Verify) {
-      const res = await authWithEmailAPI(payload)
+    async AuthWithEmailAddress(payload: IRequestPayload.Auth.OTP.Verify) {
+      const res = await verifyWithOTPAPI(payload)
 
       // execute core fn
       await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
@@ -137,8 +136,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
     /**
      * @description text message way to auth
      */
-    async AuthWithPhoneNumber(payload: IRequestPayload.Auth.Phone.Verify) {
-      const res = await authWithPhoneNumberAPI(payload)
+    async AuthWithPhoneNumber(payload: IRequestPayload.Auth.OTP.Verify) {
+      const res = await verifyWithOTPAPI(payload)
 
       // execute core fn
       await this.ExecuteCoreFnAfterAuth(res.accessToken, res.sessionKey)
@@ -172,7 +171,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         // ==================== 步骤 2: 发送登录请求到服务器 ====================
         const loginResponse = await opaqueLoginStartAPI({
           userName,
-          loginRequest: startLoginRequest,
+          start: startLoginRequest,
         })
 
         // ==================== 步骤 3: 客户端完成登录 ====================
@@ -204,7 +203,7 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
         // ==================== 步骤 4: 发送最终登录确认到服务器 ====================
         const res = await opaqueLoginFinishAPI({
           userName,
-          loginFinish: finishLoginRequest,
+          finish: finishLoginRequest,
         })
 
         // remember me
@@ -274,8 +273,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       await this.opaqueRegisterCore(
         userName,
         newPassword,
-        ({ registrationRequest }) => opaqueChangePasswordStartAPI({ registrationRequest }),
-        ({ registrationRecord }) => opaqueChangePasswordFinishAPI({ registrationRecord }),
+        ({ registrationRequest }) => opaqueChangePasswordStartAPI({ start: registrationRequest }),
+        ({ registrationRecord }) => opaqueChangePasswordFinishAPI({ finish: registrationRecord }),
       )
     },
 
@@ -287,8 +286,8 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
       await this.opaqueRegisterCore(
         userName,
         newPassword,
-        ({ registrationRequest }) => updatePasswordStartAPI({ _id: userId, registrationRequest }),
-        ({ registrationRecord }) => updatePasswordFinishAPI({ _id: userId, registrationRecord }),
+        ({ registrationRequest }) => updatePasswordStartAPI({ _id: userId, start: registrationRequest }),
+        ({ registrationRecord }) => updatePasswordFinishAPI({ _id: userId, finish: registrationRecord }),
       )
     },
 

@@ -3,7 +3,7 @@ import type { NullableRecord } from 'easy-fns-ts'
 import type { IRequestPayload } from '@/api/request'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
-import { sendAuthEmailAPI } from '@/api/auth/email'
+import { sendWithOTPAPI } from '@/api/auth/otp'
 import { mainoutConst } from '@/router/routes/mainout'
 import { isEmailAddress } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
@@ -17,8 +17,9 @@ const { t } = useAppI18n()
 const userStoreAuth = useAppStoreUserAuth()
 const appStoreNaive = useAppStoreNaive()
 
-const emailFormData = reactive<NullableRecord<IRequestPayload.Auth.Email.Verify & { agree: string }>>({
-  emailAddress: null,
+const emailFormData = reactive<NullableRecord<IRequestPayload.Auth.OTP.Verify & { agree: string }>>({
+  type: 'email',
+  identifier: null,
   verifyCode: null,
   agree: null,
 })
@@ -28,7 +29,8 @@ async function onSignIn() {
 
   try {
     await userStoreAuth.AuthWithEmailAddress({
-      emailAddress: emailFormData.emailAddress!,
+      type: emailFormData.type!,
+      identifier: emailFormData.identifier!,
       verifyCode: +emailFormData.verifyCode!,
     })
 
@@ -65,14 +67,14 @@ const [register, { validate }] = useForm<typeof emailFormData>({
     {
       type: 'Extra:EmailInput',
       formProp: {
-        path: 'emailAddress',
+        path: 'identifier',
         ruleType: 'string',
         first: true,
         locale: false,
         label: computed(() => t('app.base.emailAddress')),
         rule: [
           {
-            key: 'emailAddress',
+            key: 'identifier',
             type: 'string',
             trigger: ['input', 'change'],
             validator: (rule, value) => {
@@ -105,25 +107,30 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         locale: false,
       },
       componentProp: {
+        key: 'email-verify-code',
         retryKey: 'auth-email',
 
         onBeforeCountdown: async () => {
           // valid emailAddress before count down
-          const valid = await validate(['emailAddress'])
+          const valid = await validate(['identifier'])
 
           if (!valid)
-            return Promise.reject(new Error('EmailAddress Invalid'))
+            return false
 
           userStoreAuth.setLoading(true)
           try {
-            await sendAuthEmailAPI({
-              emailAddress: emailFormData.emailAddress!,
+            await sendWithOTPAPI({
+              type: emailFormData.type!,
+              identifier: emailFormData.identifier!,
             })
-            userStoreAuth.setLoading(false)
+            return true
           }
           catch (error) {
-            userStoreAuth.setLoading(false)
             console.error(error)
+            return false
+          }
+          finally {
+            userStoreAuth.setLoading(false)
           }
         },
       },

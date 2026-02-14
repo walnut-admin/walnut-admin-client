@@ -49,23 +49,17 @@ export namespace IRequestPayload {
       _id: string
     }
 
-    export namespace Email {
-      export interface Verify {
-        emailAddress: string
-        verifyCode: number
-      }
-      export interface Send {
-        emailAddress: string
-      }
-    }
+    export namespace OTP {
 
-    export namespace Phone {
-      export interface Verify {
-        phoneNumber: string
-        verifyCode: number
+      interface Base {
+        type: 'sms' | 'email'
       }
-      export interface Send {
-        phoneNumber: string
+      export interface Send extends Base {
+        identifier: string
+      }
+
+      export interface Verify extends Send {
+        verifyCode: number
       }
     }
 
@@ -100,22 +94,18 @@ export namespace IRequestPayload {
         }
       }
       export namespace Login {
-        export interface Start extends Pick<IModels.SystemUser, 'userName'> {
-          loginRequest: string
-        }
+        export interface Start extends Pick<IModels.SystemUser, 'userName'>, Opaque.Register.Start {}
 
-        export interface Finish extends Pick<IModels.SystemUser, 'userName'> {
-          loginFinish: string
-        }
+        export interface Finish extends Pick<IModels.SystemUser, 'userName'>, Opaque.Register.Finish { }
       }
 
       export namespace Register {
         export interface Start {
-          registrationRequest: string
+          start: string
         }
 
         export interface Finish {
-          registrationRecord: string
+          finish: string
         }
       }
     }
