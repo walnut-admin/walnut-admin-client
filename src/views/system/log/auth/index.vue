@@ -38,6 +38,7 @@ const [register, {
 
     auths: {
       list: `system:${authKey}:list`,
+      delete: `system:${authKey}:delete`,
       deleteMany: `system:${authKey}:deleteMany`,
     },
 

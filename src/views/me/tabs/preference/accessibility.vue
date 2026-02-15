@@ -64,7 +64,6 @@ const [register] = useForm<IStoreUser.Preference.Accessibility>({
         path: 'CVD',
       },
       componentProp: {
-        clearable: true,
         options: Object.values(AppConstCVD).map(i => ({
           value: i,
           label: i,

@@ -121,7 +121,7 @@ const appStoreSettingDev = useAppStoreSettingDev()
 const formCardRef = useTemplateRef<HTMLDivElement>('formCardRef')
 const { height } = useElementSize(formCardRef)
 // TODO where is this 12rem come from?
-const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentHeightWithPadding} - ${(height.value / userStorePreference.getFontSize).toFixed(4)}rem - 12rem)`)
+const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentHeightWithPadding} - ${(height.value / userStorePreference.getFontSize).toFixed(4)}rem - 13rem)`)
 </script>
 
 <template>
