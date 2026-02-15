@@ -96,7 +96,11 @@ export namespace IRequestPayload {
       export namespace Login {
         export interface Start extends Pick<IModels.SystemUser, 'userName'>, Opaque.Register.Start {}
 
-        export interface Finish extends Pick<IModels.SystemUser, 'userName'>, Opaque.Register.Finish { }
+        export interface Finish extends Pick<IModels.SystemUser, 'userName'>, Opaque.Register.Finish {}
+
+        export interface ClientError extends Pick<IModels.SystemUser, 'userName'> {
+          clientError: 'passwordError' | 'serverStaticKeyMismatch'
+        }
       }
 
       export namespace Register {

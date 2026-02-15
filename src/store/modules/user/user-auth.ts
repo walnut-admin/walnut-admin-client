@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 
 import { refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithGoogleAPI } from '@/api/auth/google'
-import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
+import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginClientErrorAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
 import { verifyWithOTPAPI } from '@/api/auth/otp'
 import { updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/user'
 import { AppCoreFn1 } from '@/core'
@@ -187,7 +187,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
         // this normally means password error
         if (!loginResult) {
-          useAppMsgError(AppI18n().global.t('app.base.failure'))
+          await opaqueLoginClientErrorAPI({
+            userName,
+            clientError: 'passwordError',
+          })
           return
         }
 
@@ -196,7 +199,10 @@ const useAppStoreUserAuthInside = defineStore(StoreKeys.USER_AUTH, {
 
         // server static public key check
         if (serverStaticPublicKey !== import.meta.env.VITE_SERVER_STATIC_PUBLIC_KEY) {
-          useAppMsgError(AppI18n().global.t('app.base.failure'))
+          await opaqueLoginClientErrorAPI({
+            userName,
+            clientError: 'serverStaticKeyMismatch',
+          })
           return
         }
 

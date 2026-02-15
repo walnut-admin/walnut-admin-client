@@ -5,6 +5,7 @@ import { AppAxios } from '@/utils/axios'
 const authOpaque = {
   LOGIN_START: '/auth/opaque/user/login/start',
   LOGIN_FINISH: '/auth/opaque/user/login/finish',
+  CLIENT_ERROR: '/auth/opaque/user/login/client-error',
   CHANGE_PASSWORD_START: '/auth/opaque/user/change-password/start',
   CHANGE_PASSWORD_FINISH: '/auth/opaque/user/change-password/finish',
 } as const
@@ -25,6 +26,16 @@ export function opaqueLoginStartAPI(data: IRequestPayload.Auth.Opaque.Login.Star
 export function opaqueLoginFinishAPI(data: IRequestPayload.Auth.Opaque.Login.Finish) {
   return AppAxios.post<IResponseData.Auth.TokenPayload>({
     url: authOpaque.LOGIN_FINISH,
+    data,
+  })
+}
+
+/**
+ * @description opaque login client error
+ */
+export function opaqueLoginClientErrorAPI(data: IRequestPayload.Auth.Opaque.Login.ClientError) {
+  return AppAxios.post<boolean>({
+    url: authOpaque.CLIENT_ERROR,
     data,
   })
 }
