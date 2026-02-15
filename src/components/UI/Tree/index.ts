@@ -1,4 +1,5 @@
 import type { TreeInst, TreeProps } from 'naive-ui'
+import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
 
 export { default } from './index.vue'
 
@@ -49,6 +50,11 @@ export interface ICompUITreeProps<T> {
    * @description max height, well just a height with scrollbar
    */
   maxHeight?: string
+
+  /**
+   * @description extra dropdown options
+   */
+  extraDropdownOptions?: (Omit<DropdownMixedOption, 'icon' | 'disabled'> & { icon?: string, disabled?: (item: T) => boolean, onClick?: (item: T) => void })[]
 
   /**
    * @description auth buttono

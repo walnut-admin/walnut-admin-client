@@ -73,6 +73,24 @@ const [registerTree] = useTree<IModels.SystemMenu>({
     update: 'system:menu:update',
   },
 
+  extraDropdownOptions: [
+    {
+      key: 'addChild',
+      label: t('app.base.addChild'),
+      icon: 'mdi:plus-circle-outline',
+      disabled: item => item.type === AppConstMenuType.ELEMENT,
+      onClick: (item) => {
+        // reset form data first
+        resetFormData()
+
+        formData.value.pid = item[keyField]
+
+        targetTreeItem.value = ''
+        actionType.value = 'create'
+      },
+    },
+  ],
+
   onTreeNodeItemDelete: async (deleted) => {
     await menuAPI.delete(deleted[keyField]!)
     useAppMsgSuccess()

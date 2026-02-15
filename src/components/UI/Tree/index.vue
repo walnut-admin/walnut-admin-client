@@ -138,6 +138,11 @@ const contextMenuOptions = computed<DropdownMixedOption[]>(() => [
     disabled: !copyTarget.value[getKeyField.value],
     icon: () => <WIcon height="20" icon="mdi:content-paste"></WIcon>,
   },
+  ...(getProps.value.extraDropdownOptions?.map(i => ({
+    ...i,
+    icon: () => i.icon ? <WIcon height="20" icon={i.icon}></WIcon> : undefined,
+    disabled: i.disabled?.(toRaw(currentTarget.value) as T),
+  })) || []),
 ])
 
 const getCombinedKeys = computed(() => checkedKeys.value.concat(indeterminateKeys.value))
@@ -171,6 +176,12 @@ const [registerDropdown, { openDropdown, closeDropdown }] = useDropdown({
         nextTick(() => {
           copyTarget.value = {}
         })
+      }
+
+      // extra dropdown options
+      const extraOption = getProps.value.extraDropdownOptions?.find(i => i.key === key)
+      if (extraOption) {
+        extraOption?.onClick?.(toRaw(currentTarget.value) as T)
       }
 
       closeDropdown()

@@ -75,6 +75,15 @@ const [register4] = useTree({
   onPaste: (copy, current) => {
     console.log('DemoTree', { copy, current })
   },
+  extraDropdownOptions: [
+    {
+      key: 'extra',
+      label: 'Extra Action',
+      onClick: (item) => {
+        console.log('DemoTree', { item })
+      },
+    },
+  ],
 
   treeProps: {
     data: getTreeData(),
