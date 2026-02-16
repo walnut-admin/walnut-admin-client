@@ -31,7 +31,7 @@ async function onSignIn() {
     await userStoreAuth.AuthWithEmailAddress({
       type: emailFormData.type!,
       identifier: emailFormData.identifier!,
-      verifyCode: +emailFormData.verifyCode!,
+      verifyCode: emailFormData.verifyCode!,
     })
 
     // close demonstrate notification

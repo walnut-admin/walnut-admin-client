@@ -95,7 +95,7 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         preferred: true,
         example: true,
         autoDefaultCountry: true,
-        onUpdate: (val: ICompExtraPhoneNumberInputUpdateParams) => {
+        onChange: (val: ICompExtraPhoneNumberInputUpdateParams) => {
           countryCallingCode.value = val.countryCallingCode
         },
       },
@@ -124,17 +124,20 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
             return false
 
           userStoreAuth.setLoading(true)
-
           try {
             await sendWithOTPAPI({
               type: SMSFormData.type!,
               identifier: SMSFormData.identifier!,
             })
             userStoreAuth.setLoading(false)
+            return true
           }
           catch (error) {
-            userStoreAuth.setLoading(false)
             console.error(error)
+            return false
+          }
+          finally {
+            userStoreAuth.setLoading(false)
           }
         },
 
