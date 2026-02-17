@@ -6,6 +6,7 @@ import type {
   FormItemProps,
   FormItemRule,
   FormRules,
+  InputOtpProps,
   SliderProps,
 } from 'naive-ui'
 import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
@@ -105,7 +106,7 @@ export declare namespace WForm {
 
       onYes?: (
         apiHandler: (apiFn: Fn, params: Recordable) => Promise<void>,
-        done: () => void
+        done: ({ closeModal }?: { closeModal?: boolean }) => void
       ) => void | Promise<void>
       onNo?: (close: Fn) => void | Promise<void>
     }
@@ -300,6 +301,7 @@ export declare namespace WForm {
       // raw
       'Raw:DynamicInput': DynamicInputProps
       'Raw:Slider': SliderProps
+      'Raw:InputOtp': InputOtpProps
 
       // business
       'Business:AreaCascader': ICompBusinessAreaCascaderProps
@@ -481,6 +483,7 @@ export declare namespace WForm {
       // raw
       type DynamicInputSchema<D> = DynamicSchemaItemProps<'Raw:DynamicInput', D>
       type SliderSchema<D> = DynamicSchemaItemProps<'Raw:Slider', D>
+      type InputOtpSchema<D> = DynamicSchemaItemProps<'Raw:InputOtp', D>
 
       // business
       type AreaCacaderSchema<D> = DynamicSchemaItemProps<'Business:AreaCascader', D>
@@ -536,6 +539,7 @@ export declare namespace WForm {
       // raw
         | SchemaItem.DynamicInputSchema<D>
         | SchemaItem.SliderSchema<D>
+        | SchemaItem.InputOtpSchema<D>
 
       // business
         | SchemaItem.AreaCacaderSchema<D>
