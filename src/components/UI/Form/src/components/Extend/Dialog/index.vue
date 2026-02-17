@@ -77,9 +77,10 @@ async function onYes() {
       }
     }
 
-    formProps.value.dialogProps?.onYes!(apiHandler, () => {
+    formProps.value.dialogProps?.onYes!(apiHandler, ({ closeModal } = { closeModal: true }) => {
       loadFinish()
-      onClose()
+      if (closeModal)
+        onClose()
     })
   }
   catch (err) {
