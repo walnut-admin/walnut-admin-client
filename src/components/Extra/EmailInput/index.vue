@@ -7,7 +7,7 @@ defineOptions({
 })
 
 defineProps<ICompExtraEmailInputProps>()
-const value = defineModel<string | null>('value', { required: true })
+const value = defineModel<string | null | undefined>('value', { required: true })
 
 const { language } = useSharedNavigatorLanguage()
 
