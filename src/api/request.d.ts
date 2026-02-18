@@ -120,6 +120,32 @@ export namespace IRequestPayload {
   export namespace Shared {}
 
   export namespace System {
+
+    export namespace UserIdentity {
+      export interface Status {
+        type: IModels.ISystemUserIdentityType
+        purpose: IModels.ISystemUserIdentityPurpose
+        status: boolean
+      }
+      export interface Verify {
+        type: IModels.ISystemUserIdentityType
+        purpose: IModels.ISystemUserIdentityPurpose
+        verifyCode: string
+      }
+      export interface Check {
+        type: IModels.ISystemUserIdentityType
+        purpose: IModels.ISystemUserIdentityPurpose
+        identifier: string
+      }
+
+      export interface Bind {
+        type: IModels.ISystemUserIdentityType
+        purpose: IModels.ISystemUserIdentityPurpose
+        identifier: string
+        verifyCode: string
+        setAsSecurity: boolean
+      }
+    }
     export namespace Deleted {
       export type Recover = Pick<IModels.Base, '_id'> & Pick<IModels.SystemDeleted, 'deletedId'>
     }

@@ -78,10 +78,6 @@ const [register, { validate }] = useForm<typeof emailFormData>({
             type: 'string',
             trigger: ['input', 'change'],
             validator: (rule, value) => {
-              // to call base rule
-              if (!value)
-                return Promise.resolve()
-
               if (!isEmailAddress(value))
                 return Promise.reject(t('app.base.emailAddress.rule'))
 

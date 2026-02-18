@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { IResponseData } from '@/api/response'
-import { getSecurityTab1StatusAPI } from '@/api/system/user_me'
 import WAccountSettingsTabSecurityTab3Device from './device.vue'
 
 defineOptions({
@@ -31,8 +30,8 @@ async function onClick(index: number) {
 }
 
 async function onInit() {
-  const res = await getSecurityTab1StatusAPI()
-  status.value = Object.assign(status.value, res)
+  // const res = await getSecurityTab3StatusAPI()
+  // status.value = Object.assign(status.value, res)
 }
 
 onBeforeMount(onInit)

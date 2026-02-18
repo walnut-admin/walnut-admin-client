@@ -13,9 +13,22 @@ export namespace IResponseData {
   export namespace Me {
     export namespace Security {
       export interface Tab1Status {
-        opaque: boolean
-        phoneNumber: boolean
-        emailAddress: boolean
+        password: {
+          set: boolean
+          lastChangedAt: string
+        }
+        phoneNumber: {
+          bound: boolean
+          verified: boolean
+          maskedValue: string
+          status: boolean
+        }
+        emailAddress: {
+          bound: boolean
+          verified: boolean
+          maskedValue: string
+          status: boolean
+        }
       }
 
       export interface Tab2Status {

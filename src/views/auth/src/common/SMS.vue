@@ -79,10 +79,6 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
             type: 'string',
             trigger: ['change'],
             validator: (_rule, value) => {
-              // to call base rule
-              if (!value)
-                return Promise.resolve()
-
               if (!isPhoneNumber(`+${countryCallingCode.value}${value}`))
                 return Promise.reject(t('app.base.phoneNumber.rule'))
 

@@ -73,6 +73,14 @@ export namespace IModels {
     populated_roles_list?: SystemRole[]
   }
 
+  // system user identity
+  export type ISystemUserIdentityType = 'phoneNumber' | 'emailAddress'
+  export type ISystemUserIdentityPurpose = 'login' | 'security'
+  export interface SystemUserIdentity extends Base {
+    type: ISystemUserIdentityType
+    purpose: ISystemUserIdentityPurpose
+  }
+
   // system user lock preference
   export interface SystemUserLockPreference extends Base {
     lockCrossDevice: boolean

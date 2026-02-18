@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'WAccountSettingsTabSecurityTab1Opaque',
+  name: 'WMeTabSecurityTab1Opaque',
   defaultView: false,
 })
 
