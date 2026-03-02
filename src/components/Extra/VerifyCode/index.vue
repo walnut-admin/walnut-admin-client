@@ -46,6 +46,7 @@ async function onClick() {
 async function onOTPFinish() {
   await nextTick()
   nTriggerFormInput()
+  props.onFinish!(value.value!)
 }
 </script>
 

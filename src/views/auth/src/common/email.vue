@@ -106,6 +106,8 @@ const [register, { validate }] = useForm<typeof emailFormData>({
         key: 'email-verify-code',
         retryKey: 'auth-email',
 
+        onFinish: onSubmit,
+
         onBeforeCountdown: async () => {
           // valid emailAddress before count down
           const valid = await validate(['identifier'])
