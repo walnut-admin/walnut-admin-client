@@ -5,6 +5,7 @@ import type { RouteMeta, RouteRecordNameGeneric } from 'vue-router'
 import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
 import type { IResponseData } from '@/api/response'
+import type { VerifyAuthOptions } from '@/components/Global/VerifyAuth/types'
 import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppConstDevice, ValueOfAppConstLayoutMode, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName, ValueOfAppCVD } from '@/const'
 
 export namespace IStoreApp {
@@ -259,6 +260,14 @@ export namespace IStoreComp {
     needRefresh: boolean
     offlineReady: boolean
     reloadFn: () => void
+  }
+
+  /**
+   * comp verify auth state
+   */
+  export interface VerifyAuth {
+    show: boolean
+    options?: VerifyAuthOptions
   }
 }
 

@@ -11,9 +11,7 @@ const { t } = useAppI18n()
 
 const deviceModal = useTemplateRef('deviceModal')
 
-const status = ref<IResponseData.Me.Security.Tab3Status>({
-
-})
+const _status = ref<IResponseData.Me.Security.Tab3Status>({})
 
 async function onClick(index: number) {
   if (index === 1) {

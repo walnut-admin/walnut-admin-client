@@ -17,7 +17,7 @@ const userStoreAuth = useAppStoreUserAuth()
 
 export async function responseInterceptors(res: AxiosResponse<IAxios.BaseResponse<IModels.Base>, any>) {
   // code below is custom code in `axios.response.data`
-  const { code, data, msg } = res.data
+  const { code, data, msg, meta } = res.data
 
   // normal success
   if (code === BusinessCodeConst.SUCCESS) {
@@ -116,6 +116,13 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
     appStoreRoute.addDynamicAuthRoute(mainoutLockRoute)
     await AppRouter.replace({ name: mainoutConst.lock.name, force: true })
     return Promise.reject(new Error('User Locked'))
+  }
+
+  // sensitive verification required
+  if (code === BusinessCodeConst.SENSITIVE_VERIFICATION_REQUIRED) {
+    console.log(123, meta)
+
+    return Promise.reject(new Error('Sensitive Verification Required'))
   }
 
   useAppMsgError(msg)

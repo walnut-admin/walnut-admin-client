@@ -257,6 +257,6 @@ onBeforeMount(onInit)
       </n-thing>
     </n-list-item>
 
-    <WMeTabSecurityTab1OTP ref="optRef" @success="onInit" />
+    <WMeTabSecurityTab1OTP ref="optRef" purpose="login" @success="onInit" />
   </n-list>
 </template>
