@@ -8,10 +8,12 @@ import { omit } from 'lodash-es'
 import { createAsyncComponent } from '@/utils/factory/asyncComponent'
 import WFormItem from '../src/components/FormItem/index.vue'
 
+import WFormExtendDialog from './components/Extend/Dialog'
 import { setFormContext } from './hooks/useFormContext'
 import { useFormItemId } from './hooks/useFormItemId'
 import { useFormMethods } from './hooks/useFormMethods'
 import { useFormSchemas } from './hooks/useFormSchemas'
+
 import { calculateRemainingSpans, extendedFormPropKeys, formItemUtils as FIU, generateBaseRules, getScopeOrGlobalProp } from './utils'
 
 defineOptions({
@@ -41,7 +43,6 @@ const userStorePreference = useAppStoreUserPreference()
 const WFormItemExtendDivider = createAsyncComponent(() => import('./components/Extend/Divider'))
 const WFormItemExtendQuery = createAsyncComponent(() => import('./components/Extend/Query'))
 const WFormExtendDesc = createAsyncComponent(() => import('./components/Extend/Desc'))
-const WFormExtendDialog = createAsyncComponent(() => import('./components/Extend/Dialog'))
 
 const { t } = useAppI18n()
 
