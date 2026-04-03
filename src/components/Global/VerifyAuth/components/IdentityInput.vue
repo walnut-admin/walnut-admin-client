@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import type { VerifyAuthMethodType, VerifyAuthOptions } from '../types'
-import type { IModels } from '@/api/models'
+import type { VerifyAuthMethod } from '../types'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 import type { WForm } from '@/components/UI/Form'
-import { checkUserIdentityAPI } from '@/api/system/user_identity'
 import { isEmailAddress, isPhoneNumber } from '@/utils/regex'
 
 /**
@@ -16,48 +14,26 @@ defineOptions({
   name: 'WCompBusinessVerifyAuthIdentityInput',
 })
 
-const props = defineProps<{
-  /** Input type - 'sms' for phone, 'email' for email */
-  type: VerifyAuthMethodType
-  /** Component options */
-  options: Required<VerifyAuthOptions>
-}>()
-
-const emit = defineEmits<{
-  /** Identity checked and code sent */
-  (e: 'confirm', identifier: string, setAsSecurity: boolean): void
-  /** Cancelled / go back */
-  (e: 'cancel'): void
-}>()
-
 const { t } = useAppI18n()
 
 // Form data - using useState pattern from otp.vue
-const { stateRef: formData, resetState: resetFormData } = useState({
+const { stateRef: formData } = useState({
   identifier: null as string | null,
-  setAsSecurity: false,
 })
 
 // Country calling code for phone validation
 const countryCallingCode = ref('')
 
-/**
- * Get identity type for API call
- */
-const identityType = computed((): IModels.ISystemUserIdentityType => {
-  return props.type === 'sms' ? 'phoneNumber' : 'emailAddress'
-})
+const selectedMethod = inject<Ref<VerifyAuthMethod>>('selectedMethod')!
 
-/**
- * Check if show setAsSecurity slot
- */
-const _showSetAsSecuritySlot = computed(() => props.options.showSetAsSecurity)
+const type = computed(() => selectedMethod.value?.type)
 
 /**
  * Get form schemas based on type
  */
 const schemas = computed<WForm.Schema.Item<typeof formData.value>[]>(() => {
-  const isPhone = props.type === 'sms'
+  const isPhone = type.value === 'sms'
+  console.log(selectedMethod.value, 123)
 
   const baseSchemas: WForm.Schema.Item<typeof formData.value>[] = [
     isPhone
@@ -84,6 +60,7 @@ const schemas = computed<WForm.Schema.Item<typeof formData.value>[]>(() => {
             ],
           },
           componentProp: {
+            key: 'sms',
             preferred: true,
             example: true,
             autoDefaultCountry: true,
@@ -120,6 +97,7 @@ const schemas = computed<WForm.Schema.Item<typeof formData.value>[]>(() => {
             ],
           },
           componentProp: {
+            key: 'email',
             clearable: true,
           },
           transitionProp: {
@@ -129,82 +107,24 @@ const schemas = computed<WForm.Schema.Item<typeof formData.value>[]>(() => {
         } as WForm.Schema.Item<typeof formData.value>,
   ]
 
-  // Add setAsSecurity slot schema when showSetAsSecurity is true
-  if (props.options.showSetAsSecurity) {
-    baseSchemas.push({
-      type: 'Base:Slot',
-      formProp: {
-        path: 'setAsSecurity',
-        showLabel: false,
-      },
-    })
-  }
-
   return baseSchemas
 })
 
-const [register, { onOpen, onClose: closeModal }] = useForm<typeof formData.value>({
-  dialogPreset: 'modal',
+const [register, { validate, restoreValidation }] = useForm<typeof formData.value>({
   baseRules: true,
-  dialogProps: {
-    width: '30%',
-    closable: true,
-    maskClosable: false,
-    closeOnEsc: false,
-    autoFocus: false,
-    fullscreen: false,
-    title: computed(() => t(props.type === 'sms' ? 'security.phone.modalTitle' : 'security.email.modalTitle')),
-    onYes: async (_onApiHandler, _modalYesDone) => {
-      await onConfirm()
-    },
-    onNo: (close) => {
-      close()
-      onCancel()
-    },
-  },
   schemas: schemas.value,
 })
 
-/**
- * Check identity and proceed to verification
- */
-async function onConfirm() {
-  await checkUserIdentityAPI({
-    type: identityType.value,
-    purpose: props.options.purpose,
-    identifier: formData.value.identifier!,
-  })
-
-  closeModal()
-  emit('confirm', formData.value.identifier!, formData.value.setAsSecurity)
-}
-
-/**
- * Handle cancel / go back
- */
-function onCancel() {
-  resetFormData()
-  emit('cancel')
-}
-
-// Watch show prop to open/close modal and reset state
-onMounted(() => {
-  resetFormData()
-  onOpen()
+defineExpose({
+  validate,
+  restoreValidation,
+  getIdentifier: () => formData.value.identifier,
 })
 </script>
 
 <template>
-  <WForm :model="formData" :schemas="schemas" @hook="register">
-    <template v-if="options.showSetAsSecurity" #setAsSecurity>
-      <n-alert class="w-full" type="info" :show-icon="false">
-        <template #header>
-          <n-checkbox v-model:checked="formData.setAsSecurity">
-            {{ $t(type === 'sms' ? 'security.phone.bindTitle' : 'security.email.bindTitle') }}
-          </n-checkbox>
-        </template>
-        {{ $t(type === 'sms' ? 'security.phone.bindTip' : 'security.email.bindTip') }}
-      </n-alert>
-    </template>
-  </WForm>
+  <div>
+    <!-- @vue-generic {typeof formData.value} -->
+    <WForm :model="formData" :schemas="schemas" @hook="register" />
+  </div>
 </template>

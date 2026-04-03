@@ -120,8 +120,8 @@ export async function responseInterceptors(res: AxiosResponse<IAxios.BaseRespons
 
   // sensitive verification required
   if (code === BusinessCodeConst.SENSITIVE_VERIFICATION_REQUIRED) {
+    // TODO call up global modal to verify, then retry request after verified
     console.log(123, meta)
-
     return Promise.reject(new Error('Sensitive Verification Required'))
   }
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { VerifyAuthMethod, VerifyAuthOptions } from '../types'
+import type { VerifyAuthMethod } from '../types'
 
 /**
  * Step 3: Verification Code Input
@@ -11,73 +11,20 @@ defineOptions({
   name: 'WCompBusinessVerifyAuthVerifyCode',
 })
 
-const props = defineProps<{
-  /** Selected authentication method */
-  method: VerifyAuthMethod
-  /** Component options */
-  options: Required<VerifyAuthOptions>
-}>()
-
 const emit = defineEmits<{
-  /** Verification code submitted */
   (e: 'verify', code: string): void
-  /** Go back to previous step */
-  (e: 'back'): void
 }>()
 
-const { t } = useAppI18n()
+const selectedMethod = inject<Ref<VerifyAuthMethod>>('selectedMethod')!
 
 // Form data - using useState pattern from otp.vue
-const { stateRef: formData, resetState: resetFormData } = useState({
+const { stateRef: formData } = useState({
   verifyCode: [] as string[],
   description: null,
 })
 
-/**
- * Get modal title based on method
- */
-const modalTitle = computed(() => {
-  switch (props.method.type) {
-    case 'sms':
-      return t('security.phone.modalTitle')
-    case 'email':
-      return t('security.email.modalTitle')
-    case 'totp':
-      return t('mfa.totp.verify.title1')
-    default:
-      return t('app.base.verifyCode.input')
-  }
-})
-
-/**
- * Get description text showing masked value
- */
-const _descriptionText = computed(() => {
-  if (props.method.maskedValue) {
-    return props.method.maskedValue
-  }
-  return ''
-})
-
-const [register, { onOpen, onClose: closeModal }] = useForm<typeof formData.value>({
-  dialogPreset: 'modal',
+const [register] = useForm<typeof formData.value>({
   baseRules: true,
-  dialogProps: {
-    width: '30%',
-    closable: computed(() => props.options.mode === 'verify'),
-    maskClosable: false,
-    closeOnEsc: false,
-    autoFocus: false,
-    fullscreen: false,
-    title: modalTitle,
-    onYes: async (_onApiHandler, _modalYesDone) => {
-      await onVerify()
-    },
-    onNo: (close) => {
-      close()
-      onBack()
-    },
-  },
   schemas: [
     {
       type: 'Base:Slot',
@@ -86,7 +33,7 @@ const [register, { onOpen, onClose: closeModal }] = useForm<typeof formData.valu
         showLabel: false,
       },
       visibleProp: {
-        vIf: computed(() => !!props.method.maskedValue),
+        vIf: computed(() => !!selectedMethod.value?.maskedValue),
       },
     },
     {
@@ -117,41 +64,17 @@ async function onVerify() {
   const code = formData.value.verifyCode.join('')
   emit('verify', code)
 }
-
-/**
- * Handle back button
- */
-function onBack() {
-  resetFormData()
-  emit('back')
-}
-
-/**
- * Close modal and reset state
- */
-function closeAndReset() {
-  closeModal()
-  resetFormData()
-}
-
-// Expose close method for parent
-defineExpose({
-  closeAndReset,
-})
-
-onMounted(() => {
-  resetFormData()
-  onOpen()
-})
 </script>
 
 <template>
-  <!-- @vue-generic {typeof formData.value} -->
-  <WForm :model="formData" @hook="register">
-    <template #description>
-      <div class="mb-4 text-center text-sm text-gray-500">
-        {{ method.maskedValue }}
-      </div>
-    </template>
-  </WForm>
+  <div>
+    <!-- @vue-generic {typeof formData.value} -->
+    <WForm :model="formData" @hook="register">
+      <template #description>
+        <div class="mb-4 text-center text-sm text-gray-500">
+          {{ selectedMethod.maskedValue }}
+        </div>
+      </template>
+    </WForm>
+  </div>
 </template>

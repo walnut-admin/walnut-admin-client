@@ -47,10 +47,6 @@ export interface VerifyAuthMethod {
  * Options for opening the secondary auth modal
  */
 export interface VerifyAuthOptions {
-  /** Modal title (i18n key) - defaults to 'app.security.tab2' */
-  title?: string
-  /** Modal description (i18n key) - defaults to 'mfa.verify.title2' */
-  description?: string
   /** Flow mode - 'verify' for existing methods, 'bind' for first-time binding */
   mode?: VerifyAuthFlowMode
   /** Pre-selected method type - skips selection step */
