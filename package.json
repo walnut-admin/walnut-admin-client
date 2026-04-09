@@ -149,7 +149,7 @@
     "mockjs": "1.1.0",
     "node-modules-inspector": "1.1.1",
     "rimraf": "6.0.1",
-    "rollup": "4.50.1",
+    "rollup": "4.52.0",
     "sass": "1.92.1",
     "sharp": "0.34.3",
     "sharp-ico": "0.1.5",

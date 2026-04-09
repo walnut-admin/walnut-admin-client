@@ -140,23 +140,11 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
 
-          // https://github.com/vitejs/vite/discussions/9440#discussioncomment-8358001
+          // Rollup 4.52.0+ onlyExplicitManualChunks 解决 manualChunks 导致的懒加载失效问题
+          // https://github.com/vitejs/vite/issues/5189#issuecomment-3816839572
+          onlyExplicitManualChunks: true,
           manualChunks(id: string) {
-            // List of modules that rollup sometimes bundles with manual chunks, causing those chunks to be eager-loaded
-            const ROLLUP_COMMON_MODULES = [
-              'vite/preload-helper',
-              'vite/modulepreload-polyfill',
-              'vite/dynamic-import-helper',
-              'commonjsHelpers',
-              'commonjs-dynamic-modules',
-              '__vite-browser-external',
-            ]
-
-            // https://github.com/vitejs/vite/issues/5189#issuecomment-2175410148
-            if (ROLLUP_COMMON_MODULES.some(commonModule => id.includes(commonModule))) {
-              return 'fuck'
-            }
-
+            // 只需返回明确需要分包的模块，不再自动合并依赖
             if (id.includes('node_modules')) {
               const modulePath = id.split('node_modules/')[1]
               const topLevelFolder = modulePath.split('/')[0]
