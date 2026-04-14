@@ -26,11 +26,10 @@
     "demo": "https://www.walnut-admin.com"
   },
   "scripts": {
-    "predev": "esno build/generate/index.ts",
+    "predev": "esno build/generate/genJSONSchemas.ts",
     "dev": "vite",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx simple-git-hooks",
-    "prebuild": "esno build/generate/index.ts",
     "build": "vite build",
     "build:stage": "npm run prebuild && vite build --mode staging",
     "preview": "vite preview --mode production",
