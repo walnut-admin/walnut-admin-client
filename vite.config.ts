@@ -7,8 +7,6 @@ import { envDir, publicDir } from './build/constant'
 import { createVitePlugins } from './build/vite/plugin'
 import { createViteProxy } from './build/vite/proxy'
 
-import { dependencies } from './package.json'
-
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
 }
@@ -57,11 +55,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
   return {
     root,
+    appType: 'spa',
 
     base: processedEnv.publicPath,
-
     envDir,
-
     publicDir,
 
     define: {
@@ -82,11 +79,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'axios/lib': resolve(__dirname, './node_modules/axios/lib'),
       },
     },
-
-    css: {},
-
-    // ⚠️ Vite 8: esbuild 配置已弃用，使用 rolldownOptions 替代
-    // 如需移除 console，在 build.rolldownOptions.output.minify 中配置
 
     server: {
       host: processedEnv.host,
@@ -109,10 +101,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       open: true,
     },
 
-    optimizeDeps: {
-      include: Object.keys(dependencies),
-    },
-
     build: {
       minify: 'esbuild',
       outDir: processedEnv.build.outDir,
@@ -121,8 +109,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       cssCodeSplit: false,
       target: 'esnext',
       sourcemap: processedEnv.build.sentry.enabled,
-
-      chunkSizeWarningLimit: 600,
 
       // ⚠️ Vite 8: rollupOptions 已更名为 rolldownOptions
       // 兼容层会自动转换，但建议显式迁移
@@ -150,16 +136,16 @@ export default ({ mode }: ConfigEnv): UserConfig => {
               },
             ],
           },
+
+          minify: processedEnv.build.dropConsole
+            ? {
+                compress: {
+                  dropConsole: true,
+                  dropDebugger: true,
+                },
+              }
+            : undefined,
         },
-        // ⚠️ Vite 8: drop console 配置迁移到这里（如需启用）
-        // output: {
-        //   minify: processedEnv.build.dropConsole ? {
-        //     compress: {
-        //       drop_console: true,
-        //       drop_debugger: true,
-        //     },
-        //   } : undefined,
-        // },
       },
     },
   }
