@@ -26,7 +26,7 @@
     "demo": "https://www.walnut-admin.com"
   },
   "scripts": {
-    "predev": "esno build/generate/genJSONSchemas.ts",
+    "predev": "tsx build/generate/genJSONSchemas.ts",
     "dev": "vite",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx simple-git-hooks",
@@ -38,7 +38,7 @@
     "lint:fix": "eslint . --fix --concurrency=auto",
     "commit:msg": "commitlint --edit",
     "types:check": "vue-tsc --noEmit",
-    "types:check:log": "esno build/types.ts",
+    "types:check:log": "tsx build/types.ts",
     "clean:cache": "rimraf node_modules/.vite",
     "clean:lib": "rimraf node_modules",
     "check:deps:update": "npx taze major -l",
@@ -46,8 +46,8 @@
     "deploy:stage": "deploy-cli-service deploy --mode staging",
     "deploy:prod": "deploy-cli-service deploy --mode production",
     "generate-pwa-assets": "pwa-assets-generator",
-    "changelog": "esno scripts/release/changelog.ts",
-    "git:push": "esno scripts/release/git.ts"
+    "changelog": "tsx scripts/release/changelog.ts",
+    "git:push": "tsx scripts/release/git.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "6.18.7",
@@ -137,7 +137,6 @@
     "deploy-cli-service": "1.5.3",
     "eslint": "9.35.0",
     "eslint-plugin-vue": "10.4.0",
-    "esno": "4.8.0",
     "git-cliff": "2.10.1",
     "javascript-obfuscator": "4.2.0",
     "lint-staged": "16.1.6",
