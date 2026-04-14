@@ -18,12 +18,12 @@ import { base64ToUint8Array, uint8ArrayToBase64, uint8ArrayToUtf8, utf8ToUint8Ar
 export async function aesGcmEncrypt(
   key: CryptoKey,
   plaintext: string,
-  raw?: false
+  raw?: false,
 ): Promise<string>
 export async function aesGcmEncrypt(
   key: CryptoKey,
   plaintext: string,
-  raw: true
+  raw: true,
 ): Promise<AesGcmRawResult>
 export async function aesGcmEncrypt(
   key: CryptoKey,
@@ -70,11 +70,11 @@ export async function aesGcmEncrypt(
  */
 export async function aesGcmDecrypt(
   key: CryptoKey,
-  encoded: string
+  encoded: string,
 ): Promise<string | null>
 export async function aesGcmDecrypt(
   key: CryptoKey,
-  parts: AesGcmRawInput
+  parts: AesGcmRawInput,
 ): Promise<string | null>
 export async function aesGcmDecrypt(
   key: CryptoKey,

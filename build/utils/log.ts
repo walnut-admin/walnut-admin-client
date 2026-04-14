@@ -36,12 +36,12 @@ export function writeIntoLog(title: string, command: string, path: string) {
     flags: 'w',
   })
 
-  const start = new Date().getTime()
+  const start = Date.now()
 
   cp.exec(command, (error, stdout, stderr) => {
     prefix(`Excuting command: ${command}`, '⚡⚡⚡⚡⚡')
 
-    const end = new Date().getTime()
+    const end = Date.now()
 
     const cost = new Date(end - start).getSeconds()
 

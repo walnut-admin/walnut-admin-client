@@ -50,13 +50,15 @@ function onInit() {
 
   chartInst.value = chart
 
+  const options = structuredClone(props.option)
+
   chartInst.value!.setOption(
     isDark.value
-      ? Object.assign(props.option, {
+      ? Object.assign(options, {
           backgroundColor: 'transparent',
           animation: !userStorePreference.getReducedMotion,
         })
-      : Object.assign(props.option, {
+      : Object.assign(options, {
           animation: !userStorePreference.getReducedMotion,
         }),
   )

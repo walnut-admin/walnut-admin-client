@@ -106,7 +106,7 @@ export declare namespace WForm {
 
       onYes?: (
         apiHandler: (apiFn: Fn, params: Recordable) => Promise<void>,
-        done: ({ closeModal }?: { closeModal?: boolean }) => void
+        done: (opts?: { closeModal?: boolean }) => void | Promise<void>,
       ) => void | Promise<void>
       onNo?: (close: Fn) => void | Promise<void>
     }

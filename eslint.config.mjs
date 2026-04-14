@@ -2,7 +2,7 @@ import antfu from '@antfu/eslint-config'
 
 export default antfu(
   {
-    ignores: ['.agents/**/*', 'AGENTS.md'],
+    ignores: ['.agents/**/*', 'AGENTS.md', 'TODO.md'],
     unocss: true,
     rules: {
       // LINK reasonable https://stackoverflow.com/a/78566802

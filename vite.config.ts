@@ -6,6 +6,7 @@ import { loadEnv } from 'vite'
 import { envDir, publicDir } from './build/constant'
 import { createVitePlugins } from './build/vite/plugin'
 import { createViteProxy } from './build/vite/proxy'
+import { dependencies } from './package.json'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -99,6 +100,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       strictPort: true,
       host: true,
       open: true,
+    },
+
+    optimizeDeps: {
+      include: Object.keys(dependencies),
     },
 
     build: {

@@ -49,7 +49,6 @@ This project is licensed under the MIT License. For details, please refer to [LI
 <!-- links -->
 
 [author-url]: https://github.com/Zhaocl1997
-[walnut-admin-client]: https://github.com/walnut-admin/walnut-admin-client
 [walnut-admin-server]: https://github.com/walnut-admin/walnut-admin-server
 [walnut-admin-doc]: https://walnut-admin-doc.netlify.app/
 [license-url]: https://github.com/walnut-admin/walnut-admin-client/blob/main/LICENSE
