@@ -85,10 +85,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
     css: {},
 
-    esbuild: {
-      drop: processedEnv.build.dropConsole ? ['console', 'debugger'] : [],
-      legalComments: 'none',
-    },
+    // ⚠️ Vite 8: esbuild 配置已弃用，使用 rolldownOptions 替代
+    // 如需移除 console，在 build.rolldownOptions.output.minify 中配置
 
     server: {
       host: processedEnv.host,
@@ -126,7 +124,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
       chunkSizeWarningLimit: 600,
 
-      rollupOptions: {
+      // ⚠️ Vite 8: rollupOptions 已更名为 rolldownOptions
+      // 兼容层会自动转换，但建议显式迁移
+      rolldownOptions: {
         output: {
           format: 'es',
           // https://github.com/vitejs/vite-plugin-vue/issues/19#issuecomment-3087602546
@@ -140,23 +140,26 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
 
-          // Rollup 4.52.0+ onlyExplicitManualChunks 解决 manualChunks 导致的懒加载失效问题
-          // https://github.com/vitejs/vite/issues/5189#issuecomment-3816839572
-          onlyExplicitManualChunks: true,
-          manualChunks(id: string) {
-            // 只需返回明确需要分包的模块，不再自动合并依赖
-            if (id.includes('node_modules')) {
-              const modulePath = id.split('node_modules/')[1]
-              const topLevelFolder = modulePath.split('/')[0]
-              if (topLevelFolder !== '.pnpm') {
-                return topLevelFolder
-              }
-              const scopedPackageName = modulePath.split('/')[1]
-              const chunkName = scopedPackageName.split('@')[scopedPackageName.startsWith('@') ? 1 : 0]
-              return chunkName
-            }
+          // Vite 8: Rolldown 默认使用 onlyExplicitManualChunks 行为
+          // manualChunks 在 Rolldown 中通过 codeSplitting 配置
+          codeSplitting: {
+            groups: [
+              {
+                name: 'vendor',
+                test: /[\\/]node_modules[\\/]/,
+              },
+            ],
           },
         },
+        // ⚠️ Vite 8: drop console 配置迁移到这里（如需启用）
+        // output: {
+        //   minify: processedEnv.build.dropConsole ? {
+        //     compress: {
+        //       drop_console: true,
+        //       drop_debugger: true,
+        //     },
+        //   } : undefined,
+        // },
       },
     },
   }

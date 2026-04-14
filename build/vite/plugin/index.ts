@@ -1,7 +1,7 @@
 import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
 import vueJsx from '@vitejs/plugin-vue-jsx'
+
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { createAutoImportPlugin } from './auto-import'
 import { createBannerPlugin } from './banner'
