@@ -5,6 +5,7 @@ export function createSentryPlugin(env: IViteEnv) {
     org: env.build.sentry.org,
     project: env.build.sentry.project,
     authToken: env.build.sentry.authToken,
+    telemetry: false,
     sourcemaps: {
       filesToDeleteAfterUpload: [`${env.build.outDir}/*.js.map`, `${env.build.outDir}/**/*.js.map`],
     },
