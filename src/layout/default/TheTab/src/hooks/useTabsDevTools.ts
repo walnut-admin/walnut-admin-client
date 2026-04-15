@@ -1,7 +1,4 @@
 import type { IStoreApp } from '@/store/types'
-import { openExternalLink } from '@/utils/window/open'
-// @ts-expect-error generated file
-import { paths } from '/build/_generated/paths'
 
 export function useTabsDevTools() {
   const devToolShow = ref(false)
@@ -14,7 +11,7 @@ export function useTabsDevTools() {
 
   const onOpenFile = () => {
     const filePath = currentMouseTab.value?.meta.component
-    openExternalLink(`vscode://file/${paths.view}/${filePath}.vue`)
+    console.log(`vscode://file/YOUR_PROJECT_PATH}/${filePath}.vue`)
     devToolShow.value = false
   }
 
