@@ -47,6 +47,7 @@ export function createPWAPlugin(env: IViteEnv) {
     workbox: {
       disableDevLogs: true,
       cleanupOutdatedCaches: true,
+      maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
       runtimeCaching: [
         {
           urlPattern: ({ request }) => request.destination === 'style' || request.destination === 'script'
