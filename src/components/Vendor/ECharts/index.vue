@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ICompVendorEChartsProps } from '.'
 import { genString } from 'easy-fns-ts'
+import { clone } from 'lodash-es'
 
 defineOptions({
   name: 'WCompVendorECharts',
@@ -50,13 +51,15 @@ function onInit() {
 
   chartInst.value = chart
 
+  const options = clone(props.option)
+
   chartInst.value!.setOption(
     isDark.value
-      ? Object.assign(props.option, {
+      ? Object.assign(options, {
           backgroundColor: 'transparent',
           animation: !userStorePreference.getReducedMotion,
         })
-      : Object.assign(props.option, {
+      : Object.assign(options, {
           animation: !userStorePreference.getReducedMotion,
         }),
   )

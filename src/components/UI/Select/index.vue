@@ -11,7 +11,7 @@ defineOptions({
 const props = withDefaults(defineProps<ICompUISelectProps>(), {
   tooltipThreshold: 100,
 })
-const attrs: SelectProps = useAttrs()
+const attrs = useAttrs() as SelectProps
 
 const renderOption: RenderOption = ({ node, option, selected }) => {
   const label = (option as SelectOption).label

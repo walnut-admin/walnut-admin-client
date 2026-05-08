@@ -28,6 +28,7 @@ export function useFormMethods<T>(formRef: Ref<WForm.Inst.NFormInst | null>) {
   return {
     validate,
     restoreValidation,
+    invalidateLabelWidth: () => formRef.value?.invalidateLabelWidth(),
   }
 }
 

@@ -63,7 +63,7 @@ async function onOSSUpload() {
     })
 
     if (result.res.status === 200) {
-      const newUrl = `${result.url}?t=${new Date().getTime()}`
+      const newUrl = `${result.url}?t=${Date.now()}`
       emits('success', newUrl)
       return true
     }

@@ -17,6 +17,7 @@ export function useForm<T>(props: WForm.Hooks.UseForm.Props<T>): WForm.Hooks.Use
   const methods: WForm.Hooks.UseForm.Methods<T> = {
     validate: async (fields?: (keyof T)[]) => await (wFormRef.value?.validate(fields) ?? Promise.resolve(false)),
     restoreValidation: () => wFormRef.value?.restoreValidation(),
+    invalidateLabelWidth: () => wFormRef.value?.invalidateLabelWidth(),
     onOpen: (beforeHook?: Fn) => wFormRef.value?.onOpen(beforeHook),
     onClose: (close: Fn) => wFormRef.value?.onClose(close),
   }

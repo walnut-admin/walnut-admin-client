@@ -5,7 +5,7 @@ export function createCheckerPlugin() {
     typescript: true,
     vueTsc: true,
     eslint: {
-      lintCommand: 'eslint .',
+      lintCommand: 'eslint . --ignore-pattern "*.md"',
       useFlatConfig: true,
       watchPath: '../../../src',
     },

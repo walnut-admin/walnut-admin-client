@@ -8,7 +8,7 @@ import {
 
 const config: import('ts-json-schema-generator/dist/src/Config').Config = {
   path: AppSettingsDevInterfaceFilePath,
-  tsconfig: 'tsconfig.json',
+  tsconfig: 'tsconfig.schema.json',
   type: 'IStoreSetting.Dev', // Or <type-name> if you want to generate schema for that one type only
 }
 
