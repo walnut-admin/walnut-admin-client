@@ -6,10 +6,11 @@ import type {
   FormItemProps,
   FormItemRule,
   FormRules,
+  FormSize,
   InputOtpProps,
   SliderProps,
 } from 'naive-ui'
-import type { LabelAlign, LabelPlacement, Size } from 'naive-ui/es/form/src/interface'
+import type { LabelAlign, LabelPlacement } from 'naive-ui/es/form/src/interface'
 
 import type { CSSProperties } from 'vue'
 // ui types
@@ -137,7 +138,7 @@ export declare namespace WForm {
     model?: T
     rules?: FormRules
     disabled?: boolean
-    size?: Size
+    size?: FormSize
     showRequireMark?: boolean
     requireMarkPlacement?: 'left' | 'right' | 'right-hanging'
     showFeedback?: boolean

@@ -9,7 +9,7 @@ defineOptions({
 const { retrySeconds = 60, retryKey } = defineProps<ICompUIButtonRetryProps>()
 const emits = defineEmits<{ click: [e: MouseEvent], retryClick: [startCountDown: Fn] }>()
 
-const attrs: ICompUIButtonProps = useAttrs()
+const attrs = useAttrs() as ICompUIButtonProps
 
 const { retryText, resume } = useCountdownStorage({ persistKey: retryKey, persistSeconds: retrySeconds })
 

@@ -1,7 +1,7 @@
 import type { LocationQuery, LocationQueryRaw } from 'vue-router'
 import qs from 'qs'
 
-export function stringifyQuery(obj: LocationQueryRaw) {
+export function stringifyQuery(obj?: LocationQueryRaw) {
   return qs.stringify(obj)
 }
 
