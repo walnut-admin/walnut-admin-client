@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ICompVendorEChartsProps } from '.'
 import { genString } from 'easy-fns-ts'
+import { clone } from 'lodash-es'
 
 defineOptions({
   name: 'WCompVendorECharts',
@@ -50,7 +51,7 @@ function onInit() {
 
   chartInst.value = chart
 
-  const options = structuredClone(props.option)
+  const options = clone(props.option)
 
   chartInst.value!.setOption(
     isDark.value
