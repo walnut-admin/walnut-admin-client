@@ -4,7 +4,6 @@ import TheAppGlobalComponents from './Features/global.vue'
 import TheAppWatermark from './Features/watermark.vue'
 import { useStarOnGithub } from './hooks/useStarOnGithub'
 import TheScrollContent from './scrollContent.vue'
-import TheScrollWrapper from './scrollWrapper.vue'
 
 import TheAside from './TheAside'
 
@@ -63,8 +62,7 @@ useStarOnGithub()
         bordered :native-scrollbar="false" :content-style="{ height: '100%' }"
         class="relative h-full w-full"
       >
-        <TheScrollContent v-if="appStoreSettingDev.getScrollModeIsContent" />
-        <TheScrollWrapper v-else-if="appStoreSettingDev.getScrollModeIsWrapper" />
+        <TheScrollContent />
       </n-layout-content>
 
       <WAppSettings />

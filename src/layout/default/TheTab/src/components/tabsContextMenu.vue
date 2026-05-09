@@ -108,7 +108,7 @@ async function onSelect(key: ValueOfAppConstTabDeleteType
         },
       })
 
-      await downloadByBase64(dataUrl, `${currentRoute.value.name as string}-${appStoreSettingDev.app.scrollMode}`)
+      await downloadByBase64(dataUrl, `${currentRoute.value.name as string}-screenshot`)
     }
     catch (error) {
       console.log(error)

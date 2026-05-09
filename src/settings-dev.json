@@ -21,7 +21,6 @@
   },
   "app": {
     "keepAlive": true,
-    "scrollMode": "wrapper",
     "contentPadding": 0.5
   },
   "logo": {

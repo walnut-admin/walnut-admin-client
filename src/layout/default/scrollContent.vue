@@ -33,6 +33,13 @@ watchEffect(() => {
 
 const getFooterShow = computed(() => bottom.value || appStoreSettingDev.getFooterFixed)
 
+const calcContentHeight = computed(() => {
+  const h = headerShow.value ? appStoreSettingDev.getHeaderHeight : 0
+  const t = tabsShow.value ? appStoreSettingDev.getTabsHeight : 0
+  const f = getFooterShow.value ? appStoreSettingDev.getFooterHeight : 0
+  return `calc(100vh - ${h}rem - ${t}rem - ${f}rem)`
+})
+
 // shit code but fix the problem
 watch(() => getFooterShow.value, async (v) => {
   if (v) {
@@ -61,7 +68,7 @@ watch(() => getFooterShow.value, async (v) => {
         x-scrollable
         :style="{
           width: appStoreSettingDev.getCalcContentWidth,
-          height: appStoreSettingDev.getCalcContentHeight,
+          height: calcContentHeight,
         }"
       >
         <div
@@ -70,7 +77,7 @@ watch(() => getFooterShow.value, async (v) => {
           :style="{
             width: appStoreSettingDev.getCalcContentWidth,
             padding: $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}rem`,
-            height: $route.meta.ternal === 'internal' ? appStoreSettingDev.getCalcContentHeight : 'initial',
+            height: $route.meta.ternal === 'internal' ? calcContentHeight : 'initial',
           }"
         >
           <TheContent />

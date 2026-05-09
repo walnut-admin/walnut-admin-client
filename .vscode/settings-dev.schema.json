@@ -110,11 +110,6 @@
               "description": "Keep Alive component, vue features",
               "default": true
             },
-            "scrollMode": {
-              "$ref": "#/definitions/ValueOfAppConstScrollMode",
-              "description": "content or wrapper, scrollbar may have part covered in wrapper mode",
-              "default": "wrapper"
-            },
             "contentPadding": {
               "type": "number",
               "description": "Content padding px",
@@ -123,7 +118,6 @@
           },
           "required": [
             "keepAlive",
-            "scrollMode",
             "contentPadding"
           ],
           "additionalProperties": false
@@ -460,14 +454,6 @@
       ],
       "additionalProperties": false,
       "description": "Pure front-end developer environment configuration Contains development debugging, implementation details, configurations that may affect application stability"
-    },
-    "ValueOfAppConstScrollMode": {
-      "type": "string",
-      "enum": [
-        "content",
-        "wrapper"
-      ],
-      "description": "type usage for const"
     },
     "ValueOfAppConstTransitionName": {
       "type": "string",

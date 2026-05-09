@@ -20,12 +20,6 @@ const useAppStoreSettingDevInside = defineStore(StoreKeys.SETTING_DEV, {
     getKeepAlive(state) {
       return state.app.keepAlive
     },
-    getScrollModeIsContent(state) {
-      return state.app.scrollMode === AppConstScrollMode.CONTENT
-    },
-    getScrollModeIsWrapper(state) {
-      return state.app.scrollMode === AppConstScrollMode.WRAPPER
-    },
     getContentPadding(state) {
       return state.app.contentPadding
     },

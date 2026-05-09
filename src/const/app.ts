@@ -39,13 +39,6 @@ export const AppConstLayoutMode = {
 
 export type ValueOfAppConstLayoutMode = ValueOf<typeof AppConstLayoutMode>
 
-export const AppConstScrollMode = {
-  CONTENT: 'content',
-  WRAPPER: 'wrapper',
-} as const
-
-export type ValueOfAppConstScrollMode = ValueOf<typeof AppConstScrollMode>
-
 export const AppConstLockMode = {
   DEFAULT: 'default',
   SECURITY: 'security',

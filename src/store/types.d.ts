@@ -6,7 +6,7 @@ import type { IModels } from '@/api/models'
 import type { IRequestPayload } from '@/api/request'
 import type { IResponseData } from '@/api/response'
 import type { VerifyAuthOptions } from '@/components/Global/VerifyAuth/types'
-import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppConstDevice, ValueOfAppConstLayoutMode, ValueOfAppConstLocale, ValueOfAppConstScrollMode, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName, ValueOfAppCVD } from '@/const'
+import type { ValueOfAppConstBasicMode, ValueOfAppConstColorMode, ValueOfAppConstDevice, ValueOfAppConstLayoutMode, ValueOfAppConstLocale, ValueOfAppConstTabUtilsShowMode, ValueOfAppConstTransitionName, ValueOfAppCVD } from '@/const'
 
 export namespace IStoreApp {
   /**
@@ -497,12 +497,6 @@ export namespace IStoreSetting {
        * @default true
        */
       keepAlive: boolean
-
-      /**
-       * @description content or wrapper, scrollbar may have part covered in wrapper mode
-       * @default wrapper
-       */
-      scrollMode: ValueOfAppConstScrollMode
 
       /**
        * @description Content padding px
