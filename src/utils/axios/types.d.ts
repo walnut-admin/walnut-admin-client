@@ -1,4 +1,5 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { Recordable } from 'easy-fns-ts'
 import type { DataTableSortOrder } from 'naive-ui'
 import type { IModels } from '@/api/models'
 
@@ -109,6 +110,11 @@ export namespace IAxios {
      * @description response data structure
      */
     data: T
+
+    /**
+     * @description error meta payload
+     */
+    meta?: Recordable
   }
 
   /**

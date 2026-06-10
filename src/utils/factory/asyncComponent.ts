@@ -62,7 +62,7 @@ export function createAsyncComponent<T extends Component = Component>(loader: ()
      * @param {*} attempts Maximum allowed retries number
      */
     onError(error, retry, fail, attempts) {
-      if (error.message.match(/fetch/) && attempts <= 3) {
+      if (/fetch/.test(error.message) && attempts <= 3) {
         // retry on fetch errors, 3 max attempts
         retry()
       }

@@ -9,6 +9,10 @@ defineOptions({
   defaultView: false,
 })
 
+const { purpose } = defineProps<{
+  purpose: IModels.ISystemUserIdentityPurpose
+}>()
+
 const emits = defineEmits<{
   (e: 'success'): void
 }>()
@@ -20,6 +24,7 @@ const type = ref<IModels.ISystemUserIdentityType>()
 const securityBound = ref()
 const countryCallingCode = ref()
 const maskedValue = ref()
+const needTip = ref(true)
 const loading = ref(false)
 
 const { stateRef: formDataPhone, resetState: resetFormDataPhone } = useState({
@@ -82,14 +87,14 @@ async function onVerify() {
   if (actionType.value === 'verify') {
     await verifyUserIdentityAPI({
       type: type.value!,
-      purpose: 'login',
+      purpose,
       verifyCode: formDataVerify.value.verifyCode!.join(''),
     })
   }
   else {
     await bindUserIdentityAPI({
       type: type.value!,
-      purpose: 'login',
+      purpose,
       identifier: type.value === 'phoneNumber' ? formDataPhone.value.identifier! : formDataEmail.value.identifier!,
       setAsSecurity: type.value === 'phoneNumber' ? formDataPhone.value.setAsSecurity : formDataEmail.value.setAsSecurity,
       verifyCode: formDataVerify.value.verifyCode!.join(''),
@@ -115,7 +120,7 @@ const [registerPhone, { onOpen: onOpenPhoneModal, onClose: onClosePhoneModal }] 
       try {
         await checkUserIdentityAPI({
           type: 'phoneNumber',
-          purpose: 'login',
+          purpose,
           identifier: formDataPhone.value.identifier!,
         })
         onClosePhoneModal()
@@ -182,6 +187,9 @@ const [registerPhone, { onOpen: onOpenPhoneModal, onClose: onClosePhoneModal }] 
         showLabel: false,
         showFeedback: false,
       },
+      visibleProp: {
+        vIf: computed(() => needTip.value),
+      },
     },
   ],
 })
@@ -200,7 +208,7 @@ const [registerEmail, { onOpen: onOpenEmailModal, onClose: onCloseEmailModal }] 
       try {
         await checkUserIdentityAPI({
           type: 'emailAddress',
-          purpose: 'login',
+          purpose,
           identifier: formDataEmail.value.identifier!,
         })
         onCloseEmailModal()
@@ -263,15 +271,19 @@ const [registerEmail, { onOpen: onOpenEmailModal, onClose: onCloseEmailModal }] 
         showLabel: false,
         showFeedback: false,
       },
+      visibleProp: {
+        vIf: computed(() => needTip.value),
+      },
     },
   ],
 })
 
 defineExpose({
-  onOpen: (_type: IModels.ISystemUserIdentityType, bound: boolean, _maskedValue: string) => {
+  onOpen: (_type: IModels.ISystemUserIdentityType, _securityBound: boolean, _maskedValue: string, _needTip = true) => {
     type.value = _type
-    securityBound.value = bound
+    securityBound.value = _securityBound
     maskedValue.value = _maskedValue
+    needTip.value = _needTip
 
     if (_type === 'phoneNumber') {
       onOpenPhoneModal()

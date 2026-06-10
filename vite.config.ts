@@ -6,7 +6,6 @@ import { loadEnv } from 'vite'
 import { envDir, publicDir } from './build/constant'
 import { createVitePlugins } from './build/vite/plugin'
 import { createViteProxy } from './build/vite/proxy'
-
 import { dependencies } from './package.json'
 
 function pathResolve(dir: string) {
@@ -57,11 +56,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
   return {
     root,
+    appType: 'spa',
 
     base: processedEnv.publicPath,
-
     envDir,
-
     publicDir,
 
     define: {
@@ -81,13 +79,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         // https://github.com/axios/axios/issues/5000#issuecomment-1362395864
         'axios/lib': resolve(__dirname, './node_modules/axios/lib'),
       },
-    },
-
-    css: {},
-
-    esbuild: {
-      drop: processedEnv.build.dropConsole ? ['console', 'debugger'] : [],
-      legalComments: 'none',
     },
 
     server: {
@@ -124,9 +115,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       target: 'esnext',
       sourcemap: processedEnv.build.sentry.enabled,
 
-      chunkSizeWarningLimit: 600,
-
-      rollupOptions: {
+      // ⚠️ Vite 8: rollupOptions 已更名为 rolldownOptions
+      // 兼容层会自动转换，但建议显式迁移
+      rolldownOptions: {
         output: {
           format: 'es',
           // https://github.com/vitejs/vite-plugin-vue/issues/19#issuecomment-3087602546
@@ -140,34 +131,25 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
 
-          // https://github.com/vitejs/vite/discussions/9440#discussioncomment-8358001
-          manualChunks(id: string) {
-            // List of modules that rollup sometimes bundles with manual chunks, causing those chunks to be eager-loaded
-            const ROLLUP_COMMON_MODULES = [
-              'vite/preload-helper',
-              'vite/modulepreload-polyfill',
-              'vite/dynamic-import-helper',
-              'commonjsHelpers',
-              'commonjs-dynamic-modules',
-              '__vite-browser-external',
-            ]
-
-            // https://github.com/vitejs/vite/issues/5189#issuecomment-2175410148
-            if (ROLLUP_COMMON_MODULES.some(commonModule => id.includes(commonModule))) {
-              return 'fuck'
-            }
-
-            if (id.includes('node_modules')) {
-              const modulePath = id.split('node_modules/')[1]
-              const topLevelFolder = modulePath.split('/')[0]
-              if (topLevelFolder !== '.pnpm') {
-                return topLevelFolder
-              }
-              const scopedPackageName = modulePath.split('/')[1]
-              const chunkName = scopedPackageName.split('@')[scopedPackageName.startsWith('@') ? 1 : 0]
-              return chunkName
-            }
+          // Vite 8: Rolldown 默认使用 onlyExplicitManualChunks 行为
+          // manualChunks 在 Rolldown 中通过 codeSplitting 配置
+          codeSplitting: {
+            groups: [
+              {
+                name: 'vendor',
+                test: /[\\/]node_modules[\\/]/,
+              },
+            ],
           },
+
+          minify: processedEnv.build.dropConsole
+            ? {
+                compress: {
+                  dropConsole: true,
+                  dropDebugger: true,
+                },
+              }
+            : undefined,
         },
       },
     },

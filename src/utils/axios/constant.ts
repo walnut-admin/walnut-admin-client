@@ -11,6 +11,7 @@ export const BusinessCodeConst = {
   CAPJS_TOKEN_INTERACTION_REQUIRED: 40116,
   CAPJS_TOKEN_REFRESH_REQUIRED: 40117,
   USER_LOCKED: 40118,
+  SENSITIVE_VERIFICATION_REQUIRED: 40119,
 } as const
 
 export const notAllowedErrorCodeMap: Record<number, string> = {

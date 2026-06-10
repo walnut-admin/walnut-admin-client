@@ -1,7 +1,5 @@
 import type { IconifyJSON } from '@iconify/types'
-import type { PluginContext } from 'rollup'
 import type { IconifyPluginOptions } from './types'
-
 import { IconSet } from '@iconify/tools'
 import { getIcons } from '@iconify/utils'
 import { glob } from 'tinyglobby'
@@ -9,6 +7,9 @@ import { BuildUtilsReadFile } from '../../../../utils'
 import { iconBundleCodeMap, iconListCodeMap } from './const'
 import { buildTrie, IconLog, scanIcons } from './shared'
 import { buildCustomSvgObject } from './svg'
+
+// Vite 8 uses Rolldown, use any for PluginContext compatibility
+type PluginContext = any
 
 interface ICustomSvg {
   customSvgObject: IconifyJSON

@@ -164,7 +164,7 @@ onBeforeMount(async () => {
     </div>
 
     <NSteps :current="currentStep" class="mb-8 ml-1/5" content-placement="bottom">
-      <NStep :title="$t('mfa.verify.step1.title')" />
+      <NStep :title="$t('security.verify.title1')" />
       <NStep :title="$t('mfa.verify.step2.title')" />
     </NSteps>
 

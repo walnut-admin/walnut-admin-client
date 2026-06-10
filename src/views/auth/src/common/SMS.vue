@@ -112,6 +112,8 @@ const [register, { validate }] = useForm<typeof SMSFormData>({
         key: 'sms-verify-code',
         retryKey: 'auth-sms',
 
+        onFinish: onSubmit,
+
         onBeforeCountdown: async () => {
           // valid phoneNumber before count down
           const valid = await validate(['identifier'])

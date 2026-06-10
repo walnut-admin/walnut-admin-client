@@ -31,46 +31,66 @@ watchEffect(() => {
     : false
 })
 
-const getFooterShow = computed(() => bottom.value || appStoreSettingDev.getFooterFixed)
+const footerAtBottom = computed(() => bottom.value || appStoreSettingDev.getFooterFixed)
+const isFooterVisible = ref(footerAtBottom.value)
+let footerHideTimer: ReturnType<typeof setTimeout> | null = null
 
-// shit code but fix the problem
-watch(() => getFooterShow.value, async (v) => {
+// TODO header/tab/footer 都是fixed false 滚动到最底部 稍微往上滚动一下 footer和顶栏的header/tab就出现了循环显示逻辑
+// 暂时通过下面的timer很蠢的方式处理有点效果
+watch(footerAtBottom, (v) => {
   if (v) {
-    await nextTick()
-    scrollWrapper.value?.scrollTo({
-      top: scrollWrapper.value.scrollHeight,
-      behavior: 'smooth',
-    })
+    if (footerHideTimer) {
+      clearTimeout(footerHideTimer)
+      footerHideTimer = null
+    }
+    isFooterVisible.value = true
   }
-}, { immediate: true })
+  else {
+    footerHideTimer = setTimeout(() => {
+      isFooterVisible.value = false
+      footerHideTimer = null
+    }, 400)
+  }
+})
 </script>
 
 <template>
-  <div class="relative h-full w-full transition-all">
-    <div class="sticky left-0 top-0 z-99">
-      <TheHeader v-show="headerShow" ref="headerRef" />
+  <div class="h-full w-full flex flex-col">
+    <div
+      class="shrink-0 overflow-hidden transition-all duration-300"
+      :style="{
+        maxHeight: headerShow ? `${appStoreSettingDev.getHeaderHeight}rem` : '0',
+        opacity: headerShow ? 1 : 0,
+      }"
+    >
+      <TheHeader ref="headerRef" />
     </div>
 
-    <div class="sticky left-0 top-0 z-98">
-      <TheTabs v-show="tabsShow" ref="tabsRef" />
+    <div
+      class="shrink-0 overflow-hidden transition-all duration-300"
+      :style="{
+        maxHeight: tabsShow ? `${appStoreSettingDev.getTabsHeight}rem` : '0',
+        opacity: tabsShow ? 1 : 0,
+      }"
+    >
+      <TheTabs ref="tabsRef" />
     </div>
 
-    <div ref="scrollWrapper">
+    <div ref="scrollWrapper" class="min-h-0 flex-1">
       <n-scrollbar
         :id="String($route.name)"
         x-scrollable
         :style="{
           width: appStoreSettingDev.getCalcContentWidth,
-          height: appStoreSettingDev.getCalcContentHeight,
+          height: '100%',
         }"
       >
         <div
           :id="`${String($route.name)}-content`"
-          class="relative h-full w-full"
+          class="h-full"
           :style="{
             width: appStoreSettingDev.getCalcContentWidth,
             padding: $route.meta.ternal === 'internal' ? 0 : `${appStoreSettingDev.getContentPadding}rem`,
-            height: $route.meta.ternal === 'internal' ? appStoreSettingDev.getCalcContentHeight : 'initial',
           }"
         >
           <TheContent />
@@ -79,8 +99,14 @@ watch(() => getFooterShow.value, async (v) => {
       </n-scrollbar>
     </div>
 
-    <div class="sticky bottom-0 left-0 z-99">
-      <TheFooter v-show="getFooterShow" />
+    <div
+      class="shrink-0 overflow-hidden transition-all duration-300"
+      :style="{
+        maxHeight: isFooterVisible ? `${appStoreSettingDev.getFooterHeight}rem` : '0',
+        opacity: isFooterVisible ? 1 : 0,
+      }"
+    >
+      <TheFooter />
     </div>
 
     <TheAppBackToTop />

@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 import type { IStoreApp } from '@/store/types'
-import { isUndefined, omitBy } from 'lodash-es'
+import { clone, isUndefined, omitBy } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { rsaPublicKeyAPI } from '@/api/security/rsa'
 import { signAesKeyAPI, signInitialAPI } from '@/api/security/sign'
@@ -89,7 +89,7 @@ const useAppStoreSecurityInside = defineStore(StoreKeys.APP_SECURITY, {
     },
 
     touchSessionKey() {
-      const sessionKey = structuredClone(this.getSessionKey)
+      const sessionKey = clone(this.getSessionKey)
       this.clearSessionKey()
       this.setSessionKey(sessionKey!)
     },
