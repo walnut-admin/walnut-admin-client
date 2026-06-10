@@ -1,0 +1,26 @@
+- [x] 一次对话内容多了，还是需要虚拟滚动支持呢
+- [x] 上一次提问的顶部吸附，一次回答内容太长了太多了会忘记提问内容，让上一次提问始终吸附在顶部用户体验更好
+- [ ] style的完全移除优化
+- [x] highlight做亮暗适配
+- [x] panel mode => panel / large-panel / content-aside 需要storage支持 深度思考也需要storage支持 和floattrigger的 y 保存一起储存吧
+- [x] input placeholder很多文章可以做
+- [x] business抽离，有些和ai没太大关系，只不过是定制化了一些输出，然后显示一些特殊的内容
+- [x] 面板模式头部可拖拽
+- [x] 回车后没有滚动到最底部,思考框一出现高度变化导致的
+- [x] https://tanstack.com/virtual/latest/docs/framework/vue/examples/sticky?panel=code
+- [x] panel收起ai也应该正常输出
+- [x] cache用不用上一下lru-cache => 不需要 不过formatCache简单封装一下即可
+- [x] 对话并行输出
+- [ ] ai输出时float dock 图标变化或者状态显示
+- [x] 文件夹架构优化
+- [x] 新对话，ai在输出 内容区刚出现滚动条 往上滚动不了 一卡一卡的
+- [x] 切换对话的时候 sticky的判断需要刷新一下 切换到的对话没有出现滚动条 但是sticky还是出现了
+- [x] 代码块单独做组件渲染
+- [x] panel drag的信息也存入ai perfs里吧
+- [x] 语音输入方案
+- [x] code block 复制 sticky
+- [x] ai开始输出后 打断 上键没有历史消息
+- [x] 很小众的问题，有几次对话涉及大段代码块，初次打开对话会稍微有些卡顿，有了缓存优化但是初次加载还是个问题
+- [ ] i18n
+- [x] 硬编码常量
+- [ ] 输出语音播放

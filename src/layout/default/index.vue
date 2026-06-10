@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useAppLock } from '@/components/App/AppLock/useAppLock'
+import AIFloatPanel from '@/components/Global/AI'
 import TheAppGlobalComponents from './Features/global.vue'
 import TheAppWatermark from './Features/watermark.vue'
 import { useStarOnGithub } from './hooks/useStarOnGithub'
@@ -69,5 +70,7 @@ useStarOnGithub()
       <TheAppWatermark v-if="appSettingScope.getWatermarkStatus" />
       <TheAppGlobalComponents />
     </div>
+
+    <AIFloatPanel />
   </n-layout>
 </template>
