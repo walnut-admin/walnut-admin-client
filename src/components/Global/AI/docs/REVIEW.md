@@ -26,7 +26,7 @@
 **文件**: [deepseek.ts](../../../api/ai/deepseek.ts#L18)
 
 ```typescript
-const DEEPSEEK_API_KEY = 'sk-4a2881e3177b49578348fb95c4129b7d'
+const DEEPSEEK_API_KEY = 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
 API Key 明文硬编码已提交到 Git 仓库。任何有仓库访问权限的人都可以使用该 Key 调用 DeepSeek API，存在资费被盗用和信息安全风险。
