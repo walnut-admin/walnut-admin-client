@@ -16,13 +16,9 @@ export function createImageOptimizerPlugin() {
           params: {
             overrides: {
               cleanupNumericValues: false,
-              removeViewBox: false, // https://github.com/svg/svgo/issues/1128
+              // `removeViewBox` is no longer part of preset-default in SVGO v3+,
+              // so it won't be applied. Configure it separately if needed.
             },
-            // cleanupIDs: {
-            //   minify: false,
-            //   remove: false,
-            // },
-            // convertPathData: false,
           },
         },
         'sortAttrs',
