@@ -14,9 +14,21 @@ defineOptions({ name: 'AiHeader' })
 
 <style>
 .ai-header-btn {
-  @apply h-7 w-7 flex-center cursor-pointer border border-border rounded-md bg-fill text-text-regular transition-all duration-150;
+  height: 1.75rem;
+  width: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  background-color: var(--body-color);
+  color: var(--text-color-2);
+  transition: all 150ms;
 }
 .ai-header-btn:hover {
-  @apply border-border-light bg-fill-lighter text-text-primary;
+  border-color: var(--divider-color);
+  background-color: var(--base-color);
+  color: var(--text-color-1);
 }
 </style>
