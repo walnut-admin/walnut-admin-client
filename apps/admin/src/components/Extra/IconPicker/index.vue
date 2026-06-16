@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { InputInst } from 'naive-ui'
 import type { ICompExtraIconPickerProps } from '.'
+import { mockListApi } from '@walnut/shared/shared'
 import { useFormItem } from 'naive-ui/es/_mixins'
 import iconList from 'virtual:icon/list'
 import iconSet from 'virtual:icon/set'
-import { mockListApi } from '@/utils/shared'
 
 defineOptions({
   name: 'WCompExtraIconPicker',

@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
+import { getBoolean } from '@walnut/shared/shared'
 // @ts-expect-error ts path error
 import buildURL from 'axios/lib/helpers/buildURL'
-import { getBoolean } from '../shared'
 
 /**
  * @description set auth header for axios
