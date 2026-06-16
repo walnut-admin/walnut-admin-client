@@ -2,7 +2,7 @@
 import type { VerifyAuthMethod } from '../types'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 import type { WForm } from '@/components/UI/Form'
-import { isEmailAddress, isPhoneNumber } from '@/utils/regex'
+import { isEmailAddress, isPhoneNumber } from '@walnut/shared/regex'
 
 /**
  * Step 2: Identity Input (Bind Mode)

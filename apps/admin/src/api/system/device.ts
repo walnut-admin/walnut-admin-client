@@ -1,8 +1,8 @@
 import type { IModels } from '../models'
 import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
+import { getCPUCoreCount, getGPUArchitecture, getIsInIncognitoMode, getMemoryGB } from '@walnut/shared/shared'
 import { AppAxios } from '@/utils/axios'
-import { getCPUCoreCount, getGPUArchitecture, getIsInIncognitoMode, getMemoryGB } from '@/utils/shared'
 import { BaseAPI } from '../base'
 
 export const deviceAPI = new BaseAPI<IModels.SystemDevice>({

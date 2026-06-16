@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+import { isEmailAddress, isPhoneNumber } from '@walnut/shared/regex'
 import { bindUserIdentityAPI, checkUserIdentityAPI, verifyUserIdentityAPI } from '@/api/system/user_identity'
-import { isEmailAddress, isPhoneNumber } from '@/utils/regex'
 
 defineOptions({
   name: 'WMeTabSecurityTab1OTP',

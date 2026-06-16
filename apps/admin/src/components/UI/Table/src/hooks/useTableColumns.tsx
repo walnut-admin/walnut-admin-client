@@ -12,7 +12,7 @@ import WMessage from '@/components/Extra/Message'
 
 import WIcon from '@/components/UI/Icon'
 import WIconButton from '@/components/UI/IconButton'
-import { getBoolean, getFunctionBoolean } from '@/utils/shared'
+import { getBoolean, getFunctionBoolean } from '@walnut/shared/shared'
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns

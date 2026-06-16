@@ -1,9 +1,9 @@
 import type { Recordable } from 'easy-fns-ts'
 import type { FormItemRule, FormRules } from 'naive-ui'
 import type { WForm } from '../types'
+import { getBoolean } from '@walnut/shared/shared'
+import { wbtoa } from '@walnut/shared/window/base64'
 import { get } from 'lodash-es'
-import { getBoolean } from '@/utils/shared'
-import { wbtoa } from '@/utils/window/base64'
 import { componentMap } from '../components/FormItem/componentMap'
 
 const appStoreLocale = useAppStoreLocale()

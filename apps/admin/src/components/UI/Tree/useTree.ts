@@ -1,5 +1,5 @@
 import type { ICompUITreeInst, ICompUITreeProps } from '.'
-import { isInSetup } from '@/utils/shared'
+import { isInSetup } from '@walnut/shared/shared'
 
 export function useTree<T>(props: IDeepMaybeRef<ICompUITreeProps<T>> | ICompUITreeProps<T>): [(inst: ICompUITreeInst<T>) => void, ICompUITreeInst<T>] {
   isInSetup()

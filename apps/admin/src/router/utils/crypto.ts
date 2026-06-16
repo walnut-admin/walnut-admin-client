@@ -1,6 +1,6 @@
-import { aesGcmDecrypt, aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
-import { SingletonPromise } from '@/utils/queue'
-import { fromUrlSafeBase64, toUrlSafeBase64 } from '@/utils/shared'
+import { aesGcmDecrypt, aesGcmEncrypt } from '@walnut/shared/crypto/symmetric/aes-gcm'
+import { SingletonPromise } from '@walnut/shared/queue'
+import { fromUrlSafeBase64, toUrlSafeBase64 } from '@walnut/shared/shared'
 import { layoutConst } from '../routes/builtin'
 
 const urlMaskingAesKeyQueue = new SingletonPromise<void>()

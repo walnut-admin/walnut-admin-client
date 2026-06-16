@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { ICompVendorCropperProps } from '.'
 import type { WCompExtraAbsImageInst } from '@/components/Extra/AbsImage'
+import { base64ToBlob } from '@walnut/shared/file/base64'
+import { downloadByUrl } from '@walnut/shared/file/download'
 import { CropperCanvas, CropperCrosshair, CropperGrid, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs'
 import { customAlphabet } from 'nanoid'
-import { base64ToBlob } from '@/utils/file/base64'
-import { downloadByUrl } from '@/utils/file/download'
 
 defineOptions({
   name: 'WCompVendorCropper',

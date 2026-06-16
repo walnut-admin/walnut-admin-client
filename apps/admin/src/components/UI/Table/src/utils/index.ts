@@ -4,7 +4,7 @@ import type {
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
 import type { IAxios } from '@/utils/axios/types'
-import { getBoolean } from '@/utils/shared'
+import { getBoolean } from '@walnut/shared/shared'
 
 export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling', 'columnSetting']
 

@@ -1,11 +1,11 @@
 <script lang="tsx" setup>
 import type { NullableRecord } from 'easy-fns-ts'
 import type { IRequestPayload } from '@/api/request'
+import { isEmailAddress } from '@walnut/shared/regex'
 // TODO 111
 import { NRadio, NText } from 'naive-ui'
 import { sendWithOTPAPI } from '@/api/auth/otp'
 import { mainoutConst } from '@/router/routes/mainout'
-import { isEmailAddress } from '@/utils/regex'
 import { openExternalLink } from '@/utils/window/open'
 
 defineOptions({

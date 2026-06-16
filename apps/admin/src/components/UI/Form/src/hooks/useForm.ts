@@ -1,5 +1,5 @@
 import type { WForm } from '../types'
-import { isInSetup } from '@/utils/shared'
+import { isInSetup } from '@walnut/shared/shared'
 
 export function useForm<T>(props: WForm.Hooks.UseForm.Props<T>): WForm.Hooks.UseForm.ReturnType<T> {
   isInSetup()

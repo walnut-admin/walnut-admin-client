@@ -1,7 +1,7 @@
 import type { NullableRecord, StringOrNumber } from 'easy-fns-ts'
 import type { WCrud } from './types'
 import type { IModels } from '@/api/models'
-import { isInSetup } from '@/utils/shared'
+import { isInSetup } from '@walnut/shared/shared'
 
 export function useCRUD<T extends IModels.Base>(props: WCrud.Hooks.UseCRUD.Props<T>): WCrud.Hooks.UseCRUD.ReturnType<T> {
   isInSetup()

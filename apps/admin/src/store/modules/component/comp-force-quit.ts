@@ -1,6 +1,6 @@
 import type { IStoreComp } from '@/store/types'
+import { useAppStorageSync } from '@walnut/shared/persistent/storage/sync'
 import { defineStore } from 'pinia'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { IStoreUser } from '@/store/types'
+import { objectToPaths, pathsToObject } from '@walnut/shared/shared'
 import { updateLayoutPreferenceAPI } from '@/api/system/user_preference'
-import { objectToPaths, pathsToObject } from '@/utils/shared'
 
 defineOptions({
   name: 'WMeTabPreferenceLayout',

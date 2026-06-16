@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios'
 import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
-import { SingletonPromise } from '@/utils/queue'
+import { SingletonPromise } from '@walnut/shared/queue'
 
 const appStoreSecurity = useAppStoreSecurity()
 const capJSQueue = new SingletonPromise<string>()

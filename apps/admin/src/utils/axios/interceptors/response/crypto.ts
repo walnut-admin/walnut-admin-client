@@ -1,6 +1,6 @@
-import { importAesKeyFromRaw, importRsaPrivateKey, rsaOaepDecrypt } from '@/utils/crypto/shared'
-import { aesGcmDecrypt } from '@/utils/crypto/symmetric/aes-gcm'
-import { base64ToUint8Array } from '@/utils/crypto/transformer'
+import { importAesKeyFromRaw, importRsaPrivateKey, rsaOaepDecrypt } from '@walnut/shared/crypto/shared'
+import { aesGcmDecrypt } from '@walnut/shared/crypto/symmetric/aes-gcm'
+import { base64ToUint8Array } from '@walnut/shared/crypto/transformer'
 
 export async function decryptResponseValue(encryptedBase64: string): Promise<string | null> {
   try {

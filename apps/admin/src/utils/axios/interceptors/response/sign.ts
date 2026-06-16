@@ -1,4 +1,4 @@
-import { SingletonPromise } from '@/utils/queue'
+import { SingletonPromise } from '@walnut/shared/queue'
 
 const appStoreSecurity = useAppStoreSecurity()
 const signQueue = new SingletonPromise<string | null>()

@@ -1,6 +1,6 @@
-import { exportAesKeyToRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@/utils/crypto/shared'
-import { aesGcmEncrypt } from '@/utils/crypto/symmetric/aes-gcm'
-import { arrayBufferToBase64, uint8ArrayToBase64 } from '@/utils/crypto/transformer'
+import { exportAesKeyToRaw, generateAes256Key, importRsaPublicKey, rsaOaepEncrypt } from '@walnut/shared/crypto/shared'
+import { aesGcmEncrypt } from '@walnut/shared/crypto/symmetric/aes-gcm'
+import { arrayBufferToBase64, uint8ArrayToBase64 } from '@walnut/shared/crypto/transformer'
 
 interface CipherEnvelope {
   enc: 'AES_256_GCM'

@@ -1,6 +1,6 @@
 import type { EffectScope } from 'vue'
 import type { IStoreApp } from '@/store/types'
-import { useAppStorageSync } from '@/utils/persistent/storage/sync'
+import { useAppStorageSync } from '@walnut/shared/persistent/storage/sync'
 
 export function useTabsPersistent() {
   let scope: EffectScope

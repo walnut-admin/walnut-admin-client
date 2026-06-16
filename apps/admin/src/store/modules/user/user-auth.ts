@@ -1,8 +1,10 @@
 import type { IRequestPayload } from '@/api/request'
 import type { IStoreUser } from '@/store/types'
 import * as opaque from '@serenity-kit/opaque'
-import { defineStore } from 'pinia'
+import { enhancedAesGcmLocalStorage } from '@walnut/shared/persistent/enhance/index'
 
+import { useAppStorageAsync } from '@walnut/shared/persistent/storage/async'
+import { defineStore } from 'pinia'
 import { refreshTokenAPI, signoutAPI } from '@/api/auth'
 import { authWithGoogleAPI } from '@/api/auth/google'
 import { opaqueChangePasswordFinishAPI, opaqueChangePasswordStartAPI, opaqueLoginClientErrorAPI, opaqueLoginFinishAPI, opaqueLoginStartAPI } from '@/api/auth/opaque'
@@ -11,8 +13,6 @@ import { updatePasswordFinishAPI, updatePasswordStartAPI } from '@/api/system/us
 import { AppCoreFn1 } from '@/core'
 import { AppRootRoute } from '@/router/routes/builtin'
 import { mainoutConst } from '@/router/routes/mainout'
-import { enhancedAesGcmLocalStorage } from '@/utils/persistent/enhance'
-import { useAppStorageAsync } from '@/utils/persistent/storage/async'
 import { StoreKeys } from '../../constant'
 import { store } from '../../pinia'
 
