@@ -10,7 +10,17 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['vue', 'lodash-es', 'nanoid'],
+      external: [
+        'vue',
+        'lodash-es',
+        'nanoid',
+        'idb',
+        'superjson',
+        'js-base64',
+        'detectincognitojs',
+        '@vueuse/core',
+        '~build/package',
+      ],
     },
   },
 })

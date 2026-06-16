@@ -74,6 +74,14 @@
     /* Advanced Options */
     "skipLibCheck": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "types/*.d.ts", "build/**/*.ts", "*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/*.d.ts",
+    "build/**/*.ts",
+    "*.ts",
+    "../../packages/shared/src/types/*.d.ts"
+  ],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

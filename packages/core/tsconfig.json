@@ -7,6 +7,11 @@
       "@walnut/axios": ["../../packages/axios/src"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../shared/src/types/*.d.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

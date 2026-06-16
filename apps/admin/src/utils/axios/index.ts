@@ -1,5 +1,5 @@
+import { Axios } from '@walnut/axios/instance'
 import { originalConfig } from './core/config'
-import { Axios } from './core/instance'
 import { AxiosTransform } from './interceptors'
 
 // app axios instance

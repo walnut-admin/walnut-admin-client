@@ -17,6 +17,7 @@
     "noEmit": true,
     "importHelpers": true,
     "allowJs": true,
+    "ignoreDeprecations": "6.0",
     "typeRoots": ["./node_modules/@types/"],
     "paths": {}
   }
