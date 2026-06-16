@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useState } from '@walnut/core/hooks/core/useState'
 import { switchRoleAPI } from '@/api/system/user_me'
 
 defineOptions({

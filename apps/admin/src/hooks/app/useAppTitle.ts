@@ -1,3 +1,4 @@
+import { useSharedDocumentVisibility } from '@walnut/core/hooks/vueuse/useDocumentVisibility'
 /**
  * @description reactive document title
  */

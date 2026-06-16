@@ -1,12 +1,12 @@
-import type { NullableRecord, Recordable, StringOrNumber } from 'easy-fns-ts'
+import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
 
+import type { NullableRecord, Recordable, StringOrNumber } from 'easy-fns-ts'
 import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
 import type { HTMLAttributes, VNodeChild } from 'vue'
 import type { ICompUIButtonProps } from '../../Button'
 import type { WForm } from '../../Form'
 import type { ICompUIIconButtonProps } from '../../IconButton'
 import type { ICompUITableHooksMethods } from './hooks/useTableMethods'
-import type { IHooksUseProps } from '@/hooks/core/useProps'
 import type { IAxios } from '@/utils/axios/types'
 
 export declare namespace WTable {

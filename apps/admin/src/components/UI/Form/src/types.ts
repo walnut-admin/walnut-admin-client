@@ -1,3 +1,4 @@
+import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
 import type { BaseDataType, Recordable, StringOrNumber } from 'easy-fns-ts'
 // raw
 import type {
@@ -10,8 +11,8 @@ import type {
   InputOtpProps,
   SliderProps,
 } from 'naive-ui'
-import type { LabelAlign, LabelPlacement } from 'naive-ui/es/form/src/interface'
 
+import type { LabelAlign, LabelPlacement } from 'naive-ui/es/form/src/interface'
 import type { CSSProperties } from 'vue'
 // ui types
 import type { ICompUIButtonProps } from '../../Button'
@@ -20,11 +21,11 @@ import type { ICompUIButtonGroupProps } from '../../ButtonGroup'
 import type { ICompUIButtonRetryProps } from '../../ButtonRetry'
 import type { ICompUICheckboxProps } from '../../Checkbox'
 import type { ICompUIColorPickerProps } from '../../ColorPicker'
+
 import type { ICompUIDatePickerProps } from '../../DatePicker'
-
 import type { ICompUIDescriptionProps, ICompUIDescriptionsItem } from '../../Descriptions'
-import type { ICompUIDrawerProps } from '../../Drawer'
 
+import type { ICompUIDrawerProps } from '../../Drawer'
 import type { ICompUIDynamicTagsProps } from '../../DynamicTags'
 import type { ICompUIInputProps } from '../../Input'
 import type { ICompUIInputNumberProps } from '../../InputNumber'
@@ -42,8 +43,8 @@ import type { ICompUIFormHooksItemId } from './hooks/useFormItemId'
 import type { ICompUIFormHooksMethods } from './hooks/useFormMethods'
 // business
 import type { ICompBusinessAreaCascaderProps } from '@/components/Business/AreaCascader'
-import type { ICompBusinessDictProps } from '@/components/Business/Dict'
 
+import type { ICompBusinessDictProps } from '@/components/Business/Dict'
 // extra
 import type { ICompExtraEmailInputProps } from '@/components/Extra/EmailInput'
 import type { ICompExtraIconPickerProps } from '@/components/Extra/IconPicker'
@@ -54,7 +55,6 @@ import type { ICompExtraTransitionProps } from '@/components/Extra/Transition'
 import type { ICompExtraVerifyCodeProps } from '@/components/Extra/VerifyCode'
 import type { ICompVendorJSONEditorProps } from '@/components/Vendor/JSONEditor'
 import type { ICompVendorTinymceProps } from '@/components/Vendor/Tinymce'
-import type { IHooksUseProps } from '@/hooks/core/useProps'
 
 export declare type RuleType = 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'array' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email' | 'pattern' | 'any'
 

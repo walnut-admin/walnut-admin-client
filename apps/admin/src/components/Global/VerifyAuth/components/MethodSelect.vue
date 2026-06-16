@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { VerifyAuthMethod, VerifyAuthOptions } from '../types'
+import { useState } from '@walnut/core/hooks/core/useState'
 import { authMfaStatusAPI } from '@/api/auth/mfa'
 import { getSecurityTab1StatusAPI2 } from '@/api/system/user_identity'
 

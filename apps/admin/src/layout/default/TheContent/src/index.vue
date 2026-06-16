@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { RouteLocationNormalizedLoadedGeneric } from 'vue-router'
+import { localRefreshFlag } from '@walnut/core/hooks/core/useLocalRefresh'
 
 const appStoreMenu = useAppStoreMenu()
 const appStoreSettingDev = useAppStoreSettingDev()

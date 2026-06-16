@@ -1,3 +1,5 @@
+import { useSharedPreferredReducedMotion } from '@walnut/core/hooks/vueuse/usePreferredReducedMotion'
+
 export function useAppReducedMotion() {
   const userStorePreference = useAppStoreUserPreference()
   const isReducedMotion = useSharedPreferredReducedMotion()

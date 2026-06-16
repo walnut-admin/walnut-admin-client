@@ -1,11 +1,12 @@
 <script lang="tsx" setup generic="T extends Record<string, any>">
 import type { StringOrNumber, TreeNodeItem } from 'easy-fns-ts'
 import type { DropdownOption, TreeInst, TreeOption } from 'naive-ui'
-
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
-import type { TreeNodeProps, TreeRenderProps } from 'naive-ui/es/tree/src/interface'
 
+import type { TreeNodeProps, TreeRenderProps } from 'naive-ui/es/tree/src/interface'
 import type { ICompUITreeInst, ICompUITreeProps } from '.'
+
+import { useProps } from '@walnut/core/hooks/core/useProps'
 import { findPath, formatTree, treeToArr } from 'easy-fns-ts'
 import { cloneDeep } from 'lodash-es'
 // TODO 111

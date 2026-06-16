@@ -1,3 +1,6 @@
+import { useAppBreakpoints } from '@walnut/core/hooks/vueuse/useBreakpoints'
+import { useWindowResize } from '@walnut/core/hooks/vueuse/useResize'
+
 export function useAppResize() {
   const appStoreAdapter = useAppStoreAdapter()
   const appStoreMenu = useAppStoreMenu()

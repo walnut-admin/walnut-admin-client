@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IResponseData } from '@/api/response'
+import { useState } from '@walnut/core/hooks/core/useState'
 import { forceQuitUserDeviceAPI, listUserDevicesAPI, lockUserDeviceAPI, unlockUserDeviceAPI, updateUserDeviceNameAPI } from '@/api/system/user_device'
 
 defineOptions({

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ICompVendorJSONEditorProps } from '.'
+import { useLinkTag } from '@walnut/core/hooks/web/useLinkTag'
 import JsonEditorVue from 'json-editor-vue'
 
 defineOptions({

@@ -3,6 +3,8 @@ import type { CountryCode } from 'libphonenumber-js'
 import type { SelectMixedOption } from 'naive-ui/lib/select/src/interface'
 import type { VNodeChild } from 'vue'
 import type { ICompExtraCountryCallingSelectOption, ICompExtraCountryCallingSelectProps } from '.'
+import { useSharedNavigatorLanguage } from '@walnut/core/hooks/vueuse/useNavigatorLanguage'
+import { useSharedNetwork } from '@walnut/core/hooks/vueuse/useNetwork'
 import options from './data'
 import './icon.css'
 

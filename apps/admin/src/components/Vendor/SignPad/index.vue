@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { ICompVendorSignPadProps } from './types'
+import { useWindowResize } from '@walnut/core/hooks/vueuse/useResize'
 import { downloadByBase64 } from '@walnut/shared/file/download'
 import { genString } from 'easy-fns-ts'
 import { toJpeg, toPng } from 'html-to-image'

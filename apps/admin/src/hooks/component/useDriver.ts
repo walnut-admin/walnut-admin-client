@@ -1,4 +1,5 @@
 import type { Driver, DriveStep } from 'driver.js'
+import { useLinkTag } from '@walnut/core/hooks/web/useLinkTag'
 import { driver } from 'driver.js'
 import { getCookie, setCookie } from '@/utils/persistent/Cookie'
 

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IModels } from '@/api/models'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
+import { useState } from '@walnut/core/hooks/core/useState'
 import { isEmailAddress, isPhoneNumber } from '@walnut/shared/regex'
 import { bindUserIdentityAPI, checkUserIdentityAPI, verifyUserIdentityAPI } from '@/api/system/user_identity'
 

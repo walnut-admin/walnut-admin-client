@@ -1,3 +1,5 @@
+import { useSharedPreferredReducedMotion } from '@walnut/core/hooks/vueuse/usePreferredReducedMotion'
+
 const isReducedMotion = useSharedPreferredReducedMotion()
 
 const useSharedDark = createSharedComposable(() => {

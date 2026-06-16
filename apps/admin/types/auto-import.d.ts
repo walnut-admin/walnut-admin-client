@@ -21,7 +21,6 @@ declare global {
   const AppConstPersistKey: typeof import('../src/const/persistent').AppConstPersistKey
   const AppConstRequestHeaders: typeof import('../src/const/app').AppConstRequestHeaders
   const AppConstRoles: typeof import('../src/const/app').AppConstRoles
-  const AppConstScrollMode: typeof import('../src/const/app')['AppConstScrollMode']
   const AppConstStorageType: typeof import('../src/const/persistent').AppConstStorageType
   const AppConstSymbolKey: typeof import('../src/const/symbol').AppConstSymbolKey
   const AppConstTabAffixMode: typeof import('../src/const/tab').AppConstTabAffixMode
@@ -87,7 +86,6 @@ declare global {
   const isReadonly: typeof import('vue').isReadonly
   const isRef: typeof import('vue').isRef
   const isShallow: typeof import('vue').isShallow
-  const localRefreshFlag: typeof import('../src/hooks/core/useLocalRefresh').localRefreshFlag
   const makeDestructurable: typeof import('@vueuse/core').makeDestructurable
   const markRaw: typeof import('vue').markRaw
   const nextTick: typeof import('vue').nextTick
@@ -131,8 +129,6 @@ declare global {
   const refWithControl: typeof import('@vueuse/core').refWithControl
   const registerSocketEvent: typeof import('../src/socket/index').registerSocketEvent
   const resolveComponent: typeof import('vue').resolveComponent
-  const resolveRef: typeof import('@vueuse/core')['resolveRef']
-  const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const sendUserMonitorBeacon: typeof import('../src/hooks/web/useMonitor').sendUserMonitorBeacon
   const setupI18n: typeof import('../src/locales/index').setupI18n
   const setupRouter: typeof import('../src/router/index').setupRouter
@@ -151,7 +147,6 @@ declare global {
   const toRefs: typeof import('vue').toRefs
   const toValue: typeof import('vue').toValue
   const toggleDark: typeof import('../src/hooks/app/useAppDark').toggleDark
-  const toggleLocalRefreshFlag: typeof import('../src/hooks/core/useLocalRefresh').toggleLocalRefreshFlag
   const triggerRef: typeof import('vue').triggerRef
   const tryOnBeforeMount: typeof import('@vueuse/core').tryOnBeforeMount
   const tryOnBeforeUnmount: typeof import('@vueuse/core').tryOnBeforeUnmount
@@ -164,7 +159,6 @@ declare global {
   const until: typeof import('@vueuse/core').until
   const useActiveElement: typeof import('@vueuse/core').useActiveElement
   const useAnimate: typeof import('@vueuse/core').useAnimate
-  const useAppBreakpoints: typeof import('../src/hooks/vueuse/useBreakpoints').useAppBreakpoints
   const useAppConfirm: typeof import('../src/hooks/component/useConfirm').useAppConfirm
   const useAppContentFull: typeof import('../src/hooks/app/useAppContentFull').useAppContentFull
   const useAppDialog: typeof import('../src/hooks/component/useConfirm').useAppDialog
@@ -229,7 +223,6 @@ declare global {
   const useAttrs: typeof import('vue').useAttrs
   const useBase64: typeof import('@vueuse/core').useBase64
   const useBattery: typeof import('@vueuse/core').useBattery
-  const useBlob: typeof import('../src/hooks/web/useBlob').useBlob
   const useBluetooth: typeof import('@vueuse/core').useBluetooth
   const useBreakpoints: typeof import('@vueuse/core').useBreakpoints
   const useBroadcastChannel: typeof import('@vueuse/core').useBroadcastChannel
@@ -241,7 +234,6 @@ declare global {
   const useCloned: typeof import('@vueuse/core').useCloned
   const useColorMode: typeof import('@vueuse/core').useColorMode
   const useConfirmDialog: typeof import('@vueuse/core').useConfirmDialog
-  const useContext: typeof import('../src/hooks/core/useContext').useContext
   const useCountdown: typeof import('@vueuse/core').useCountdown
   const useCountdownStorage: typeof import('../src/hooks/component/useCountdown').useCountdownStorage
   const useCounter: typeof import('@vueuse/core').useCounter
@@ -264,7 +256,6 @@ declare global {
   const useDisplayMedia: typeof import('@vueuse/core').useDisplayMedia
   const useDocumentVisibility: typeof import('@vueuse/core').useDocumentVisibility
   const useDraggable: typeof import('@vueuse/core').useDraggable
-  const useDraggableElement: typeof import('../src/hooks/vueuse/useDraggableElement').useDraggableElement
   const useDriver: typeof import('../src/hooks/component/useDriver').useDriver
   const useDropZone: typeof import('@vueuse/core').useDropZone
   const useElementBounding: typeof import('@vueuse/core').useElementBounding
@@ -275,7 +266,6 @@ declare global {
   const useEventBus: typeof import('@vueuse/core').useEventBus
   const useEventListener: typeof import('@vueuse/core').useEventListener
   const useEventSource: typeof import('@vueuse/core').useEventSource
-  const useExpireTimer: typeof import('../src/hooks/vueuse/useExpireTimer').useExpireTimer
   const useEyeDropper: typeof import('@vueuse/core').useEyeDropper
   const useFavicon: typeof import('@vueuse/core').useFavicon
   const useFetch: typeof import('@vueuse/core').useFetch
@@ -288,7 +278,6 @@ declare global {
   const useFullscreen: typeof import('@vueuse/core').useFullscreen
   const useGamepad: typeof import('@vueuse/core').useGamepad
   const useGeolocation: typeof import('@vueuse/core').useGeolocation
-  const useGlobalAsyncComponent: typeof import('../src/hooks/component/useGlobalAsyncComponent').useGlobalAsyncComponent
   const useI18n: typeof import('vue-i18n').useI18n
   const useId: typeof import('vue').useId
   const useIdle: typeof import('@vueuse/core').useIdle
@@ -297,11 +286,9 @@ declare global {
   const useIntersectionObserver: typeof import('@vueuse/core').useIntersectionObserver
   const useInterval: typeof import('@vueuse/core').useInterval
   const useIntervalFn: typeof import('@vueuse/core').useIntervalFn
-  const useIntervalFnWithPercent: typeof import('../src/hooks/vueuse/useIntervalFnWithPercent').useIntervalFnWithPercent
   const useKeyModifier: typeof import('@vueuse/core').useKeyModifier
   const useLastChanged: typeof import('@vueuse/core').useLastChanged
   const useLink: typeof import('vue-router').useLink
-  const useLinkTag: typeof import('../src/hooks/web/useLinkTag').useLinkTag
   const useLocalStorage: typeof import('@vueuse/core').useLocalStorage
   const useMagicKeys: typeof import('@vueuse/core').useMagicKeys
   const useManualRefHistory: typeof import('@vueuse/core').useManualRefHistory
@@ -336,7 +323,6 @@ declare global {
   const usePreferredReducedMotion: typeof import('@vueuse/core').usePreferredReducedMotion
   const usePreferredReducedTransparency: typeof import('@vueuse/core').usePreferredReducedTransparency
   const usePrevious: typeof import('@vueuse/core').usePrevious
-  const useProps: typeof import('../src/hooks/core/useProps').useProps
   const useRafFn: typeof import('@vueuse/core').useRafFn
   const useRedirect: typeof import('../src/hooks/core/useRedirect').useRedirect
   const useRefHistory: typeof import('@vueuse/core').useRefHistory
@@ -353,16 +339,10 @@ declare global {
   const useScrollLock: typeof import('@vueuse/core').useScrollLock
   const useSessionStorage: typeof import('@vueuse/core').useSessionStorage
   const useShare: typeof import('@vueuse/core').useShare
-  const useSharedBattery: typeof import('../src/hooks/vueuse/useBattery').useSharedBattery
-  const useSharedDocumentVisibility: typeof import('../src/hooks/vueuse/useDocumentVisibility').useSharedDocumentVisibility
-  const useSharedNavigatorLanguage: typeof import('../src/hooks/vueuse/useNavigatorLanguage').useSharedNavigatorLanguage
-  const useSharedNetwork: typeof import('../src/hooks/vueuse/useNetwork').useSharedNetwork
-  const useSharedPreferredReducedMotion: typeof import('../src/hooks/vueuse/usePreferredReducedMotion').useSharedPreferredReducedMotion
   const useSlots: typeof import('vue').useSlots
   const useSorted: typeof import('@vueuse/core').useSorted
   const useSpeechRecognition: typeof import('@vueuse/core').useSpeechRecognition
   const useSpeechSynthesis: typeof import('@vueuse/core').useSpeechSynthesis
-  const useState: typeof import('../src/hooks/core/useState').useState
   const useStepper: typeof import('@vueuse/core').useStepper
   const useStorage: typeof import('@vueuse/core').useStorage
   const useStorageAsync: typeof import('@vueuse/core').useStorageAsync
@@ -405,7 +385,6 @@ declare global {
   const useWebWorker: typeof import('@vueuse/core').useWebWorker
   const useWebWorkerFn: typeof import('@vueuse/core').useWebWorkerFn
   const useWindowFocus: typeof import('@vueuse/core').useWindowFocus
-  const useWindowResize: typeof import('../src/hooks/vueuse/useResize').useWindowResize
   const useWindowScroll: typeof import('@vueuse/core').useWindowScroll
   const useWindowSize: typeof import('@vueuse/core').useWindowSize
   const watch: typeof import('vue').watch
@@ -448,9 +427,6 @@ declare global {
   // @ts-ignore
   export type { ValueOfAppConstTransitionName } from '../src/const/transition'
   import('../src/const/transition')
-  // @ts-ignore
-  export type { IHooksUseProps } from '../src/hooks/core/useProps'
-  import('../src/hooks/core/useProps')
 }
 
 // for vue template auto import
@@ -538,7 +514,6 @@ declare module 'vue' {
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
-    readonly localRefreshFlag: UnwrapRef<typeof import('../src/hooks/core/useLocalRefresh')['localRefreshFlag']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
@@ -600,7 +575,6 @@ declare module 'vue' {
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly toggleDark: UnwrapRef<typeof import('../src/hooks/app/useAppDark')['toggleDark']>
-    readonly toggleLocalRefreshFlag: UnwrapRef<typeof import('../src/hooks/core/useLocalRefresh')['toggleLocalRefreshFlag']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly tryOnBeforeMount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeMount']>
     readonly tryOnBeforeUnmount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeUnmount']>
@@ -613,7 +587,6 @@ declare module 'vue' {
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
-    readonly useAppBreakpoints: UnwrapRef<typeof import('../src/hooks/vueuse/useBreakpoints')['useAppBreakpoints']>
     readonly useAppConfirm: UnwrapRef<typeof import('../src/hooks/component/useConfirm')['useAppConfirm']>
     readonly useAppContentFull: UnwrapRef<typeof import('../src/hooks/app/useAppContentFull')['useAppContentFull']>
     readonly useAppDialog: UnwrapRef<typeof import('../src/hooks/component/useConfirm')['useAppDialog']>
@@ -678,7 +651,6 @@ declare module 'vue' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
-    readonly useBlob: UnwrapRef<typeof import('../src/hooks/web/useBlob')['useBlob']>
     readonly useBluetooth: UnwrapRef<typeof import('@vueuse/core')['useBluetooth']>
     readonly useBreakpoints: UnwrapRef<typeof import('@vueuse/core')['useBreakpoints']>
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
@@ -690,7 +662,6 @@ declare module 'vue' {
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
-    readonly useContext: UnwrapRef<typeof import('../src/hooks/core/useContext')['useContext']>
     readonly useCountdown: UnwrapRef<typeof import('@vueuse/core')['useCountdown']>
     readonly useCountdownStorage: UnwrapRef<typeof import('../src/hooks/component/useCountdown')['useCountdownStorage']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
@@ -713,7 +684,6 @@ declare module 'vue' {
     readonly useDisplayMedia: UnwrapRef<typeof import('@vueuse/core')['useDisplayMedia']>
     readonly useDocumentVisibility: UnwrapRef<typeof import('@vueuse/core')['useDocumentVisibility']>
     readonly useDraggable: UnwrapRef<typeof import('@vueuse/core')['useDraggable']>
-    readonly useDraggableElement: UnwrapRef<typeof import('../src/hooks/vueuse/useDraggableElement')['useDraggableElement']>
     readonly useDriver: UnwrapRef<typeof import('../src/hooks/component/useDriver')['useDriver']>
     readonly useDropZone: UnwrapRef<typeof import('@vueuse/core')['useDropZone']>
     readonly useElementBounding: UnwrapRef<typeof import('@vueuse/core')['useElementBounding']>
@@ -724,7 +694,6 @@ declare module 'vue' {
     readonly useEventBus: UnwrapRef<typeof import('@vueuse/core')['useEventBus']>
     readonly useEventListener: UnwrapRef<typeof import('@vueuse/core')['useEventListener']>
     readonly useEventSource: UnwrapRef<typeof import('@vueuse/core')['useEventSource']>
-    readonly useExpireTimer: UnwrapRef<typeof import('../src/hooks/vueuse/useExpireTimer')['useExpireTimer']>
     readonly useEyeDropper: UnwrapRef<typeof import('@vueuse/core')['useEyeDropper']>
     readonly useFavicon: UnwrapRef<typeof import('@vueuse/core')['useFavicon']>
     readonly useFetch: UnwrapRef<typeof import('@vueuse/core')['useFetch']>
@@ -737,7 +706,6 @@ declare module 'vue' {
     readonly useFullscreen: UnwrapRef<typeof import('@vueuse/core')['useFullscreen']>
     readonly useGamepad: UnwrapRef<typeof import('@vueuse/core')['useGamepad']>
     readonly useGeolocation: UnwrapRef<typeof import('@vueuse/core')['useGeolocation']>
-    readonly useGlobalAsyncComponent: UnwrapRef<typeof import('../src/hooks/component/useGlobalAsyncComponent')['useGlobalAsyncComponent']>
     readonly useI18n: UnwrapRef<typeof import('vue-i18n')['useI18n']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>
@@ -746,11 +714,9 @@ declare module 'vue' {
     readonly useIntersectionObserver: UnwrapRef<typeof import('@vueuse/core')['useIntersectionObserver']>
     readonly useInterval: UnwrapRef<typeof import('@vueuse/core')['useInterval']>
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
-    readonly useIntervalFnWithPercent: UnwrapRef<typeof import('../src/hooks/vueuse/useIntervalFnWithPercent')['useIntervalFnWithPercent']>
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
-    readonly useLinkTag: UnwrapRef<typeof import('../src/hooks/web/useLinkTag')['useLinkTag']>
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
     readonly useManualRefHistory: UnwrapRef<typeof import('@vueuse/core')['useManualRefHistory']>
@@ -785,7 +751,6 @@ declare module 'vue' {
     readonly usePreferredReducedMotion: UnwrapRef<typeof import('@vueuse/core')['usePreferredReducedMotion']>
     readonly usePreferredReducedTransparency: UnwrapRef<typeof import('@vueuse/core')['usePreferredReducedTransparency']>
     readonly usePrevious: UnwrapRef<typeof import('@vueuse/core')['usePrevious']>
-    readonly useProps: UnwrapRef<typeof import('../src/hooks/core/useProps')['useProps']>
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRedirect: UnwrapRef<typeof import('../src/hooks/core/useRedirect')['useRedirect']>
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
@@ -802,16 +767,10 @@ declare module 'vue' {
     readonly useScrollLock: UnwrapRef<typeof import('@vueuse/core')['useScrollLock']>
     readonly useSessionStorage: UnwrapRef<typeof import('@vueuse/core')['useSessionStorage']>
     readonly useShare: UnwrapRef<typeof import('@vueuse/core')['useShare']>
-    readonly useSharedBattery: UnwrapRef<typeof import('../src/hooks/vueuse/useBattery')['useSharedBattery']>
-    readonly useSharedDocumentVisibility: UnwrapRef<typeof import('../src/hooks/vueuse/useDocumentVisibility')['useSharedDocumentVisibility']>
-    readonly useSharedNavigatorLanguage: UnwrapRef<typeof import('../src/hooks/vueuse/useNavigatorLanguage')['useSharedNavigatorLanguage']>
-    readonly useSharedNetwork: UnwrapRef<typeof import('../src/hooks/vueuse/useNetwork')['useSharedNetwork']>
-    readonly useSharedPreferredReducedMotion: UnwrapRef<typeof import('../src/hooks/vueuse/usePreferredReducedMotion')['useSharedPreferredReducedMotion']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSorted: UnwrapRef<typeof import('@vueuse/core')['useSorted']>
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>
     readonly useSpeechSynthesis: UnwrapRef<typeof import('@vueuse/core')['useSpeechSynthesis']>
-    readonly useState: UnwrapRef<typeof import('../src/hooks/core/useState')['useState']>
     readonly useStepper: UnwrapRef<typeof import('@vueuse/core')['useStepper']>
     readonly useStorage: UnwrapRef<typeof import('@vueuse/core')['useStorage']>
     readonly useStorageAsync: UnwrapRef<typeof import('@vueuse/core')['useStorageAsync']>
@@ -854,7 +813,6 @@ declare module 'vue' {
     readonly useWebWorker: UnwrapRef<typeof import('@vueuse/core')['useWebWorker']>
     readonly useWebWorkerFn: UnwrapRef<typeof import('@vueuse/core')['useWebWorkerFn']>
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
-    readonly useWindowResize: UnwrapRef<typeof import('../src/hooks/vueuse/useResize')['useWindowResize']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>

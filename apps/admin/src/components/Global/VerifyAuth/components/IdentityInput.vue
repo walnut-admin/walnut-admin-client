@@ -2,6 +2,7 @@
 import type { VerifyAuthMethod } from '../types'
 import type { ICompExtraPhoneNumberInputUpdateParams } from '@/components/Extra/PhoneNumberInput'
 import type { WForm } from '@/components/UI/Form'
+import { useState } from '@walnut/core/hooks/core/useState'
 import { isEmailAddress, isPhoneNumber } from '@walnut/shared/regex'
 
 /**

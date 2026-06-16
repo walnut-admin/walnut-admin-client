@@ -2,6 +2,7 @@
 import type { FormRules } from 'naive-ui'
 import type { CSSProperties } from 'vue'
 import type { WForm } from './types'
+import { useProps } from '@walnut/core/hooks/core/useProps'
 
 import { omit } from 'lodash-es'
 

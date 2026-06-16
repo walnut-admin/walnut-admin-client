@@ -1,3 +1,4 @@
+import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
 import type { DropdownProps } from 'naive-ui'
 
 export { default } from './index.vue'

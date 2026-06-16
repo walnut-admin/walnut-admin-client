@@ -1,4 +1,5 @@
 import type { IModels } from '@/api/models'
+import { useSharedDocumentVisibility } from '@walnut/core/hooks/vueuse/useDocumentVisibility'
 import { layoutConst } from '@/router/routes/builtin'
 
 const appStoreFingerprint = useAppStoreFingerprint()

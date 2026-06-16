@@ -1,6 +1,7 @@
 <script lang="ts" setup generic="T">
 import type { ICompUITableHooksAPIListParams } from './hooks/useTableAPIListParams'
 import type { WTable } from './types'
+import { useProps } from '@walnut/core/hooks/core/useProps'
 
 import { omit } from 'lodash-es'
 import TableHeader from './components/header/index.vue'
