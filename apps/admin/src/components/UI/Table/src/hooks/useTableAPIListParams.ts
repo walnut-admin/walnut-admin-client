@@ -1,4 +1,4 @@
-import type { IAxios } from '@/utils/axios/types'
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 import { useState } from '@walnut/core/hooks/core/useState'
 
 export function useTableAPIListParams<T>() {
@@ -6,7 +6,7 @@ export function useTableAPIListParams<T>() {
     stateRef: apiListParams,
     resetState: resetParams,
     commit: commitParams,
-  } = useState<IAxios.BaseListParams<T>>({
+  } = useState<BaseListParams<T>>({
     query: {} as T,
     sort: [],
     page: {

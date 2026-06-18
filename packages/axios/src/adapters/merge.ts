@@ -18,7 +18,7 @@ interface PendingRequest {
 type RequestGroup = Map<string, PendingRequest[]>
 
 const DEFAULT_DELAY = 50 // Delay in milliseconds before merging requests
-const requestGroups = shallowRef(new Map<string, RequestGroup>())
+const requestGroups = new Map<string, RequestGroup>()
 
 /**
  * Merge multiple request parameters into a single parameter object
@@ -120,7 +120,7 @@ const scheduleMergeRequest = debounce((groupKey: string, group: RequestGroup, or
     })
     .finally(() => {
       // Clean up processed request group
-      requestGroups.value.delete(groupKey)
+      requestGroups.delete(groupKey)
     })
 }, DEFAULT_DELAY)
 
@@ -143,10 +143,10 @@ export function mergeAdapter(adapter: AxiosAdapter): AxiosAdapter {
     const groupKey = `${url}|${method}`
 
     // Get or create request group
-    if (!requestGroups.value.has(groupKey)) {
-      requestGroups.value.set(groupKey, new Map())
+    if (!requestGroups.has(groupKey)) {
+      requestGroups.set(groupKey, new Map())
     }
-    const group = requestGroups.value.get(groupKey)!
+    const group = requestGroups.get(groupKey)!
 
     // Generate parameter signature to distinguish different parameter combinations
     const paramsSignature = JSON.stringify(params || {})

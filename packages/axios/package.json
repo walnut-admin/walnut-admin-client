@@ -4,6 +4,10 @@
   "version": "0.0.1",
   "private": true,
   "description": "Custom Axios HTTP client with interceptors for Walnut Admin",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
   "scripts": {
     "build": "echo 'axios: pure source, no build needed'",
     "lint": "eslint .",
@@ -12,12 +16,11 @@
     "clean": "rimraf dist",
     "clean:all": "rimraf dist node_modules"
   },
-  "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/*.ts"
-  },
   "peerDependencies": {
-    "axios": "1.16.0"
+    "axios": "1.16.0",
+    "lodash-es": "^4.0.0",
+    "lru-cache": "^10.0.0",
+    "nanoid": "^5.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "6.0.6",

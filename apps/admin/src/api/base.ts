@@ -1,6 +1,6 @@
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 import type { StringOrNumber } from 'easy-fns-ts'
 import type { IModels } from './models'
-import type { IAxios } from '@/utils/axios/types'
 import { omit } from 'lodash-es'
 import { AppAxios } from '@/utils/axios'
 
@@ -17,8 +17,8 @@ export class BaseAPI<T extends IModels.Base> {
     this.baseAPI = `/${model}/${section}`
   }
 
-  list(data?: IAxios.BaseListParams<T>) {
-    return AppAxios.post<IAxios.BaseListResponse<T>>({
+  list(data?: BaseListParams<T>) {
+    return AppAxios.post<BaseListResponse<T>>({
       url: `${this.baseAPI}/list`,
       data,
     })

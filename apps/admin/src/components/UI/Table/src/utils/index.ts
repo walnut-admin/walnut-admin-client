@@ -1,9 +1,9 @@
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 import type { DataTableSortState } from 'naive-ui'
 import type {
   SorterMultiple,
 } from 'naive-ui/lib/data-table/src/interface'
 import type { WTable } from '../types'
-import type { IAxios } from '@/utils/axios/types'
 import { getBoolean } from '@walnut/shared/shared'
 
 export const extendedTablePropKeys: (keyof WTable.Props)[] = ['localeUniqueKey', 'auths', 'apiProps', 'queryFormProps', 'headerLeftBuiltInActions', 'headerLeftExtraActions', 'polling', 'columnSetting']
@@ -25,7 +25,7 @@ export function generateDefaultSortParams<T>(columns: WTable.Column<T>[]) {
 /**
  * @description generate base sort object
  */
-export function generateSortParams<T>(sort: DataTableSortState | DataTableSortState[]): IAxios.BaseSortParams<T> {
+export function generateSortParams<T>(sort: DataTableSortState | DataTableSortState[]): BaseSortParams<T> {
   const getBase = (i: DataTableSortState) => ({
     field: i.columnKey as keyof T,
     order: i.order,

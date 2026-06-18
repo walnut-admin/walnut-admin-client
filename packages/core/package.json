@@ -4,6 +4,10 @@
   "version": "0.0.1",
   "private": true,
   "description": "Core runtime - hooks, Pinia stores, router guards for Walnut Admin",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
   "scripts": {
     "build": "echo 'core: pure source, no build needed'",
     "lint": "eslint .",
@@ -12,18 +16,14 @@
     "clean": "rimraf dist",
     "clean:all": "rimraf dist node_modules"
   },
-  "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/*.ts"
-  },
-  "dependencies": {
-    "@walnut/shared": "workspace:*"
-  },
   "peerDependencies": {
     "@vueuse/core": "14.3.0",
     "naive-ui": "2.44.1",
     "vue": "3.5.34",
     "vue-router": "5.0.6"
+  },
+  "dependencies": {
+    "@walnut/shared": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "6.0.6",

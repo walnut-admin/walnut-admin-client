@@ -1,6 +1,6 @@
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 import type { IRequestPayload } from '../request'
 import type { IResponseData } from '../response'
-import type { IAxios } from '@/utils/axios/types'
 import { AppAxios } from '@/utils/axios'
 
 const systemUserDevice = {
@@ -15,7 +15,7 @@ const systemUserDevice = {
  * @description list user's devices
  */
 export function listUserDevicesAPI() {
-  return AppAxios.get<IAxios.BaseListResponse<IResponseData.System.UserDevice.List>>({
+  return AppAxios.get<BaseListResponse<IResponseData.System.UserDevice.List>>({
     url: systemUserDevice.LIST,
   })
 }

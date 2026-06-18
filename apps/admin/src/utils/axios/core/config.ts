@@ -1,8 +1,8 @@
 import type { AxiosRequestConfig } from 'axios'
+import { composeAdapters } from '@walnut/axios/adapters/index'
 import qs from 'qs'
-import { composeAdapters } from '../adapters'
 
-const { axiosTimeout: axiosTimeoutSeconds } = useAppEnvSeconds()
+const { axiosTimeout: axiosTimeoutSeconds, axiosCache: axiosCacheSeconds } = useAppEnvSeconds()
 
 const { httpUrl } = useAppEnvProxy()
 
@@ -25,7 +25,7 @@ export const originalConfig: AxiosRequestConfig = {
   timeout: Number(axiosTimeoutSeconds) * 1000,
 
   // adapter
-  adapter: composeAdapters(),
+  adapter: composeAdapters({ cacheTTLSeconds: Number(axiosCacheSeconds) }),
 
   _cancelOnRouteChange: true,
 }

@@ -15,12 +15,12 @@ interface IAxiosCancelPoolItem {
   ac: AbortController
 }
 
-const AxiosCancelPoolRef = shallowRef(new Map<string, IAxiosCancelPoolItem>())
+const AxiosCancelPool = new Map<string, IAxiosCancelPoolItem>()
 
 function addToCancelPool(config: AxiosRequestConfig, id: string, pathname: string, controller: AbortController) {
   const key = buildSortedURL(config.url, config.params, config.paramsSerializer)
 
-  AxiosCancelPoolRef.value.set(id, {
+  AxiosCancelPool.set(id, {
     k: key,
     p: pathname,
     ac: controller,
@@ -28,45 +28,45 @@ function addToCancelPool(config: AxiosRequestConfig, id: string, pathname: strin
 }
 
 function removeFromCancelPool(id: string, excuteCancel = false) {
-  const target = AxiosCancelPoolRef.value.get(id)
+  const target = AxiosCancelPool.get(id)
 
   if (target) {
     excuteCancel && target.ac.abort()
-    AxiosCancelPoolRef.value.delete(id)
+    AxiosCancelPool.delete(id)
   }
 }
 
 // cancel the latest request that do not receive a response
 export function removeLatestRequest() {
-  const lastestItem = Array.from(AxiosCancelPoolRef.value).pop()
+  const latestItem = Array.from(AxiosCancelPool).pop()
 
-  if (lastestItem) {
-    lastestItem[1].ac.abort('Remove latest request')
-    AxiosCancelPoolRef.value.delete(lastestItem[0])
+  if (latestItem) {
+    latestItem[1].ac.abort('Remove latest request')
+    AxiosCancelPool.delete(latestItem[0])
   }
 }
 
 // cancel all the request that currently do not have a response
 export function removeAllCancel() {
-  const arr = Array.from(AxiosCancelPoolRef.value)
+  const arr = Array.from(AxiosCancelPool)
 
   for (let i = 0; i < arr.length; i++) {
     const id = arr[i][0]
     const element = arr[i][1]
     element.ac.abort('Remove all cancel requests')
-    AxiosCancelPoolRef.value.delete(id)
+    AxiosCancelPool.delete(id)
   }
 }
 
 // remove all requests in current page from cancel pool
 export function removeCurrentPageRequests(path: string) {
-  const arr = Array.from(AxiosCancelPoolRef.value).filter(i => i[1].p === path)
+  const arr = Array.from(AxiosCancelPool).filter(i => i[1].p === path)
 
   for (let i = 0; i < arr.length; i++) {
     const id = arr[i][0]
     const element = arr[i][1]
     element.ac.abort('Remove current page requests')
-    AxiosCancelPoolRef.value.delete(id)
+    AxiosCancelPool.delete(id)
   }
 }
 
@@ -79,19 +79,19 @@ export function cancelAdapter(adapter: AxiosAdapter): AxiosAdapter {
 
     // create AbortController and add to cancel pool
     const controller = new AbortController()
-    config.signal = controller.signal // 设置 AbortSignal
+    config.signal = controller.signal // set AbortSignal
     addToCancelPool(config, requestId, location.pathname, controller)
 
     try {
       const res = await adapter(config)
-      // request finished successfully, remove from the cancel pool
-      removeFromCancelPool(requestId)
       return res
     }
     catch (error) {
-      // request failed, remove from the cancel pool
-      removeFromCancelPool(requestId)
       return Promise.reject(error)
+    }
+    finally {
+      // always remove from cancel pool
+      removeFromCancelPool(requestId)
     }
   }
 }

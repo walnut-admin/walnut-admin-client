@@ -131,7 +131,6 @@ function onFilter(pattern: string, option: ICompExtraCountryCallingSelectOption)
 </script>
 
 <template>
-  <!-- @vue-expect-error -->
   <WSelect
     v-model:value="value"
     :loading="loading"

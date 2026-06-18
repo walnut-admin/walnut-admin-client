@@ -1,9 +1,9 @@
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
+import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
 import type { Recordable } from 'easy-fns-ts'
 import type { DropdownOption, TagProps } from 'naive-ui'
 import type { FilterOption } from 'naive-ui/es/data-table/src/interface'
 import type { WTable } from '../types'
-import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
-import type { IAxios } from '@/utils/axios/types'
 import { getBoolean, getFunctionBoolean } from '@walnut/shared/shared'
 import { omit } from 'lodash-es'
 import { NA, NDropdown, NTag } from 'naive-ui'
@@ -17,7 +17,7 @@ import WIconButton from '@/components/UI/IconButton'
 import { getTableTranslated } from '../utils'
 
 // Extend Naive UI columns
-export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, apiListParams: Ref<IAxios.BaseListParams<T>>) {
+export function useTableColumns<T>(propsCtx: IHooksUseProps<WTable.Props<T>>, apiListParams: Ref<BaseListParams<T>>) {
   const columns = ref<WTable.Column<T>[]>([])
   const { t } = useAppI18n()
   const userStorePermission = useAppStoreUserPermission()

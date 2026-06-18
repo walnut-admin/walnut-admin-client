@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig } from 'axios'
+import type { InternalAxiosRequestConfig } from 'axios'
 import { cloneDeep, get, isArray, set } from 'lodash-es'
 import { setTokenHeaderWithConfig } from '../../utils'
 import { encryptRequestValue } from './crypto'
@@ -8,12 +8,7 @@ const appStoreLocale = useAppStoreLocale()
 const appStoreSecurity = useAppStoreSecurity()
 const appStoreFingerprint = useAppStoreFingerprint()
 
-export async function requestInterceptors(config: AxiosRequestConfig) {
-  // avoid use ! below for ts
-  if (!config.headers) {
-    config.headers = {}
-  }
-
+export async function requestInterceptors(config: InternalAxiosRequestConfig) {
   // custom headers
   config.headers[AppConstRequestHeaders.LANGUAGE] = appStoreLocale.getLocale
 

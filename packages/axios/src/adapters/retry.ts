@@ -1,6 +1,20 @@
 import type { AxiosAdapter, AxiosResponse } from 'axios'
 import { BusinessCodeConst } from '../constant'
 
+/**
+ * Safely parse response data and extract the business code.
+ * Returns null if parsing fails (non-JSON response, etc.).
+ */
+function parseResponseCode(data: any): number | null {
+  try {
+    const parsed = typeof data === 'string' ? JSON.parse(data) : data
+    return parsed?.code ?? null
+  }
+  catch {
+    return null
+  }
+}
+
 export function retryAdapter(adapter: AxiosAdapter): AxiosAdapter {
   return async (config) => {
     const { _retryTimes } = config
@@ -13,7 +27,7 @@ export function retryAdapter(adapter: AxiosAdapter): AxiosAdapter {
         try {
           const response = await adapter(config)
 
-          if (JSON.parse(response.data).code !== BusinessCodeConst.SUCCESS) {
+          if (parseResponseCode(response.data) !== BusinessCodeConst.SUCCESS) {
             timeUp = _retryTimes === count
             if (timeUp)
               return response

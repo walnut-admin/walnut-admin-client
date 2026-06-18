@@ -25,46 +25,47 @@ export class Axios {
     )
   }
 
-  private createRequestInterceptor(interceptor: any, error: any) {
+  private createRequestInterceptor(
+    interceptor: AxiosTransformers['requestInterceptors'],
+    error?: AxiosTransformers['requestInterceptorsCatch'],
+  ) {
     this.instance.interceptors.request.use(interceptor, error)
   }
 
-  private createResponseInterceptor(interceptor: any, error: any) {
+  private createResponseInterceptor(
+    interceptor: AxiosTransformers['responseInterceptors'],
+    error?: AxiosTransformers['responseInterceptorsCatch'],
+  ) {
     this.instance.interceptors.response.use(interceptor, error)
   }
 
   request<T = any, D = any>(
-    config: AxiosRequestConfig<D>,
+    config: AxiosRequestConfig<D, T>,
   ): Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.instance
-        .request<T, T>(config)
-        .then(res => resolve(res))
-        .catch(err => reject(err))
-    })
+    return this.instance.request<T, T>(config)
   }
 
   isCancel(err: AxiosError) {
     return axios.isCancel(err)
   }
 
-  get<T, D = any>(config: AxiosRequestConfig<D>) {
+  get<T, D = any>(config: AxiosRequestConfig<D, T>) {
     return this.request<T, D>({ ...config, method: 'GET' })
   }
 
-  post<T, D = any>(config: AxiosRequestConfig<D>) {
+  post<T, D = any>(config: AxiosRequestConfig<D, T>) {
     return this.request<T, D>({ ...config, method: 'POST' })
   }
 
-  put<T, D = any>(config: AxiosRequestConfig<D>) {
+  put<T, D = any>(config: AxiosRequestConfig<D, T>) {
     return this.request<T, D>({ ...config, method: 'PUT' })
   }
 
-  patch<T, D = any>(config: AxiosRequestConfig<D>) {
+  patch<T, D = any>(config: AxiosRequestConfig<D, T>) {
     return this.request<T, D>({ ...config, method: 'PATCH' })
   }
 
-  delete<T, D = any>(config: AxiosRequestConfig<D>) {
+  delete<T, D = any>(config: AxiosRequestConfig<D, T>) {
     return this.request<T, D>({ ...config, method: 'DELETE' })
   }
 }

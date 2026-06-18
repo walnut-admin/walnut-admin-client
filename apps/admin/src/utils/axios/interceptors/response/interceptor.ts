@@ -1,11 +1,11 @@
+import type { BaseResponse } from '@walnut/axios/types'
 import type { AxiosResponse } from 'axios'
-import type { IAxios } from '../../types'
 import type { IModels } from '@/api/models'
+import { removeCurrentPageRequests } from '@walnut/axios/adapters/cancel'
+import { BusinessCodeConst, notAllowedErrorCodeMap } from '@walnut/axios/constant'
 import { get, isArray, set } from 'lodash-es'
 import { mainoutConst, mainoutLockRoute, mainoutMfaRequiredRoute, mainoutMfaVerifiedRoute } from '@/router/routes/mainout'
 import { AppAxios } from '../..'
-import { removeCurrentPageRequests } from '../../adapters/cancel'
-import { BusinessCodeConst, notAllowedErrorCodeMap } from '../../constant'
 import { SingletonPromiseCapJSInteraction, SingletonPromiseCapJSRefresh } from './capJSToken'
 import { decryptResponseValue } from './crypto'
 import { SingletonPromiseRefreshToken } from './refreshToken'
@@ -15,7 +15,7 @@ import { SingletonPromiseSign } from './sign'
 
 const userStoreAuth = useAppStoreUserAuth()
 
-export async function responseInterceptors(res: AxiosResponse<IAxios.BaseResponse<IModels.Base>, any>) {
+export async function responseInterceptors(res: AxiosResponse<BaseResponse<IModels.Base>, any>) {
   // code below is custom code in `axios.response.data`
   const { code, data, msg, meta } = res.data
 

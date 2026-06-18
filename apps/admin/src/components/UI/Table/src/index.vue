@@ -135,7 +135,6 @@ const getTableHeight = computed(() => `calc(${appStoreSettingDev.getCalcContentH
     <!-- @vue-generic {T} -->
     <TableHeader />
 
-    <!-- @vue-expect-error -->
     <n-data-table
       ref="tableRef"
       v-bind="getTableProps"

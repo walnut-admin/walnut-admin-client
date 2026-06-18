@@ -1,5 +1,6 @@
-import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 
+import type { IHooksUseProps } from '@walnut/core/hooks/core/useProps'
 import type { NullableRecord, Recordable, StringOrNumber } from 'easy-fns-ts'
 import type { DataTableBaseColumn, DataTableColumn, DataTableCreateRowKey, DataTableCreateSummary, DataTableExpandColumn, DataTableFilterState, DataTableInst, DataTableSelectionColumn, DataTableSortState, PaginationProps, PopoverProps, ScrollbarProps, TagProps } from 'naive-ui'
 import type { HTMLAttributes, VNodeChild } from 'vue'
@@ -7,7 +8,6 @@ import type { ICompUIButtonProps } from '../../Button'
 import type { WForm } from '../../Form'
 import type { ICompUIIconButtonProps } from '../../IconButton'
 import type { ICompUITableHooksMethods } from './hooks/useTableMethods'
-import type { IAxios } from '@/utils/axios/types'
 
 export declare namespace WTable {
   type ColumnActionType = 'create' | 'read' | 'delete' | 'detail'
@@ -64,7 +64,7 @@ export declare namespace WTable {
       /**
        * @description get list params
        */
-      onGetApiListParams: () => Ref<IAxios.BaseListParams<T>>
+      onGetApiListParams: () => Ref<BaseListParams<T>>
 
       /**
        * @description set default query form data
@@ -183,15 +183,15 @@ export declare namespace WTable {
     apiProps?: {
       /**
        * @description before request hook, you can change the request params here or do some request
-       * @retrurn IAxios.BaseListParams<T>
+       * @retrurn BaseListParams<T>
        */
       onBeforeRequest?: (params: T) => Promise<T>
 
       /**
        * @description list api, need to follow response structure
-       * @retrurn IAxios.BaseListResponse<T>
+       * @retrurn BaseListResponse<T>
        */
-      listApi?: (params: IAxios.BaseListParams<T>) => Promise<IAxios.BaseListResponse<T>>
+      listApi?: (params: BaseListParams<T>) => Promise<BaseListResponse<T>>
 
       /**
        * @description delete api, need to follow response structure
@@ -254,7 +254,7 @@ export declare namespace WTable {
     tableEvent: ShortEmits<Emits<T>>
     tablePropsCtx: IHooksUseProps<Props<T>>
 
-    apiListParams: Ref<IAxios.BaseListParams<T>>
+    apiListParams: Ref<BaseListParams<T>>
     onApiList: () => Promise<void>
     onApiQuery: WForm.onFinishFormLoadingCallback
     onApiReset: WForm.onFinishFormLoadingCallback

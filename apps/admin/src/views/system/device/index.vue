@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 import type { DataTableColumn } from 'naive-ui'
 import type { IModels } from '@/api/models'
 import type { WForm } from '@/components/UI/Form'
-import type { IAxios } from '@/utils/axios/types'
 import { useState } from '@walnut/core/hooks/core/useState'
 import { banDeviceAPI, deviceAPI, getDeviceCurrentActiveUserAPI, getDeviceHistoryUsersAPI, lockDeviceAPI, unbanDeviceAPI, unlockDeviceAPI } from '@/api/system/device'
 import { extractDefaultFormDataFromSchemas } from '@/components/UI/Form/src/utils'
@@ -32,7 +32,7 @@ const {
   stateRef: listParams,
   resetState: resetListParams,
   commit: commitParams,
-} = useState<IAxios.BaseListParams<IModels.SystemDevice>>({
+} = useState<BaseListParams<IModels.SystemDevice>>({
   query: {} as IModels.SystemDevice,
   sort: [{ field: 'active', order: 'descend', priority: 9 }, { field: 'locked', order: 'descend', priority: 8 }, { field: 'banned', order: 'descend', priority: 7 }],
   page: {

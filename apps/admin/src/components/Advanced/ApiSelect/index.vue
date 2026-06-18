@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import type { BaseListParams, BaseListResponse, BasePageParams, BaseResponse, BaseSortParams } from '@walnut/axios/types'
 import type { OptionDataItem, Recordable, StringOrNumber } from 'easy-fns-ts'
-import type { IAxios } from '@/utils/axios/types'
 import { useState } from '@walnut/core/hooks/core/useState'
 import { isFunction } from 'easy-fns-ts'
 import { WithValueProps } from '@/components/HOC/WithValue'
@@ -16,7 +16,7 @@ const props = defineProps({
 
   listFn: {
     type: Function as PropType<
-      (data?: IAxios.BaseListParams<any>) => Promise<IAxios.BaseListResponse<any>>
+      (data?: BaseListParams<any>) => Promise<BaseListResponse<any>>
     >,
     required: true,
   },
@@ -36,7 +36,7 @@ const total = ref(0)
 const options = ref<OptionDataItem[]>([])
 const valueOptions = ref<OptionDataItem[]>([])
 
-const { stateRef: params, resetState } = useState<IAxios.BaseListParams<Recordable>>({
+const { stateRef: params, resetState } = useState<BaseListParams<Recordable>>({
   page: { page: 1, pageSize: 10 },
   query: {},
 })
@@ -178,7 +178,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- @vue-expect-error -->
   <WSelect
     :value="value"
     :options="getOptions"
