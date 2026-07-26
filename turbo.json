@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["tsconfig.base.json", "eslint.config.mjs"],
+  "globalEnv": ["NODE_ENV"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "cache": true
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": [],
+      "cache": true
+    },
+    "lint:fix": {
+      "dependsOn": [],
+      "cache": true
+    },
+    "types:check": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "clean": {
+      "dependsOn": [],
+      "cache": false
+    },
+    "clean:all": {
+      "dependsOn": [],
+      "cache": false
+    }
+  }
+}

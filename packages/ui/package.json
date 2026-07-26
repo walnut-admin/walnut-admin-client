@@ -1,0 +1,41 @@
+{
+  "name": "@walnut/ui",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "UI component library for Walnut Admin",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "clean": "rimraf dist",
+    "clean:all": "rimraf dist node_modules"
+  },
+  "dependencies": {
+    "@walnut/core": "workspace:*",
+    "@walnut/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "@vueuse/core": "14.3.0",
+    "compare-versions": "6.1.1",
+    "cropperjs": "2.1.1",
+    "driver.js": "1.4.0",
+    "echarts": "6.0.0",
+    "highlight.js": "11.11.1",
+    "lodash-es": "4.18.1",
+    "markdown-it": "14.1.1",
+    "naive-ui": "2.44.1",
+    "pinia": "3.0.4",
+    "sortablejs": "1.15.7",
+    "vue": "3.5.34",
+    "vue-i18n": "11.4.2",
+    "vue-router": "5.0.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.6",
+    "@vitejs/plugin-vue-jsx": "5.1.5",
+    "rimraf": "6.1.3",
+    "typescript": "6.0.3",
+    "vite": "8.0.11",
+    "vite-plugin-dts": "4.5.4"
+  }
+}
