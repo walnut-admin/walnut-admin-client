@@ -1,21 +1,38 @@
 node_modules
 .DS_Store
-dist
-dist-staging
-dist-production
-dist-ssr
 *.local
-report/*
-!report/*.md
+*.zip
+release-notes.md
+
+# Turborepo
+.turbo
+
+# Build outputs
+dist/
+dist-*/
+dev-dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# Auto-generated
 types/auto-import.d.ts
 types/components.d.ts
+
+# Build generated
 build/_generated/*.ts
 build/_generated/*.json
 build/_generated/*.log
-env-local
-*.zip
+
+# Environment
+env-local/
+
+# Deploy configs (may contain credentials)
 deploy.config.*
-tsconfig.tsbuildinfo
-dev-dist
-release-notes.md
+
+# Reports (keep .md files)
+report/*
+!report/*.md
+
+# Legacy
 config/husky/*

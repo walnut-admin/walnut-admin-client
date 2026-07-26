@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@walnut/shared": ["../../packages/shared/src"],
+      "@walnut/axios": ["../../packages/axios/src"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../shared/src/types/*.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

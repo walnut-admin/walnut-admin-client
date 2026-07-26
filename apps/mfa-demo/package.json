@@ -1,0 +1,19 @@
+{
+  "name": "@walnut/mfa-demo",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "MFA demo application - reserved for future use",
+  "scripts": {
+    "clean": "rimraf dist",
+    "clean:all": "rimraf dist node_modules"
+  },
+  "dependencies": {
+    "@walnut/ui": "workspace:*",
+    "@walnut/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "8.0.11",
+    "typescript": "6.0.3"
+  }
+}
